@@ -1,0 +1,137 @@
+Roadmaps	format_2561	Sequence assembly format (text)	Text format for sequence assembly data.
+Sequences	format_1929	FASTA	FASTA format including NCBI-style IDs.
+ab1	format_2333	Binary format	Binary format.
+affybatch	format_2331	HTML	HTML format.
+afg	format_2561	Sequence assembly format (text)	Text format for sequence assembly data.
+arff	format_2330	Textual format	Textual format.
+asn1	format_2330	Textual format	Textual format.
+asn1-binary	format_2333	Binary format	Binary format.
+axt	format_2330	Textual format	Textual format.
+bam	format_2572	BAM	BAM format, the binary, BGZF-formatted compressed version of SAM format for alignment of nucleotide sequences (e.g. sequencing reads) to (a) reference sequence(s). May contain base-call and alignment qualities and other data.
+bcf	format_3020	BCF	BCF, the binary version of Variant Call Format (VCF) for sequence variation (indels, polymorphisms, structural variation).
+bed	format_3003	BED	Browser Extensible Data (BED) format of sequence annotation track, typically to be displayed in a genome browser.
+bed12	format_3003	BED	Browser Extensible Data (BED) format of sequence annotation track, typically to be displayed in a genome browser.
+bed6	format_3003	BED	Browser Extensible Data (BED) format of sequence annotation track, typically to be displayed in a genome browser.
+bedgraph	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+bedstrict	format_3003	BED	Browser Extensible Data (BED) format of sequence annotation track, typically to be displayed in a genome browser.
+bgzip	format_2333	Binary format	Binary format.
+bigbed	format_3004	bigBed	bigBed format for large sequence annotation tracks, similar to textual BED format.
+bigwig	format_3006	bigWig	bigWig format for large sequence annotation tracks that consist of a value for each sequence position. Similar to textual WIG format.
+bmp	format_3547	Image format	Format used for images and image metadata.
+bowtie_base_index	format_2331	HTML	HTML format.
+bowtie_color_index	format_2331	HTML	HTML format.
+chrint	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+cisml	format_2332	XML	eXtensible Markup Language (XML) format.
+csfasta	format_1929	FASTA	FASTA format including NCBI-style IDs.
+csv	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+customtrack	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+cxb	format_2333	Binary format	Binary format.
+data	format_1915	Format	A defined way or layout of representing and structuring data in a computer file, blob, string, message, or elsewhere.
+data_manager_json	format_2330	Textual format	Textual format.
+dbnsfp.tabular	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+eigenstratgeno	format_2331	HTML	HTML format.
+eigenstratpca	format_2331	HTML	HTML format.
+eland	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+elandmulti	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+encodepeak	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+eps	format_3466	EPS	Encapsulated PostScript format
+eset	format_2331	HTML	HTML format.
+fasta	format_1929	FASTA	FASTA format including NCBI-style IDs.
+fastq	format_1930	FASTQ	FASTQ short read format ignoring quality scores.
+fastqcssanger	format_1930	FASTQ	FASTQ short read format ignoring quality scores.
+fastqillumina	format_1931	FASTQ-illumina	FASTQ Illumina 1.3 short read format.
+fastqsanger	format_1932	FASTQ-sanger	FASTQ short read format with phred quality.
+fastqsolexa	format_1933	FASTQ-solexa	FASTQ Solexa/Illumina 1.0 short read format.
+fli	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+fped	format_2331	HTML	HTML format.
+fphe	format_2331	HTML	HTML format.
+fqtoc	format_2330	Textual format	Textual format.
+gatk_dbsnp	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+gatk_interval	format_2330	Textual format	Textual format.
+gatk_recal	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+gatk_report	format_2330	Textual format	Textual format.
+gatk_tranche	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+gemini.sqlite	format_2333	Binary format	Binary format.
+genetrack	format_2919	Sequence annotation track format	Format of a sequence annotation track.
+gff	format_2305	GFF	GFF feature format (of indeterminate version).
+gff3	format_1975	GFF3	Generic Feature Format version 3 (GFF3) of sequence features.
+gg	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+gif	format_3467	GIF	Graphics Interchange Format.
+gmaj.zip	format_3547	Image format	Format used for images and image metadata.
+gtf	format_2306	GTF	Gene Transfer Format (GTF), a restricted version of GFF.
+h5	format_2333	Binary format	Binary format.
+html	format_2331	HTML	HTML format.
+im	format_3547	Image format	Format used for images and image metadata.
+interval	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+interval_index	format_2333	Binary format	Binary format.
+ipynb	format_3464	JSON	Javascript Object Notation format; a lightweight, text-based format to represent structured data using key-value pairs.
+jpg	format_3547	Image format	Format used for images and image metadata.
+json	format_3464	JSON	Javascript Object Notation format; a lightweight, text-based format to represent structured data using key-value pairs.
+laj	format_2330	Textual format	Textual format.
+lav	format_3014	LAV	LAV format of alignments generated by BLASTZ and LASTZ.
+ldindep	format_2331	HTML	HTML format.
+len	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+linecount	format_2330	Textual format	Textual format.
+lped	format_2331	HTML	HTML format.
+maf	format_3008	MAF	Multiple Alignment Format (MAF) supporting alignments of whole genomes with rearrangements, directions, multiple pieces to the alignment, and so forth.
+mafcustomtrack	format_2330	Textual format	Textual format.
+malist	format_2331	HTML	HTML format.
+memexml	format_2332	XML	eXtensible Markup Language (XML) format.
+nex	format_1912	Nexus format	Phylogenetic tree Nexus (text) format.
+nhx	format_1910	newick	Phylogenetic tree Newick (text) format.
+obo	format_2549	OBO	OBO ontology text format.
+owl	format_3262	OWL/XML	OWL ontology XML serialisation format.
+pbed	format_2331	HTML	HTML format.
+pbm	format_3547	Image format	Format used for images and image metadata.
+pcd	format_3547	Image format	Format used for images and image metadata.
+pcx	format_3547	Image format	Format used for images and image metadata.
+pdf	format_3508	PDF	Portable Document Format
+peptideshaker_archive	format_2333	Binary format	Binary format.
+pgm	format_3547	Image format	Format used for images and image metadata.
+pheno	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+phyloxml	format_2332	XML	eXtensible Markup Language (XML) format.
+picard_interval_list	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+pileup	format_3015	Pileup	Pileup format of alignment of sequences (e.g. sequencing reads) to (a) reference sequence(s). Contains aligned bases per base of the reference sequence(s).
+png	format_3547	Image format	Format used for images and image metadata.
+pphe	format_2331	HTML	HTML format.
+ppm	format_3547	Image format	Format used for images and image metadata.
+psd	format_3547	Image format	Format used for images and image metadata.
+qual	format_2330	Textual format	Textual format.
+qual454	format_2330	Textual format	Textual format.
+qualillumina	format_2330	Textual format	Textual format.
+qualsolexa	format_2330	Textual format	Textual format.
+qualsolid	format_2330	Textual format	Textual format.
+rast	format_3547	Image format	Format used for images and image metadata.
+rdf	format_2376	RDF format	A serialisation format conforming to the Resource Description Framework (RDF) model.
+rexpbase	format_2331	HTML	HTML format.
+rgb	format_3547	Image format	Format used for images and image metadata.
+rgenetics	format_2331	HTML	HTML format.
+rna_eps	format_3466	EPS	Encapsulated PostScript format
+sam	format_2573	SAM	Sequence Alignment/Map (SAM) format for alignment of nucleotide sequences (e.g. sequencing reads) to (a) reference sequence(s). May contain base-call and alignment qualities and other data.
+scf	format_1632	SCF	Staden Chromatogram Files format (SCF) of base-called sequence reads, qualities, and other metadata.
+searchgui_archive	format_2333	Binary format	Binary format.
+sff	format_3284	SFF	Standard flowgram format (SFF) is a binary file format used to encode results of pyrosequencing from the 454 Life Sciences platform for high-throughput sequencing.
+sif	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+snpeffdb	format_2330	Textual format	Textual format.
+snpmatrix	format_2331	HTML	HTML format.
+snpsiftdbnsfp	format_2330	Textual format	Textual format.
+snptest	format_2331	HTML	HTML format.
+sqlite	format_2333	Binary format	Binary format.
+svg	format_3547	Image format	Format used for images and image metadata.
+tabix	format_2333	Binary format	Binary format.
+tabular	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+taxonomy	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+tiff	format_3547	Image format	Format used for images and image metadata.
+toolshed.gz	format_2333	Binary format	Binary format.
+twobit	format_3009	2bit	2bit binary format of nucleotide sequences using 2 bits per nucleotide. In addition encodes unknown nucleotides and lower-case 'masking'.
+txt	format_2330	Textual format	Textual format.
+vcf	format_3016	VCF	Variant Call Format (VCF) for sequence variation (indels, polymorphisms, structural variation).
+vcf_bgzip	format_2333	Binary format	Binary format.
+velvet	format_2331	HTML	HTML format.
+wig	format_3005	WIG	Wiggle format (WIG) of a sequence annotation track that consists of a value for each sequence position. Typically to be displayed in a genome browser.
+xbm	format_3547	Image format	Format used for images and image metadata.
+xgmml	format_2332	XML	eXtensible Markup Language (XML) format.
+xls	format_3475	TSV	Tabular data represented as tab-separated values in a text file.
+xlsx	format_2333	Binary format	Binary format.
+xml	format_2332	XML	eXtensible Markup Language (XML) format.
+xpm	format_3547	Image format	Format used for images and image metadata.

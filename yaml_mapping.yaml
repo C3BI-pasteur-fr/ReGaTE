@@ -1,0 +1,452 @@
+Roadmaps:
+- EDAM_format:2561
+- EDAM_data:0925
+Sequences:
+- EDAM_format:1929
+- EDAM_data:0863
+- EDAM_data:0849
+- EDAM_data:0006
+ab1:
+- EDAM_format:2333
+- EDAM_data:0006
+affybatch:
+- EDAM_format:2331
+- EDAM_data:2048
+afg:
+- EDAM_format:2561
+- EDAM_data:0925
+arff:
+- EDAM_format:2330
+- EDAM_data:0006
+asn1:
+- EDAM_format:2330
+- EDAM_data:0006
+asn1-binary:
+- EDAM_format:2333
+- EDAM_data:0006
+axt:
+- EDAM_format:2330
+- EDAM_data:0006
+bam:
+- EDAM_format:2572
+- EDAM_data:1381
+- EDAM_data:0924
+- EDAM_data:0006
+bcf:
+- EDAM_format:3020
+- EDAM_data:3498
+- EDAM_data:0006
+bed:
+- EDAM_format:3003
+- EDAM_data:3002
+- EDAM_data:0006
+bed12:
+- EDAM_format:3003
+- EDAM_data:3002
+- EDAM_data:0006
+bed6:
+- EDAM_format:3003
+- EDAM_data:3002
+- EDAM_data:0006
+bedgraph:
+- EDAM_format:3475
+- EDAM_data:0006
+bedstrict:
+- EDAM_format:3003
+- EDAM_data:3002
+- EDAM_data:0006
+bgzip:
+- EDAM_format:2333
+- EDAM_data:0006
+bigbed:
+- EDAM_format:3004
+- EDAM_data:3002
+- EDAM_data:0006
+bigwig:
+- EDAM_format:3006
+- EDAM_data:3002
+- EDAM_data:0006
+bmp:
+- EDAM_format:3547
+- EDAM_data:2968
+bowtie_base_index:
+- EDAM_format:2331
+- EDAM_data:2048
+bowtie_color_index:
+- EDAM_format:2331
+- EDAM_data:2048
+chrint:
+- EDAM_format:3475
+- EDAM_data:0006
+cisml:
+- EDAM_format:2332
+- EDAM_data:0006
+csfasta:
+- EDAM_format:1929
+- EDAM_data:0863
+- EDAM_data:0849
+- EDAM_data:0006
+csv:
+- EDAM_format:3475
+- EDAM_data:0006
+customtrack:
+- EDAM_format:3475
+- EDAM_data:0006
+cxb:
+- EDAM_format:2333
+- EDAM_data:0006
+data:
+- EDAM_format:1915
+- EDAM_data:0006
+data_manager_json:
+- EDAM_format:2330
+- EDAM_data:0006
+dbnsfp.tabular:
+- EDAM_format:3475
+- EDAM_data:0006
+eigenstratgeno:
+- EDAM_format:2331
+- EDAM_data:2048
+eigenstratpca:
+- EDAM_format:2331
+- EDAM_data:2048
+eland:
+- EDAM_format:3475
+- EDAM_data:0006
+elandmulti:
+- EDAM_format:3475
+- EDAM_data:0006
+encodepeak:
+- EDAM_format:3475
+- EDAM_data:0006
+eps:
+- EDAM_format:3466
+- EDAM_data:0006
+eset:
+- EDAM_format:2331
+- EDAM_data:2048
+fasta:
+- EDAM_format:1929
+- EDAM_data:0863
+- EDAM_data:0849
+- EDAM_data:0006
+fastq:
+- EDAM_format:1930
+- EDAM_data:0924
+- EDAM_data:0006
+fastqcssanger:
+- EDAM_format:1930
+- EDAM_data:0924
+- EDAM_data:0006
+fastqillumina:
+- EDAM_format:1931
+- EDAM_data:0924
+- EDAM_data:0006
+fastqsanger:
+- EDAM_format:1932
+- EDAM_data:0924
+- EDAM_data:0006
+fastqsolexa:
+- EDAM_format:1933
+- EDAM_data:0924
+- EDAM_data:0006
+fli:
+- EDAM_format:3475
+- EDAM_data:0006
+fped:
+- EDAM_format:2331
+- EDAM_data:2048
+fphe:
+- EDAM_format:2331
+- EDAM_data:2048
+fqtoc:
+- EDAM_format:2330
+- EDAM_data:0006
+gatk_dbsnp:
+- EDAM_format:3475
+- EDAM_data:0006
+gatk_interval:
+- EDAM_format:2330
+- EDAM_data:0006
+gatk_recal:
+- EDAM_format:3475
+- EDAM_data:0006
+gatk_report:
+- EDAM_format:2330
+- EDAM_data:0006
+gatk_tranche:
+- EDAM_format:3475
+- EDAM_data:0006
+gemini.sqlite:
+- EDAM_format:2333
+- EDAM_data:0006
+genetrack:
+- EDAM_format:2919
+- EDAM_data:3002
+gff:
+- EDAM_format:2305
+- EDAM_data:1255
+- EDAM_data:0006
+gff3:
+- EDAM_format:1975
+- EDAM_data:1255
+- EDAM_data:0006
+gg:
+- EDAM_format:3475
+- EDAM_data:0006
+gif:
+- EDAM_format:3467
+- EDAM_data:0006
+gmaj.zip:
+- EDAM_format:3547
+- EDAM_data:2968
+gtf:
+- EDAM_format:2306
+- EDAM_data:1255
+- EDAM_data:0006
+h5:
+- EDAM_format:2333
+- EDAM_data:0006
+html:
+- EDAM_format:2331
+- EDAM_data:2048
+im:
+- EDAM_format:3547
+- EDAM_data:2968
+interval:
+- EDAM_format:3475
+- EDAM_data:0006
+interval_index:
+- EDAM_format:2333
+- EDAM_data:0006
+ipynb:
+- EDAM_format:3464
+- EDAM_data:0006
+jpg:
+- EDAM_format:3547
+- EDAM_data:2968
+json:
+- EDAM_format:3464
+- EDAM_data:0006
+laj:
+- EDAM_format:2330
+- EDAM_data:0006
+lav:
+- EDAM_format:3014
+- EDAM_data:1381
+- EDAM_data:0006
+ldindep:
+- EDAM_format:2331
+- EDAM_data:2048
+len:
+- EDAM_format:3475
+- EDAM_data:0006
+linecount:
+- EDAM_format:2330
+- EDAM_data:0006
+lped:
+- EDAM_format:2331
+- EDAM_data:2048
+maf:
+- EDAM_format:3008
+- EDAM_data:3002
+- EDAM_data:0863
+- EDAM_data:0006
+mafcustomtrack:
+- EDAM_format:2330
+- EDAM_data:0006
+malist:
+- EDAM_format:2331
+- EDAM_data:2048
+memexml:
+- EDAM_format:2332
+- EDAM_data:0006
+nex:
+- EDAM_format:1912
+- EDAM_data:0872
+- EDAM_data:0006
+nhx:
+- EDAM_format:1910
+- EDAM_data:0872
+- EDAM_data:0006
+obo:
+- EDAM_format:2549
+- EDAM_data:0582
+- EDAM_data:0006
+owl:
+- EDAM_format:3262
+- EDAM_data:0006
+- EDAM_data:0582
+- EDAM_data:0006
+pbed:
+- EDAM_format:2331
+- EDAM_data:2048
+pbm:
+- EDAM_format:3547
+- EDAM_data:2968
+pcd:
+- EDAM_format:3547
+- EDAM_data:2968
+pcx:
+- EDAM_format:3547
+- EDAM_data:2968
+pdf:
+- EDAM_format:3508
+- EDAM_data:0006
+- EDAM_data:0006
+peptideshaker_archive:
+- EDAM_format:2333
+- EDAM_data:0006
+pgm:
+- EDAM_format:3547
+- EDAM_data:2968
+pheno:
+- EDAM_format:3475
+- EDAM_data:0006
+phyloxml:
+- EDAM_format:2332
+- EDAM_data:0006
+picard_interval_list:
+- EDAM_format:3475
+- EDAM_data:0006
+pileup:
+- EDAM_format:3015
+- EDAM_data:1381
+- EDAM_data:0006
+png:
+- EDAM_format:3547
+- EDAM_data:2968
+pphe:
+- EDAM_format:2331
+- EDAM_data:2048
+ppm:
+- EDAM_format:3547
+- EDAM_data:2968
+psd:
+- EDAM_format:3547
+- EDAM_data:2968
+qual:
+- EDAM_format:2330
+- EDAM_data:0006
+qual454:
+- EDAM_format:2330
+- EDAM_data:0006
+qualillumina:
+- EDAM_format:2330
+- EDAM_data:0006
+qualsolexa:
+- EDAM_format:2330
+- EDAM_data:0006
+qualsolid:
+- EDAM_format:2330
+- EDAM_data:0006
+rast:
+- EDAM_format:3547
+- EDAM_data:2968
+rdf:
+- EDAM_format:2376
+- EDAM_data:0582
+- EDAM_data:0006
+rexpbase:
+- EDAM_format:2331
+- EDAM_data:2048
+rgb:
+- EDAM_format:3547
+- EDAM_data:2968
+rgenetics:
+- EDAM_format:2331
+- EDAM_data:2048
+rna_eps:
+- EDAM_format:3466
+- EDAM_data:0006
+sam:
+- EDAM_format:2573
+- EDAM_data:1381
+- EDAM_data:0924
+- EDAM_data:0006
+scf:
+- EDAM_format:1632
+- EDAM_data:0924
+- EDAM_data:0006
+searchgui_archive:
+- EDAM_format:2333
+- EDAM_data:0006
+sff:
+- EDAM_format:3284
+- EDAM_data:0924
+- EDAM_data:0006
+sif:
+- EDAM_format:3475
+- EDAM_data:0006
+snpeffdb:
+- EDAM_format:2330
+- EDAM_data:0006
+snpmatrix:
+- EDAM_format:2331
+- EDAM_data:2048
+snpsiftdbnsfp:
+- EDAM_format:2330
+- EDAM_data:0006
+snptest:
+- EDAM_format:2331
+- EDAM_data:2048
+sqlite:
+- EDAM_format:2333
+- EDAM_data:0006
+svg:
+- EDAM_format:3547
+- EDAM_data:2968
+tabix:
+- EDAM_format:2333
+- EDAM_data:0006
+tabular:
+- EDAM_format:3475
+- EDAM_data:0006
+taxonomy:
+- EDAM_format:3475
+- EDAM_data:0006
+tiff:
+- EDAM_format:3547
+- EDAM_data:2968
+toolshed.gz:
+- EDAM_format:2333
+- EDAM_data:0006
+twobit:
+- EDAM_format:3009
+- EDAM_data:0848
+- EDAM_data:0006
+txt:
+- EDAM_format:2330
+- EDAM_data:0006
+vcf:
+- EDAM_format:3016
+- EDAM_data:3498
+- EDAM_data:0006
+vcf_bgzip:
+- EDAM_format:2333
+- EDAM_data:0006
+velvet:
+- EDAM_format:2331
+- EDAM_data:2048
+wig:
+- EDAM_format:3005
+- EDAM_data:3002
+- EDAM_data:0006
+xbm:
+- EDAM_format:3547
+- EDAM_data:2968
+xgmml:
+- EDAM_format:2332
+- EDAM_data:0006
+xls:
+- EDAM_format:3475
+- EDAM_data:0006
+xlsx:
+- EDAM_format:2333
+- EDAM_data:0006
+xml:
+- EDAM_format:2332
+- EDAM_data:0006
+xpm:
+- EDAM_format:3547
+- EDAM_data:2968
