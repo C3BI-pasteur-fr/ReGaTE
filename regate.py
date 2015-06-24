@@ -366,16 +366,14 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     gi = GalaxyInstance(args.galaxy_url, key=args.api_key)
-
+    gi.verify = False
     tools = gi.tools.get_tools()
 
     tools_meta_data = []
     new_dict = {}
     json_ext = '.json'
-
     edam_dict = build_edam_dict(args.edam_file)
-
-    for i in tools[0:20]:
+    for i in tools:
         try:
             # improve this part, important to be able to get all tool from any toolshed
             if not i['id'].find("galaxy.web.pasteur.fr") or not i['id'].find("testtoolshed.g2.bx.psu.edu") or not i['id'].find("toolshed.g2.bx.psu.edu"):
