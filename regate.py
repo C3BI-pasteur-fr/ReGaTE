@@ -297,13 +297,12 @@ def build_fonction_dict(tool_meta_data, edam_dict):
 
     for output in tool_meta_data[u'outputs']:
         outputDict = {}
-        print output[u'format']
         uri = find_edam_data(output[u'format'], edam_dict)
-        print uri
+        
         outputDict[u'dataType'] = {u'uri': uri, u'term': ''}
         uri = find_edam_format(output[u'format'], edam_dict)
         outputDict[u'dataFormat'] = {u'uri': uri, u'term': ''}
-        outputDict[u'dataHandle'] = output[u'format']
+        outputDict[u'dataHandle'] = output[u'label']
         outputs.append(outputDict)
 
     if inputs.get("input_fix") is None:
@@ -374,10 +373,8 @@ if __name__ == "__main__":
     tools_meta_data = []
     new_dict = {}
     json_ext = '.json'
-
     edam_dict = build_edam_dict(args.edam_file)
-
-    for i in tools[0:20]:
+    for i in tools:
         try:
             # improve this part, important to be able to get all tool from any toolshed
             if not i['id'].find("galaxy.web.pasteur.fr") or not i['id'].find("testtoolshed.g2.bx.psu.edu") or not i['id'].find("toolshed.g2.bx.psu.edu"):

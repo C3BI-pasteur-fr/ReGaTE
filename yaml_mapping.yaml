@@ -7,8 +7,8 @@ Roadmaps:
 Sequences:
 - EDAM_format:1929
 - EDAM_data:0863
-- EDAM_data:0849
 - EDAM_data:0006
+- EDAM_data:0849
 ab1:
 - EDAM_format:2333
 - EDAM_data:0006
@@ -126,8 +126,8 @@ cpgreport:
 csfasta:
 - EDAM_format:1929
 - EDAM_data:0863
-- EDAM_data:0849
 - EDAM_data:0006
+- EDAM_data:0849
 csv:
 - EDAM_format:3475
 - EDAM_data:0006
@@ -212,8 +212,8 @@ excel:
 fasta:
 - EDAM_format:1929
 - EDAM_data:0863
-- EDAM_data:0849
 - EDAM_data:0006
+- EDAM_data:0849
 fastq:
 - EDAM_format:1930
 - EDAM_data:0924
