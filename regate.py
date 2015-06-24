@@ -295,13 +295,12 @@ def build_fonction_dict(tool_meta_data, edam_dict):
 
     for output in tool_meta_data[u'outputs']:
         outputDict = {}
-        print output[u'format']
         uri = find_edam_data(output[u'format'], edam_dict)
-        print uri
+        
         outputDict[u'dataType'] = {u'uri': uri, u'term': ''}
         uri = find_edam_format(output[u'format'], edam_dict)
         outputDict[u'dataFormat'] = {u'uri': uri, u'term': ''}
-        outputDict[u'dataHandle'] = output[u'format']
+        outputDict[u'dataHandle'] = output[u'label']
         outputs.append(outputDict)
 
     if inputs.get("input_fix") is None:
