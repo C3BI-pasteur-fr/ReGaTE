@@ -216,24 +216,24 @@ fasta:
 - EDAM_data:0006
 fastq:
 - EDAM_format:1930
-- EDAM_data:0006
 - EDAM_data:0924
+- EDAM_data:0006
 fastqcssanger:
 - EDAM_format:1930
-- EDAM_data:0006
 - EDAM_data:0924
+- EDAM_data:0006
 fastqillumina:
 - EDAM_format:1931
-- EDAM_data:0006
 - EDAM_data:0924
+- EDAM_data:0006
 fastqsanger:
 - EDAM_format:1932
-- EDAM_data:0006
 - EDAM_data:0924
+- EDAM_data:0006
 fastqsolexa:
 - EDAM_format:1933
-- EDAM_data:0006
 - EDAM_data:0924
+- EDAM_data:0006
 feattable:
 - EDAM_format:2330
 - EDAM_data:0006
@@ -301,12 +301,12 @@ genetrack:
 - EDAM_data:3002
 gff:
 - EDAM_format:2305
-- EDAM_data:1255
 - EDAM_data:0006
+- EDAM_data:1255
 gff3:
 - EDAM_format:1975
-- EDAM_data:1255
 - EDAM_data:0006
+- EDAM_data:1255
 gg:
 - EDAM_format:3475
 - EDAM_data:0006
@@ -318,8 +318,8 @@ gmaj.zip:
 - EDAM_data:2968
 gtf:
 - EDAM_format:2306
-- EDAM_data:1255
 - EDAM_data:0006
+- EDAM_data:1255
 h5:
 - EDAM_format:2333
 - EDAM_data:0006
@@ -448,8 +448,8 @@ newcpgseek:
 - EDAM_data:0006
 nex:
 - EDAM_format:1912
-- EDAM_data:0006
 - EDAM_data:0872
+- EDAM_data:0006
 nexus:
 - EDAM_format:2330
 - EDAM_data:0006
@@ -458,15 +458,15 @@ nexusnon:
 - EDAM_data:0006
 nhx:
 - EDAM_format:1910
-- EDAM_data:0006
 - EDAM_data:0872
+- EDAM_data:0006
 noreturn:
 - EDAM_format:2330
 - EDAM_data:0006
 obo:
 - EDAM_format:2549
-- EDAM_data:0006
 - EDAM_data:0582
+- EDAM_data:0006
 owl:
 - EDAM_format:3262
 - EDAM_data:0582

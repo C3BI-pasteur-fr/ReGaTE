@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 Created on Oct. 23, 2014
 
@@ -366,7 +368,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     gi = GalaxyInstance(args.galaxy_url, key=args.api_key)
-
+    gi.verify = False
     tools = gi.tools.get_tools()
 
     tools_meta_data = []
