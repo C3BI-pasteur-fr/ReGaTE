@@ -38,5 +38,5 @@ remag.py --galaxy_url a_galaxy_url --api_key the_galaxy_api_key --output_yaml my
 Execute remag with a tsv mapping file :
 remag.py --mapping_file mapping --output_yaml myyaml.yaml --edam_file EDAM_X.owl
 
-Execute remag with a datatype_conf with edam_type :
-remag.py --datatype_conf --output_yaml myyaml.yaml --edam_file EDAM_X.owl 
+It's also possible to execute remag with a datatype_conf with edam_type attribut :
+remag.py --datatype_conf yourdatatype --output_yaml myyaml.yaml --edam_file EDAM_X.owl 
