@@ -188,7 +188,7 @@ def find_edam_format(format_name, edam_dict):
     else:
         uri = "no uri"
         return uri
-    
+
 def find_edam_data(format_name, edam_dict):
     if format_name in edam_dict:
         list_uri = []
@@ -203,7 +203,7 @@ def find_edam_data(format_name, edam_dict):
     else:
         uri = "no uri"
         return uri
-    
+
 def build_input_for_json(list_inputs, edam_dict):
     liste = []
     #inputs = {}
@@ -218,7 +218,7 @@ def build_input_for_json(list_inputs, edam_dict):
                 except KeyError, e:
                     print e, "error 1"
                     formatList = ["AnyFormat"]
-                    
+
                 inputDict[u'dataType'] = []
                 list_format = []
                 for format in formatList:
@@ -298,7 +298,7 @@ def build_fonction_dict(tool_meta_data, edam_dict):
     for output in tool_meta_data[u'outputs']:
         outputDict = {}
         uri = find_edam_data(output[u'format'], edam_dict)
-        
+
         outputDict[u'dataType'] = {u'uri': uri, u'term': ''}
         uri = find_edam_format(output[u'format'], edam_dict)
         outputDict[u'dataFormat'] = {u'uri': uri, u'term': ''}
@@ -377,7 +377,7 @@ if __name__ == "__main__":
     for i in tools:
         try:
             # improve this part, important to be able to get all tool from any toolshed
-            if not i['id'].find("galaxy.web.pasteur.fr") or not i['id'].find("testtoolshed.g2.bx.psu.edu") or not i['id'].find("toolshed.g2.bx.psu.edu"):
+            if not i['id'].find("galaxy.web.pasteur.fr") or not i['id'].find("toolshed"):
                 tool_metadata = gi.tools.show_tool(tool_id=i['id'], io_details=True, link_details=True)
                 #pprint.pprint(tool_metadata)
                 tools_meta_data.append(tool_metadata)
