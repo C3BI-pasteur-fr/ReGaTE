@@ -375,7 +375,7 @@ if __name__ == "__main__":
     for i in tools:
         try:
             # improve this part, important to be able to get all tool from any toolshed
-            if not i['id'].find("galaxy.web.pasteur.fr") or not i['id'].find("ttoolshed"):
+            if not i['id'].find("galaxy.web.pasteur.fr") or not i['id'].find("toolshed"):
                 tool_metadata = gi.tools.show_tool(tool_id=i['id'], io_details=True, link_details=True)
                 #pprint.pprint(tool_metadata)
                 tools_meta_data.append(tool_metadata)
