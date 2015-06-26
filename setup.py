@@ -5,12 +5,6 @@ from distutils.core import setup
 
 readme = open('README.md').read()
 
-requirements = [
-    'bioblend',
-    'PyYAML',
-    'rdflib'
-    
-]
 
 setup(
     name='regate',
@@ -24,5 +18,7 @@ setup(
         'regate.py',
         'remag.py'
     ],
-    data_files=[('yaml', ['yaml_mapping.yaml'])]
+    script_data={'yaml': ['yaml_mapping.yaml']},
+    license="AFL"
+    
 )
