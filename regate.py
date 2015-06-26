@@ -118,7 +118,7 @@ def build_metadata_one(tool_meta_data, url):
     gen_dict[u'docs'] = []
     gen_dict[u'publications'] = []
     gen_dict[u'homepage'] = homepage
-    gen_dict[u'accessibility'] = "private"
+   # gen_dict[u'accessibility'] = "private"
 
     return gen_dict
 
@@ -356,9 +356,7 @@ if __name__ == "__main__":
     parser.add_argument("--collection_name", help="collection name \
         matchine the galaxy url")
 
-    parser.add_argument("--edam_file", help="edam own file to create  \
-        the edam_dict")
-
+    parser.add_argument("--yaml_file", help="yaml file generated with remag.py")
     parser.add_argument('--login', help="registry login")
 
     if len(sys.argv) == 1:
@@ -377,7 +375,7 @@ if __name__ == "__main__":
     for i in tools:
         try:
             # improve this part, important to be able to get all tool from any toolshed
-            if not i['id'].find("galaxy.web.pasteur.fr") or not i['id'].find("toolshed"):
+            if not i['id'].find("galaxy.web.pasteur.fr") or not i['id'].find("ttoolshed"):
                 tool_metadata = gi.tools.show_tool(tool_id=i['id'], io_details=True, link_details=True)
                 #pprint.pprint(tool_metadata)
                 tools_meta_data.append(tool_metadata)
