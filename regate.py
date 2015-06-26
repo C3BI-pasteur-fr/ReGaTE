@@ -340,6 +340,40 @@ def build_edam_dict(yaml_file):
             edam_dict[key] = temp_edam_dict[key]
     return edam_dict
 
+def auth(login):
+    password = getpass.getpass()
+    resp = requests.post('https://elixir-registry.cbs.dtu.dk/api/auth/login','{"username": "%s","password": "%s"}' % (login, password), headers={'Accept': 'application/json', 'Content-type': 'application/json'}).text
+    return json.loads(resp)['token']
+
+def pushtoelix(login, tool_dir):
+    print "authenticating..."
+    token = auth(login)
+    print "authentication ok"
+    ok_cnt = 0
+    ko_cnt = 0
+    print "attempting to delete all registered services..."
+    resp = requests.delete('https://elixir-registry.cbs.dtu.dk/api/tool/%s' % login, headers={'Accept':'application/json', 'Content-type':'application/json', 'Authorization': 'Token %s' % token})
+    print resp
+    print resp.headers
+    print resp.status_code
+    pprint.pprint(resp)
+
+    print "loading json"
+    print os.getcwd()
+    path = os.path.join(os.getcwd(), tool_dir)
+    for file in os.listdir(tool_dir):
+        with open(os.path.join(path, file), 'r') as json_file:
+            json_data = json.load(json_file)
+            resp = requests.post('https://elixir-registry.cbs.dtu.dk/api/tool', json.dumps(json_data), headers={'Accept':'application/json', 'Content-type':'application/json', 'Authorization': 'Token %s' % token})
+            if resp.status_code == 201:
+                print "%s ok" % file
+                ok_cnt += 1
+            else:
+                print "%s ko, error: %s" % (file, resp.text)
+                ko_cnt += 1
+    print "afterFor"
+    print "import finished, ok=%s, ko=%s" % (ok_cnt, ko_cnt)    
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Galaxy instance tool\
@@ -351,12 +385,14 @@ if __name__ == "__main__":
     parser.add_argument("--api_key", help="galaxy user api key")
 
     parser.add_argument("--tool_dir", help="directory to store the tool\
-        json (needs to be created before running the script")
+        json", required=True)
 
     parser.add_argument("--collection_name", help="collection name \
         matchine the galaxy url")
 
     parser.add_argument("--yaml_file", help="yaml file generated with remag.py")
+    parser.add_argument("--pushtoelixir", action='store_true', help="import all JSON to ELIXIR bioregistry")
+    parser.add_argument("--onlypush", action='store_true', help="import all JSON to ELIXIR bioregistry of an already exist specified directory")
     parser.add_argument('--login', help="registry login")
 
     if len(sys.argv) == 1:
@@ -364,42 +400,54 @@ if __name__ == "__main__":
         sys.exit(1)
 
     args = parser.parse_args()
-    gi = GalaxyInstance(args.galaxy_url, key=args.api_key)
-    gi.verify = False
-    tools = gi.tools.get_tools()
+    
+    if args.pushtoelixir == True:        
+        if not args.login:
+            raise argparse.ArgumentError(args.login, "error: with pushtoelixir argument login elixir registry argument is required")        
+    
+    if args.onlypush == False:
+        gi = GalaxyInstance(args.galaxy_url, key=args.api_key)
+        gi.verify = False
+        tools = gi.tools.get_tools()
 
-    tools_meta_data = []
-    new_dict = {}
-    json_ext = '.json'
-    edam_dict = build_edam_dict(args.yaml_file)
-    for i in tools:
-        try:
+        tools_meta_data = []
+        new_dict = {}
+        json_ext = '.json'
+        edam_dict = build_edam_dict(args.yaml_file)
+        for i in tools:
+            try:
             # improve this part, important to be able to get all tool from any toolshed
-            if not i['id'].find("galaxy.web.pasteur.fr") or not i['id'].find("toolshed"):
-                tool_metadata = gi.tools.show_tool(tool_id=i['id'], io_details=True, link_details=True)
+                if not i['id'].find("galaxy.web.pasteur.fr") or not i['id'].find("toolshed"):
+                    tool_metadata = gi.tools.show_tool(tool_id=i['id'], io_details=True, link_details=True)
                 #pprint.pprint(tool_metadata)
                 tools_meta_data.append(tool_metadata)
           #  else:
            #     print i['id']
-        except ConnectionError:
-            print "ConnectionError"
-            pass
+            except ConnectionError:
+                print "ConnectionError"
+                pass
 
-    for tool in tools_meta_data:
-        tool_name = build_tool_name(tool[u'id'])
-        try:
+        for tool in tools_meta_data:
+            tool_name = build_tool_name(tool[u'id'])
+            try:
 
-            function = build_fonction_dict(tool, edam_dict)
-            with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + json_ext), 'w') as tool_file:
-                general_dict = build_metadata_one(tool, args.galaxy_url)
-                general_dict[u"function"] = function
-                general_dict[u"name"] = get_tool_name(tool[u'id'])
-                json.dump(general_dict, tool_file, indent=4)
+                function = build_fonction_dict(tool, edam_dict)
+                with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + json_ext), 'w') as tool_file:
+                    general_dict = build_metadata_one(tool, args.galaxy_url)
+                    general_dict[u"function"] = function
+                    general_dict[u"name"] = get_tool_name(tool[u'id'])
+                    json.dump(general_dict, tool_file, indent=4)
 
-        except IOError:
-            os.mkdir(os.path.join(os.getcwd(),args.tool_dir))
-            with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + json_ext), 'w') as tool_file:
-                general_dict = build_metadata_one(tool, args.galaxy_url)
-                general_dict[u"function"] = function
-                general_dict[u"name"] = get_tool_name(tool[u'id'])
-                json.dump(general_dict, tool_file, indent=4)
+            except IOError:
+                os.mkdir(os.path.join(os.getcwd(),args.tool_dir))
+                with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + json_ext), 'w') as tool_file:
+                    general_dict = build_metadata_one(tool, args.galaxy_url)
+                    general_dict[u"function"] = function
+                    general_dict[u"name"] = get_tool_name(tool[u'id'])
+                    json.dump(general_dict, tool_file, indent=4)
+    
+    if args.pushtoelixir == True:
+        pushtoelix(args.login, args.tool_dir)
+
+
+        
