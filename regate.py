@@ -328,10 +328,10 @@ def build_fonction_dict(tool_meta_data, edam_dict):
 def extract_edam_from_galaxy(mapping_edam = {}):
     return mapping_edam
 
-def build_edam_dict(edam_file):
+def build_edam_dict(yaml_file):
     import yaml
     edam_dict = extract_edam_from_galaxy()
-    with open(edam_file, "r") as file_edam:
+    with open(yaml_file, "r") as file_edam:
         temp_edam_dict = yaml.load(file_edam)
     for key, value in temp_edam_dict.iteritems():
         if key in edam_dict:
@@ -371,7 +371,7 @@ if __name__ == "__main__":
     tools_meta_data = []
     new_dict = {}
     json_ext = '.json'
-    edam_dict = build_edam_dict(args.edam_file)
+    edam_dict = build_edam_dict(args.yaml_file)
     for i in tools:
         try:
             # improve this part, important to be able to get all tool from any toolshed
