@@ -118,7 +118,7 @@ def build_metadata_one(tool_meta_data, url):
     gen_dict[u'docs'] = []
     gen_dict[u'publications'] = []
     gen_dict[u'homepage'] = homepage
-    gen_dict[u'accessibility'] = "private"
+   # gen_dict[u'accessibility'] = "private"
 
     return gen_dict
 
@@ -188,7 +188,7 @@ def find_edam_format(format_name, edam_dict):
     else:
         uri = "no uri"
         return uri
-    
+
 def find_edam_data(format_name, edam_dict):
     if format_name in edam_dict:
         list_uri = []
@@ -203,7 +203,7 @@ def find_edam_data(format_name, edam_dict):
     else:
         uri = "no uri"
         return uri
-    
+
 def build_input_for_json(list_inputs, edam_dict):
     liste = []
     #inputs = {}
@@ -218,7 +218,7 @@ def build_input_for_json(list_inputs, edam_dict):
                 except KeyError, e:
                     print e, "error 1"
                     formatList = ["AnyFormat"]
-                    
+
                 inputDict[u'dataType'] = []
                 list_format = []
                 for format in formatList:
@@ -298,7 +298,7 @@ def build_fonction_dict(tool_meta_data, edam_dict):
     for output in tool_meta_data[u'outputs']:
         outputDict = {}
         uri = find_edam_data(output[u'format'], edam_dict)
-        
+
         outputDict[u'dataType'] = {u'uri': uri, u'term': ''}
         uri = find_edam_format(output[u'format'], edam_dict)
         outputDict[u'dataFormat'] = {u'uri': uri, u'term': ''}
@@ -328,10 +328,10 @@ def build_fonction_dict(tool_meta_data, edam_dict):
 def extract_edam_from_galaxy(mapping_edam = {}):
     return mapping_edam
 
-def build_edam_dict(edam_file):
+def build_edam_dict(yaml_file):
     import yaml
     edam_dict = extract_edam_from_galaxy()
-    with open(edam_file, "r") as file_edam:
+    with open(yaml_file, "r") as file_edam:
         temp_edam_dict = yaml.load(file_edam)
     for key, value in temp_edam_dict.iteritems():
         if key in edam_dict:
@@ -356,9 +356,7 @@ if __name__ == "__main__":
     parser.add_argument("--collection_name", help="collection name \
         matchine the galaxy url")
 
-    parser.add_argument("--edam_file", help="edam own file to create  \
-        the edam_dict")
-
+    parser.add_argument("--yaml_file", help="yaml file generated with remag.py")
     parser.add_argument('--login', help="registry login")
 
     if len(sys.argv) == 1:
@@ -373,11 +371,11 @@ if __name__ == "__main__":
     tools_meta_data = []
     new_dict = {}
     json_ext = '.json'
-    edam_dict = build_edam_dict(args.edam_file)
+    edam_dict = build_edam_dict(args.yaml_file)
     for i in tools:
         try:
             # improve this part, important to be able to get all tool from any toolshed
-            if not i['id'].find("galaxy.web.pasteur.fr") or not i['id'].find("testtoolshed.g2.bx.psu.edu") or not i['id'].find("toolshed.g2.bx.psu.edu"):
+            if not i['id'].find("galaxy.web.pasteur.fr") or not i['id'].find("ttoolshed"):
                 tool_metadata = gi.tools.show_tool(tool_id=i['id'], io_details=True, link_details=True)
                 #pprint.pprint(tool_metadata)
                 tools_meta_data.append(tool_metadata)
