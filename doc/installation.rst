@@ -16,8 +16,7 @@ ReGaTE dependencies
 ReGaTE has three dependencies
  - Python modules *PyYAML* (>=3.11)
  - Python modules *rdflib* (>=4.2.0)
- - And for the moment a particular version of bioblend
- (https://github.com/fmareuil/bioblend.git)
+ - And for the moment a particular version of bioblend (https://github.com/fmareuil/bioblend.git)
  
 This dependencies will be installed during the installation procedure.
  

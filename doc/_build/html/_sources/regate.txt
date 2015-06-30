@@ -17,7 +17,7 @@ In order to run ReGaTE you need an account on a galaxy workbench with an API Key
 
 * Type:
 
-  "``regate.py --galaxy_url your_galaxy_url --api_key your_galaxy_api_key --edam_file src/regate/yaml_mapping.yaml --tool_dir jsons_output``"
+  "``regate.py --galaxy_url your_galaxy_url --api_key your_galaxy_api_key --edam_file src/regate/data/yaml_mapping.yaml --tool_dir jsons_output``"
   
   to obtain a list of json files which are the description of each tool installed in your galaxy from a toolshed.
   
