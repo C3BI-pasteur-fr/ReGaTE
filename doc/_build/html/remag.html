@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ReMaG Guide &mdash; ReGaTE 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="ReGaTE 0.1 documentation" href="index.html" />
+    <link rel="next" title="ReGaTE Guide" href="regate.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="remag-guide">
+<span id="id1"></span><h1>ReMaG Guide<a class="headerlink" href="#remag-guide" title="Permalink to this headline">¶</a></h1>
+<p>In order to run ReMaG you need a description file of the EDAM ontology in the owl format <a class="reference external" href="https://github.com/edamontology/edamontology.git">https://github.com/edamontology/edamontology.git</a>, EDAM_X.owl file.</p>
+<ul>
+<li><p class="first">Type:</p>
+<p>&#8220;<code class="docutils literal"><span class="pre">remag.py</span> <span class="pre">-h</span></code>&#8221;
+to see all options available.</p>
+</li>
+<li><p class="first">The execution of remag give an yaml file, a mapping between galaxy extension and edam format/data, to obtain it:</p>
+</li>
+</ul>
+<p>&#8211; With a mapping tsv file (first column: galaxy extension, second column the edam format: fomat_XXX, third column: description), type:</p>
+<blockquote>
+<div>&#8220;<code class="docutils literal"><span class="pre">remag.py</span> <span class="pre">--mapping_file</span> <span class="pre">mapping</span> <span class="pre">--output_yaml</span> <span class="pre">myyaml.yaml</span> <span class="pre">--edam_file</span> <span class="pre">EDAM_X.owl</span></code>&#8220;</div></blockquote>
+<p>&#8211; With a datatype_conf with edam_type attribut, type:</p>
+<blockquote>
+<div>&#8220;<code class="docutils literal"><span class="pre">remag.py</span> <span class="pre">--datatype_conf</span> <span class="pre">yourdatatype</span> <span class="pre">--output_yaml</span> <span class="pre">myyaml.yaml</span> <span class="pre">--edam_file</span> <span class="pre">EDAM_X.owl</span></code>&#8220;</div></blockquote>
+<p>&#8211; With a recent galaxy (<a class="reference external" href="https://github.com/galaxyproject/galaxy.git">https://github.com/galaxyproject/galaxy.git</a>, for the moment the dev branch is necessary to have the edam format, you need an account and an api key on this galaxy), type:</p>
+<blockquote>
+<div>&#8220;<code class="docutils literal"><span class="pre">remag.py</span> <span class="pre">--galaxy_url</span> <span class="pre">a_galaxy_url</span> <span class="pre">--api_key</span> <span class="pre">the_galaxy_api_key</span> <span class="pre">--output_yaml</span> <span class="pre">myyaml.yaml</span> <span class="pre">--edam_file</span> <span class="pre">EDAM_X.owl</span></code>&#8220;</div></blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="installation.html" title="previous chapter">Installation</a></li>
+      <li>Next: <a href="regate.html" title="next chapter">ReGaTE Guide</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/remag.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Olivia Doppelt-Azeroual, Fabien Mareuil.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/remag.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
