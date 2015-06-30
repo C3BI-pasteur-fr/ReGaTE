@@ -15,10 +15,11 @@ setup(
     author_email='olivia.doppelt@pasteur.fr',
     url='https://github.com/bioinfo-center-pasteur-fr/ReGaTE.git',
     scripts=[
-        'regate.py',
-        'remag.py'
+        'bin/regate.py',
+        'bin/remag.py',
+        'bin/import2er'
     ],
-    script_data={'yaml': ['yaml_mapping.yaml']},
+    script_data={'data': ['yaml_mapping.yaml']},
     license="AFL"
     
 )
