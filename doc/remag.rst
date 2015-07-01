@@ -1,12 +1,16 @@
-.. ReGaTE documentation master file, created by
-   sphinx-quickstart on Mon Jun 29 16:39:40 2015.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. ReGaTE Registration of Galaxy Tools in Elixir
+ Authors: Olivia Doppelt-Azeroual, Fabien Mareuil
+ ReGate is distributed under the terms of the GNU General Public License (GPLv2). 
+ See the COPYING file for details.
+ ReGaTE documentation master file, created by sphinx-quickstart
    
 .. _remag guide:
 
+
+***********
 ReMaG Guide
-============
+***********
+
 
 In order to run ReMaG you need a description file of the EDAM ontology in the owl format https://github.com/edamontology/edamontology.git, EDAM_X.owl file.
 
@@ -31,3 +35,4 @@ In order to run ReMaG you need a description file of the EDAM ontology in the ow
   "``remag.py --galaxy_url a_galaxy_url --api_key the_galaxy_api_key --output_yaml myyaml.yaml --edam_file EDAM_X.owl``"
   
  
+  

@@ -1,6 +1,6 @@
 .. ReGaTE Registration of Galaxy Tools in Elixir
  Authors: Olivia Doppelt-Azeroual, Fabien Mareuil
- ReGate is distributed under the terms of the GNU General Public License (GPLv3). 
+ ReGate is distributed under the terms of the GNU General Public License (GPLv2). 
  See the COPYING file for details.
  ReGaTE documentation master file, created by sphinx-quickstart
 
@@ -45,6 +45,15 @@ Regate documentation
    
    regate
    
+
+Import documentation
+====================
+
+.. toctree::
+   :maxdepth: 2
+   
+   import
+
 
 Indices and tables
 ==================

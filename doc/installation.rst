@@ -1,7 +1,8 @@
-.. ReGaTE documentation master file, created by
-   sphinx-quickstart on Mon Jun 29 16:39:40 2015.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. ReGaTE Registration of Galaxy Tools in Elixir
+ Authors: Olivia Doppelt-Azeroual, Fabien Mareuil
+ ReGate is distributed under the terms of the GNU General Public License (GPLv2). 
+ See the COPYING file for details.
+ ReGaTE documentation master file, created by sphinx-quickstart
 
 .. _installation:
 
