@@ -4,7 +4,7 @@
  See the COPYING file for details.
  ReGaTE documentation master file, created by sphinx-quickstart
  
-.. _import:
+.. _import section:
 
 
 ***************************

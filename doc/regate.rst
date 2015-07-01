@@ -27,4 +27,4 @@ In order to run ReGaTE you need an account on a galaxy workbench with an API Key
   
   yaml_mapping.yaml is a mapping file between the EDAM ontology and the galaxy extension in a yaml format. You can generate a new version of this file with remag.py see :ref:`remag options section <remag guide>`.
   
-**To import json in the Elixir Registry see :ref:`import section <import>`.**
+**To import json in the Elixir Registry see** :ref:`import section <import section>`.
