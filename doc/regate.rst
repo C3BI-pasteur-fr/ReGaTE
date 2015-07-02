@@ -12,12 +12,12 @@ ReGaTE Guide
 ************
 
 
-In order to run ReGaTE you need an account on a galaxy workbench with an API Key, see galaxy documentation if necessary (https://wiki.galaxyproject.org/Learn/API).
+In order to run ReGaTE you need an account on a galaxy workbench with an API Key (see galaxy documentation if necessary https://wiki.galaxyproject.org/Learn/API).
 
 * Type:
 
   "``regate.py -h``"
-  to see all options available.
+  to see available options.
 
 * Type:
 

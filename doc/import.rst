@@ -12,12 +12,12 @@ Elixir Registry Importation
 ***************************
 
 
-Currently there is two way to import json:
+Currently there are two ways to import json:
 
 * with the command import2er.py
 
   "``import2er.py -h``"
-  to see all options available.
+  to see available optionse.
   
   "``import2er.py --login your_registry_login --json_dir directory_with_json_file``"
   

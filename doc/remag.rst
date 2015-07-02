@@ -17,9 +17,9 @@ In order to run ReMaG you need a description file of the EDAM ontology in the ow
 * Type:
 
   "``remag.py -h``"
-  to see all options available.
+  to see available options.
   
-* The execution of remag give an yaml file, a mapping between galaxy extension and edam format/data, to obtain it:
+* The execution of remag creates an yaml file, which is the result of a mapping between galaxy extension and edam format/data. To obtain it:
 
 -- With a mapping tsv file (first column: galaxy extension, second column the edam format: fomat_XXX, third column: description), type:
 
