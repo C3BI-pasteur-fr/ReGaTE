@@ -17,7 +17,7 @@ Currently there are two ways to import json:
 * with the command import2er.py
 
   "``import2er.py -h``"
-  to see available optionse.
+  to see available options.
   
   "``import2er.py --login your_registry_login --json_dir directory_with_json_file``"
   
