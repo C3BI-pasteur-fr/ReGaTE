@@ -87,36 +87,32 @@ def build_metadata_one(tool_meta_data, url):
                           "usesHomepage": url,
                           "usesVersion": gen_dict[u'version']
         }]
-    gen_dict[u'collection'] = ressourceName
+    gen_dict[u'collection'] = [ressourceName]
     gen_dict[u'sourceRegistry'] = get_source_registry(tool_meta_data[u'id'])
-    gen_dict[u'resourceType'] = [{"term": "Tool (analysis)", "uri": "http://www.cbs.dtu.dk/ontology/resource_type/7"}]
-    gen_dict[u'maturity'] = [{u'uri': "",
-                            u'term': 'production'
+    gen_dict[u'resourceType'] = [{"term": "Tool (analysis)"}]
+    gen_dict[u'maturity'] = [{
+                            u'term': 'Established'
                             }]
-    gen_dict[u'platform'] = [{u'uri': "",
-                              u'term': 'Linux'
-                              }]
+    gen_dict[u'platform'] = [{u'term': 'Linux'}]
     gen_dict[u'interface'] = [
         {u'interfaceType': {
             u'term': "WEB UI",
             u'uri': "http://www.cbs.dtu.dk/ontology/interface_type/3"
             }}
         ]
-    gen_dict[u'contact'] = {
+    gen_dict[u'contact'] = [{
         u'contactEmail': 'galaxy@pasteur.fr',
-        u'contactURL': '',
         u'contactName': 'Institut Pasteur galaxy team',
-        u'contactRole': 'Computer Biologist'
-        }
+        }]
     # these fields need to be filled with MODULE ressource at Pasteur
-    gen_dict[u'language'] = []
-    gen_dict[u'topic'] = [{u'term': "", u'uri':"http://edamontology.org/topic_0003"}]
-    gen_dict[u'tag'] = []
-    gen_dict[u'license'] = []
-    gen_dict[u'cost'] = []
-    gen_dict[u'credits'] = []
-    gen_dict[u'docs'] = []
-    gen_dict[u'publications'] = []
+   # gen_dict[u'language'] = []
+    gen_dict[u'topic'] = [{u'uri':"http://edamontology.org/topic_0003"}]
+   # gen_dict[u'tag'] = []
+  #  gen_dict[u'license'] = []
+   # gen_dict[u'cost'] = []
+  #  gen_dict[u'credits'] = []
+  #  gen_dict[u'docs'] = []
+  #  gen_dict[u'publications'] = []
     gen_dict[u'homepage'] = homepage
    # gen_dict[u'accessibility'] = "private"
 
@@ -173,7 +169,7 @@ def oldfind_edam_term(edam_name, edam_dict, cond):
         if (re.match(value[0], edam_name, re.IGNORECASE)) is not None and (re.match(r""+cond, k)) is None:
             return(k, value[1])
         else:
-            edam = edam_name, "no uri"
+            edam = edam_name, "None"
     return edam
 
 def edam_to_uri(edam):
@@ -186,23 +182,25 @@ def find_edam_format(format_name, edam_dict):
         uri = edam_to_uri(edam_dict[format_name][0])
         return uri
     else:
-        uri = "no uri"
+        uri = ""
         return uri
 
 def find_edam_data(format_name, edam_dict):
     if format_name in edam_dict:
-        list_uri = []
+        list_term = []
         temp_list = edam_dict[format_name][1:]
         if "EDAM_data:0006" in temp_list and len(temp_list) > 1:
             temp_list.remove("EDAM_data:0006")
         for edam_data in temp_list:
             if len(temp_list) == 1:
-                uri = edam_to_uri(edam_data)
-                list_uri.append(uri)
-        return ", ".join(list_uri)
+                term = edam_data
+                print term
+                list_term.append(term)
+        print list_term
+        return ", ".join(list_term)
     else:
-        uri = "no uri"
-        return uri
+        term = "None"
+        return term
 
 def build_input_for_json(list_inputs, edam_dict):
     liste = []
@@ -212,7 +210,6 @@ def build_input_for_json(list_inputs, edam_dict):
 
     for input in list_inputs:
                 inputDict = {}
-
                 try:
                     formatList = input[u'extensions']
                 except KeyError, e:
@@ -223,9 +220,11 @@ def build_input_for_json(list_inputs, edam_dict):
                 list_format = []
                 for format in formatList:
                     uri = find_edam_format(format, edam_dict)
-                    dict_format = {u'uri': uri, u'term': ''}
-                    uri = find_edam_data(format, edam_dict)
-                    inputDict[u'dataType'] = {u'uri': uri, u'term': ''}
+                    dict_format = {u'uri': uri}
+                    term = find_edam_data(format, edam_dict)
+                    if term == "":
+                        term = "None" #print "BBBBBBBB"
+                    inputDict[u'dataType'] = {u'term': term}
                     list_format.append(dict_format)
 
                 inputDict[u'dataFormat'] = list_format
@@ -297,18 +296,20 @@ def build_fonction_dict(tool_meta_data, edam_dict):
 
     for output in tool_meta_data[u'outputs']:
         outputDict = {}
-        uri = find_edam_data(output[u'format'], edam_dict)
-
-        outputDict[u'dataType'] = {u'uri': uri, u'term': ''}
+        term = find_edam_data(output[u'format'], edam_dict)
+        if term == "":
+            term = "None"
+        #print tool_meta_data['name'], term
+        outputDict[u'dataType'] = {u'term': term}
         uri = find_edam_format(output[u'format'], edam_dict)
-        outputDict[u'dataFormat'] = {u'uri': uri, u'term': ''}
-        outputDict[u'dataHandle'] = output[u'label']
+        outputDict[u'dataFormat'] = {u'uri': uri}
+       # outputDict[u'dataHandle'] = output[u'label']
         outputs.append(outputDict)
 
     if inputs.get("input_fix") is None:
         for input_case_name, item in inputs.items():
             func_dict = {}
-            func_dict[u'description'] = format_description(tool_meta_data[u'description'])
+            func_dict[u'functionDescription'] = format_description(tool_meta_data[u'description'])
             func_dict[u'functionName'] = [{"uri":"http://edamontology.org/operation_0004"}]
             func_dict[u'output'] = outputs
             func_dict[u'input'] = item
@@ -316,7 +317,7 @@ def build_fonction_dict(tool_meta_data, edam_dict):
             #func_dict[u'annot'] = input_case_name
             func_list.append(func_dict)
     else:
-        func_dict[u'description'] = format_description(tool_meta_data[u'description'])
+        func_dict[u'functionDescription'] = format_description(tool_meta_data[u'description'])
         func_dict[u'functionName'] = []
         func_dict[u'output'] = outputs
         func_dict[u'input'] = inputs[u"input_fix"]
@@ -372,7 +373,7 @@ def pushtoelix(login, tool_dir):
                 print "%s ko, error: %s" % (file, resp.text)
                 ko_cnt += 1
     print "afterFor"
-    print "import finished, ok=%s, ko=%s" % (ok_cnt, ko_cnt)    
+    print "import finished, ok=%s, ko=%s" % (ok_cnt, ko_cnt)
 
 if __name__ == "__main__":
 
@@ -400,11 +401,12 @@ if __name__ == "__main__":
         sys.exit(1)
 
     args = parser.parse_args()
-    
-    if args.pushtoelixir == True:        
+    print args
+
+    if args.pushtoelixir == True:
         if not args.login:
-            raise argparse.ArgumentError(args.login, "error: with pushtoelixir argument login elixir registry argument is required")        
-    
+            raise argparse.ArgumentError(args.login, "error: with pushtoelixir argument login elixir registry argument is required")
+
     if args.onlypush == False:
         gi = GalaxyInstance(args.galaxy_url, key=args.api_key)
         gi.verify = False
@@ -420,7 +422,7 @@ if __name__ == "__main__":
                 if not i['id'].find("galaxy.web.pasteur.fr") or not i['id'].find("toolshed"):
                     tool_metadata = gi.tools.show_tool(tool_id=i['id'], io_details=True, link_details=True)
                 #pprint.pprint(tool_metadata)
-                tools_meta_data.append(tool_metadata)
+                    tools_meta_data.append(tool_metadata)
           #  else:
            #     print i['id']
             except ConnectionError:
@@ -445,9 +447,9 @@ if __name__ == "__main__":
                     general_dict[u"function"] = function
                     general_dict[u"name"] = get_tool_name(tool[u'id'])
                     json.dump(general_dict, tool_file, indent=4)
-    
+
     if args.pushtoelixir == True:
         pushtoelix(args.login, args.tool_dir)
 
 
-        
+
