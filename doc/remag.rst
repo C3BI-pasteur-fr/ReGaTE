@@ -12,7 +12,7 @@ ReMaG Guide
 ***********
 
 
-In order to run ReMaG you need a description file of the EDAM ontology in the owl format https://github.com/edamontology/edamontology.git, EDAM_X.owl file.
+In order to run ReMaG (Registry Mapping Galaxy) you need a description file of the EDAM ontology in the owl format https://github.com/edamontology/edamontology.git, EDAM_X.owl file.
 
 * Type:
 
