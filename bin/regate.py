@@ -18,6 +18,8 @@ import string
 import argparse
 import json
 import yaml
+import requests
+import getpass
 
 from bioblend.galaxy.client import ConnectionError
 from bioblend.galaxy import GalaxyInstance
@@ -28,7 +30,7 @@ def build_tool_name(tool_id):
     @tool_id: tool_id
     builds the tool_name regarding its toolshed id
    """
-    #print tool_id
+    # print tool_id
     id_list = string.split(tool_id, '/')
     return string.join(id_list[-2:], '_')
 
@@ -73,12 +75,12 @@ def build_metadata_one(tool_meta_data, url):
     """
 
     if url == "https://galaxyapi.web.pasteur.fr":
-        ressourceName = "Galaxy@pasteur"
+        ressourcename = "Galaxy@pasteur"
         homepage = "https://galaxy.web.pasteur.fr"
     else:
-        ressourceName = url
+        ressourcename = url
         homepage = url
-#    gen_dict = {k: tool_meta_data[k] for k in (u'version', u'description')}
+    #    gen_dict = {k: tool_meta_data[k] for k in (u'version', u'description')}
 
     gen_dict = {}
     gen_dict[u'version'] = tool_meta_data[u'version']
@@ -86,42 +88,42 @@ def build_metadata_one(tool_meta_data, url):
     gen_dict[u'uses'] = [{"usesName": tool_meta_data[u'id'],
                           "usesHomepage": url,
                           "usesVersion": gen_dict[u'version']
-        }]
-    gen_dict[u'collection'] = [ressourceName]
+                          }]
+    gen_dict[u'collection'] = [ressourcename]
     gen_dict[u'sourceRegistry'] = get_source_registry(tool_meta_data[u'id'])
     gen_dict[u'resourceType'] = [{"term": "Tool (analysis)"}]
     gen_dict[u'maturity'] = [{
-                            u'term': 'Established'
-                            }]
+        u'term': 'Established'
+    }]
     gen_dict[u'platform'] = [{u'term': 'Linux'}]
     gen_dict[u'interface'] = [
         {u'interfaceType': {
             u'term': "WEB UI",
             u'uri': "http://www.cbs.dtu.dk/ontology/interface_type/3"
-            }}
-        ]
+        }}
+    ]
     gen_dict[u'contact'] = [{
         u'contactEmail': 'galaxy@pasteur.fr',
         u'contactName': 'Institut Pasteur galaxy team',
-        }]
+    }]
     # these fields need to be filled with MODULE ressource at Pasteur
-   # gen_dict[u'language'] = []
-    gen_dict[u'topic'] = [{u'uri':"http://edamontology.org/topic_0003"}]
-   # gen_dict[u'tag'] = []
-  #  gen_dict[u'license'] = []
-   # gen_dict[u'cost'] = []
-  #  gen_dict[u'credits'] = []
-  #  gen_dict[u'docs'] = []
-  #  gen_dict[u'publications'] = []
+    # gen_dict[u'language'] = []
+    gen_dict[u'topic'] = [{u'uri': "http://edamontology.org/topic_0003"}]
+    # gen_dict[u'tag'] = []
+    #  gen_dict[u'license'] = []
+    # gen_dict[u'cost'] = []
+    #  gen_dict[u'credits'] = []
+    #  gen_dict[u'docs'] = []
+    #  gen_dict[u'publications'] = []
     gen_dict[u'homepage'] = homepage
-   # gen_dict[u'accessibility'] = "private"
+    # gen_dict[u'accessibility'] = "private"
 
     return gen_dict
 
 
-def build_case_inputs(case_dict, input):
+def build_case_inputs(case_dict, input_tool):
     dict_cases = {}
-    for inp in input[u'cases']:
+    for inp in input_tool[u'cases']:
 
         for elem in inp[u'inputs']:
             if elem[u'type'] == u'data':
@@ -130,14 +132,14 @@ def build_case_inputs(case_dict, input):
                 else:
                     dict_cases[inp[u'value']].append(elem)
 
-                # repeat in conditional
+                    # repeat in conditional
 
             if elem[u'type'] == u'repeat':
                 try:
                     cases = elem[u'inputs'][0][u'cases']
 
                     for case in cases:
-                        if case[u'inputs'] != []:
+                        if case[u'inputs']:
                             for case_input in case[u'inputs']:
                                 if case_input[u'type'] == u'data':
                                     if dict_cases.get(inp[u'value']) is None:
@@ -146,7 +148,7 @@ def build_case_inputs(case_dict, input):
                                         dict_cases[inp[u'value']].append(case_input)
 
                 except KeyError:
-#                    print "KeyError key == REPEAT"
+                    #                    print "KeyError key == REPEAT"
                     for el in elem[u'inputs']:
                         if el[u'type'] == u'data':
                             if dict_cases.get(inp[u'value']) is None:
@@ -154,28 +156,14 @@ def build_case_inputs(case_dict, input):
                             else:
                                 dict_cases[inp[u'value']].append(el)
 
-    case_dict.update({i: j for i, j in dict_cases.items() if len(j) != 0})
+    case_dict.update({key: value for key, value in dict_cases.items() if len(value) != 0})
 
-
-def oldfind_edam_term(edam_name, edam_dict, cond):
-    """
-    edam_name: term to find in the edam_dict
-    edam_dict: edam
-    cond: term to not include is found because of edam_name
-    """
-    edam = ""
-    for k, value in edam_dict.items():
-        #print value[0], edam_name
-        if (re.match(value[0], edam_name, re.IGNORECASE)) is not None and (re.match(r""+cond, k)) is None:
-            return(k, value[1])
-        else:
-            edam = edam_name, "None"
-    return edam
 
 def edam_to_uri(edam):
-    uri = re.split("_|:",edam)
+    uri = re.split("_|:", edam)
     uri = "http://edamontology.org/{}_{:0>4d}".format(uri[1], int(uri[2]))
     return uri
+
 
 def find_edam_format(format_name, edam_dict):
     if format_name in edam_dict:
@@ -184,6 +172,7 @@ def find_edam_format(format_name, edam_dict):
     else:
         uri = ""
         return uri
+
 
 def find_edam_data(format_name, edam_dict):
     if format_name in edam_dict:
@@ -194,66 +183,38 @@ def find_edam_data(format_name, edam_dict):
         for edam_data in temp_list:
             if len(temp_list) == 1:
                 term = edam_data
-                print term
                 list_term.append(term)
-        print list_term
         return ", ".join(list_term)
     else:
         term = "None"
         return term
 
+
 def build_input_for_json(list_inputs, edam_dict):
     liste = []
-    #inputs = {}
-    #try:
-    #    try:
-
-    for input in list_inputs:
-                inputDict = {}
-                try:
-                    formatList = input[u'extensions']
-                except KeyError, e:
-                    print e, "error 1"
-                    formatList = ["AnyFormat"]
-
-                inputDict[u'dataType'] = []
-                list_format = []
-                for format in formatList:
-                    uri = find_edam_format(format, edam_dict)
-                    dict_format = {u'uri': uri}
-                    term = find_edam_data(format, edam_dict)
-                    if term == "":
-                        term = "None" #print "BBBBBBBB"
-                    inputDict[u'dataType'] = {u'term': term}
-                    list_format.append(dict_format)
-
-                inputDict[u'dataFormat'] = list_format
-                inputDict[u'dataHandle'] = ", ".join(input[u'extensions'])
-                liste.append(inputDict)
-                #pprint.pprint(inputDict)
-
-    """
+    for input_tool in list_inputs:
+        inputdict = {}
+        try:
+            formatlist = input_tool[u'extensions']
         except KeyError, e:
-                print e, "error 2"
-                formatList = input[u'extensions']
-                for format in formatList:
-                    uri = find_edam_data(format, edam_dict)
-                    inputDict[u'dataType'].append({u'uri':uri, u'term': ''})
-                    uri = find_edam_format(format, edam_dict)
-                    inputDict[u'dataFormat'].append({u'uri': uri, u'term': ''})
+            print e, "error 1"
+            formatlist = ["AnyFormat"]
 
-                inputDict[u'dataHandle'] = ", ".join(input[u'extensions'])
-                liste.append(inputDict)
+        inputdict[u'dataType'] = []
+        list_format = []
+        for format_tool in formatlist:
+            uri = find_edam_format(format_tool, edam_dict)
+            dict_format = {u'uri': uri}
+            term = find_edam_data(format_tool, edam_dict)
+            if term == "":
+                term = "None"
+            inputdict[u'dataType'] = {u'term': term}
+            list_format.append(dict_format)
 
-    except KeyError, e:
-        print e, "error 3"
-        uri = find_edam_data(input[u'type'], edam_dict)
-        inputDict[u'dataType'] = {u'uri': uri, u'term': ''}
-        uri = find_edam_format(input[u'type'], edam_dict)
-        inputDict[u'dataFormat'] = [{u'uri': uri, u'term': ''}]
-        inputDict[u'dataHandle'] = ", ".join(input[u'extensions'])
-        liste.append(inputDict)
-    """
+        inputdict[u'dataFormat'] = list_format
+        inputdict[u'dataHandle'] = ", ".join(input_tool[u'extensions'])
+        liste.append(inputdict)
+
     return liste
 
 
@@ -270,67 +231,71 @@ def build_fonction_dict(tool_meta_data, edam_dict):
     outputs = []
     inputs_fix = []
     dict_cases = {}
-    inputs_case = {}
+    # inputs_case = {}
 
-    for input in tool_meta_data[u'inputs']:
-        if input[u'type'] == u'data':
-            inputs_fix.append(input)
+    for input_tool in tool_meta_data[u'inputs']:
+        if input_tool[u'type'] == u'data':
+            inputs_fix.append(input_tool)
         # repeat not in conditional
-        if input[u'type'] == u'repeat':
-            for rep in input[u'inputs']:
+        if input_tool[u'type'] == u'repeat':
+            for rep in input_tool[u'inputs']:
                 if rep[u'type'] == u'data':
                     inputs_fix.append(rep)
                 elif rep[u'type'] == "conditional":
                     build_case_inputs(dict_cases, rep)
-        if input[u'type'] == "conditional":
-            build_case_inputs(dict_cases, input)
+        if input_tool[u'type'] == "conditional":
+            build_case_inputs(dict_cases, input_tool)
 
-#__________________INPUT DICT _________________________
+            # __________________INPUT DICT _________________________
     if len(dict_cases) == 0:
         inputs["input_fix"] = build_input_for_json(inputs_fix, edam_dict)
     else:
         for key, case in dict_cases.iteritems():
             inputs[key] = build_input_for_json(case, edam_dict) + build_input_for_json(inputs_fix, edam_dict)
 
-#_____________OUTPUT DICT_______________________________________
+            # _____________OUTPUT DICT_______________________________________
 
     for output in tool_meta_data[u'outputs']:
-        outputDict = {}
+        outputdict = {}
         term = find_edam_data(output[u'format'], edam_dict)
         if term == "":
             term = "None"
-        #print tool_meta_data['name'], term
-        outputDict[u'dataType'] = {u'term': term}
+        # print tool_meta_data['name'], term
+        outputdict[u'dataType'] = {u'term': term}
         uri = find_edam_format(output[u'format'], edam_dict)
-        outputDict[u'dataFormat'] = {u'uri': uri}
-       # outputDict[u'dataHandle'] = output[u'label']
-        outputs.append(outputDict)
+        outputdict[u'dataFormat'] = {u'uri': uri}
+        # outputdict[u'dataHandle'] = output[u'label']
+        outputs.append(outputdict)
 
     if inputs.get("input_fix") is None:
         for input_case_name, item in inputs.items():
             func_dict = {}
             func_dict[u'functionDescription'] = format_description(tool_meta_data[u'description'])
-            func_dict[u'functionName'] = [{"uri":"http://edamontology.org/operation_0004"}]
+            func_dict[u'functionName'] = [{"uri": "http://edamontology.org/operation_0004"}]
             func_dict[u'output'] = outputs
-            func_dict[u'input'] = item
+            func_dict[u'input_tool'] = item
             func_dict[u'functionHandle'] = input_case_name
-            #func_dict[u'annot'] = input_case_name
+            # func_dict[u'annot'] = input_case_name
             func_list.append(func_dict)
     else:
         func_dict[u'functionDescription'] = format_description(tool_meta_data[u'description'])
         func_dict[u'functionName'] = []
         func_dict[u'output'] = outputs
-        func_dict[u'input'] = inputs[u"input_fix"]
+        func_dict[u'input_tool'] = inputs[u"input_fix"]
         func_dict[u'functionHandle'] = 'MainFunction'
         func_list.append(func_dict)
-    #pprint.pprint(func_list)
+    # pprint.pprint(func_list)
     return func_list
 
-def extract_edam_from_galaxy(mapping_edam = {}):
+
+def extract_edam_from_galaxy(mapping_edam=None):
+    if not mapping_edam:
+        mapping_edam = {}
     return mapping_edam
 
+
 def build_edam_dict(yaml_file):
-    import yaml
+
     edam_dict = extract_edam_from_galaxy()
     with open(yaml_file, "r") as file_edam:
         temp_edam_dict = yaml.load(file_edam)
@@ -341,10 +306,14 @@ def build_edam_dict(yaml_file):
             edam_dict[key] = temp_edam_dict[key]
     return edam_dict
 
+
 def auth(login):
     password = getpass.getpass()
-    resp = requests.post('https://elixir-registry.cbs.dtu.dk/api/auth/login','{"username": "%s","password": "%s"}' % (login, password), headers={'Accept': 'application/json', 'Content-type': 'application/json'}).text
+    resp = requests.post('https://elixir-registry.cbs.dtu.dk/api/auth/login',
+                         '{"username": "%s","password": "%s"}' % (login, password),
+                         headers={'Accept': 'application/json', 'Content-type': 'application/json'}).text
     return json.loads(resp)['token']
+
 
 def pushtoelix(login, tool_dir):
     print "authenticating..."
@@ -353,7 +322,9 @@ def pushtoelix(login, tool_dir):
     ok_cnt = 0
     ko_cnt = 0
     print "attempting to delete all registered services..."
-    resp = requests.delete('https://elixir-registry.cbs.dtu.dk/api/tool/%s' % login, headers={'Accept':'application/json', 'Content-type':'application/json', 'Authorization': 'Token %s' % token})
+    resp = requests.delete('https://elixir-registry.cbs.dtu.dk/api/tool/%s' % login,
+                           headers={'Accept': 'application/json', 'Content-type': 'application/json',
+                                    'Authorization': 'Token %s' % token})
     print resp
     print resp.headers
     print resp.status_code
@@ -362,18 +333,21 @@ def pushtoelix(login, tool_dir):
     print "loading json"
     print os.getcwd()
     path = os.path.join(os.getcwd(), tool_dir)
-    for file in os.listdir(tool_dir):
-        with open(os.path.join(path, file), 'r') as json_file:
+    for jsonfile in os.listdir(tool_dir):
+        with open(os.path.join(path, jsonfile), 'r') as json_file:
             json_data = json.load(json_file)
-            resp = requests.post('https://elixir-registry.cbs.dtu.dk/api/tool', json.dumps(json_data), headers={'Accept':'application/json', 'Content-type':'application/json', 'Authorization': 'Token %s' % token})
+            resp = requests.post('https://elixir-registry.cbs.dtu.dk/api/tool', json.dumps(json_data),
+                                 headers={'Accept': 'application/json', 'Content-type': 'application/json',
+                                          'Authorization': 'Token %s' % token})
             if resp.status_code == 201:
-                print "%s ok" % file
+                print "%s ok" % jsonfile
                 ok_cnt += 1
             else:
-                print "%s ko, error: %s" % (file, resp.text)
+                print "%s ko, error: %s" % (jsonfile, resp.text)
                 ko_cnt += 1
     print "afterFor"
     print "import finished, ok=%s, ko=%s" % (ok_cnt, ko_cnt)
+
 
 if __name__ == "__main__":
 
@@ -393,7 +367,8 @@ if __name__ == "__main__":
 
     parser.add_argument("--yaml_file", help="yaml file generated with remag.py")
     parser.add_argument("--pushtoelixir", action='store_true', help="import all JSON to ELIXIR bioregistry")
-    parser.add_argument("--onlypush", action='store_true', help="import all JSON to ELIXIR bioregistry of an already exist specified directory")
+    parser.add_argument("--onlypush", action='store_true',
+                        help="import all JSON to ELIXIR bioregistry of an already exist specified directory")
     parser.add_argument('--login', help="registry login")
 
     if len(sys.argv) == 1:
@@ -403,11 +378,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print args
 
-    if args.pushtoelixir == True:
+    if args.pushtoelixir:
         if not args.login:
-            raise argparse.ArgumentError(args.login, "error: with pushtoelixir argument login elixir registry argument is required")
+            raise argparse.ArgumentError(args.login,
+                                         "error: with pushtoelixir argument login elixir registry argument is required")
 
-    if args.onlypush == False:
+    if not args.onlypush:
         gi = GalaxyInstance(args.galaxy_url, key=args.api_key)
         gi.verify = False
         tools = gi.tools.get_tools()
@@ -418,13 +394,13 @@ if __name__ == "__main__":
         edam_dict = build_edam_dict(args.yaml_file)
         for i in tools:
             try:
-            # improve this part, important to be able to get all tool from any toolshed
+                # improve this part, important to be able to get all tool from any toolshed
                 if not i['id'].find("galaxy.web.pasteur.fr") or not i['id'].find("toolshed"):
                     tool_metadata = gi.tools.show_tool(tool_id=i['id'], io_details=True, link_details=True)
-                #pprint.pprint(tool_metadata)
+                    # pprint.pprint(tool_metadata)
                     tools_meta_data.append(tool_metadata)
-          #  else:
-           #     print i['id']
+                    #  else:
+                    #     print i['id']
             except ConnectionError:
                 print "ConnectionError"
                 pass
@@ -441,15 +417,12 @@ if __name__ == "__main__":
                     json.dump(general_dict, tool_file, indent=4)
 
             except IOError:
-                os.mkdir(os.path.join(os.getcwd(),args.tool_dir))
+                os.mkdir(os.path.join(os.getcwd(), args.tool_dir))
                 with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + json_ext), 'w') as tool_file:
                     general_dict = build_metadata_one(tool, args.galaxy_url)
                     general_dict[u"function"] = function
                     general_dict[u"name"] = get_tool_name(tool[u'id'])
                     json.dump(general_dict, tool_file, indent=4)
 
-    if args.pushtoelixir == True:
+    if args.pushtoelixir:
         pushtoelix(args.login, args.tool_dir)
-
-
-
