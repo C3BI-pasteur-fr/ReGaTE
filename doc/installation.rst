@@ -20,8 +20,8 @@ ReGaTE has three dependencies
  - A fork of BioBlend (https://github.com/galaxyproject/bioblend) available at (https://github.com/fmareuil/bioblend.git)
  
 These dependencies will automatically be installed during ReGaTE installation procedure.
- 
- **Python version 2.7** is required to run ReGaTE and ReMaG: https://docs.python.org/2.7/index.html
+
+**Python version 2.7** is required to run ReGaTE and ReMaG: https://docs.python.org/2.7/index.html
  
 
 Installation procedure
