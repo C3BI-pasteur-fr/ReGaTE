@@ -17,38 +17,40 @@ ReGaTE dependencies
 ReGaTE has three dependencies
  - Python modules *PyYAML* (>=3.11)
  - Python modules *rdflib* (>=4.2.0)
- - And for the moment a specific version of bioblend (https://github.com/fmareuil/bioblend.git)
+ - A fork of BioBlend (https://github.com/galaxyproject/bioblend) available at (https://github.com/fmareuil/bioblend.git)
  
-These dependencies will be automatically installed during the installation procedure.
+These dependencies will automatically be installed during ReGaTE installation procedure.
  
  **Python version 2.7** is required to run ReGaTE and ReMaG: https://docs.python.org/2.7/index.html
  
 
 Installation procedure
 ======================
-It is better to use virtualenv to avoid any conflict (including bioblend version conflict).
+We recommend to use a virtualenv in order to avoid conflicts with your LINUX configuration (as well as with BioBlend main version).
 
 First install virtualenv::
 
     pip install virtualenv
 
-Create a virtual environnement::
+Then, create a virtual environnement::
 
     virtualenv ReGaTE_env
+And, activate it:: 
+
     cd ReGaTE_env
     source bin/activate
 
-To install regate::
+To install ReGaTE::
 
     pip install -e git+https://github.com/bioinfo-center-pasteur-fr/ReGaTE.git#egg=regate
 
-To install dependencies::
+To install its dependencies::
 
     pip install -r src/regate/requirements.txt
 
 
 .. warning::
-  When installing a new version of ReGaTE, do not forget to uninstall the previous version! 
+  if you update the version of ReGaTE, do not forget to uninstall the previous one! 
 
 Uninstalling ReGaTE
 ========================
