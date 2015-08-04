@@ -25,7 +25,7 @@ To generate it:
 
 -- With a mapping tsv file (first column: galaxy extension, second column the edam format: fomat_XXX, third column: description), type:
 
- "``remag.py --mapping_file mapping --output_yaml myyaml.yaml --edam_file EDAM_X.owl``"
+"``remag.py --mapping_file mapping --output_yaml myyaml.yaml --edam_file EDAM_X.owl``"
 
 
 -- With the Galaxe datatype_conf and edam_type attributes, type:
