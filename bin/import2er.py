@@ -53,6 +53,7 @@ if __name__ == "__main__":
         print os.getcwd()
         path = os.path.join(os.getcwd(), args.json_dir)
         for jsonfile in os.listdir(args.json_dir):
+            print jsonfile
             with open(os.path.join(path, jsonfile), 'r') as json_file:
                 json_data = json.load(json_file)
                 resp = requests.post('https://elixir-registry.cbs.dtu.dk/api/tool', json.dumps(json_data),

@@ -91,16 +91,13 @@ def build_metadata_one(tool_meta_data, url):
                           }]
     gen_dict[u'collection'] = [ressourcename]
     gen_dict[u'sourceRegistry'] = get_source_registry(tool_meta_data[u'id'])
-    gen_dict[u'resourceType'] = [{"term": "Tool (analysis)"}]
+    gen_dict[u'resourceType'] = "Tool"
     gen_dict[u'maturity'] = [{
         u'term': 'Established'
     }]
     gen_dict[u'platform'] = [{u'term': 'Linux'}]
     gen_dict[u'interface'] = [
-        {u'interfaceType': {
-            u'term': "WEB UI",
-            u'uri': "http://www.cbs.dtu.dk/ontology/interface_type/3"
-        }}
+        {u'interfaceType': "WEB UI"}
     ]
     gen_dict[u'contact'] = [{
         u'contactEmail': 'galaxy@pasteur.fr',
@@ -108,15 +105,17 @@ def build_metadata_one(tool_meta_data, url):
     }]
     # these fields need to be filled with MODULE ressource at Pasteur
     # gen_dict[u'language'] = []
-    gen_dict[u'topic'] = [{u'uri': "http://edamontology.org/topic_0003"}]
+    gen_dict[u'topic'] = [{u'uri': "http://edamontology.org/topic_0003",
+                           u'term' : "EDAM TOPIC"}]
+                        #]
     # gen_dict[u'tag'] = []
     #  gen_dict[u'license'] = []
     # gen_dict[u'cost'] = []
     #  gen_dict[u'credits'] = []
     #  gen_dict[u'docs'] = []
-    #  gen_dict[u'publications'] = []
+    gen_dict[u'publications'] = [{u'publicationsPrimaryID': "None"}]
     gen_dict[u'homepage'] = homepage
-    # gen_dict[u'accessibility'] = "private"
+    gen_dict[u'accessibility'] = "private"
 
     return gen_dict
 
@@ -176,18 +175,20 @@ def find_edam_format(format_name, edam_dict):
 
 def find_edam_data(format_name, edam_dict):
     if format_name in edam_dict:
-        list_term = []
+        list_uri = []
         temp_list = edam_dict[format_name][1:]
         if "EDAM_data:0006" in temp_list and len(temp_list) > 1:
             temp_list.remove("EDAM_data:0006")
-        for edam_data in temp_list:
-            if len(temp_list) == 1:
-                term = edam_data
-                list_term.append(term)
-        return ", ".join(list_term)
+        if len(temp_list) == 1:
+            uri = edam_to_uri(temp_list[0])
+            list_uri.append(uri)
+        else:
+            uri = edam_to_uri(temp_list[0])
+            list_uri.append(uri)
+
+        return ", ".join(list_uri)
     else:
-        term = "None"
-        return term
+        return []
 
 
 def build_input_for_json(list_inputs, edam_dict):
@@ -205,16 +206,15 @@ def build_input_for_json(list_inputs, edam_dict):
         for format_tool in formatlist:
             uri = find_edam_format(format_tool, edam_dict)
             dict_format = {u'uri': uri}
-            term = find_edam_data(format_tool, edam_dict)
-            if term == "":
-                term = "None"
-            inputdict[u'dataType'] = {u'term': term}
             list_format.append(dict_format)
-
+        data_uri = find_edam_data(formatlist[0], edam_dict)
+        if data_uri == []:
+            data_uri = "None" #http://edamontology.org/data_0006"
+        # put a logger here to get the missing format
+        inputdict[u'dataType'] = {u'uri': data_uri}
         inputdict[u'dataFormat'] = list_format
         inputdict[u'dataHandle'] = ", ".join(input_tool[u'extensions'])
         liste.append(inputdict)
-
     return liste
 
 
@@ -257,12 +257,13 @@ def build_fonction_dict(tool_meta_data, edam_dict):
 
     for output in tool_meta_data[u'outputs']:
         outputdict = {}
-        term = find_edam_data(output[u'format'], edam_dict)
-        if term == "":
-            term = "None"
+        data_uri = find_edam_data(output[u'format'], edam_dict)
+        if data_uri == []:
+            data_uri = "None" #http://edamontology.org/data_0006"
+            # put a logger here to get the missing format
         # print tool_meta_data['name'], term
-        outputdict[u'dataType'] = {u'term': term}
         uri = find_edam_format(output[u'format'], edam_dict)
+        outputdict[u'dataType'] = {u'uri': data_uri}
         outputdict[u'dataFormat'] = {u'uri': uri}
         # outputdict[u'dataHandle'] = output[u'label']
         outputs.append(outputdict)
@@ -271,9 +272,9 @@ def build_fonction_dict(tool_meta_data, edam_dict):
         for input_case_name, item in inputs.items():
             func_dict = {}
             func_dict[u'functionDescription'] = format_description(tool_meta_data[u'description'])
-            func_dict[u'functionName'] = [{"uri": "http://edamontology.org/operation_0004"}]
+            func_dict[u'functionName'] = [{u'uri': "http://edamontology.org/operation_0004"}]
             func_dict[u'output'] = outputs
-            func_dict[u'input_tool'] = item
+            func_dict[u'input'] = item
             func_dict[u'functionHandle'] = input_case_name
             # func_dict[u'annot'] = input_case_name
             func_list.append(func_dict)
@@ -281,10 +282,9 @@ def build_fonction_dict(tool_meta_data, edam_dict):
         func_dict[u'functionDescription'] = format_description(tool_meta_data[u'description'])
         func_dict[u'functionName'] = []
         func_dict[u'output'] = outputs
-        func_dict[u'input_tool'] = inputs[u"input_fix"]
+        func_dict[u'input'] = inputs[u"input_fix"]
         func_dict[u'functionHandle'] = 'MainFunction'
         func_list.append(func_dict)
-    # pprint.pprint(func_list)
     return func_list
 
 
@@ -345,7 +345,6 @@ def pushtoelix(login, tool_dir):
             else:
                 print "%s ko, error: %s" % (jsonfile, resp.text)
                 ko_cnt += 1
-    print "afterFor"
     print "import finished, ok=%s, ko=%s" % (ok_cnt, ko_cnt)
 
 
@@ -376,7 +375,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     args = parser.parse_args()
-    print args
+    print(args)
 
     if args.pushtoelixir:
         if not args.login:
@@ -402,7 +401,7 @@ if __name__ == "__main__":
                     #  else:
                     #     print i['id']
             except ConnectionError:
-                print "ConnectionError"
+                print("ConnectionError")
                 pass
 
         for tool in tools_meta_data:
