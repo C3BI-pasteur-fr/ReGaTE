@@ -1,14 +1,3 @@
-RData:
-- EDAM_format:2333
-- EDAM_data:0006
-Roadmaps:
-- EDAM_format:2561
-- EDAM_data:0925
-Sequences:
-- EDAM_format:1929
-- EDAM_data:0863
-- EDAM_data:0006
-- EDAM_data:0849
 ab1:
 - EDAM_format:2333
 - EDAM_data:0006
@@ -20,7 +9,7 @@ affybatch:
 - EDAM_data:2048
 afg:
 - EDAM_format:2561
-- EDAM_data:0925
+- EDAM_data:0006
 arff:
 - EDAM_format:2330
 - EDAM_data:0006
@@ -35,8 +24,8 @@ axt:
 - EDAM_data:0006
 bam:
 - EDAM_format:2572
-- EDAM_data:1381
 - EDAM_data:0924
+- EDAM_data:1381
 - EDAM_data:0006
 bcf:
 - EDAM_format:3020
@@ -117,19 +106,29 @@ coderet:
 compseq:
 - EDAM_format:2330
 - EDAM_data:0006
+consensusxml:
+- EDAM_format:2332
+- EDAM_data:0006
 cpgplot:
 - EDAM_format:2330
 - EDAM_data:0006
 cpgreport:
 - EDAM_format:2330
 - EDAM_data:0006
+cps:
+- EDAM_format:2333
+- EDAM_data:0006
 csfasta:
 - EDAM_format:1929
 - EDAM_data:0863
-- EDAM_data:0006
 - EDAM_data:0849
+- EDAM_data:0006
 csv:
 - EDAM_format:3475
+- EDAM_data:0006
+ct:
+- EDAM_format:3309
+- EDAM_data:0880
 - EDAM_data:0006
 cusp:
 - EDAM_format:2330
@@ -154,6 +153,10 @@ data_manager_json:
 - EDAM_data:0006
 dbmotif:
 - EDAM_format:2330
+- EDAM_data:0006
+dbn:
+- EDAM_format:1457
+- EDAM_data:0880
 - EDAM_data:0006
 dbnsfp.tabular:
 - EDAM_format:3475
@@ -212,8 +215,8 @@ excel:
 fasta:
 - EDAM_format:1929
 - EDAM_data:0863
-- EDAM_data:0006
 - EDAM_data:0849
+- EDAM_data:0006
 fastq:
 - EDAM_format:1930
 - EDAM_data:0924
@@ -236,6 +239,9 @@ fastqsolexa:
 - EDAM_data:0006
 feattable:
 - EDAM_format:2330
+- EDAM_data:0006
+featurexml:
+- EDAM_format:2332
 - EDAM_data:0006
 fitch:
 - EDAM_format:2330
@@ -301,12 +307,12 @@ genetrack:
 - EDAM_data:3002
 gff:
 - EDAM_format:2305
-- EDAM_data:0006
 - EDAM_data:1255
+- EDAM_data:0006
 gff3:
 - EDAM_format:1975
-- EDAM_data:0006
 - EDAM_data:1255
+- EDAM_data:0006
 gg:
 - EDAM_format:3475
 - EDAM_data:0006
@@ -318,8 +324,8 @@ gmaj.zip:
 - EDAM_data:2968
 gtf:
 - EDAM_format:2306
-- EDAM_data:0006
 - EDAM_data:1255
+- EDAM_data:0006
 h5:
 - EDAM_format:2333
 - EDAM_data:0006
@@ -328,6 +334,9 @@ helixturnhelix:
 - EDAM_data:0006
 hennig86:
 - EDAM_format:2330
+- EDAM_data:0006
+hlf:
+- EDAM_format:2333
 - EDAM_data:0006
 hmm2:
 - EDAM_format:2330
@@ -341,12 +350,21 @@ hmoment:
 html:
 - EDAM_format:2331
 - EDAM_data:2048
+idpdb:
+- EDAM_format:2333
+- EDAM_data:0006
+idxml:
+- EDAM_format:2332
+- EDAM_data:0006
 ig:
 - EDAM_format:2330
 - EDAM_data:0006
 im:
 - EDAM_format:3547
 - EDAM_data:2968
+interprophet_pepxml:
+- EDAM_format:2332
+- EDAM_data:0006
 interval:
 - EDAM_format:3475
 - EDAM_data:0006
@@ -393,8 +411,8 @@ lped:
 maf:
 - EDAM_format:3008
 - EDAM_data:3002
-- EDAM_data:0863
 - EDAM_data:0006
+- EDAM_data:0863
 mafcustomtrack:
 - EDAM_format:2330
 - EDAM_data:0006
@@ -416,6 +434,9 @@ markx2:
 markx3:
 - EDAM_format:2330
 - EDAM_data:0006
+mascotdat:
+- EDAM_format:2330
+- EDAM_data:0006
 match:
 - EDAM_format:2330
 - EDAM_data:0006
@@ -428,8 +449,35 @@ meganon:
 memexml:
 - EDAM_format:2332
 - EDAM_data:0006
+mgf:
+- EDAM_format:2330
+- EDAM_data:0006
 motif:
 - EDAM_format:2330
+- EDAM_data:0006
+ms2:
+- EDAM_format:2330
+- EDAM_data:0006
+msp:
+- EDAM_format:2330
+- EDAM_data:0006
+mz.sqlite:
+- EDAM_format:2333
+- EDAM_data:0006
+mzid:
+- EDAM_format:3247
+- EDAM_data:2536
+- EDAM_data:0006
+mzml:
+- EDAM_format:3244
+- EDAM_data:2536
+- EDAM_data:0006
+mzq:
+- EDAM_format:3248
+- EDAM_data:2536
+- EDAM_data:0006
+mzxml:
+- EDAM_format:2332
 - EDAM_data:0006
 nametable:
 - EDAM_format:2330
@@ -472,6 +520,24 @@ owl:
 - EDAM_data:0582
 - EDAM_data:0006
 - EDAM_data:0006
+oxlicg:
+- EDAM_format:2333
+- EDAM_data:0006
+oxligl:
+- EDAM_format:2333
+- EDAM_data:0006
+oxling:
+- EDAM_format:2333
+- EDAM_data:0006
+oxliss:
+- EDAM_format:2333
+- EDAM_data:0006
+oxlist:
+- EDAM_format:2333
+- EDAM_data:0006
+oxlits:
+- EDAM_format:2333
+- EDAM_data:0006
 pair:
 - EDAM_format:2330
 - EDAM_data:0006
@@ -503,8 +569,17 @@ pepinfo:
 pepstats:
 - EDAM_format:2330
 - EDAM_data:0006
+peptideprophet_pepxml:
+- EDAM_format:2332
+- EDAM_data:0006
 peptideshaker_archive:
 - EDAM_format:2333
+- EDAM_data:0006
+pepxml:
+- EDAM_format:2332
+- EDAM_data:0006
+pepxml.tsv:
+- EDAM_format:3475
 - EDAM_data:0006
 pgm:
 - EDAM_format:3547
@@ -531,6 +606,12 @@ pileup:
 pir:
 - EDAM_format:2330
 - EDAM_data:0006
+plyascii:
+- EDAM_format:2330
+- EDAM_data:0006
+plybinary:
+- EDAM_format:2333
+- EDAM_data:0006
 png:
 - EDAM_format:3547
 - EDAM_data:2968
@@ -552,9 +633,18 @@ prettyseq:
 primersearch:
 - EDAM_format:2330
 - EDAM_data:0006
+protxml:
+- EDAM_format:2332
+- EDAM_data:0006
+protxml.tsv:
+- EDAM_format:3475
+- EDAM_data:0006
 psd:
 - EDAM_format:3547
 - EDAM_data:2968
+qcml:
+- EDAM_format:2332
+- EDAM_data:0006
 qual:
 - EDAM_format:2330
 - EDAM_data:0006
@@ -573,6 +663,12 @@ qualsolid:
 rast:
 - EDAM_format:3547
 - EDAM_data:2968
+raw_pepxml:
+- EDAM_format:2332
+- EDAM_data:0006
+rdata:
+- EDAM_format:2333
+- EDAM_data:0006
 rdf:
 - EDAM_format:2376
 - EDAM_data:0582
@@ -592,10 +688,13 @@ rgenetics:
 rna_eps:
 - EDAM_format:3466
 - EDAM_data:0006
+roadmaps:
+- EDAM_format:2561
+- EDAM_data:0006
 sam:
 - EDAM_format:2573
-- EDAM_data:1381
 - EDAM_data:0924
+- EDAM_data:1381
 - EDAM_data:0006
 scf:
 - EDAM_format:1632
@@ -609,6 +708,14 @@ searchgui_archive:
 - EDAM_data:0006
 seqtable:
 - EDAM_format:2330
+- EDAM_data:0006
+sequences:
+- EDAM_format:1929
+- EDAM_data:0863
+- EDAM_data:0849
+- EDAM_data:0006
+sf3:
+- EDAM_format:2333
 - EDAM_data:0006
 sff:
 - EDAM_format:3284
@@ -641,6 +748,12 @@ snpsiftdbnsfp:
 snptest:
 - EDAM_format:2331
 - EDAM_data:2048
+splib:
+- EDAM_format:2330
+- EDAM_data:0006
+splib_noindex:
+- EDAM_format:2330
+- EDAM_data:0006
 sqlite:
 - EDAM_format:2333
 - EDAM_data:0006
@@ -686,17 +799,30 @@ tabular:
 tagseq:
 - EDAM_format:2330
 - EDAM_data:0006
+tandem:
+- EDAM_format:2332
+- EDAM_data:0006
 taxonomy:
 - EDAM_format:3475
 - EDAM_data:0006
 textsearch:
 - EDAM_format:2330
 - EDAM_data:0006
+thermo.raw:
+- EDAM_format:2333
+- EDAM_data:0006
 tiff:
 - EDAM_format:3547
 - EDAM_data:2968
 toolshed.gz:
 - EDAM_format:2333
+- EDAM_data:0006
+trafoxml:
+- EDAM_format:2332
+- EDAM_data:0006
+traml:
+- EDAM_format:3246
+- EDAM_data:2536
 - EDAM_data:0006
 twobit:
 - EDAM_format:3009
@@ -718,6 +844,15 @@ vectorstrip:
 velvet:
 - EDAM_format:2331
 - EDAM_data:2048
+vtkascii:
+- EDAM_format:2330
+- EDAM_data:0006
+vtkbinary:
+- EDAM_format:2333
+- EDAM_data:0006
+wiff:
+- EDAM_format:2333
+- EDAM_data:0006
 wig:
 - EDAM_format:3005
 - EDAM_data:3002

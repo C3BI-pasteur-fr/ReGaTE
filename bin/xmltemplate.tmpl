@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns="http://biotoolsregistry.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://biotoolsregistry.org ../biotools-1.3.xsd">
+	<resource>
+        <name>$name</name>
+        <homepage>$homepage</homepage>
+        #for $mir in $mirror
+        <mirror>$mir</mirror>
+        #end for
+		<version>$version</version>
+		<canonicalID>$canonicalID</canonicalID>
+        #for $col in $collection
+        <collection>$col</collection>
+		#end for
+		<accessibility>$accessibility</accessibility>
+        #for $use in $uses
+		<uses>
+            <usesName>$use.usesName</usesName>
+            <usesHomepage>$use.usesHomepage</usesHomepage>
+            <usesVersion>$use.usesVersion</usesVersion>
+		</uses>
+        #end for
+        #for $rType in $resourceType
+        <resourceType>$rType</resourceType>
+        #end for
+        #for $interf in $interface
+        <interface>
+		    <interfaceType>$interf.interfaceType</interfaceType>
+		    <interfaceDocs>$interf.interfaceDocs</interfaceDocs>
+		    <interfaceSpecURL>$interf.interfaceSpecURL</interfaceSpecURL>
+		    <interfaceSpecFormat>$interf.interfaceSpecFormat</interfaceSpecFormat>
+		   </interface>
+        #end for
+		<description>$description</description>
+        #for $top in $topic
+		<topic uri="$top.uri">$top.term</topic>
+        #end for
+        #for $tg in $tag
+		<tag>$tg</tag>
+		#end for
+        #for $func in $function
+		<function>
+            #for $Fname in $func.functionName
+		    <functionName uri="$Fname.uri">$Fname.term</functionName>
+			#end for
+			<functionDescription>$func.functionDescription</functionDescription>
+			<functionHandle>$func.functionHandle</functionHandle>
+            #for $int in $func.input
+		    <input>
+			    <dataType uri="$int.dataType.uri">$int.dataType.term</dataType>
+                    #for $IFormat in $int.dataFormat
+		        <dataFormat uri="$IFormat.uri">$IFormat.term</dataFormat>
+                    #end for
+				<dataHandle>$int.dataHandle</dataHandle>
+				<dataDescription>$int.dataDescription</dataDescription>
+			</input>
+            #end for
+            #for $out in $func.output
+		    <output>
+		    	<dataType uri="$out.dataType.uri">$out.dataType.term</dataType>
+                    #for $OFormat in $out.dataFormat
+		   	    <dataFormat uri="$OFormat.uri">$OFormat.term</dataFormat>
+                    #end for
+		    	<dataHandle>$out.dataHandle</dataHandle>
+		    	<dataDescription>$out.dataDescription</dataDescription>
+		    </output>
+            #end for
+		</function>
+        #end for
+        #for $cont in $contact
+		<contact>
+		    <contactEmail>$cont.contactEmail</contactEmail>
+		    <contactURL>$cont.contactURL</contactURL>
+		    <contactName>$cont.contactName</contactName>
+		    <contactTel>$cont.contactTel</contactTel>
+                #for $role in $cont.contactRole
+		    <contactRole>$role</contactRole>
+                #end for
+		</contact>
+        #end for
+		<sourceRegistry>$sourceRegistry</sourceRegistry>
+		<elixirInfo>
+			<elixirStatus>$elixirInfo.elixirStatus</elixirStatus>
+			<elixirNode>$elixirInfo.elixirNode</elixirNode>
+		</elixirInfo>
+		<maturity>$maturity</maturity>
+        #for $plat in $platform
+		<platform>$plat.term</platform>
+        #end for
+        #for $lang in $language
+		<language>$lang</language>
+		#end for
+		<license>$license</license>
+		<cost>$cost</cost>
+		<docs>
+			<docsHome>$docs.docsHome</docsHome>
+			<docsTermsOfUse>$docs.docsTermsOfUse</docsTermsOfUse>
+			<docsDownload>$docs.docsDownload</docsDownload>
+			<docsCitationInstructions>$docs.docsCitationInstructions</docsCitationInstructions>
+		</docs>
+		<publications>
+		    <publicationsPrimaryID>$publications.publicationsPrimaryID</publicationsPrimaryID>
+            #for $pubotherID in $publications.publicationsOtherID
+			<publicationsOtherID>$pubotherID</publicationsOtherID>
+            #end for
+		</publications>
+		<credits>
+            #for $credD in $credits.creditsDeveloper
+			<creditsDeveloper>$credD</creditsDeveloper>
+            #end for
+            #for $credC in $credits.creditsContributor
+			<creditsContributor>$credC</creditsContributor>
+            #end for
+            #for $credIs in $credits.creditsInstitution
+			<creditsInstitution>$credIs</creditsInstitution>
+            #end for
+            #for $credIf in $credits.creditsInfrastructure
+			<creditsInfrastructure>$credIf</creditsInfrastructure>
+			#end for
+            #for $credF in $credits.creditsFunding
+			<creditsFunding>$credF</creditsFunding>
+			#end for
+		</credits>
+    </resource>
+</resources>
