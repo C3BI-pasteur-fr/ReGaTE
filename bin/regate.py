@@ -7,7 +7,7 @@ Created on Oct. 23, 2014
 @author: Fabien Mareuil, CIB-C3BI, Institut Pasteur, Paris
 @contact: olivia.doppelt@pasteur.fr
 @project: ReGaTE
-@githuborganization: bioinfo-center-pasteur-fr
+@githuborganization: C3BI-pasteur-fr
 """
 
 import sys
@@ -20,11 +20,13 @@ import json
 import yaml
 import requests
 import getpass
+import logging
 
 from Cheetah.Template import Template
 from bioblend.galaxy.client import ConnectionError
 from bioblend.galaxy import GalaxyInstance
 
+from logging.handlers import RotatingFileHandler
 
 def build_tool_name(tool_id):
     """
@@ -188,7 +190,8 @@ def find_edam_format(format_name, edam_dict):
         uri = edam_to_uri(edam_dict[format_name][0])
         return uri
     else:
-        uri = ""
+        uri = "http://edamontology.org/format_1915"
+        logger.warning("EDAM MAPPING: TERM ----{}---- is missing from EDAM current version".format(format_name))
         return uri
 
 
@@ -228,8 +231,8 @@ def build_input_for_json(list_inputs, edam_dict):
             list_format.append(dict_format)
         data_uri = find_edam_data(formatlist[0], edam_dict)
         if data_uri == []:
-            data_uri = "None" #http://edamontology.org/data_0006"
-        # put a logger here to get the missing format
+            data_uri = "http://edamontology.org/data_0006"
+            logger.warning("EDAM MAPPING: TERM ----{}---- is missing from EDAM current version".format(formatlist[0]))
         inputdict[u'dataType'] = {u'uri': data_uri, u'term': ''}
         inputdict[u'dataFormat'] = list_format
         dataH =  ", ".join(input_tool[u'extensions'])
@@ -280,8 +283,9 @@ def build_fonction_dict(tool_meta_data, edam_dict):
         outputdict = {}
         data_uri = find_edam_data(output[u'format'], edam_dict)
         if data_uri == []:
-            data_uri = "None" #http://edamontology.org/data_0006"
+            data_uri = "http://edamontology.org/data_0006"
             # put a logger here to get the missing format
+            logger.warning("EDAM MAPPING: TERM ----{}---- is missing from EDAM current version".format(output[u'format']))
         # print tool_meta_data['name'], term
         uri = find_edam_format(output[u'format'], edam_dict)
         outputdict[u'dataType'] = {u'uri': data_uri, u'term': ''}
@@ -371,6 +375,25 @@ def pushtoelix(login, tool_dir):
 
 
 if __name__ == "__main__":
+
+    logger = logging.getLogger()
+    logger.setLevel(logging.DEBUG)
+
+    formatter = logging.Formatter('%(asctime)s :: %(levelname)s :: %(message)s')
+
+    # first logger
+    file_handler = RotatingFileHandler('activity.log', 'a', 1000000, 1)
+
+    file_handler.setLevel(logging.DEBUG)
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+
+    # second logger
+    file_handler_edam = RotatingFileHandler('edam_mapping.log', 'a', 1000000, 1)
+
+    file_handler_edam.setLevel(logging.WARNING)
+    file_handler_edam.setFormatter(formatter)
+    logger.addHandler(file_handler_edam)
 
     parser = argparse.ArgumentParser(description="Galaxy instance tool\
         parsing, for integration in biotools/bioregistry")
