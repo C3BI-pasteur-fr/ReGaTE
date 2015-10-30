@@ -108,9 +108,6 @@ def build_metadata_one(tool_meta_data, url):
     # gen_dict[u'language'] = []
     gen_dict[u'topic'] = [{u'uri': "http://edamontology.org/topic_0003",
                            u'term' : "EDAM label placeholder"}]
-    #gen_dict[u'topic'] = [{u'uri': "",
-    #                       u'term' : ""},{u'uri': "",
-    #                       u'term' : ""}]
     gen_dict[u'credits'] = []
     gen_dict[u'publications'] = {u'publicationsPrimaryID': "None", u'publicationsOtherID' : []}
     gen_dict[u'homepage'] = homepage
@@ -379,19 +376,22 @@ def push_to_elix(login, tool_dir):
     print "import finished, ok=%s, ko=%s" % (ok_cnt, ko_cnt)
 
 def clean_list(jsonlist):
-    newjsonlist = copy.deepcopy(jsonlist)
-    for elem in newjsonlist:
-        if elem:
-            tempelem = copy.deepcopy(elem)
-            if isinstance(elem, dict):
-                clean_dict(elem)
-            if isinstance(elem, list):
-                clean_list(elem)
-        if not elem:
-            jsonlist.remove(tempelem)
-        if elem and tempelem != elem:
-            jsonlist[jsonlist.index(tempelem)] = elem
-
+    """
+    :param jsonlist:
+    :return:
+    """
+    nullindexlist = []
+    for elem in range(len(jsonlist)):
+        if isinstance(jsonlist[elem], dict):
+            clean_dict(jsonlist[elem])
+        if isinstance(jsonlist[elem], list):
+            clean_list(jsonlist[elem])
+        if len(jsonlist[elem]) == 0:
+            nullindexlist.append(elem)
+    if nullindexlist:
+        nullindexlist.sort(reverse=True)
+        for i in nullindexlist:
+            jsonlist.pop(i)
     return
 
 def clean_dict(jsondict):
@@ -399,6 +399,7 @@ def clean_dict(jsondict):
     :param jsondict:
     :return:
     """
+
     for sonkey, sonvalue in jsondict.items():
         if sonvalue:
             if isinstance(sonvalue, dict):
@@ -406,34 +407,9 @@ def clean_dict(jsondict):
             if isinstance(sonvalue, list):
                 clean_list(sonvalue)
 
-        if not jsondict[sonkey]:
-            del jsondict[sonkey]
-    return
-
-def newclean_list(jsonlist):
-    for elem in jsonlist:
-        if isinstance(elem, dict):
-            newclean_dict(elem)
-        if isinstance(elem, list):
-            newclean_list(elem)
-    return
-
-def newclean_dict(jsondict):
-    """
-    :param jsondict:
-    :return:
-    """
-    for sonkey, sonvalue in jsondict.items():
-        if sonvalue:
-            if isinstance(sonvalue, dict):
-                newclean_dict(sonvalue)
-            if isinstance(sonvalue, list):
-                newclean_list(sonvalue)
-
         if not sonvalue:
             del jsondict[sonkey]
     return
-
 
 def write_json_files(tool_name, general_dict):
     """
@@ -442,9 +418,7 @@ def write_json_files(tool_name, general_dict):
     :return:
     """
     cleaned_dict = copy.deepcopy(general_dict)
-    newclean_dict(cleaned_dict)
-    #remove new empty elements
-    #clean_dict(cleaned_dict)
+    clean_dict(cleaned_dict)
     try:
         with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + ".json"), 'w') as tool_file:
             json.dump(cleaned_dict, tool_file, indent=4)
