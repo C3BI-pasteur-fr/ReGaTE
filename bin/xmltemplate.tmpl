@@ -3,40 +3,64 @@
 	<resource>
         <name>$name</name>
         <homepage>$homepage</homepage>
+		#if $mirror
         #for $mir in $mirror
         <mirror>$mir</mirror>
         #end for
+		#end if
 		<version>$version</version>
+		#if $canonicalID
 		<canonicalID>$canonicalID</canonicalID>
+		#end if
+		#if $collection
         #for $col in $collection
         <collection>$col</collection>
 		#end for
+		#end if
+		#if $accessibility
 		<accessibility>$accessibility</accessibility>
+		#end if
+		#if $uses
         #for $use in $uses
+		#if $use.usesName
 		<uses>
             <usesName>$use.usesName</usesName>
+			#if $use.usesHomepage
             <usesHomepage>$use.usesHomepage</usesHomepage>
+			#end if
+			#if $use.usesVersion
             <usesVersion>$use.usesVersion</usesVersion>
+			#end if
 		</uses>
+		#end if
         #end for
+		#end if
         #for $rType in $resourceType
         <resourceType>$rType</resourceType>
         #end for
         #for $interf in $interface
         <interface>
 		    <interfaceType>$interf.interfaceType</interfaceType>
+			#if $interf.interfaceDocs
 		    <interfaceDocs>$interf.interfaceDocs</interfaceDocs>
+			#end if
+			#if $interf.interfaceSpecURL
 		    <interfaceSpecURL>$interf.interfaceSpecURL</interfaceSpecURL>
+			#end if
+			#if $interf.interfaceSpecFormat
 		    <interfaceSpecFormat>$interf.interfaceSpecFormat</interfaceSpecFormat>
-		   </interface>
+			#end if
+		</interface>
         #end for
 		<description>$description</description>
         #for $top in $topic
 		<topic uri="$top.uri">$top.term</topic>
         #end for
+		#if $tag
         #for $tg in $tag
 		<tag>$tg</tag>
 		#end for
+		#end if
         #for $func in $function
 		<function>
             #for $Fname in $func.functionName
@@ -47,21 +71,33 @@
             #for $int in $func.input
 		    <input>
 			    <dataType uri="$int.dataType.uri">$int.dataType.term</dataType>
-                    #for $IFormat in $int.dataFormat
+				#if $int.dataFormat
+				#for $IFormat in $int.dataFormat
 		        <dataFormat uri="$IFormat.uri">$IFormat.term</dataFormat>
-                    #end for
+				#end for
+				#end if
+				#if $int.dataHandle
 				<dataHandle>$int.dataHandle</dataHandle>
+				#end if
+				#if $int.dataDescription
 				<dataDescription>$int.dataDescription</dataDescription>
+				#end if
 			</input>
             #end for
             #for $out in $func.output
 		    <output>
 		    	<dataType uri="$out.dataType.uri">$out.dataType.term</dataType>
-                    #for $OFormat in $out.dataFormat
+				#if $out.dataFormat
+				#for $OFormat in $out.dataFormat
 		   	    <dataFormat uri="$OFormat.uri">$OFormat.term</dataFormat>
-                    #end for
+				#end for
+				#end if
+				#if $out.dataHandle
 		    	<dataHandle>$out.dataHandle</dataHandle>
+				#end if
+				#if $out.dataDescription
 		    	<dataDescription>$out.dataDescription</dataDescription>
+				#end if
 		    </output>
             #end for
 		</function>
@@ -69,56 +105,110 @@
         #for $cont in $contact
 		<contact>
 		    <contactEmail>$cont.contactEmail</contactEmail>
+			#if $cont.contactURL
 		    <contactURL>$cont.contactURL</contactURL>
+			#end if
+			#if $cont.contactName
 		    <contactName>$cont.contactName</contactName>
+			#end if
+			#if $cont.contactTel
 		    <contactTel>$cont.contactTel</contactTel>
-                #for $role in $cont.contactRole
+			#end if
+			#if $cont.contactRole
+			#for $role in $cont.contactRole
 		    <contactRole>$role</contactRole>
-                #end for
+			#end for
+			#end if
 		</contact>
         #end for
+		#if $sourceRegistry
 		<sourceRegistry>$sourceRegistry</sourceRegistry>
+		#end if
+		#if $elixirInfo
+			#if $elixirInfo.elixirNode
 		<elixirInfo>
+			#if $elixirInfo.elixirStatus
 			<elixirStatus>$elixirInfo.elixirStatus</elixirStatus>
+			#end if
 			<elixirNode>$elixirInfo.elixirNode</elixirNode>
 		</elixirInfo>
+			#end if
+		#end if
+		#if $maturity
 		<maturity>$maturity</maturity>
+		#end if
+		#if $platform
         #for $plat in $platform
 		<platform>$plat.term</platform>
         #end for
+		#end if
+		#if $language
         #for $lang in $language
 		<language>$lang</language>
 		#end for
+		#end if
+		#if $license
 		<license>$license</license>
+		#end if
+		#if $cost
 		<cost>$cost</cost>
+		#end if
+		#if $docs
+			#if $docs.docsHome
 		<docs>
 			<docsHome>$docs.docsHome</docsHome>
+			#if $docs.docsTermsOfUse
 			<docsTermsOfUse>$docs.docsTermsOfUse</docsTermsOfUse>
+			#end if
+			#if $docs.docsDownload
 			<docsDownload>$docs.docsDownload</docsDownload>
+			#end if
+			#if $docs.docsCitationInstructions
 			<docsCitationInstructions>$docs.docsCitationInstructions</docsCitationInstructions>
+			#end if
 		</docs>
+			#end if
+		#end if
+		#if $publications
+			#if $publications.publicationsPrimaryID
 		<publications>
 		    <publicationsPrimaryID>$publications.publicationsPrimaryID</publicationsPrimaryID>
+			#if $publications.publicationsOtherID
             #for $pubotherID in $publications.publicationsOtherID
 			<publicationsOtherID>$pubotherID</publicationsOtherID>
             #end for
+			#end if
 		</publications>
+			#end if
+		#end if
+		#if $credits
+		#if $credits.creditsDeveloper
 		<credits>
             #for $credD in $credits.creditsDeveloper
 			<creditsDeveloper>$credD</creditsDeveloper>
             #end for
+			#if $credits.creditsContributor
             #for $credC in $credits.creditsContributor
 			<creditsContributor>$credC</creditsContributor>
             #end for
+			#end if
+			#if $credits.creditsInstitution
             #for $credIs in $credits.creditsInstitution
 			<creditsInstitution>$credIs</creditsInstitution>
             #end for
+			#end if
+			#if $credits.creditsInfrastructure
             #for $credIf in $credits.creditsInfrastructure
 			<creditsInfrastructure>$credIf</creditsInfrastructure>
 			#end for
+			#end if
+			#if $credits.creditsFunding
             #for $credF in $credits.creditsFunding
 			<creditsFunding>$credF</creditsFunding>
 			#end for
+			#end if
 		</credits>
+		#end if
+		#end if
     </resource>
 </resources>

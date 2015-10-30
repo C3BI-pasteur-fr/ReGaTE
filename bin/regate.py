@@ -20,6 +20,7 @@ import json
 import yaml
 import requests
 import getpass
+import copy
 
 from Cheetah.Template import Template
 from bioblend.galaxy.client import ConnectionError
@@ -98,23 +99,22 @@ def build_metadata_one(tool_meta_data, url):
     gen_dict[u'platform'] = [{u'term': 'Linux'}]
     gen_dict[u'interface'] = [
         {u'interfaceType': "WEB UI",
-        u'interfaceDocs': "",
-        u'interfaceSpecURL':"",
-        u'interfaceSpecFormat':""}]
-    gen_dict[u'contact'] = [{
-        u'contactEmail': 'galaxy@pasteur.fr',
-        u'contactName': 'Institut Pasteur galaxy team',
-    }]
+        u'interfaceDocs': '',
+        u'interfaceSpecURL':'',
+        u'interfaceSpecFormat':''}]
     # these fields need to be filled with MODULE ressource at Pasteur
     # gen_dict[u'language'] = []
-    gen_dict[u'topic'] = [{u'uri': "http://edamontology.org/topic_0003",
-                           u'term' : "EDAM TOPIC"}]
+    #gen_dict[u'topic'] = [{u'uri': "http://edamontology.org/topic_0003",
+    #                       u'term' : "EDAM label placeholder"}]
+    gen_dict[u'topic'] = [{u'uri': "",
+                           u'term' : ""},{u'uri': "",
+                           u'term' : ""}]
     gen_dict[u'credits'] = []
     gen_dict[u'publications'] = {u'publicationsPrimaryID': "None", u'publicationsOtherID' : []}
     gen_dict[u'homepage'] = homepage
     gen_dict[u'accessibility'] = "private"
     gen_dict[u'mirror'] = []
-    gen_dict[u'canonicalID'] = ""
+    gen_dict[u'canonicalID'] = ''
     gen_dict[u'tag'] = []
     gen_dict[u'elixirInfo'] = {u'elixirStatus' :'',
                             u'elixirNode':''}
@@ -131,9 +131,9 @@ def build_metadata_one(tool_meta_data, url):
                             u'creditsInstitution': [],
                             u'creditsInfrastructure': [],
                             u'creditsFunding': []}
-    gen_dict[u'contact'] = [{u'contactEmail': '',
+    gen_dict[u'contact'] = [{u'contactEmail': 'galaxy@pasteur.fr',
                             u'contactURL': '',
-                            u'contactName': '',
+                            u'contactName': 'Institut Pasteur galaxy team',
                             u'contactTel': '',
                             u'contactRole': []}]
     return gen_dict
@@ -224,13 +224,13 @@ def build_input_for_json(list_inputs, edam_dict):
         list_format = []
         for format_tool in formatlist:
             uri = find_edam_format(format_tool, edam_dict)
-            dict_format = {u'uri': uri, u'term': ''}
+            dict_format = {u'uri': uri, u'term': 'EDAM label placeholder'}
             list_format.append(dict_format)
         data_uri = find_edam_data(formatlist[0], edam_dict)
         if data_uri == []:
             data_uri = "None" #http://edamontology.org/data_0006"
         # put a logger here to get the missing format
-        inputdict[u'dataType'] = {u'uri': data_uri, u'term': ''}
+        inputdict[u'dataType'] = {u'uri': data_uri, u'term': 'EDAM label placeholder'}
         inputdict[u'dataFormat'] = list_format
         dataH =  ", ".join(input_tool[u'extensions'])
         inputdict[u'dataHandle'] = ", ".join(input_tool[u'extensions'])
@@ -284,8 +284,8 @@ def build_fonction_dict(tool_meta_data, edam_dict):
             # put a logger here to get the missing format
         # print tool_meta_data['name'], term
         uri = find_edam_format(output[u'format'], edam_dict)
-        outputdict[u'dataType'] = {u'uri': data_uri, u'term': ''}
-        outputdict[u'dataFormat'] = [{u'uri': uri, u'term': ''}]
+        outputdict[u'dataType'] = {u'uri': data_uri, u'term': 'EDAM label placeholder'}
+        outputdict[u'dataFormat'] = [{u'uri': uri, u'term': 'EDAM label placeholder'}]
         outputdict[u'dataHandle'] = ''
         outputdict[u'dataDescription'] = ''
         outputs.append(outputdict)
@@ -294,7 +294,7 @@ def build_fonction_dict(tool_meta_data, edam_dict):
         for input_case_name, item in inputs.items():
             func_dict = {}
             func_dict[u'functionDescription'] = format_description(tool_meta_data[u'description'])
-            func_dict[u'functionName'] = [{u'uri': "http://edamontology.org/operation_0004", u'term' : ''}]
+            func_dict[u'functionName'] = [{u'uri': "http://edamontology.org/operation_0004", u'term' : 'EDAM label placeholder'}]
             func_dict[u'output'] = outputs
             func_dict[u'input'] = item
             func_dict[u'functionHandle'] = input_case_name
@@ -369,6 +369,82 @@ def pushtoelix(login, tool_dir):
                 ko_cnt += 1
     print "import finished, ok=%s, ko=%s" % (ok_cnt, ko_cnt)
 
+def clean_list(jsonlist):
+    #newjsonlist = copy.deepcopy(jsonlist)
+    for elem in jsonlist:
+        if elem:
+            if isinstance(elem, dict):
+                clean_dict(elem)
+            if isinstance(elem, list):
+                clean_list(elem)
+        if not elem:
+            jsonlist.remove(elem)
+    return
+
+def clean_dict(jsondict):
+    """
+    :param jsondict:
+    :return:
+    """
+    for sonkey, sonvalue in jsondict.items():
+        if sonvalue:
+            if isinstance(sonvalue, dict):
+                clean_dict(sonvalue)
+            if isinstance(sonvalue, list):
+                clean_list(sonvalue)
+        if not jsondict[sonkey]:
+            del jsondict[sonkey]
+    return 
+
+
+def write_json_files(tool_name, general_dict):
+    """
+    :param tool_name:
+    :param general_dict:
+    :return:
+    """
+    cleaned_dict = copy.deepcopy(general_dict)
+    clean_dict(cleaned_dict)
+    #remove new empty elements
+    #clean_dict(cleaned_dict)
+    try:
+        with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + ".json"), 'w') as tool_file:
+            json.dump(cleaned_dict, tool_file, indent=4)
+    except IOError:
+        os.mkdir(os.path.join(os.getcwd(), args.tool_dir))
+        with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + ".json"),'w') as tool_file:
+            json.dump(cleaned_dict, tool_file, indent=4)
+
+def write_xml_files(tool_name, general_dict):
+    """
+    :param tool_name:
+    :param general_dict:
+    :return:
+    """
+    try:
+        with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + ".xml"), 'w') as tool_file:
+            template = Template(file='xmltemplate.tmpl', searchList=[general_dict])
+            tool_file.write(str(template))
+    except IOError:
+        os.mkdir(os.path.join(os.getcwd(), args.tool_dir))
+        with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + ".xml"), 'w') as tool_file:
+            template = Template(file='xmltemplate.tmpl', searchList=[general_dict])
+            tool_file.write(str(template))
+
+def build_outputs(tools_meta_data):
+    """
+    :param tools_meta_data:
+    :return:
+    """
+    for tool in tools_meta_data:
+        tool_name = build_tool_name(tool[u'id'])
+        function = build_fonction_dict(tool, edam_dict)
+        general_dict = build_metadata_one(tool, args.galaxy_url)
+        general_dict[u"function"] = function
+        general_dict[u"name"] = get_tool_name(tool[u'id'])
+        write_json_files(tool_name, general_dict)
+        write_xml_files(tool_name, general_dict)
+
 
 if __name__ == "__main__":
 
@@ -410,9 +486,6 @@ if __name__ == "__main__":
         tools = gi.tools.get_tools()
 
         tools_meta_data = []
-        new_dict = {}
-        #json_ext = '.json'
-        xml_ext = '.xml'
         edam_dict = build_edam_dict(args.yaml_file)
         for i in tools:
             try:
@@ -426,29 +499,7 @@ if __name__ == "__main__":
             except ConnectionError:
                 print("ConnectionError")
                 pass
-
-        for tool in tools_meta_data:
-            tool_name = build_tool_name(tool[u'id'])
-            try:
-
-                function = build_fonction_dict(tool, edam_dict)
-                with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + xml_ext), 'w') as tool_file:
-                    general_dict = build_metadata_one(tool, args.galaxy_url)
-                    general_dict[u"function"] = function
-                    general_dict[u"name"] = get_tool_name(tool[u'id'])
-                    template = Template(file='xmltemplate.tmpl', searchList=[general_dict])
-                    tool_file.write(str(template))
-                    #json.dump(general_dict, tool_file, indent=4)
-
-            except IOError:
-                os.mkdir(os.path.join(os.getcwd(), args.tool_dir))
-                with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + xml_ext), 'w') as tool_file:
-                    general_dict = build_metadata_one(tool, args.galaxy_url)
-                    general_dict[u"function"] = function
-                    general_dict[u"name"] = get_tool_name(tool[u'id'])
-                    template = Template(file='xmltemplate.tmpl', searchList=[general_dict])
-                    tool_file.write(str(template))
-                    #json.dump(general_dict, tool_file, indent=4)
+        build_outputs(tools_meta_data)
 
     if args.pushtoelixir:
         pushtoelix(args.login, args.tool_dir)
