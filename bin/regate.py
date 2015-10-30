@@ -408,7 +408,31 @@ def clean_dict(jsondict):
 
         if not jsondict[sonkey]:
             del jsondict[sonkey]
-    return 
+    return
+
+def newclean_list(jsonlist):
+    for elem in jsonlist:
+        if isinstance(elem, dict):
+            newclean_dict(elem)
+        if isinstance(elem, list):
+            newclean_list(elem)
+    return
+
+def newclean_dict(jsondict):
+    """
+    :param jsondict:
+    :return:
+    """
+    for sonkey, sonvalue in jsondict.items():
+        if sonvalue:
+            if isinstance(sonvalue, dict):
+                newclean_dict(sonvalue)
+            if isinstance(sonvalue, list):
+                newclean_list(sonvalue)
+
+        if not sonvalue:
+            del jsondict[sonkey]
+    return
 
 
 def write_json_files(tool_name, general_dict):
@@ -418,7 +442,7 @@ def write_json_files(tool_name, general_dict):
     :return:
     """
     cleaned_dict = copy.deepcopy(general_dict)
-    clean_dict(cleaned_dict)
+    newclean_dict(cleaned_dict)
     #remove new empty elements
     #clean_dict(cleaned_dict)
     try:
@@ -456,7 +480,7 @@ def build_outputs(tools_meta_data):
         general_dict = build_metadata_one(tool, args.galaxy_url)
         general_dict[u"function"] = function
         general_dict[u"name"] = get_tool_name(tool[u'id'])
-        #write_json_files(tool_name, general_dict)
+        write_json_files(tool_name, general_dict)
         write_xml_files(tool_name, general_dict)
 
 
