@@ -1,4 +1,4 @@
-from remag import *
+from bin.remag import *
 import unittest
 
 

@@ -106,11 +106,11 @@ def build_metadata_one(tool_meta_data, url):
         u'interfaceSpecFormat':''}]
     # these fields need to be filled with MODULE ressource at Pasteur
     # gen_dict[u'language'] = []
-    #gen_dict[u'topic'] = [{u'uri': "http://edamontology.org/topic_0003",
-    #                       u'term' : "EDAM label placeholder"}]
-    gen_dict[u'topic'] = [{u'uri': "",
-                           u'term' : ""},{u'uri': "",
-                           u'term' : ""}]
+    gen_dict[u'topic'] = [{u'uri': "http://edamontology.org/topic_0003",
+                           u'term' : "EDAM label placeholder"}]
+    #gen_dict[u'topic'] = [{u'uri': "",
+    #                       u'term' : ""},{u'uri': "",
+    #                       u'term' : ""}]
     gen_dict[u'credits'] = []
     gen_dict[u'publications'] = {u'publicationsPrimaryID': "None", u'publicationsOtherID' : []}
     gen_dict[u'homepage'] = homepage
@@ -379,15 +379,19 @@ def push_to_elix(login, tool_dir):
     print "import finished, ok=%s, ko=%s" % (ok_cnt, ko_cnt)
 
 def clean_list(jsonlist):
-    #newjsonlist = copy.deepcopy(jsonlist)
-    for elem in jsonlist:
+    newjsonlist = copy.deepcopy(jsonlist)
+    for elem in newjsonlist:
         if elem:
+            tempelem = copy.deepcopy(elem)
             if isinstance(elem, dict):
                 clean_dict(elem)
             if isinstance(elem, list):
                 clean_list(elem)
         if not elem:
-            jsonlist.remove(elem)
+            jsonlist.remove(tempelem)
+        if elem and tempelem != elem:
+            jsonlist[jsonlist.index(tempelem)] = elem
+
     return
 
 def clean_dict(jsondict):
@@ -401,6 +405,7 @@ def clean_dict(jsondict):
                 clean_dict(sonvalue)
             if isinstance(sonvalue, list):
                 clean_list(sonvalue)
+
         if not jsondict[sonkey]:
             del jsondict[sonkey]
     return 
@@ -451,7 +456,7 @@ def build_outputs(tools_meta_data):
         general_dict = build_metadata_one(tool, args.galaxy_url)
         general_dict[u"function"] = function
         general_dict[u"name"] = get_tool_name(tool[u'id'])
-        write_json_files(tool_name, general_dict)
+        #write_json_files(tool_name, general_dict)
         write_xml_files(tool_name, general_dict)
 
 
