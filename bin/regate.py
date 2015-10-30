@@ -341,7 +341,12 @@ def auth(login):
     return json.loads(resp)['token']
 
 
-def pushtoelix(login, tool_dir):
+def push_to_elix(login, tool_dir):
+    """
+    :param login:
+    :param tool_dir:
+    :return:
+    """
     print "authenticating..."
     token = auth(login)
     print "authentication ok"
@@ -525,4 +530,4 @@ if __name__ == "__main__":
         build_outputs(tools_meta_data)
 
     if args.pushtoelixir:
-        pushtoelix(args.login, args.tool_dir)
+        push_to_elix(args.login, args.tool_dir)
