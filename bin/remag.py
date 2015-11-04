@@ -23,10 +23,18 @@ from bioblend.galaxy.client import ConnectionError
 
 
 def is_true(value):
+    """
+    :param value:
+    :return:
+    """
     return value.lower() == "true"
 
 
 def is_edamtype(dic_child):
+    """
+    :param dic_child:
+    :return:
+    """
     if 'edam' in dic_child:
         if dic_child['edam'] not in ['', "None", "Null"]:
             return True
@@ -37,12 +45,21 @@ def is_edamtype(dic_child):
 
 
 def return_formatted_edam(edam):
+    """
+    :param edam:
+    :return:
+    """
     edam = string.split(edam, '_')
     edam = "EDAM_{}:{:0>4d}".format(edam[0], int(edam[1]))
     return edam
 
 
 def tsv_to_dict(edam_mapping_file, mapping_dict):
+    """
+    :param edam_mapping_file:
+    :param mapping_dict:
+    :return:
+    """
     with open(edam_mapping_file, "r") as EG_MAPPING:
         for line in EG_MAPPING:
             splitted = string.split(line, '\t')
@@ -64,6 +81,11 @@ def tsv_to_dict(edam_mapping_file, mapping_dict):
 
 
 def xml_to_dict(datatype_file_xml, mapping_dict):
+    """
+    :param datatype_file_xml:
+    :param mapping_dict:
+    :return:
+    """
     tree = ET.parse(datatype_file_xml)
     root = tree.getroot()
     for child in root[0]:
@@ -85,11 +107,19 @@ def xml_to_dict(datatype_file_xml, mapping_dict):
 
 
 def http_to_edamform(url):
+    """
+    :param url:
+    :return:
+    """
     base = string.split(os.path.basename(url), '_')
     return str("EDAM_{}:{:0>4d}").format(base[0], int(base[1]))
 
 
 def edam_to_dict(edam_file):
+    """
+    :param edam_file:
+    :return:
+    """
     g = rdflib.Graph()
     g.parse(edam_file)
     query1 = """SELECT ?format ?is_format_of WHERE {
@@ -118,6 +148,13 @@ def edam_to_dict(edam_file):
 
 
 def add_data(formats, relation_formats, relation_data, list_edam_data):
+    """
+    :param formats:
+    :param relation_formats:
+    :param relation_data:
+    :param list_edam_data:
+    :return:
+    """
     if len(formats) != 0:
         for format_tool in formats:
             if format_tool in relation_data:
@@ -141,8 +178,13 @@ def add_data(formats, relation_formats, relation_data, list_edam_data):
 
 
 def add_datas(dict_map, relation_format_formats, relation_format_data):
+    """
+    :param dict_map:
+    :param relation_format_formats:
+    :param relation_format_data:
+    :return:
+    """
     import copy
-
     for key, value in dict_map.iteritems():
         formats = copy.copy(value)
         datas = add_data(formats, relation_format_formats, relation_format_data, list_edam_data=[])
@@ -151,11 +193,22 @@ def add_datas(dict_map, relation_format_formats, relation_format_data):
 
 
 def dict_to_yaml(mapping_dict, yamlfile):
+    """
+    :param mapping_dict:
+    :param yamlfile:
+    :return:
+    """
     stream = file(yamlfile, 'w')
     yaml.dump(mapping_dict, stream, default_flow_style=False)
 
 
 def galaxy_to_edamdict(url, key, dict_map=None):
+    """
+    :param url:
+    :param key:
+    :param dict_map:
+    :return:
+    """
     if not dict_map:
         dict_map = {}
     gi = GalaxyInstance(url, key=key)
@@ -212,4 +265,5 @@ if __name__ == "__main__":
         dict_mapping = xml_to_dict(args.datatype_conf, dict_mapping)
     yaml_file = args.output_yaml
     dict_mapping = add_datas(dict_mapping, relation_format_formats, relation_format_data)
+
     dict_to_yaml(dict_mapping, yaml_file)
