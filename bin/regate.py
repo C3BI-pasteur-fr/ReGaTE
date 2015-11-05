@@ -435,12 +435,12 @@ def write_xml_files(tool_name, general_dict):
     """
     try:
         with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + ".xml"), 'w') as tool_file:
-            template = Template(file='xmltemplate.tmpl', searchList=[general_dict])
+            template = Template(file='./xmltemplate.tmpl', searchList=[general_dict])
             tool_file.write(str(template))
     except IOError:
         os.mkdir(os.path.join(os.getcwd(), args.tool_dir))
         with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + ".xml"), 'w') as tool_file:
-            template = Template(file='xmltemplate.tmpl', searchList=[general_dict])
+            template = Template(file='./xmltemplate.tmpl', searchList=[general_dict])
             tool_file.write(str(template))
 
 def build_outputs(tools_meta_data):
