@@ -17,6 +17,7 @@ import yaml
 import rdflib
 import xml.etree.ElementTree as ET
 import argparse
+import ConfigParser
 
 from bioblend.galaxy import GalaxyInstance
 from bioblend.galaxy.client import ConnectionError
@@ -228,6 +229,20 @@ def galaxy_to_edamdict(url, key, dict_map=None):
         dictmapping[str(key)] = [form_edam]
     return dictmapping
 
+def generate_template():
+    """
+    :return:
+    """
+    TEMPLATE_CONFIG = os.path.join(os.path.dirname(__file__),'regate.ini')
+    print TEMPLATE_CONFIG
+    config = ConfigParser.ConfigParser(allow_no_value = True)
+    config.read(TEMPLATE_CONFIG)
+    with open('regate.ini', 'w') as fp:
+        config.write(fp)
+
+
+    with open('regate.ini', 'w') as fp:
+        config.write(fp)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Galaxy instance tool\
@@ -238,32 +253,39 @@ if __name__ == "__main__":
 
     parser.add_argument("--api_key", help="galaxy user api key")
 
-    parser.add_argument("--output_yaml", help="output file format yaml", required=True)
+    parser.add_argument("--output_yaml", help="output file format yaml")
 
     parser.add_argument("--datatype_conf", help="datatype_conf with \
         edam format")
 
     parser.add_argument("--edam_file", help="edam owl file to create  \
-        the edam_dict", required=True)
+        the edam_dict")
 
     parser.add_argument("--mapping_file", help="mapping file format tsv  \
         extension edam_format description")
+
+    parser.add_argument("--config", help="config file")
+
+    parser.add_argument("--templateconfig", action='store_true', help="generate a config file template")
 
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit(1)
 
     args = parser.parse_args()
-    if args.galaxy_url and args.api_key:
-        dict_mapping = galaxy_to_edamdict(args.galaxy_url, args.api_key)
-    else:
-        dict_mapping = {}
-    relation_format_formats, relation_format_data = edam_to_dict(args.edam_file)
-    if args.mapping_file:
-        dict_mapping = tsv_to_dict(args.mapping_file, dict_mapping)
-    if args.datatype_conf:
-        dict_mapping = xml_to_dict(args.datatype_conf, dict_mapping)
-    yaml_file = args.output_yaml
-    dict_mapping = add_datas(dict_mapping, relation_format_formats, relation_format_data)
+    if not args.templateconfig:
+        if args.galaxy_url and args.api_key:
+            dict_mapping = galaxy_to_edamdict(args.galaxy_url, args.api_key)
+        else:
+            dict_mapping = {}
+        relation_format_formats, relation_format_data = edam_to_dict(args.edam_file)
+        if args.mapping_file:
+            dict_mapping = tsv_to_dict(args.mapping_file, dict_mapping)
+        if args.datatype_conf:
+            dict_mapping = xml_to_dict(args.datatype_conf, dict_mapping)
+            yaml_file = args.output_yaml
+            dict_mapping = add_datas(dict_mapping, relation_format_formats, relation_format_data)
 
-    dict_to_yaml(dict_mapping, yaml_file)
+        dict_to_yaml(dict_mapping, yaml_file)
+    else:
+        generate_template()

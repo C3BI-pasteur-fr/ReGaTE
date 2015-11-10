@@ -19,7 +19,7 @@ setup(
         'bin/remag.py',
         'bin/import2er.py'
     ],
-    script_data={'data': ['yaml_mapping.yaml']},
+#    data_files=[('data', ['data/yaml_mapping.yaml'])],
     license="AFL"
     
 )
