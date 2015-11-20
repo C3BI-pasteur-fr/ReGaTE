@@ -18,6 +18,7 @@ import rdflib
 import xml.etree.ElementTree as ET
 import argparse
 import ConfigParser
+from distutils.core import setup
 
 from bioblend.galaxy import GalaxyInstance
 from bioblend.galaxy.client import ConnectionError
@@ -233,16 +234,14 @@ def generate_template():
     """
     :return:
     """
-    TEMPLATE_CONFIG = os.path.join(os.path.dirname(__file__),'regate.ini')
+    TEMPLATE_CONFIG = os.path.join(os.path.dirname(__file__),'../share/regate/regate.ini')
     print TEMPLATE_CONFIG
+
     config = ConfigParser.ConfigParser(allow_no_value = True)
     config.read(TEMPLATE_CONFIG)
     with open('regate.ini', 'w') as fp:
         config.write(fp)
 
-
-    with open('regate.ini', 'w') as fp:
-        config.write(fp)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Galaxy instance tool\
