@@ -234,13 +234,13 @@ def generate_template():
     """
     :return:
     """
-    TEMPLATE_CONFIG = os.path.join(os.path.dirname(__file__),'../share/regate/regate.ini')
-    print TEMPLATE_CONFIG
+    TEMPLATE_CONFIG = os.path.join('$PREFIXDATA', 'regate.ini')
 
-    config = ConfigParser.ConfigParser(allow_no_value = True)
-    config.read(TEMPLATE_CONFIG)
-    with open('regate.ini', 'w') as fp:
-        config.write(fp)
+    #config = ConfigParser.ConfigParser()
+    with open( TEMPLATE_CONFIG, 'r') as configtemplate:
+        with open('regate.ini', 'w') as fp:
+            for line in configtemplate:
+                fp.write(line)
 
 
 if __name__ == "__main__":

@@ -433,7 +433,7 @@ def write_xml_files(tool_name, general_dict):
     :param general_dict:
     :return:
     """
-    TEMPLATE_PATH = os.path.join(os.path.dirname(__file__),'xmltemplate.tmpl')
+    TEMPLATE_PATH = os.path.join('$PREFIXDATA','xmltemplate.tmpl')
     try:
         with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + ".xml"), 'w') as tool_file:
             template = Template(file=TEMPLATE_PATH, searchList=[general_dict])
