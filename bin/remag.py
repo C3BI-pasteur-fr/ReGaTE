@@ -17,11 +17,44 @@ import yaml
 import rdflib
 import xml.etree.ElementTree as ET
 import argparse
-import ConfigParser
+
+import configparser
 from distutils.core import setup
 
 from bioblend.galaxy import GalaxyInstance
 from bioblend.galaxy.client import ConnectionError
+from bioblend.galaxy.datatypes import DatatypesClient
+from bioblend.galaxy.client import Client
+
+
+class EdamDatatypesClient(DatatypesClient):
+    """
+    Override of the bioblend DatatypesClient class to add a get_edam_formats method
+    """
+
+    def get_edam_formats(self):
+        """
+        Displays a collection (dict) of edam formats.
+        :rtype: dict
+        :return: A dict of  individual edam_format.
+                 For example::
+             {
+                "RData": "format_2333",
+                "Roadmaps": "format_2561",
+                "Sequences": "format_1929",
+                "ab1": "format_2333",
+                "acedb": "format_2330",
+                "affybatch": "format_2331",
+                "afg": "format_2561",
+                "arff": "format_2330",
+                "asn1": "format_2330",
+                "asn1-binary": "format_2333"}
+        """
+
+        url = self.gi._make_url(self)
+        url = '/'.join([url, "edam_formats"])
+
+        return Client._get(self, url=url)
 
 
 def is_true(value):
@@ -214,8 +247,9 @@ def galaxy_to_edamdict(url, key, dict_map=None):
     if not dict_map:
         dict_map = {}
     gi = GalaxyInstance(url, key=key)
+    datatypeclient = EdamDatatypesClient(gi)
     try:
-        dict_map = gi.datatypes.get_edam_formats()
+        dict_map = datatypeclient.get_edam_formats()
     except AttributeError, e:
         sys.stderr.write(
             '{}, The Galaxy data can\'t be used, It\'s \
@@ -242,29 +276,21 @@ def generate_template():
             for line in configtemplate:
                 fp.write(line)
 
+def config_parser(configfile):
+    """
+    :param configfile:
+    :return:
+    """
+    config = configparser.ConfigParser()
+    config.read(configfile)
+    return config
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Galaxy instance tool\
         parsing, for integration in biotools/bioregistry")
 
-    parser.add_argument("--galaxy_url", help="url to the analyze \
-        galaxy instance")
-
-    parser.add_argument("--api_key", help="galaxy user api key")
-
-    parser.add_argument("--output_yaml", help="output file format yaml")
-
-    parser.add_argument("--datatype_conf", help="datatype_conf with \
-        edam format")
-
-    parser.add_argument("--edam_file", help="edam owl file to create  \
-        the edam_dict")
-
-    parser.add_argument("--mapping_file", help="mapping file format tsv  \
-        extension edam_format description")
-
-    parser.add_argument("--config", help="config file")
-
+    parser.add_argument("--config_file", help="config.ini file for regate or remag")
     parser.add_argument("--templateconfig", action='store_true', help="generate a config file template")
 
     if len(sys.argv) == 1:
@@ -273,18 +299,26 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     if not args.templateconfig:
-        if args.galaxy_url and args.api_key:
-            dict_mapping = galaxy_to_edamdict(args.galaxy_url, args.api_key)
+        config = config_parser(args.config_file)
+        if 'galaxy_url' and 'api_key' in config['galaxy_server']:
+            dict_mapping = galaxy_to_edamdict(config['galaxy_server']['galaxy_url'], config['galaxy_server']['api_key'])
         else:
-            dict_mapping = {}
-        relation_format_formats, relation_format_data = edam_to_dict(args.edam_file)
-        if args.mapping_file:
-            dict_mapping = tsv_to_dict(args.mapping_file, dict_mapping)
-        if args.datatype_conf:
-            dict_mapping = xml_to_dict(args.datatype_conf, dict_mapping)
-            yaml_file = args.output_yaml
+            sys.stderr.write("galaxy_url or api_key option doesn't exist in your config.ini file")
+            sys.exit(1)
+
+        if 'edam_file' in config['remag_specific_section']:
+            relation_format_formats, relation_format_data = edam_to_dict(config['remag_specific_section']['edam_file'])
+        else:
+            sys.sterr.write("edam_file option doesn't exist in your config.ini file")
+            sys.exit(1)
+
+        if 'output_yaml' in config['remag_specific_section']:
+            yaml_file = config['remag_specific_section']['output_yaml']
             dict_mapping = add_datas(dict_mapping, relation_format_formats, relation_format_data)
 
-        dict_to_yaml(dict_mapping, yaml_file)
+            dict_to_yaml(dict_mapping, yaml_file)
+        else:
+            sys.stderr.write("output_yaml option doesn't exist in your config.ini file")
+            sys.exit(1)
     else:
         generate_template()
