@@ -22,6 +22,8 @@ import requests
 import getpass
 import copy
 import logging
+import configparser
+import remag
 
 from Cheetah.Template import Template
 from bioblend.galaxy.client import ConnectionError
@@ -411,7 +413,7 @@ def clean_dict(jsondict):
             del jsondict[sonkey]
     return
 
-def write_json_files(tool_name, general_dict):
+def write_json_files(tool_name, general_dict, tool_dir):
     """
     :param tool_name:
     :param general_dict:
@@ -420,31 +422,34 @@ def write_json_files(tool_name, general_dict):
     cleaned_dict = copy.deepcopy(general_dict)
     clean_dict(cleaned_dict)
     try:
-        with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + ".json"), 'w') as tool_file:
+        with open(os.path.join(os.getcwd(), tool_dir, tool_name + ".json"), 'w') as tool_file:
             json.dump(cleaned_dict, tool_file, indent=4)
     except IOError:
-        os.mkdir(os.path.join(os.getcwd(), args.tool_dir))
-        with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + ".json"),'w') as tool_file:
+        os.mkdir(os.path.join(os.getcwd(), tool_dir))
+        with open(os.path.join(os.getcwd(), tool_dir, tool_name + ".json"),'w') as tool_file:
             json.dump(cleaned_dict, tool_file, indent=4)
 
-def write_xml_files(tool_name, general_dict):
+def write_xml_files(tool_name, general_dict, tool_dir, xmltemplate=None):
     """
     :param tool_name:
     :param general_dict:
     :return:
     """
-    TEMPLATE_PATH = os.path.join('$PREFIXDATA','xmltemplate.tmpl')
+    if xmltemplate:
+        TEMPLATE_PATH = xmltemplate
+    else:
+        TEMPLATE_PATH = os.path.join('$PREFIXDATA','xmltemplate.tmpl')
     try:
-        with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + ".xml"), 'w') as tool_file:
+        with open(os.path.join(os.getcwd(), tool_dir, tool_name + ".xml"), 'w') as tool_file:
             template = Template(file=TEMPLATE_PATH, searchList=[general_dict])
             tool_file.write(str(template))
     except IOError:
-        os.mkdir(os.path.join(os.getcwd(), args.tool_dir))
-        with open(os.path.join(os.getcwd(), args.tool_dir, tool_name + ".xml"), 'w') as tool_file:
+        os.mkdir(os.path.join(os.getcwd(), tool_dir))
+        with open(os.path.join(os.getcwd(), tool_dir, tool_name + ".xml"), 'w') as tool_file:
             template = Template(file=TEMPLATE_PATH, searchList=[general_dict])
             tool_file.write(str(template))
 
-def build_outputs(tools_meta_data):
+def build_outputs(tools_meta_data, galaxy_url, tool_dir, xmltemplate=None):
     """
     :param tools_meta_data:
     :return:
@@ -452,12 +457,21 @@ def build_outputs(tools_meta_data):
     for tool in tools_meta_data:
         tool_name = build_tool_name(tool[u'id'])
         function = build_fonction_dict(tool, edam_dict)
-        general_dict = build_metadata_one(tool, args.galaxy_url)
+        general_dict = build_metadata_one(tool, galaxy_url)
         general_dict[u"function"] = function
-        general_dict[u"name"] = get_tool_name(tool[u'id'])
-        write_json_files(tool_name, general_dict)
-        write_xml_files(tool_name, general_dict)
+        #general_dict[u"name"] = get_tool_name(tool[u'id'])
+        general_dict[u"name"] = tool[u'name']
+        write_json_files(tool_name, general_dict, tool_dir)
+        write_xml_files(tool_name, general_dict, tool_dir, xmltemplate=xmltemplate)
 
+def config_parser(configfile):
+    """
+    :param configfile:
+    :return:
+    """
+    config = configparser.ConfigParser()
+    config.read(configfile)
+    return config
 
 if __name__ == "__main__":
 
@@ -482,56 +496,69 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Galaxy instance tool\
         parsing, for integration in biotools/bioregistry")
+    parser.add_argument("--config_file", help="config.ini file for regate or remag")
+    parser.add_argument("--templateconfig", action='store_true', help="generate a config file template")
+#    parser.add_argument("--galaxy_url", help="url to the analyze \
+#        galaxy instance")
 
-    parser.add_argument("--galaxy_url", help="url to the analyze \
-        galaxy instance")
+#    parser.add_argument("--api_key", help="galaxy user api key")
 
-    parser.add_argument("--api_key", help="galaxy user api key")
+#    parser.add_argument("--tool_dir", help="directory to store the tool\
+#        json", required=True)
 
-    parser.add_argument("--tool_dir", help="directory to store the tool\
-        json", required=True)
+#    parser.add_argument("--collection_name", help="collection name \
+#        matchine the galaxy url")
 
-    parser.add_argument("--collection_name", help="collection name \
-        matchine the galaxy url")
-
-    parser.add_argument("--yaml_file", help="yaml file generated with remag.py")
-    parser.add_argument("--pushtoelixir", action='store_true', help="import all JSON to ELIXIR bioregistry")
-    parser.add_argument("--onlypush", action='store_true',
-                        help="import all JSON to ELIXIR bioregistry of an already exist specified directory")
-    parser.add_argument('--login', help="registry login")
+#    parser.add_argument("--yaml_file", help="yaml file generated with remag.py")
+#    parser.add_argument("--pushtoelixir", action='store_true', help="import all JSON to ELIXIR bioregistry")
+#    parser.add_argument("--onlypush", action='store_true',
+#                        help="import all JSON to ELIXIR bioregistry of an already exist specified directory")
+#    parser.add_argument('--login', help="registry login")
 
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit(1)
 
     args = parser.parse_args()
-    print(args)
+    if not args.templateconfig:
 
-    if args.pushtoelixir:
-        if not args.login:
-            raise argparse.ArgumentError(args.login,
-                                         "error: with pushtoelixir argument login elixir registry argument is required")
+    #print(args)
+        config = remag.config_parser(args.config_file)
+        if 'pushtoelixir' in config['regate_specific_section'] and config.getboolean('regate_specific_section', 'pushtoelixir'):
+                if not 'login' in config['regate_specific_section'] or not config.get('regate_specific_section', 'login'):
+                    sys.stderr.write("error: with pushtoelixir argument login elixir registry argument is required\n")
+                    sys.exit(1)
 
-    if not args.onlypush:
-        gi = GalaxyInstance(args.galaxy_url, key=args.api_key)
-        gi.verify = False
-        tools = gi.tools.get_tools()
+        if not 'onlypush' in config['regate_specific_section'] or not config.getboolean('regate_specific_section', 'onlypush'):
+            gi = GalaxyInstance(config.get('galaxy_server', 'galaxy_url'), key=config.get('galaxy_server', 'api_key'))
+            gi.verify = False
+            tools = gi.tools.get_tools()
 
-        tools_meta_data = []
-        edam_dict = build_edam_dict(args.yaml_file)
-        for i in tools:
-            try:
-                # improve this part, important to be able to get all tool from any toolshed
-                if not i['id'].find("galaxy.web.pasteur.fr") or not i['id'].find("toolshed"):
-                    tool_metadata = gi.tools.show_tool(tool_id=i['id'], io_details=True, link_details=True)
-                    # pprint.pprint(tool_metadata)
-                    tools_meta_data.append(tool_metadata)
-                    #  else:
-                    #     print i['id']
-            except ConnectionError:
-                print("ConnectionError")
-                pass
-        build_outputs(tools_meta_data)
+            tools_meta_data = []
+            edam_dict = build_edam_dict(config.get('regate_specific_section', 'yaml_file'))
+            tools_list = config.get('regate_specific_section','tools_list').split(',')
+            for i in tools:
+                try:
+                    # improve this part, important to be able to get all tool from any toolshed
+                    if not i['id'] in tools_list:
+                        tool_metadata = gi.tools.show_tool(tool_id=i['id'], io_details=True, link_details=True)
+                        # pprint.pprint(tool_metadata)
+                        tools_meta_data.append(tool_metadata)
+                        #  else:
+                        #     print i['id']
+                except ConnectionError:
+                    print("ConnectionError")
+                    pass
+            if 'xmltemplate' in config['regate_specific_section']:
+                build_outputs(tools_meta_data, config.get('galaxy_server', 'galaxy_url'),
+                              config.get('regate_specific_section', 'tool_dir'),
+                              xmltemplate = config.get('regate_specific_section', 'xmltemplate'))
+            else:
+                build_outputs(tools_meta_data, config.get('galaxy_server', 'galaxy_url'),
+                              config.get('regate_specific_section', 'tool_dir'))
 
-    if args.pushtoelixir:
-        push_to_elix(args.login, args.tool_dir)
+        if 'pushtoelixir' in config['regate_specific_section'] and config.getboolean('regate_specific_section', 'pushtoelixir'):
+            push_to_elix(config.get('regate_specific_section','login'), config.get('regate_specific_section', 'tool_dir'))
+
+    else:
+        remag.generate_template()

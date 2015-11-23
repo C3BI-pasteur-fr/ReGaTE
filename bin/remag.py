@@ -300,25 +300,25 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if not args.templateconfig:
         config = config_parser(args.config_file)
-        if 'galaxy_url' and 'api_key' in config['galaxy_server']:
-            dict_mapping = galaxy_to_edamdict(config['galaxy_server']['galaxy_url'], config['galaxy_server']['api_key'])
+        if 'galaxy_url' and 'api_key' in config['galaxy_server'] and config.get('galaxy_server', 'galaxy_url') and config.get('galaxy_server', 'api_key'):
+            dict_mapping = galaxy_to_edamdict(config.get('galaxy_server', 'galaxy_url'), config.get('galaxy_server', 'api_key'))
         else:
-            sys.stderr.write("galaxy_url or api_key option doesn't exist in your config.ini file")
+            sys.stderr.write("galaxy_url or api_key option doesn't exist in your config.ini file\n")
             sys.exit(1)
 
-        if 'edam_file' in config['remag_specific_section']:
-            relation_format_formats, relation_format_data = edam_to_dict(config['remag_specific_section']['edam_file'])
+        if 'edam_file' in config['remag_specific_section'] and config.get('remag_specific_section', 'edam_file'):
+            relation_format_formats, relation_format_data = edam_to_dict(config.get('remag_specific_section', 'edam_file'))
         else:
-            sys.sterr.write("edam_file option doesn't exist in your config.ini file")
+            sys.sterr.write("edam_file option doesn't exist in your config.ini file\n")
             sys.exit(1)
 
-        if 'output_yaml' in config['remag_specific_section']:
-            yaml_file = config['remag_specific_section']['output_yaml']
+        if 'output_yaml' in config['remag_specific_section'] and config.get('remag_specific_section', 'output_yaml'):
+            yaml_file = config.get('remag_specific_section', 'output_yaml')
             dict_mapping = add_datas(dict_mapping, relation_format_formats, relation_format_data)
 
             dict_to_yaml(dict_mapping, yaml_file)
         else:
-            sys.stderr.write("output_yaml option doesn't exist in your config.ini file")
+            sys.stderr.write("output_yaml option doesn't exist in your config.ini file\n")
             sys.exit(1)
     else:
         generate_template()
