@@ -9,7 +9,7 @@ Registration of Galaxy Tools in Elixir
 
 Welcome to ReGaTE's documentation! 
 ==================================
-ReGaTE is a software component enabling the automated publication of Galaxy tools and workflows into the ELIXIR Tools and Data Services Registry (https://elixir-registry.cbs.dtu.dk/#/).
+ReGaTE is a software component enabling the automated publication of Galaxy tools and workflows into the ELIXIR Tools and Data Services Registry (https://bio.tools).
 
 This registry is a web portal for the exploration of bioinformatics resources, such as software packages, web services, websites, or reference databases. Through a dedicated interface, its users can search and locate relevant tools and data resources, and bioinformatics resource providers can enhance the visibility of their services. The registration of resources in the registry can be performed either manually, by filling a form on a web user interface, and providing the required description elements, or automatically by using the registry API.
 
