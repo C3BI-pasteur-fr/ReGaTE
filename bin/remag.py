@@ -17,9 +17,7 @@ import yaml
 import rdflib
 import xml.etree.ElementTree as ET
 import argparse
-
 import configparser
-from distutils.core import setup
 
 from bioblend.galaxy import GalaxyInstance
 from bioblend.galaxy.client import ConnectionError
@@ -91,6 +89,7 @@ def return_formatted_edam(edam):
 
 def tsv_to_dict(edam_mapping_file, mapping_dict):
     """
+    Deprecated
     :param edam_mapping_file:
     :param mapping_dict:
     :return:
@@ -106,7 +105,7 @@ def tsv_to_dict(edam_mapping_file, mapping_dict):
                     if splitted[0].strip() in mapping_dict:
                         if mapping_dict[splitted[0].strip()][0] != form_edam:
                             sys.stderr.write(
-                                "MAPPING Incoherence between {} and {} for {} extension, {} have been chosen\n".format(
+                                "MAPPING Incoherence between {0} and {1} for {2} extension, {3} have been chosen\n".format(
                                     mapping_dict[splitted[0].strip()][0], form_edam, splitted[0].strip(),
                                     mapping_dict[splitted[0].strip()][0]))
 
@@ -117,6 +116,7 @@ def tsv_to_dict(edam_mapping_file, mapping_dict):
 
 def xml_to_dict(datatype_file_xml, mapping_dict):
     """
+    Deprecated
     :param datatype_file_xml:
     :param mapping_dict:
     :return:
@@ -132,7 +132,7 @@ def xml_to_dict(datatype_file_xml, mapping_dict):
                 else:
                     if mapping_dict[child.attrib['extension']][0] != edam_format:
                         sys.stderr.write(
-                            "XML Incoherence between {} and {} for {} extension, {} have been chosen\n".format(
+                            "XML Incoherence between {0} and {1} for {2} extension, {3} have been chosen\n".format(
                                 mapping_dict[child.attrib['extension']][0], edam_format, child.attrib['extension'],
                                 mapping_dict[child.attrib['extension']][0]))
             else:
@@ -201,7 +201,7 @@ def add_data(formats, relation_formats, relation_data, list_edam_data):
                 formats = formats + relation_formats[format_tool]
                 return add_data(formats, relation_formats, relation_data, list_edam_data)
             else:
-                sys.stdout.write("NO FORMAT AND NO DATA FOR {}\n".format(format_tool))
+                sys.stdout.write("NO FORMAT AND NO DATA FOR {0}\n".format(format_tool))
                 formats.remove(format_tool)
                 if format_tool in ("Not Mapped Yet", "NONE Known"):
                     return add_data(formats, relation_formats, relation_data, list_edam_data)
@@ -250,14 +250,9 @@ def galaxy_to_edamdict(url, key, dict_map=None):
     datatypeclient = EdamDatatypesClient(gi)
     try:
         dict_map = datatypeclient.get_edam_formats()
-    except AttributeError, e:
-        sys.stderr.write(
-            '{}, The Galaxy data can\'t be used, It\'s \
-            possible that your bioblend version is too old, please update it\n'.format(
-                e))
     except ConnectionError, e:
-        sys.stderr.write(
-            '{}, The Galaxy data can\'t be used, It\'s possible that Galaxy is too old, please update it\n'.format(e))
+        raise ConnectionError(
+            '{0}, The Galaxy data can\'t be used, It\'s possible that Galaxy is too old, please update it\n'.format(e))
     dictmapping = {}
     for key, value in dict_map.iteritems():
         form_edam = return_formatted_edam(value)
@@ -269,8 +264,6 @@ def generate_template():
     :return:
     """
     TEMPLATE_CONFIG = os.path.join('$PREFIXDATA', 'regate.ini')
-
-    #config = ConfigParser.ConfigParser()
     with open( TEMPLATE_CONFIG, 'r') as configtemplate:
         with open('regate.ini', 'w') as fp:
             for line in configtemplate:
@@ -291,7 +284,7 @@ if __name__ == "__main__":
         parsing, for integration in biotools/bioregistry")
 
     parser.add_argument("--config_file", help="config.ini file for regate or remag")
-    parser.add_argument("--templateconfig", action='store_true', help="generate a config file template")
+    parser.add_argument("--templateconfig", action='store_true', help="generate a config_file template")
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -299,18 +292,19 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     if not args.templateconfig:
+        if not os.path.exists(args.config_file):
+            raise IOError("{0} doesn't exist".format(args.config_file))
         config = config_parser(args.config_file)
         if 'galaxy_url' and 'api_key' in config['galaxy_server'] and config.get('galaxy_server', 'galaxy_url') and config.get('galaxy_server', 'api_key'):
             dict_mapping = galaxy_to_edamdict(config.get('galaxy_server', 'galaxy_url'), config.get('galaxy_server', 'api_key'))
         else:
-            sys.stderr.write("galaxy_url or api_key option doesn't exist in your config.ini file\n")
-            sys.exit(1)
+            raise KeyError("galaxy_url or api_key option doesn't exist in {0}".format(args.config_file))
+
 
         if 'edam_file' in config['remag_specific_section'] and config.get('remag_specific_section', 'edam_file'):
             relation_format_formats, relation_format_data = edam_to_dict(config.get('remag_specific_section', 'edam_file'))
         else:
-            sys.sterr.write("edam_file option doesn't exist in your config.ini file\n")
-            sys.exit(1)
+            raise KeyError("edam_file option doesn't exist in {0}".format(args.config_file))
 
         if 'output_yaml' in config['remag_specific_section'] and config.get('remag_specific_section', 'output_yaml'):
             yaml_file = config.get('remag_specific_section', 'output_yaml')
@@ -318,7 +312,8 @@ if __name__ == "__main__":
 
             dict_to_yaml(dict_mapping, yaml_file)
         else:
-            sys.stderr.write("output_yaml option doesn't exist in your config.ini file\n")
-            sys.exit(1)
-    else:
+            raise KeyError("output_yaml option doesn't exist in {0}".format(args.config_file))
+    elif args.templateconfig:
         generate_template()
+    else:
+        parser.print_help()

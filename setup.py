@@ -1,23 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
+import os, sys
 
 from distutils.core import setup
 from distutils.command.install import install
+from distutils.command.build import build
 from distutils.dist import Distribution
 from distutils.errors import DistutilsFileError
 from distutils.util import subst_vars as distutils_subst_vars
+from distutils.util import get_platform
+from distutils.file_util import write_file
+from distutils.errors import DistutilsPlatformError
 
 readme = open('README.md').read()
 
-
 class install_regate(install):
-    def initialize_options(self):
-        install.initialize_options(self)
-
-    def finalize_options(self):
-        install.finalize_options(self)
 
     def get_build_script(self):
         return os.path.join(self.build_base, 'scripts-{}'.format(self.config_vars['py_version_short']))
@@ -30,13 +28,26 @@ class install_regate(install):
             os.unlink(input_file)
             self.move_file(output_file, input_file)
 
+        #TODO : ask to bertrand why he is not a problem in his setup.py in the same section
+        # Obviously have to build before we can install
+        if not self.skip_build:
+            self.run_command('build')
+            # If we built for any other platform, we can't install.
+            build_plat = self.distribution.get_command_obj('build').plat_name
+            # check warn_dir - it is a clue that the 'install' is happening
+            # internally, and not to sys.path, so we don't check the platform
+            # matches what we are running.
+            if self.warn_dir and build_plat != get_platform():
+                raise DistutilsPlatformError("Can't install when "
+                                             "cross-compiling")
+            self.skip_build = 1
+
         inst = self.distribution.command_options.get('install')
         vars_2_subst = {'PREFIXDATA': os.path.join(get_install_data_dir(inst), 'regate'),
                         }
         for _file in self.distribution.fix_prefix:
             subst_file(_file, vars_2_subst)
         install.run(self)
-
 
 class UsageDistribution(Distribution):
     def __init__(self, attrs=None):
@@ -73,10 +84,6 @@ def subst_vars(src, dst, vars):
                 new_line = distutils_subst_vars(line, vars)
                 dest_file.write(new_line)
 
-
-require_python = ['python (>=2.7, <3.0)']
-require_packages = []
-
 setup(
     name='regate',
     version='0.1',
@@ -94,7 +101,6 @@ setup(
     license="AFL",
     fix_prefix=['regate.py', 'remag.py'],
     cmdclass={'install': install_regate,
-
               },
     distclass=UsageDistribution
 )
