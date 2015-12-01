@@ -18,7 +18,7 @@ Central to the development of this tool is the mapping of the Galaxy datatype sy
 
 This mapping is being developed in collaboration with members of the Galaxy team, the EDAM ontology and the Common Workflow Language project.
 
-`Olivia Doppelt-Azeroual, Fabien Mareuil, Eric Deveaud, Matus Kalas and Herve Menager`
+`Olivia Doppelt-Azeroual, Fabien Mareuil, Eric Deveaud, Matúš Kalaš and Hervé Ménager`
 
 Installation
 ============
