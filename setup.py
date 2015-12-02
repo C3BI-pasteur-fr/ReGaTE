@@ -5,17 +5,24 @@ import os, sys
 
 from distutils.core import setup
 from distutils.command.install import install
-from distutils.command.build import build
 from distutils.dist import Distribution
 from distutils.errors import DistutilsFileError
 from distutils.util import subst_vars as distutils_subst_vars
 from distutils.util import get_platform
-from distutils.file_util import write_file
 from distutils.errors import DistutilsPlatformError
 
 readme = open('README.md').read()
 
 class install_regate(install):
+
+    @property
+    def skip_build(self):
+        return self.skip_build
+
+    @skip_build.setter
+    def skip_build(self, x):
+        self.skip_build = x
+
 
     def get_build_script(self):
         return os.path.join(self.build_base, 'scripts-{}'.format(self.config_vars['py_version_short']))
@@ -29,7 +36,7 @@ class install_regate(install):
             self.move_file(output_file, input_file)
 
         #TODO : ask to bertrand why he is not a problem in his setup.py in the same section
-        # Obviously have to build before we can install
+        # Obviously have to build before we can substitute PREFIXDATA and after install without build
         if not self.skip_build:
             self.run_command('build')
             # If we built for any other platform, we can't install.
@@ -94,8 +101,7 @@ setup(
     url='https://github.com/bioinfo-center-pasteur-fr/ReGaTE.git',
     scripts=[
         'bin/regate.py',
-        'bin/remag.py',
-        'bin/import2er.py'
+        'bin/remag.py'
     ],
     data_files=[('share/regate', ['data/yaml_mapping.yaml', 'data/regate.ini', 'data/xmltemplate.tmpl'])],
     license="AFL",
