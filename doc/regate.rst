@@ -20,16 +20,24 @@ Type:
 
 "``regate.py -h``"
 
+* to generate a template of the config.ini file type:
+"``regate.py --templateconfig``"
+A regate.ini file will be created
+
+
 * to generate a list of json files corresponding to the description of each tool installed in your galaxy from any toolshed.
 
 Type:
 
-"``regate.py --galaxy_url your_galaxy_url --api_key your_galaxy_api_key --edam_file src/regate/data/yaml_mapping.yaml --tool_dir jsons_output``"
+"``regate.py --config_file regate.ini``"
 
- 
-yaml_mapping.yaml is a mapping file between the EDAM ontology and the galaxy extensions in a yaml format. 
+You will need to define the galaxy server url usable with the api (galaxy_url_api) and the galaxy server usable with a web browser (it can be the same), the api_key of an galaxy account, a contact name, a contact email and a ressource name, the yaml file see :ref:`remag options section <remag guide>`, and a name for the output directory.
+For each Galaxy server available tool a xml and a json description file will be created.
 
-**To update the yaml file, use the program remag.py** see :ref:`remag options section <remag guide>`.
+
+yaml file is a mapping file between the EDAM ontology and the galaxy extensions in a yaml format.
+
+**To generate the yaml file, use the program remag.py** see :ref:`remag options section <remag guide>`.
 
 **To import json in the Elixir Registry** see :ref:`import section <import section>`.
 

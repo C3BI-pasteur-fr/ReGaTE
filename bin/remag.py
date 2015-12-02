@@ -295,10 +295,10 @@ if __name__ == "__main__":
         if not os.path.exists(args.config_file):
             raise IOError("{0} doesn't exist".format(args.config_file))
         config = config_parser(args.config_file)
-        if 'galaxy_url' and 'api_key' in config['galaxy_server'] and config.get('galaxy_server', 'galaxy_url') and config.get('galaxy_server', 'api_key'):
-            dict_mapping = galaxy_to_edamdict(config.get('galaxy_server', 'galaxy_url'), config.get('galaxy_server', 'api_key'))
+        if 'galaxy_url_api' and 'api_key' in config['galaxy_server'] and config.get('galaxy_server', 'galaxy_url_api') and config.get('galaxy_server', 'api_key'):
+            dict_mapping = galaxy_to_edamdict(config.get('galaxy_server', 'galaxy_url_api'), config.get('galaxy_server', 'api_key'))
         else:
-            raise KeyError("galaxy_url or api_key option doesn't exist in {0}".format(args.config_file))
+            raise KeyError("galaxy_url_api or api_key option doesn't exist in {0}".format(args.config_file))
 
 
         if 'edam_file' in config['remag_specific_section'] and config.get('remag_specific_section', 'edam_file'):

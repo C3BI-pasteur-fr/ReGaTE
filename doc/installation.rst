@@ -42,7 +42,9 @@ And, activate it::
 
 To install ReGaTE::
 
-    pip install -e git+https://github.com/bioinfo-center-pasteur-fr/ReGaTE.git#egg=regate
+    git clone https://github.com/bioinfo-center-pasteur-fr/ReGaTE.git
+    cd ReGaTE
+    python setup.py install
 
 To install its dependencies::
 

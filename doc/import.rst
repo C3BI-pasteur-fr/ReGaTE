@@ -12,23 +12,11 @@ Elixir Registry Importation
 ***************************
 
 
-Currently there are two ways to import a json file in the Elixir Registry:
+To create json and xml file and import the json files in the Elixir Registry you will need to set the pushtoelixir option to True in the config.ini file and specify your login on the registry and type:
 
-* with the command import2er.py
+"``regate.py --config_file config.ini``"
 
-  "``import2er.py -h``"
-  to see available options.
   
-  "``import2er.py --login your_registry_login --json_dir directory_with_json_file``"
+To only inmport already created json file in the registry set to True the options onlypush and pushtoelixir and specify your login and the directory where is tools (tool_dir) and type:
   
-  to import all json files of the directory in the registry
-
-* directly with regate
-
-  "``regate.py --galaxy_url your_galaxy_url --api_key your_galaxy_api_key --edam_file src/regate/data/yaml_mapping.yaml --tool_dir jsons_output --pushtoelixir --login your_registry_login``"
-  
-  to create json files and import them in the registry directly after
-  
-  "``regate.py --pushtoelixir --onlypush --login your_registry_login --tool_dir json_directory``"
-  
-  to only import json files in the registry
+  "``regate.py --config_file config.ini``"
