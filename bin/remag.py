@@ -15,9 +15,8 @@ import os
 import sys
 import yaml
 import rdflib
-import xml.etree.ElementTree as ET
 import argparse
-import configparser
+import regate
 
 from bioblend.galaxy import GalaxyInstance
 from bioblend.galaxy.client import ConnectionError
@@ -48,7 +47,6 @@ class EdamDatatypesClient(DatatypesClient):
                 "asn1": "format_2330",
                 "asn1-binary": "format_2333"}
         """
-
         url = self.gi._make_url(self)
         url = '/'.join([url, "edam_formats"])
 
@@ -85,60 +83,6 @@ def return_formatted_edam(edam):
     edam = string.split(edam, '_')
     edam = "EDAM_{}:{:0>4d}".format(edam[0], int(edam[1]))
     return edam
-
-
-def tsv_to_dict(edam_mapping_file, mapping_dict):
-    """
-    Deprecated
-    :param edam_mapping_file:
-    :param mapping_dict:
-    :return:
-    """
-    with open(edam_mapping_file, "r") as EG_MAPPING:
-        for line in EG_MAPPING:
-            splitted = string.split(line, '\t')
-            if len(splitted) > 1 and splitted[0] not in ["GALAXY", "NAME", '"', "EXTENSION", '']:
-                if splitted[1].strip() in ['']:
-                    mapping_dict[splitted[0].strip()] = ["Not Mapped Yet"]
-                else:
-                    form_edam = return_formatted_edam(splitted[1].strip())
-                    if splitted[0].strip() in mapping_dict:
-                        if mapping_dict[splitted[0].strip()][0] != form_edam:
-                            sys.stderr.write(
-                                "MAPPING Incoherence between {0} and {1} for {2} extension, {3} have been chosen\n".format(
-                                    mapping_dict[splitted[0].strip()][0], form_edam, splitted[0].strip(),
-                                    mapping_dict[splitted[0].strip()][0]))
-
-                    else:
-                        mapping_dict[splitted[0].strip()] = [form_edam]
-    return mapping_dict
-
-
-def xml_to_dict(datatype_file_xml, mapping_dict):
-    """
-    Deprecated
-    :param datatype_file_xml:
-    :param mapping_dict:
-    :return:
-    """
-    tree = ET.parse(datatype_file_xml)
-    root = tree.getroot()
-    for child in root[0]:
-        if 'display_in_upload' in child.attrib:
-            if is_edamtype(child.attrib):
-                edam_format = return_formatted_edam(child.attrib['edam'])
-                if not child.attrib['extension'] in mapping_dict and is_true(child.attrib['display_in_upload']):
-                    mapping_dict[child.attrib['extension']] = [edam_format]
-                else:
-                    if mapping_dict[child.attrib['extension']][0] != edam_format:
-                        sys.stderr.write(
-                            "XML Incoherence between {0} and {1} for {2} extension, {3} have been chosen\n".format(
-                                mapping_dict[child.attrib['extension']][0], edam_format, child.attrib['extension'],
-                                mapping_dict[child.attrib['extension']][0]))
-            else:
-                if not child.attrib['extension'] in mapping_dict and is_true(child.attrib['display_in_upload']):
-                    mapping_dict[child.attrib['extension']] = ["Not Mapped Yet"]
-    return mapping_dict
 
 
 def http_to_edamform(url):
@@ -212,17 +156,17 @@ def add_data(formats, relation_formats, relation_data, list_edam_data):
         return list_edam_data
 
 
-def add_datas(dict_map, relation_format_formats, relation_format_data):
+def add_datas(dict_map, rel_format_formats, rel_format_data):
     """
     :param dict_map:
-    :param relation_format_formats:
-    :param relation_format_data:
+    :param rel_format_formats:
+    :param rel_format_data:
     :return:
     """
     import copy
     for key, value in dict_map.iteritems():
         formats = copy.copy(value)
-        datas = add_data(formats, relation_format_formats, relation_format_data, list_edam_data=[])
+        datas = add_data(formats, rel_format_formats, rel_format_data, list_edam_data=[])
         dict_map[key] = value + datas
     return dict_map
 
@@ -237,15 +181,12 @@ def dict_to_yaml(mapping_dict, yamlfile):
     yaml.dump(mapping_dict, stream, default_flow_style=False)
 
 
-def galaxy_to_edamdict(url, key, dict_map=None):
+def galaxy_to_edamdict(url, key):
     """
     :param url:
     :param key:
-    :param dict_map:
     :return:
     """
-    if not dict_map:
-        dict_map = {}
     gi = GalaxyInstance(url, key=key)
     datatypeclient = EdamDatatypesClient(gi)
     try:
@@ -258,26 +199,6 @@ def galaxy_to_edamdict(url, key, dict_map=None):
         form_edam = return_formatted_edam(value)
         dictmapping[str(key)] = [form_edam]
     return dictmapping
-
-def generate_template():
-    """
-    :return:
-    """
-    TEMPLATE_CONFIG = os.path.join('$PREFIXDATA', 'regate.ini')
-    with open( TEMPLATE_CONFIG, 'r') as configtemplate:
-        with open('regate.ini', 'w') as fp:
-            for line in configtemplate:
-                fp.write(line)
-
-def config_parser(configfile):
-    """
-    :param configfile:
-    :return:
-    """
-    config = configparser.ConfigParser()
-    config.read(configfile)
-    return config
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Galaxy instance tool\
@@ -294,26 +215,13 @@ if __name__ == "__main__":
     if not args.templateconfig:
         if not os.path.exists(args.config_file):
             raise IOError("{0} doesn't exist".format(args.config_file))
-        config = config_parser(args.config_file)
-        if 'galaxy_url_api' and 'api_key' in config['galaxy_server'] and config.get('galaxy_server', 'galaxy_url_api') and config.get('galaxy_server', 'api_key'):
-            dict_mapping = galaxy_to_edamdict(config.get('galaxy_server', 'galaxy_url_api'), config.get('galaxy_server', 'api_key'))
-        else:
-            raise KeyError("galaxy_url_api or api_key option doesn't exist in {0}".format(args.config_file))
-
-
-        if 'edam_file' in config['remag_specific_section'] and config.get('remag_specific_section', 'edam_file'):
-            relation_format_formats, relation_format_data = edam_to_dict(config.get('remag_specific_section', 'edam_file'))
-        else:
-            raise KeyError("edam_file option doesn't exist in {0}".format(args.config_file))
-
-        if 'output_yaml' in config['remag_specific_section'] and config.get('remag_specific_section', 'output_yaml'):
-            yaml_file = config.get('remag_specific_section', 'output_yaml')
-            dict_mapping = add_datas(dict_mapping, relation_format_formats, relation_format_data)
-
-            dict_to_yaml(dict_mapping, yaml_file)
-        else:
-            raise KeyError("output_yaml option doesn't exist in {0}".format(args.config_file))
+        config = regate.Config(args.config_file, "remag")
+        dict_mapping = galaxy_to_edamdict(config.galaxy_url_api, config.api_key)
+        relation_format_formats, relation_format_data = edam_to_dict(config.edam_file)
+        yaml_file = config.output_yaml
+        dict_mapping = add_datas(dict_mapping, relation_format_formats, relation_format_data)
+        dict_to_yaml(dict_mapping, yaml_file)
     elif args.templateconfig:
-        generate_template()
+        regate.generate_template()
     else:
         parser.print_help()

@@ -17,6 +17,6 @@ To create json and xml file and import the json files in the Elixir Registry you
 "``regate.py --config_file config.ini``"
 
   
-To only inmport already created json file in the registry set to True the options onlypush and pushtoelixir and specify your login and the directory where is tools (tool_dir) and type:
+To only import already created json file in the registry set to True the options onlypush and pushtoelixir and specify your login and the directory where is tools (tool_dir) and type:
   
   "``regate.py --config_file config.ini``"

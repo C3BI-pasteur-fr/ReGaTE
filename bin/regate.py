@@ -23,7 +23,6 @@ import getpass
 import copy
 import logging
 import configparser
-import remag
 
 from Cheetah.Template import Template
 from bioblend.galaxy.client import ConnectionError
@@ -31,12 +30,84 @@ from bioblend.galaxy import GalaxyInstance
 
 from logging.handlers import RotatingFileHandler
 
+
+class Config(object):
+    """
+    class config to parse and check the config.ini file
+    """
+    def __init__(self, configfile, script):
+        self.conf = config_parser(configfile)
+        self.galaxy_url_api = self.assign("galaxy_server", "galaxy_url_api", ismandatory=True)
+        self.api_key = self.assign("galaxy_server", "api_key", ismandatory=True)
+        if script == "regate":
+            self.galaxy_url = self.assign("galaxy_server", "galaxy_url", ismandatory=True)
+            self.tools_default = self.assign("galaxy_server", "tools_default", ismandatory=True)
+            self.contactName = self.assign("galaxy_server", "contactName", ismandatory=True)
+            self.contactEmail = self.assign("galaxy_server", "contactEmail", ismandatory=True)
+            self.ressourcename = self.assign("galaxy_server", "ressourcename", ismandatory=True)
+            self.onlypush = self.assign("regate_specific_section", "onlypush", ismandatory=False, boolean=True)
+            if self.onlypush:
+                self.pushtoelixir = self.assign("regate_specific_section", "pushtoelixir", ismandatory=True,
+                                                message="pushtoelixir option is mandatory if onlypush is True",
+                                                boolean=True)
+            else:
+                self.pushtoelixir = self.assign("regate_specific_section", "pushtoelixir", ismandatory=False,
+                                                boolean=True)
+            if self.pushtoelixir:
+                self.login = self.assign("regate_specific_section", "login", ismandatory=True,
+                                         message="login option is mandatory if pushtoelixir is True")
+            else:
+                self.login = self.assign("regate_specific_section", "login", ismandatory=False)
+            self.tool_dir = self.assign("regate_specific_section", "tool_dir", ismandatory=True)
+            self.yaml_file = self.assign("regate_specific_section", "yaml_file", ismandatory=False)
+            self.xmltemplate = self.assign("regate_specific_section", "xmltemplate", ismandatory=False)
+        if script == "remag":
+            self.edam_file = self.assign("remag_specific_section", "edam_file", ismandatory=True)
+            self.output_yaml = self.assign("remag_specific_section", "output_yaml", ismandatory=True)
+
+    def assign(self, section, key, ismandatory=True, message=None, boolean=False):
+        """
+            return value if key exist in config.ini file or an error or None if not, depending on whether the option
+            is mandatory or not
+        """
+        if ismandatory:
+            if self.exist(section, key):
+                return self.getvalue(section, key, boolean=boolean)
+            else:
+                if message:
+                    raise KeyError(message)
+                else:
+                    raise KeyError("{0} option is mandatory".format(key))
+        if not ismandatory:
+            if self.exist(section, key):
+                return self.getvalue(section, key, boolean=boolean)
+            else:
+                return None
+
+    def getvalue(self, section, key, boolean=False):
+        """
+            test if key is a boolean and return value
+        """
+        if boolean:
+            return self.conf.getboolean(section, key)
+        else:
+            return self.conf.get(section, key)
+
+    def exist(self, section, key):
+        """
+            Check if key exist in the section
+        """
+        if key in self.conf[section] and self.conf.get(section, key):
+            return True
+        else:
+            return False
+
+
 def build_tool_name(tool_id):
     """
     @tool_id: tool_id
     builds the tool_name regarding its toolshed id
    """
-    # print tool_id
     id_list = string.split(tool_id, '/')
     return string.join(id_list[-2:], '_')
 
@@ -83,61 +154,68 @@ def build_metadata_one(tool_meta_data, conf):
       builds general_dict
       @param: tool_meta_data for one tool extracted from galaxy
     """
-    ressourcename = conf.get('galaxy_server', 'ressourcename')
     #    gen_dict = {k: tool_meta_data[k] for k in (u'version', u'description')}
 
-    gen_dict = {}
-    gen_dict[u'version'] = tool_meta_data[u'version']
-    gen_dict[u'description'] = format_description(tool_meta_data[u'description'])
-    gen_dict[u'uses'] = [{"usesName": tool_meta_data[u'id'],
-                          "usesHomepage":  "{0}?tool_id={1}".format(
-                                                        os.path.join(conf.get('galaxy_server', 'galaxy_url'),"root"),
-                                                        tool_meta_data[u'id']
-                                                        ),
-                          "usesVersion": gen_dict[u'version']
-                          }]
-    gen_dict[u'collection'] = [ressourcename]
-    gen_dict[u'sourceRegistry'] = get_source_registry(tool_meta_data[u'id'])
-    gen_dict[u'resourceType'] = ["Tool"]
-    gen_dict[u'maturity'] = 'Established'
-
-    gen_dict[u'platform'] = [{u'term': 'Linux'}]
-    gen_dict[u'interface'] = [
-        {u'interfaceType': "WEB UI",
-        u'interfaceDocs': '',
-        u'interfaceSpecURL':'',
-        u'interfaceSpecFormat':''}]
-    # these fields need to be filled with MODULE ressource at Pasteur
-    # gen_dict[u'language'] = []
-    gen_dict[u'topic'] = [{u'uri': "http://edamontology.org/topic_0003",
-                           u'term' : "EDAM label placeholder"}]
-    gen_dict[u'credits'] = []
-    gen_dict[u'publications'] = {u'publicationsPrimaryID': "None", u'publicationsOtherID' : []}
-    gen_dict[u'homepage'] = conf.get('galaxy_server', 'galaxy_url')
-    gen_dict[u'accessibility'] = "private"
-    gen_dict[u'mirror'] = []
-    gen_dict[u'canonicalID'] = ''
-    gen_dict[u'tag'] = []
-    gen_dict[u'elixirInfo'] = {u'elixirStatus' :'',
-                            u'elixirNode':''}
-    gen_dict[u'platform'] = []
-    gen_dict[u'language'] = []
-    gen_dict[u'license'] = ''
-    gen_dict[u'cost'] = ''
-    gen_dict[u'docs'] = {u'docsHome': '',
-                    u'docsTermsOfUse': '',
-                    u'docsDownload': '',
-                    u'docsCitationInstructions': ''}
-    gen_dict[u'credits'] = {u'creditsDeveloper': [],
-                            u'creditsContributor': [],
-                            u'creditsInstitution': [],
-                            u'creditsInfrastructure': [],
-                            u'creditsFunding': []}
-    gen_dict[u'contact'] = [{u'contactEmail': conf.get('galaxy_server', 'contactEmail'),
-                            u'contactURL': '',
-                            u'contactName': conf.get('galaxy_server', 'contactName'),
-                            u'contactTel': '',
-                            u'contactRole': []}]
+    gen_dict = {
+        u'version': tool_meta_data[u'version'],
+        u'description': format_description(tool_meta_data[u'description']),
+        u'uses': [{
+            "usesName": tool_meta_data[u'id'],
+            "usesHomepage": "{0}?tool_id={1}".format(os.path.join(conf.galaxy_url, "root"),
+                                                     tool_meta_data[u'id']),
+            "usesVersion": tool_meta_data[u'version']
+        }],
+        u'collection': [conf.ressourcename],
+        u'sourceRegistry': get_source_registry(tool_meta_data[u'id']),
+        u'resourceType': ["Tool"],
+        u'maturity': 'Established',
+        u'platform': [{u'term': 'Linux'}],
+        u'interface': [{
+            u'interfaceType': "WEB UI",
+            u'interfaceDocs': '',
+            u'interfaceSpecURL': '',
+            u'interfaceSpecFormat': ''
+        }],
+        # these fields need to be filled with MODULE ressource at Pasteur
+        #  gen_dict[u'language'] = []
+        u'topic': [{
+            u'uri': "http://edamontology.org/topic_0003",
+            u'term': "EDAM label placeholder"
+        }],
+        u'publications': {u'publicationsPrimaryID': "None", u'publicationsOtherID': []},
+        u'homepage': conf.galaxy_url,
+        u'accessibility': "private",
+        u'mirror': [],
+        u'canonicalID': '',
+        u'tag': [],
+        u'elixirInfo': {
+            u'elixirStatus': '',
+            u'elixirNode': ''
+        },
+        u'language': [],
+        u'license': '',
+        u'cost': '',
+        u'docs': {
+            u'docsHome': '',
+            u'docsTermsOfUse': '',
+            u'docsDownload': '',
+            u'docsCitationInstructions': ''
+        },
+        u'credits': {
+            u'creditsDeveloper': [],
+            u'creditsContributor': [],
+            u'creditsInstitution': [],
+            u'creditsInfrastructure': [],
+            u'creditsFunding': []
+        },
+        u'contact': [{
+            u'contactEmail': conf.contactEmail,
+            u'contactURL': '',
+            u'contactName': conf.contactName,
+            u'contactTel': '',
+            u'contactRole': []
+        }]
+    }
     return gen_dict
 
 
@@ -240,14 +318,12 @@ def build_input_for_json(list_inputs, mapping_edam):
     """
     liste = []
     for input_tool in list_inputs:
-        inputdict = {}
         try:
             formatlist = input_tool[u'extensions']
-        except KeyError, e:
-            print e, "error 1"
+        except KeyError, err:
+            print err, "error 1"
             formatlist = ["AnyFormat"]
 
-        inputdict[u'dataType'] = []
         list_format = []
         for format_tool in formatlist:
             uri = find_edam_format(format_tool, mapping_edam)
@@ -257,10 +333,12 @@ def build_input_for_json(list_inputs, mapping_edam):
         if data_uri:
             data_uri = "http://edamontology.org/data_0006"
             logger.warning("EDAM MAPPING: TERM ----{}---- is missing from EDAM current version".format(formatlist[0]))
-        inputdict[u'dataType'] = {u'uri': data_uri, u'term': 'EDAM label placeholder'}
-        inputdict[u'dataFormat'] = list_format
-        inputdict[u'dataHandle'] = ", ".join(input_tool[u'extensions'])
-        inputdict[u'dataDescription'] = ''
+        inputdict = {
+            u'dataType': {u'uri': data_uri, u'term': 'EDAM label placeholder'},
+            u'dataFormat': list_format,
+            u'dataHandle': ", ".join(input_tool[u'extensions']),
+            u'dataDescription': ''
+        }
         liste.append(inputdict)
     return liste
 
@@ -272,7 +350,6 @@ def build_fonction_dict(tool_meta_data, mapping_edam):
     dict comprehension to keep only important info
     1 steps for outputs, only dict comprehension
     """
-    func_dict = {}
     func_list = []
     inputs = {}
     outputs = []
@@ -303,36 +380,43 @@ def build_fonction_dict(tool_meta_data, mapping_edam):
             # _____________OUTPUT DICT_______________________________________
 
     for output in tool_meta_data[u'outputs']:
-        outputdict = {}
         data_uri = find_edam_data(output[u'format'], mapping_edam)
-        if data_uri == []:
+        if data_uri:
             data_uri = "http://edamontology.org/data_0006"
             # put a logger here to get the missing format
-            logger.warning("EDAM MAPPING: TERM ----{}---- is missing from EDAM current version".format(output[u'format']))
+            logger.warning("EDAM MAPPING: TERM --{0}-- is missing from EDAM current version".format(output[u'format']))
         # print tool_meta_data['name'], term
         uri = find_edam_format(output[u'format'], mapping_edam)
-        outputdict[u'dataType'] = {u'uri': data_uri, u'term': 'EDAM label placeholder'}
-        outputdict[u'dataFormat'] = [{u'uri': uri, u'term': 'EDAM label placeholder'}]
-        outputdict[u'dataHandle'] = ''
-        outputdict[u'dataDescription'] = ''
+        outputdict = {
+            u'dataType': {u'uri': data_uri, u'term': 'EDAM label placeholder'},
+            u'dataFormat': [{u'uri': uri, u'term': 'EDAM label placeholder'}],
+            u'dataHandle': '',
+            u'dataDescription': ''
+        }
         outputs.append(outputdict)
 
     if inputs.get("input_fix") is None:
         for input_case_name, item in inputs.items():
-            func_dict = {}
-            func_dict[u'functionDescription'] = format_description(tool_meta_data[u'description'])
-            func_dict[u'functionName'] = [{u'uri': "http://edamontology.org/operation_0004", u'term' : 'EDAM label placeholder'}]
-            func_dict[u'output'] = outputs
-            func_dict[u'input'] = item
-            func_dict[u'functionHandle'] = input_case_name
-            # func_dict[u'annot'] = input_case_name
+            func_dict = {
+                u'functionDescription': format_description(tool_meta_data[u'description']),
+                u'functionName': [{
+                    u'uri': "http://edamontology.org/operation_0004",
+                    u'term': 'EDAM label placeholder'
+                }],
+                u'output': outputs,
+                u'input': item,
+                u'functionHandle': input_case_name
+                # func_dict[u'annot'] = input_case_name
+            }
             func_list.append(func_dict)
     else:
-        func_dict[u'functionDescription'] = format_description(tool_meta_data[u'description'])
-        func_dict[u'functionName'] = []
-        func_dict[u'output'] = outputs
-        func_dict[u'input'] = inputs[u"input_fix"]
-        func_dict[u'functionHandle'] = 'MainFunction'
+        func_dict = {
+            u'functionDescription': format_description(tool_meta_data[u'description']),
+            u'functionName': [],
+            u'output': outputs,
+            u'input': inputs[u"input_fix"],
+            u'functionHandle': 'MainFunction'
+        }
         func_list.append(func_dict)
     return func_list
 
@@ -412,6 +496,7 @@ def push_to_elix(login, tool_dir):
                 ko_cnt += 1
     print "import finished, ok=%s, ko=%s" % (ok_cnt, ko_cnt)
 
+
 def clean_list(jsonlist):
     """
     :param jsonlist:
@@ -431,6 +516,7 @@ def clean_list(jsonlist):
             jsonlist.pop(i)
     return
 
+
 def clean_dict(jsondict):
     """
     :param jsondict:
@@ -448,6 +534,7 @@ def clean_dict(jsondict):
             del jsondict[sonkey]
     return
 
+
 def write_json_files(tool_name, general_dict, tool_dir):
     """
     :param tool_name:
@@ -462,7 +549,6 @@ def write_json_files(tool_name, general_dict, tool_dir):
             json.dump(cleaned_dict, tool_file, indent=4)
 
 
-
 def write_xml_files(tool_name, general_dict, tool_dir, xmltemplate=None):
     """
     :param tool_name:
@@ -470,43 +556,57 @@ def write_xml_files(tool_name, general_dict, tool_dir, xmltemplate=None):
     :return:
     """
     if xmltemplate:
-        TEMPLATE_PATH = xmltemplate
+        template_path = xmltemplate
     else:
-        TEMPLATE_PATH = os.path.join('$PREFIXDATA','xmltemplate.tmpl')
+        template_path = os.path.join('$PREFIXDATA', 'xmltemplate.tmpl')
 
     if not os.path.exists(tool_dir):
         os.mkdir(tool_dir)
     with open(os.path.join(tool_dir, tool_name + ".xml"), 'w') as tool_file:
-            template = Template(file=TEMPLATE_PATH, searchList=[general_dict])
+            template = Template(file=template_path, searchList=[general_dict])
             tool_file.write(str(template))
 
-def build_outputs(tools_meta_data, conf, mapping_edam):
+
+def build_outputs(tools_metadata, conf, mapping_edam):
     """
-    :param tools_meta_data:
+    :param tools_metadata:
     :return:
     """
-    for tool in tools_meta_data:
-        tool_name = build_tool_name(tool[u'id'])
-        function = build_fonction_dict(tool, mapping_edam)
-        general_dict = build_metadata_one(tool, conf)
+    for tool_meta in tools_metadata:
+        tool_name = build_tool_name(tool_meta[u'id'])
+        function = build_fonction_dict(tool_meta, mapping_edam)
+        general_dict = build_metadata_one(tool_meta, conf)
         general_dict[u"function"] = function
-        #general_dict[u"name"] = get_tool_name(tool[u'id'])
-        general_dict[u"name"] = tool[u'name']
-        write_json_files(tool_name, general_dict, conf.get('regate_specific_section', 'tool_dir'))
-        if 'xmltemplate' in conf['regate_specific_section']:
-            write_xml_files(tool_name, general_dict, conf.get('regate_specific_section', 'tool_dir'),
-                            xmltemplate=conf.get('regate_specific_section', 'xmltemplate'))
+        # general_dict[u"name"] = get_tool_name(tool[u'id'])
+        general_dict[u"name"] = tool_meta[u'name']
+        write_json_files(tool_name, general_dict, conf.tool_dir)
+        if conf.xmltemplate:
+            write_xml_files(tool_name, general_dict, conf.tool_dir,
+                            xmltemplate=conf.xmltemplate)
         else:
-            write_xml_files(tool_name, general_dict, conf.get('regate_specific_section', 'tool_dir'))
+            write_xml_files(tool_name, general_dict, conf.tool_dir)
+
+
+def generate_template():
+    """
+    :return:
+    """
+    template_config = os.path.join('$PREFIXDATA', 'regate.ini')
+    with open(template_config, 'r') as configtemplate:
+        with open('regate.ini', 'w') as fp:
+            for line in configtemplate:
+                fp.write(line)
+
 
 def config_parser(configfile):
     """
     :param configfile:
     :return:
     """
-    config = configparser.ConfigParser()
-    config.read(configfile)
-    return config
+    configuration = configparser.ConfigParser()
+    configuration.read(configfile)
+    return configuration
+
 
 if __name__ == "__main__":
 
@@ -542,19 +642,23 @@ if __name__ == "__main__":
     if not args.templateconfig:
         if not os.path.exists(args.config_file):
             raise IOError("{0} doesn't exist".format(args.config_file))
-        config = remag.config_parser(args.config_file)
-
-        if not 'onlypush' in config['regate_specific_section'] or not config.getboolean('regate_specific_section', 'onlypush'):
-            gi = GalaxyInstance(config.get('galaxy_server', 'galaxy_url_api'), key=config.get('galaxy_server', 'api_key'))
+        config = Config(args.config_file, "regate")
+        if not config.onlypush:
+            gi = GalaxyInstance(config.galaxy_url_api, key=config.api_key)
             gi.verify = False
             try:
                 TOOLS = gi.tools.get_tools()
             except ConnectionError, e:
-                    raise ConnectionError("Connection with the Galaxy server {0} failed, {1}".format(config.get('galaxy_server', 'galaxy_url_api'), e))
+                raise ConnectionError("Connection with the Galaxy server {0} failed, {1}".format(config.galaxy_url_api,
+                                                                                                 e))
 
             tools_meta_data = []
-            edam_dict = build_edam_dict(config.get('regate_specific_section', 'yaml_file'))
-            tools_list = config.get('galaxy_server','tools_default').split(',')
+            if config.yaml_file:
+                edam_dict = build_edam_dict(config.yaml_file)
+            else:
+                edam_dict = build_edam_dict(os.path.join('$PREFIXDATA', 'yaml_mapping.yaml'))
+
+            tools_list = config.tools_default.split(',')
             for tool in TOOLS:
                 if not tool['id'] in tools_list:
                     tool_metadata = gi.tools.show_tool(tool_id=tool['id'], io_details=True, link_details=True)
@@ -562,22 +666,16 @@ if __name__ == "__main__":
 
             build_outputs(tools_meta_data, config, edam_dict)
 
-        if 'onlypush' in config['regate_specific_section'] and config.getboolean('regate_specific_section', 'onlypush'):
-            if not 'pushtoelixir' in config['regate_specific_section'] or not config.getboolean('regate_specific_section', 'pushtoelixir'):
-                raise KeyError("with onlypush argument pushtoelixir argument is required")
-            else:
-                tools_dir = config.get('regate_specific_section', 'tool_dir')
-                onlyfiles = [f for f in os.listdir(tools_dir) if os.path.isfile(os.path.join(tools_dir, f))]
-                if len(onlyfiles) == 0:
-                    raise IOError("Error: Any file in {0}".format(tools_dir))
+        if config.onlypush:
+            tools_dir = config.tool_dir
+            onlyfiles = [f for f in os.listdir(tools_dir) if os.path.isfile(os.path.join(tools_dir, f))]
+            if len(onlyfiles) == 0:
+                raise IOError("Error: Any file in {0}".format(tools_dir))
 
-        if 'pushtoelixir' in config['regate_specific_section'] and config.getboolean('regate_specific_section', 'pushtoelixir'):
-            if not 'login' in config['regate_specific_section'] or not config.get('regate_specific_section', 'login'):
-                raise KeyError("with pushtoelixir argument login elixir registry argument is required you can relaunch regate with just the onlypush option to True after login correction")
-            else:
-                push_to_elix(config.get('regate_specific_section','login'), config.get('regate_specific_section', 'tool_dir'))
+        if config.pushtoelixir:
+            push_to_elix(config.login, config.tool_dir)
 
     elif args.templateconfig:
-        remag.generate_template()
+        generate_template()
     else:
         parser.print_help()
