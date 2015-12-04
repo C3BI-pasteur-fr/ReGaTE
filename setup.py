@@ -93,11 +93,11 @@ def subst_vars(src, dst, vars):
 
 setup(
     name='regate',
-    version='0.1',
+    version='0.9',
     description='Registration of Galaxy Tools in Elixir',
     long_description=readme,
     author='Olivia Doppelt-Azeroual and Fabien Mareuil',
-    author_email='olivia.doppelt@pasteur.fr',
+    author_email='olivia.doppelt@pasteur.fr and fabien.mareuil@pasteur.fr',
     url='https://github.com/bioinfo-center-pasteur-fr/ReGaTE.git',
     scripts=[
         'bin/regate.py',
