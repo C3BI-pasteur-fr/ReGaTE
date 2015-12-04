@@ -14,10 +14,13 @@ Installation
 
 ReGaTE dependencies
 ===================
-ReGaTE has three dependencies
+ReGaTE has five dependencies
  - Python modules *PyYAML* (>=3.11)
  - Python modules *rdflib* (>=4.2.0)
- - A fork of BioBlend (https://github.com/galaxyproject/bioblend) available at (https://github.com/fmareuil/bioblend.git)
+ - Python modules *requests* (>=2.7.0)
+ - Python modules *cheetah* (>=2.4.4)
+ - Python modules *configparser* (>=3.3.0.post2)
+ - Python modules *bioblend* (>=0.5.4)
  
 These dependencies will automatically be installed during ReGaTE installation procedure.
 
