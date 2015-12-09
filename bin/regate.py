@@ -12,6 +12,7 @@ Created on Oct. 23, 2014
 
 import sys
 import os
+import glob
 import re
 import pprint
 import string
@@ -23,6 +24,8 @@ import getpass
 import copy
 import logging
 import configparser
+
+from lxml import etree
 
 from Cheetah.Template import Template
 from bioblend.galaxy.client import ConnectionError
@@ -50,17 +53,32 @@ class Config(object):
                 self.pushtoelixir = self.assign("regate_specific_section", "pushtoelixir", ismandatory=True,
                                                 message="pushtoelixir option is mandatory if onlypush is True",
                                                 boolean=True)
+                if not self.pushtoelixir:
+                    raise KeyError("pushtoelixir option must be True if onlypush is True")
+
             else:
                 self.pushtoelixir = self.assign("regate_specific_section", "pushtoelixir", ismandatory=False,
                                                 boolean=True)
             if self.pushtoelixir:
                 self.login = self.assign("regate_specific_section", "login", ismandatory=True,
                                          message="login option is mandatory if pushtoelixir is True")
+                self.host = self.assign("regate_specific_section", "bioregistry_host", ismandatory=True,
+                                        message="bioregistry_host option is mandatory if pushtoelixir is True")
+                self.ssl_verify = self.assign("regate_specific_section", "ssl_verify", ismandatory=True,
+                                              message="ssl_verify option is mandatory if pushtoelixir is True",
+                                              boolean=True)
+                self.private = self.assign("regate_specific_section", "private", ismandatory=True,
+                                                 message="private option is mandatory if pushtoelixir is True",
+                                                 boolean=True)
             else:
                 self.login = self.assign("regate_specific_section", "login", ismandatory=False)
+                self.host = self.assign("regate_specific_section", "bioregistry_host", ismandatory=False)
+                self.ssl_verify = self.assign("regate_specific_section", "ssl_verify", ismandatory=False, boolean=True)
+            self.private = self.assign("regate_specific_section", "private", ismandatory=True, boolean=True)
             self.tool_dir = self.assign("regate_specific_section", "tool_dir", ismandatory=True)
             self.yaml_file = self.assign("regate_specific_section", "yaml_file", ismandatory=False)
             self.xmltemplate = self.assign("regate_specific_section", "xmltemplate", ismandatory=False)
+            self.xsdbiotools = self.assign("regate_specific_section", "xsdbiotools", ismandatory=False)
         if script == "remag":
             self.edam_file = self.assign("remag_specific_section", "edam_file", ismandatory=True)
             self.output_yaml = self.assign("remag_specific_section", "output_yaml", ismandatory=True)
@@ -168,10 +186,10 @@ def build_metadata_one(tool_meta_data, conf):
         u'collection': [conf.ressourcename],
         u'sourceRegistry': get_source_registry(tool_meta_data[u'id']),
         u'resourceType': ["Tool"],
-        u'maturity': 'Established',
+        u'maturity': 'Stable',
         u'platform': [{u'term': 'Linux'}],
         u'interface': [{
-            u'interfaceType': "WEB UI",
+            u'interfaceType': "Web UI",
             u'interfaceDocs': '',
             u'interfaceSpecURL': '',
             u'interfaceSpecFormat': ''
@@ -184,7 +202,7 @@ def build_metadata_one(tool_meta_data, conf):
         }],
         u'publications': {u'publicationsPrimaryID': "None", u'publicationsOtherID': []},
         u'homepage': conf.galaxy_url,
-        u'accessibility': "private",
+        u'accessibility': "Private" if conf.private else "Public",
         u'mirror': [],
         u'canonicalID': '',
         u'tag': [],
@@ -283,7 +301,7 @@ def find_edam_format(format_name, mapping_edam):
         return uri
     else:
         uri = "http://edamontology.org/format_1915"
-        logger.warning("EDAM MAPPING: TERM ----{}---- is missing from EDAM current version".format(format_name))
+        logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(format_name))
         return uri
 
 
@@ -332,7 +350,7 @@ def build_input_for_json(list_inputs, mapping_edam):
         data_uri = find_edam_data(formatlist[0], mapping_edam)
         if data_uri:
             data_uri = "http://edamontology.org/data_0006"
-            logger.warning("EDAM MAPPING: TERM ----{}---- is missing from EDAM current version".format(formatlist[0]))
+            logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(formatlist[0]))
         inputdict = {
             u'dataType': {u'uri': data_uri, u'term': 'EDAM label placeholder'},
             u'dataFormat': list_format,
@@ -384,7 +402,8 @@ def build_fonction_dict(tool_meta_data, mapping_edam):
         if data_uri:
             data_uri = "http://edamontology.org/data_0006"
             # put a logger here to get the missing format
-            logger.warning("EDAM MAPPING: TERM --{0}-- is missing from EDAM current version".format(output[u'format']))
+            logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(
+                output[u'format']))
         # print tool_meta_data['name'], term
         uri = find_edam_format(output[u'format'], mapping_edam)
         outputdict = {
@@ -412,7 +431,10 @@ def build_fonction_dict(tool_meta_data, mapping_edam):
     else:
         func_dict = {
             u'functionDescription': format_description(tool_meta_data[u'description']),
-            u'functionName': [],
+            u'functionName': [{
+                u'uri': "http://edamontology.org/operation_0004",
+                u'term': 'EDAM label placeholder'
+            }],
             u'output': outputs,
             u'input': inputs[u"input_fix"],
             u'functionHandle': 'MainFunction'
@@ -447,54 +469,60 @@ def build_edam_dict(yaml_file):
     return map_edam
 
 
-def auth(login):
+def auth(login, host, ssl_verify):
     """
     :param login:
     :return:
     """
     password = getpass.getpass()
-    resp = requests.post('https://elixir-registry.cbs.dtu.dk/api/auth/login',
-                         '{"username": "%s","password": "%s"}' % (login, password),
-                         headers={'Accept': 'application/json', 'Content-type': 'application/json'}).text
+    resp = requests.post(os.path.join(host, '/api/auth/login'),
+                         '{"username": "{0},"password": {1}}'.format(login, password),
+                         headers={'Accept': 'application/json', 'Content-type': 'application/json'},
+                         verify=ssl_verify).text
     return json.loads(resp)['token']
 
 
-def push_to_elix(login, tool_dir):
+def push_to_elix(login, host, ssl_verify, tool_dir, xsd=None):
     """
     :param login:
     :param tool_dir:
     :return:
     """
     print "authenticating..."
-    token = auth(login)
+    token = auth(login, host, ssl_verify)
     print "authentication ok"
     ok_cnt = 0
     ko_cnt = 0
     print "attempting to delete all registered services..."
-    resp = requests.delete('https://elixir-registry.cbs.dtu.dk/api/tool/%s' % login,
+    resp = requests.delete(os.path.join(host, '/api/tool/{0}'.format(login)),
                            headers={'Accept': 'application/json', 'Content-type': 'application/json',
-                                    'Authorization': 'Token %s' % token})
+                                    'Authorization': 'Token {0}'.format(token)})
     print resp
     print resp.headers
     print resp.status_code
     pprint.pprint(resp)
-
     print "loading json"
-    print os.getcwd()
-    path = os.path.join(os.getcwd(), tool_dir)
-    for jsonfile in os.listdir(tool_dir):
-        with open(os.path.join(path, jsonfile), 'r') as json_file:
-            json_data = json.load(json_file)
-            resp = requests.post('https://elixir-registry.cbs.dtu.dk/api/tool', json.dumps(json_data),
-                                 headers={'Accept': 'application/json', 'Content-type': 'application/json',
-                                          'Authorization': 'Token %s' % token})
-            if resp.status_code == 201:
-                print "%s ok" % jsonfile
-                ok_cnt += 1
-            else:
-                print "%s ko, error: %s" % (jsonfile, resp.text)
-                ko_cnt += 1
-    print "import finished, ok=%s, ko=%s" % (ok_cnt, ko_cnt)
+    if xsd:
+        xsdparse = etree.parse(xsd)
+    else:
+        xsdparse = etree.parse(os.path.join('$PREFIXDATA', 'biotools.xsd'))
+    schema = etree.XMLSchema(xsdparse)
+    parser = etree.XMLParser(schema = schema)
+    for xmlfile in glob.glob(os.path.join(tool_dir, "*.xml")):
+        try:
+            xmltree = etree.parse(xmlfile, parser)
+        except etree.XMLSyntaxError, err:
+            print  "XML {0} is wrong formated, {1}".format(os.path.basename(xmlfile), err)
+        resp = requests.post(os.path.join(host, '/api/tool'), etree.tostring(xmltree, pretty_print=True),
+                             headers={'Accept': 'application/json', 'Content-type': 'application/json',
+                                      'Authorization': 'Token {0}'.format(token)}, verify=ssl_verify)
+        if resp.status_code == 201:
+            print "{0} ok".format(os.path.basename(xmlfile))
+            ok_cnt += 1
+        else:
+            print "{0} ko, error: {1}".format(os.path.basename(xmlfile), resp.text)
+            ko_cnt += 1
+    print "import finished, ok={0}, ko={1}".format(ok_cnt, ko_cnt)
 
 
 def clean_list(jsonlist):
@@ -673,7 +701,10 @@ if __name__ == "__main__":
                 raise IOError("Error: Any file in {0}".format(tools_dir))
 
         if config.pushtoelixir:
-            push_to_elix(config.login, config.tool_dir)
+            if config.xsdbiotools:
+                push_to_elix(config.login, config.host, config.ssl_verify, config.tool_dir, xsd=config.xsdbiotools)
+            else:
+                push_to_elix(config.login, config.host, config.ssl_verify, config.tool_dir)
 
     elif args.templateconfig:
         generate_template()

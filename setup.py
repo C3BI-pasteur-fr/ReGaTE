@@ -103,7 +103,8 @@ setup(
         'bin/regate.py',
         'bin/remag.py'
     ],
-    data_files=[('share/regate', ['data/yaml_mapping.yaml', 'data/regate.ini', 'data/xmltemplate.tmpl'])],
+    data_files=[('share/regate', ['data/yaml_mapping.yaml', 'data/regate.ini', 'data/xmltemplate.tmpl',
+                                  'data/biotools.xsd'])],
     license="AFL",
     fix_prefix=['regate.py', 'remag.py'],
     cmdclass={'install': install_regate,
