@@ -126,8 +126,9 @@ def build_tool_name(tool_id):
     @tool_id: tool_id
     builds the tool_name regarding its toolshed id
    """
-    id_list = string.split(tool_id, '/')
-    return string.join(id_list[-2:], '_')
+    tbl = string.maketrans('.:/','___')
+    #warning unicode is not string
+    return str(tool_id).translate(tbl)
 
 
 def get_source_registry(tool_id):
@@ -605,8 +606,11 @@ def build_outputs(tools_metadata, conf, mapping_edam):
         function = build_fonction_dict(tool_meta, mapping_edam)
         general_dict = build_metadata_one(tool_meta, conf)
         general_dict[u"function"] = function
-        # general_dict[u"name"] = get_tool_name(tool[u'id'])
-        general_dict[u"name"] = tool_meta[u'name']
+        # to obtain an uniq id in galaxy we need the toolshed repository, the owner, the xml toolid, the xml version,
+        # if the tool provide from a toolshed, if not we need the xml toolid and the xml version only
+        # The easiest : use id of the tool
+        # general_dict[u"name"] = tool_meta[u'id']
+        general_dict[u"name"] = tool_name
         write_json_files(tool_name, general_dict, conf.tool_dir)
         if conf.xmltemplate:
             write_xml_files(tool_name, general_dict, conf.tool_dir,
