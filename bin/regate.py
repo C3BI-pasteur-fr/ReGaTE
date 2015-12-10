@@ -121,17 +121,22 @@ class Config(object):
             return False
 
 
-def build_tool_name(tool_id):
+def build_tool_name(tool_id, tool_version):
     """
     @tool_id: tool_id
     builds the tool_name regarding its toolshed id
    """
     tbl = string.maketrans('.:/','___')
-    #warning unicode is not string
-    return str(tool_id).translate(tbl)
+    # warning unicode is not string
+    # with a long id galaxy, xml version is already in the id
+    if tool_version in tool_id:
+        return str(tool_id).translate(tbl)
+    else:
+        return str("_".join([tool_id, tool_version])).translate(tbl)
 
 
 def get_source_registry(tool_id):
+    #a supprimer trop compliqué d'avoir l'info et en plus les sources si elles sont accessible le sont depuis la page du galaxy
     """
     :param tool_id:
     :return:
@@ -139,15 +144,6 @@ def get_source_registry(tool_id):
     try:
         source = string.split(tool_id, '/')
         return "https://" + '/'.join(source[0:len(source) - 2])
-    except ValueError:
-        print "ValueError:", tool_id
-        return ""
-
-
-def get_tool_name(tool_id):
-    try:
-        source = string.split(tool_id, '/')[-2]
-        return source
     except ValueError:
         print "ValueError:", tool_id
         return ""
@@ -166,6 +162,55 @@ def format_description(description):
             return description[0].upper() + description[1:size] + '.'
     except IndexError:
         print description
+
+
+def inputs_extract_data(data_json):
+    pass
+    #print data_json
+
+
+def inputs_extract_repeat(repeat_json):
+    #print repeat_json['name']
+    #print repeat_json['help']
+    #print repeat_json['title']
+    for input in  repeat_json['inputs']:
+        if input['type'] == "conditional":
+            inputs_extract_conditional(input)
+        elif input['type'] == "repeat":
+            inputs_extract_repeat(input)
+        #elif input["type"] == "data":
+            #print inputs_extract_data(input)
+    #print repeat_json
+
+
+def inputs_extract_conditional(conditional_json):
+    #print conditional_json['name']
+    for case in conditional_json["cases"]:
+        #print case["value"]
+        print case
+        for input in case["inputs"]:
+            if input['type'] == "conditional":
+                inputs_extract_conditional(input)
+            elif input['type'] == "repeat":
+                inputs_extract_repeat(input)
+            #elif input["type"] == "data":
+            #    print inputs_extract_data(input)
+
+def extract_informations(tool_json):
+    """
+    print tool_json['description']
+    print tool_json['id']
+    print tool_json['version']
+    """
+    print tool_json['name']
+
+    for input in tool_json['inputs']:
+        if input['type'] == "conditional":
+            inputs_extract_conditional(input)
+        elif input['type'] == "repeat":
+            inputs_extract_repeat(input)
+        elif input["type"] == "data":
+            inputs_extract_data(input)
 
 
 def build_metadata_one(tool_meta_data, conf):
@@ -443,7 +488,7 @@ def build_fonction_dict(tool_meta_data, mapping_edam):
         func_list.append(func_dict)
     return func_list
 
-
+'''
 def extract_edam_from_galaxy(mapping_edam=None):
     """
     :param mapping_edam:
@@ -467,6 +512,15 @@ def build_edam_dict(yaml_file):
             map_edam[key] = map_edam[key] + temp_map_edam[key][1:]
         else:
             map_edam[key] = temp_map_edam[key]
+    return map_edam
+'''
+def build_edam_dict(yaml_file):
+    """
+    :param yaml_file:
+    :return:
+    """
+    with open(yaml_file, "r") as file_edam:
+        map_edam = yaml.load(file_edam)
     return map_edam
 
 
@@ -602,7 +656,8 @@ def build_outputs(tools_metadata, conf, mapping_edam):
     :return:
     """
     for tool_meta in tools_metadata:
-        tool_name = build_tool_name(tool_meta[u'id'])
+        extract_informations(tool_meta)
+        tool_name = build_tool_name(tool_meta[u'id'], tool_meta[u'version'])
         function = build_fonction_dict(tool_meta, mapping_edam)
         general_dict = build_metadata_one(tool_meta, conf)
         general_dict[u"function"] = function
