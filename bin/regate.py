@@ -68,8 +68,8 @@ class Config(object):
                                               message="ssl_verify option is mandatory if pushtoelixir is True",
                                               boolean=True)
                 self.private = self.assign("regate_specific_section", "private", ismandatory=True,
-                                                 message="private option is mandatory if pushtoelixir is True",
-                                                 boolean=True)
+                                           message="private option is mandatory if pushtoelixir is True",
+                                           boolean=True)
             else:
                 self.login = self.assign("regate_specific_section", "login", ismandatory=False)
                 self.host = self.assign("regate_specific_section", "bioregistry_host", ismandatory=False)
@@ -126,7 +126,7 @@ def build_tool_name(tool_id, tool_version):
     @tool_id: tool_id
     builds the tool_name regarding its toolshed id
    """
-    tbl = string.maketrans('.:/','___')
+    tbl = string.maketrans('.:/', '___')
     # warning unicode is not string
     # with a long id galaxy, xml version is already in the id
     if tool_version in tool_id:
@@ -136,7 +136,7 @@ def build_tool_name(tool_id, tool_version):
 
 
 def get_source_registry(tool_id):
-    #a supprimer trop compliqué d'avoir l'info et en plus les sources si elles sont accessible le sont depuis la page du galaxy
+    # a supprimer trop compliqué d'avoir l'info et en plus les sources si elles sont accessible le sont depuis la page du galaxy
     """
     :param tool_id:
     :return:
@@ -164,53 +164,116 @@ def format_description(description):
         print description
 
 
-def inputs_extract_data(data_json):
-    pass
-    #print data_json
-
-
-def inputs_extract_repeat(repeat_json):
-    #print repeat_json['name']
-    #print repeat_json['help']
-    #print repeat_json['title']
-    for input in  repeat_json['inputs']:
-        if input['type'] == "conditional":
-            inputs_extract_conditional(input)
-        elif input['type'] == "repeat":
-            inputs_extract_repeat(input)
-        #elif input["type"] == "data":
-            #print inputs_extract_data(input)
-    #print repeat_json
-
-
-def inputs_extract_conditional(conditional_json):
-    #print conditional_json['name']
-    for case in conditional_json["cases"]:
-        #print case["value"]
-        print case
-        for input in case["inputs"]:
-            if input['type'] == "conditional":
-                inputs_extract_conditional(input)
-            elif input['type'] == "repeat":
-                inputs_extract_repeat(input)
-            #elif input["type"] == "data":
-            #    print inputs_extract_data(input)
-
 def extract_informations(tool_json):
     """
     print tool_json['description']
     print tool_json['id']
     print tool_json['version']
-    """
-    print tool_json['name']
 
-    for input in tool_json['inputs']:
-        if input['type'] == "conditional":
-            inputs_extract_conditional(input)
-        elif input['type'] == "repeat":
-            inputs_extract_repeat(input)
-        elif input["type"] == "data":
-            inputs_extract_data(input)
+    """
+    print tool_json['name'], 'TOOL'
+
+    def inputs_extract_select(select_json):
+        pass
+
+    def inputs_extract_data(data_json):
+        dictinputs[(data_json["type"], data_json["name"], data_json["label"], tuple(data_json["extensions"]),
+                    tuple(data_json["edam_formats"]))] = copy.deepcopy(listtypes)
+
+    def inputs_extract_repeat(repeat_json):
+        listtypes.append((repeat_json['type'], repeat_json['name'], repeat_json['title'], repeat_json['help']))
+        # print repeat_json['name']
+        # print repeat_json['help']
+        # print repeat_json['title']
+        for inpt in repeat_json['inputs']:
+            if inpt['type'] == "conditional":
+                inputs_extract_conditional(inpt)
+            elif inpt['type'] == "repeat":
+                inputs_extract_repeat(inpt)
+            elif inpt["type"] == "data":
+                inputs_extract_data(inpt)
+        listtypes.pop(-1)
+
+    def inputs_extract_conditional(conditional_json):
+
+        # print conditional_json['name']
+        # print conditional_json["test_param"]["name"]
+        # print conditional_json["test_param"]["options"]
+        for case in conditional_json["cases"]:
+            # print case["value"]
+            listtypes.append((conditional_json['type'], conditional_json['name'],
+                              conditional_json["test_param"]["name"], conditional_json["test_param"]["label"],
+                              tuple(map(tuple, conditional_json["test_param"]["options"])), case["value"]))
+            for inpu in case["inputs"]:
+                if inpu['type'] == "conditional":
+                    inputs_extract_conditional(inpu)
+                elif inpu['type'] == "repeat":
+                    inputs_extract_repeat(inpu)
+                elif inpu["type"] == "data":
+                    inputs_extract_data(inpu)
+            listtypes.pop(-1)
+
+    dictinputs = {}
+    listtypes = []
+
+    for inp in tool_json['inputs']:
+
+        if inp['type'] == "conditional":
+            inputs_extract_conditional(inp)
+        elif inp['type'] == "repeat":
+            inputs_extract_repeat(inp)
+        elif inp["type"] == "data":
+            inputs_extract_data(inp)
+
+    build_function(reversedict(dictinputs))
+
+
+def build_function(inputsdict, mappin_edam):
+    func_list = []
+    inputs = []
+    for key, values in inputsdict.iteritems():
+        if key == "MainFunction":
+            data_uri = find_edam_data(, mapping_edam)
+            inputdict = {
+                u'dataType': {u'uri': data_uri, u'term': 'EDAM label placeholder'},
+                u'dataFormat': list_format,
+                u'dataHandle': ", ".join(input_tool[u'extensions']),
+                u'dataDescription': ''
+            }
+        if key[0] == "conditional":
+
+        #print key
+        inputs = {
+
+        }
+    func_dict = {
+        u'functionDescription': [u'description'],
+        u'functionName': [{
+            u'uri': "http://edamontology.org/operation_0004",
+            u'term': 'EDAM label placeholder'
+        }],
+        u'output': "nothing for the moment",
+        u'input': " ",
+        u'functionHandle': " "
+    }
+    func_list.append(func_dict)
+
+
+def reversedict(dictionary):
+    new_dict = {}
+    for key, values in dictionary.iteritems():
+        if values:
+            for value in values:
+                if not tuple(value) in new_dict:
+                    new_dict[tuple(value)] = [key]
+                else:
+                    new_dict[tuple(value)].append(key)
+        else:
+            if not "MainFunction" in new_dict:
+                new_dict["MainFunction"] = [key]
+            else:
+                new_dict["MainFunction"].append(key)
+    return new_dict
 
 
 def build_metadata_one(tool_meta_data, conf):
@@ -656,7 +719,7 @@ def build_outputs(tools_metadata, conf, mapping_edam):
     :return:
     """
     for tool_meta in tools_metadata:
-        extract_informations(tool_meta)
+        function = extract_informations(tool_meta)
         tool_name = build_tool_name(tool_meta[u'id'], tool_meta[u'version'])
         function = build_fonction_dict(tool_meta, mapping_edam)
         general_dict = build_metadata_one(tool_meta, conf)
