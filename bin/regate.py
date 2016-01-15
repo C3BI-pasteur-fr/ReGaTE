@@ -136,14 +136,12 @@ def build_tool_name(tool_id, tool_version):
 
 
 def get_source_registry(tool_id):
-    # a supprimer trop compliqué d'avoir l'info et en plus les sources si elles sont accessible le sont depuis la page du galaxy
     """
     :param tool_id:
     :return:
     """
     try:
-        source = string.split(tool_id, '/')
-        return "https://" + '/'.join(source[0:len(source) - 2])
+        return "/".join(tool_id.replace('repos','view',1).split('/')[0:-2])
     except ValueError:
         print "ValueError:", tool_id
         return ""
@@ -164,24 +162,50 @@ def format_description(description):
         print description
 
 
-def extract_informations(tool_json):
+def extract_informations(tool_json, mapping_edam):
     """
     print tool_json['description']
     print tool_json['id']
     print tool_json['version']
 
     """
-    print tool_json['name'], 'TOOL'
+    print tool_json['id'], 'TOOL'
+
+    def keygenerator(listtags):
+        key = ''
+        for tag in listtags:
+            key = key + tag['type'] + tag['name']
+        return key
 
     def inputs_extract_select(select_json):
         pass
 
     def inputs_extract_data(data_json):
-        dictinputs[(data_json["type"], data_json["name"], data_json["label"], tuple(data_json["extensions"]),
-                    tuple(data_json["edam_formats"]))] = copy.deepcopy(listtypes)
+        if not listtypes:
+            if not "MainFunction" in dictinputs:
+                dictinputs["MainFunction"] = [["MainFunction"],[{'type':data_json["type"], 'name':data_json["name"],
+                                                                 'label':data_json["label"],
+                                                                 'extensions':data_json["extensions"],
+                                                                 'edam_formats':data_json["edam_formats"]}]]
+            else:
+                dictinputs["MainFunction"][1].append({'type':data_json["type"], 'name':data_json["name"],
+                                                      'label':data_json["label"], 'extensions':data_json["extensions"],
+                                                      'edam_formats':data_json["edam_formats"]})
+        else:
+            inputkey = keygenerator(listtypes)
+            if not inputkey in dictinputs:
+                dictinputs[inputkey] = [copy.deepcopy(listtypes),[{'type':data_json["type"], 'name':data_json["name"],
+                                                                     'label':data_json["label"],
+                                                                     'extensions':data_json["extensions"],
+                                                                     'edam_formats':data_json["edam_formats"]}]]
+            else:
+                dictinputs[inputkey][1].append({'type':data_json["type"], 'name':data_json["name"],
+                                                'label':data_json["label"], 'extensions':data_json["extensions"],
+                                                'edam_formats':data_json["edam_formats"]})
 
     def inputs_extract_repeat(repeat_json):
-        listtypes.append((repeat_json['type'], repeat_json['name'], repeat_json['title'], repeat_json['help']))
+        listtypes.append({'type':repeat_json['type'], 'name':repeat_json['name'],
+                          'title':repeat_json['title'], 'help':repeat_json['help']})
         # print repeat_json['name']
         # print repeat_json['help']
         # print repeat_json['title']
@@ -199,11 +223,13 @@ def extract_informations(tool_json):
         # print conditional_json['name']
         # print conditional_json["test_param"]["name"]
         # print conditional_json["test_param"]["options"]
+        # we need informations from the param in the
         for case in conditional_json["cases"]:
-            # print case["value"]
-            listtypes.append((conditional_json['type'], conditional_json['name'],
-                              conditional_json["test_param"]["name"], conditional_json["test_param"]["label"],
-                              tuple(map(tuple, conditional_json["test_param"]["options"])), case["value"]))
+            if "option" in conditional_json["test_param"]:
+                listtypes.append({'type':conditional_json['type'], 'conditional_name':conditional_json['name'],
+                                  'name':conditional_json["test_param"]["name"],
+                                  'label':conditional_json["test_param"]["label"],
+                                  'options':conditional_json["test_param"]["options"], 'value':case["value"]})
             for inpu in case["inputs"]:
                 if inpu['type'] == "conditional":
                     inputs_extract_conditional(inpu)
@@ -211,11 +237,13 @@ def extract_informations(tool_json):
                     inputs_extract_repeat(inpu)
                 elif inpu["type"] == "data":
                     inputs_extract_data(inpu)
-            listtypes.pop(-1)
+            if "option" in conditional_json["test_param"]:
+                listtypes.pop(-1)
 
     dictinputs = {}
     listtypes = []
 
+    #pprint.pprint(tool_json)
     for inp in tool_json['inputs']:
 
         if inp['type'] == "conditional":
@@ -225,27 +253,27 @@ def extract_informations(tool_json):
         elif inp["type"] == "data":
             inputs_extract_data(inp)
 
-    build_function(reversedict(dictinputs))
+    build_function(dictinputs, mapping_edam)
 
 
-def build_function(inputsdict, mappin_edam):
+
+def build_function(inputsdict, mapping_edam):
     func_list = []
     inputs = []
     for key, values in inputsdict.iteritems():
         if key == "MainFunction":
-            data_uri = find_edam_data(, mapping_edam)
-            inputdict = {
-                u'dataType': {u'uri': data_uri, u'term': 'EDAM label placeholder'},
-                u'dataFormat': list_format,
-                u'dataHandle': ", ".join(input_tool[u'extensions']),
-                u'dataDescription': ''
-            }
-        if key[0] == "conditional":
+            for inputdata in values[1]:
+                data_uri = ", ".join(str(find_edam_data(edam_form, mapping_edam)) for edam_form in inputdata['extensions'])
+                inputdict = {
+                    u'dataType': {u'uri': data_uri, u'term': 'EDAM label placeholder'},
+                    u'dataFormat': ", ".join(str(ed) for ed in inputdata['edam_formats'] if ed is not None),
+                    u'dataHandle': ", ".join(inputdata['extensions']),
+                    u'dataDescription': ''
+                }
+            inputs.append(inputdict)
+    print inputs
 
-        #print key
-        inputs = {
 
-        }
     func_dict = {
         u'functionDescription': [u'description'],
         u'functionName': [{
@@ -434,7 +462,7 @@ def find_edam_data(format_name, mapping_edam):
 
         return ", ".join(list_uri)
     else:
-        return []
+        return None
 
 
 def build_input_for_json(list_inputs, mapping_edam):
@@ -718,16 +746,16 @@ def build_outputs(tools_metadata, conf, mapping_edam):
     :param tools_metadata:
     :return:
     """
-    for tool_meta in tools_metadata:
-        function = extract_informations(tool_meta)
-        tool_name = build_tool_name(tool_meta[u'id'], tool_meta[u'version'])
-        function = build_fonction_dict(tool_meta, mapping_edam)
+    for tool_meta in tools_metadata[5:11]:
         general_dict = build_metadata_one(tool_meta, conf)
+        function = extract_informations(tool_meta, mapping_edam)
+        function = build_fonction_dict(tool_meta, mapping_edam)
         general_dict[u"function"] = function
         # to obtain an uniq id in galaxy we need the toolshed repository, the owner, the xml toolid, the xml version,
         # if the tool provide from a toolshed, if not we need the xml toolid and the xml version only
         # The easiest : use id of the tool
         # general_dict[u"name"] = tool_meta[u'id']
+        tool_name = build_tool_name(tool_meta[u'id'], tool_meta[u'version'])
         general_dict[u"name"] = tool_name
         write_json_files(tool_name, general_dict, conf.tool_dir)
         if conf.xmltemplate:
