@@ -21,10 +21,11 @@ ReGaTE has five dependencies
  - Python modules *cheetah* (>=2.4.4)
  - Python modules *configparser* (>=3.3.0.post2)
  - Python modules *bioblend* (>=0.5.4)
+ - Python modules *lxml* (>=3.4.2)
  
 These dependencies will automatically be installed during ReGaTE installation procedure.
 
-**Python version 2.7** is required to run ReGaTE and ReMaG: https://docs.python.org/2.7/index.html
+**Python and Python-dev version 2.7** are required to run ReGaTE and ReMaG: https://docs.python.org/2.7/index.html
  
 
 Installation procedure
