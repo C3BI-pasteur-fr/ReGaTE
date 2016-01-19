@@ -137,8 +137,7 @@ def get_source_registry(tool_id):
     :return:
     """
     try:
-        source = string.split(tool_id, '/')
-        return "https://" + '/'.join(source[0:len(source) - 2])
+        return "/".join(tool_id.replace('repos','view',1).split('/')[0:-2])
     except ValueError:
         print "ValueError:", tool_id
         return ""
