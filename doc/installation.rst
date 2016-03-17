@@ -46,7 +46,7 @@ And, activate it::
 
 To install ReGaTE::
 
-    git clone https://github.com/C3BI-pasteur-f/ReGaTE.git
+    git clone https://github.com/C3BI-pasteur-fr/ReGaTE.git
     cd ReGaTE
     python setup.py install
 
