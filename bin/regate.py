@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/home/odoppelt/projets/Galaxy_Work/ReGaTE/ReGaTE2016/ReGaTE_env/bin/python
 # -*- coding: utf-8 -*-
 """
 Created on Oct. 23, 2014
@@ -167,20 +167,23 @@ def format_description(description):
         print description
 
 
-def build_metadata_one(tool_meta_data, conf):
+
+def build_general_dict(tool_meta_data, conf):
     """
-      builds general_dict
-      @param: tool_meta_data for one tool extracted from galaxy
+    Extract informations from a galaxy json tool and return the general json in the biotools format
+    :param tool_meta_data: galaxy json tool
+    :conf : regate.ini config file
+    :return: biotools dictionary
+    :rtype: dictionary
     """
-    #    gen_dict = {k: tool_meta_data[k] for k in (u'version', u'description')}
 
     gen_dict = {
         u'version': tool_meta_data[u'version'],
         u'description': format_description(tool_meta_data[u'description']),
         u'uses': [{
             "usesName": tool_meta_data[u'id'],
-            "usesHomepage": "{0}?tool_id={1}".format(os.path.join(conf.galaxy_url, "root"),
-                                                     tool_meta_data[u'id']),
+            "usesHomepage": "{0}?id={1}".format(os.path.join('conf.galaxy_url', "root"),
+                                                      tool_meta_data[u'id']),
             "usesVersion": tool_meta_data[u'version']
         }],
         u'collection': [conf.ressourcename],
@@ -194,15 +197,13 @@ def build_metadata_one(tool_meta_data, conf):
             u'interfaceSpecURL': '',
             u'interfaceSpecFormat': ''
         }],
-        # these fields need to be filled with MODULE ressource at Pasteur
-        #  gen_dict[u'language'] = []
         u'topic': [{
             u'uri': "http://edamontology.org/topic_0003",
             u'term': "EDAM label placeholder"
         }],
         u'publications': {u'publicationsPrimaryID': "None", u'publicationsOtherID': []},
         u'homepage': conf.galaxy_url,
-        u'accessibility': "Private" if conf.private else "Public",
+        u'accessibility': '"Private" if conf.private else "Public"',
         u'mirror': [],
         u'canonicalID': '',
         u'tag': [],
@@ -237,56 +238,20 @@ def build_metadata_one(tool_meta_data, conf):
     return gen_dict
 
 
-def build_case_inputs(case_dict, input_tool):
-    """
-    :param case_dict:
-    :param input_tool:
-    :return:
-    """
-    dict_cases = {}
-    for inp in input_tool[u'cases']:
-
-        for elem in inp[u'inputs']:
-            if elem[u'type'] == u'data':
-                if dict_cases.get(inp[u'value']) is None:
-                    dict_cases[inp[u'value']] = [elem]
-                else:
-                    dict_cases[inp[u'value']].append(elem)
-
-                    # repeat in conditional
-
-            if elem[u'type'] == u'repeat':
-                try:
-                    cases = elem[u'inputs'][0][u'cases']
-
-                    for case in cases:
-                        if case[u'inputs']:
-                            for case_input in case[u'inputs']:
-                                if case_input[u'type'] == u'data':
-                                    if dict_cases.get(inp[u'value']) is None:
-                                        dict_cases[inp[u'value']] = [case_input]
-                                    else:
-                                        dict_cases[inp[u'value']].append(case_input)
-
-                except KeyError:
-                    #                    print "KeyError key == REPEAT"
-                    for el in elem[u'inputs']:
-                        if el[u'type'] == u'data':
-                            if dict_cases.get(inp[u'value']) is None:
-                                dict_cases[inp[u'value']] = [el]
-                            else:
-                                dict_cases[inp[u'value']].append(el)
-
-    case_dict.update({key: value for key, value in dict_cases.items() if len(value) != 0})
-
-
 def edam_to_uri(edam):
     """
     :param edam:
     :return:
     """
-    uri = re.split("_|:", edam)
-    uri = "http://edamontology.org/{}_{:0>4d}".format(uri[1], int(uri[2]))
+    try:
+        uri = re.split("_|:", edam)
+        if len(uri) == 2:
+            uri = "http://edamontology.org/{}_{:0>4d}".format(uri[0], int(uri[1]))
+        else:
+            uri = "http://edamontology.org/{}_{:0>4d}".format(uri[1], int(uri[2]))
+    except TypeError:
+        print "no edam data"
+        uri=""
     return uri
 
 
@@ -322,125 +287,135 @@ def find_edam_data(format_name, mapping_edam):
         else:
             uri = edam_to_uri(temp_list[0])
             list_uri.append(uri)
-
         return ", ".join(list_uri)
     else:
         return []
 
 
-def build_input_for_json(list_inputs, mapping_edam):
+def build_function_dict(json_tool, mapping_edam):
     """
-    :param list_inputs:
-    :param mapping_edam:
-    :return:
+    Extract information from a galaxy json tool and return a list of functions in the json biotools format
+    :param json_tool: galaxy json tool
+    :return: list of functions in the json biotools format
+    :rtype: list
     """
-    liste = []
-    for input_tool in list_inputs:
-        try:
-            formatlist = input_tool[u'extensions']
-        except KeyError, err:
-            print err, "error 1"
-            formatlist = ["AnyFormat"]
+    list_func = []
 
-        list_format = []
-        for format_tool in formatlist:
-            uri = find_edam_format(format_tool, mapping_edam)
-            dict_format = {u'uri': uri, u'term': 'EDAM label placeholder'}
-            list_format.append(dict_format)
-        data_uri = find_edam_data(formatlist[0], mapping_edam)
-        if data_uri:
-            data_uri = "http://edamontology.org/data_0006"
-            logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(formatlist[0]))
-        inputdict = {
-            u'dataType': {u'uri': data_uri, u'term': 'EDAM label placeholder'},
-            u'dataFormat': list_format,
-            u'dataHandle': ", ".join(input_tool[u'extensions']),
-            u'dataDescription': ''
-        }
-        liste.append(inputdict)
-    return liste
+    listinps = inputs_extract(json_tool['inputs'], mapping_edam)
+
+    listoutps = ouputs_extract(json_tool['outputs'], mapping_edam)
+    func_dict = {
+        'functionDescription': json_tool['description'],
+        'functionName': [{
+            'uri': "http://edamontology.org/operation_0004",
+            'term': 'EDAM label placeholder'
+        }],
+        'output': listoutps,
+        'input': listinps,
+        'functionHandle': " "
+    }
+    list_func.append(func_dict)
+    return list_func
 
 
-def build_fonction_dict(tool_meta_data, mapping_edam):
+def inputs_extract(inputs_json, mapping_edam):
     """
-    builds function dict
-    2 steps for inputs, get only the data format and
-    dict comprehension to keep only important info
-    1 steps for outputs, only dict comprehension
+    Extract type data param of a galaxy json tool inputs and return a list of dictionary in the json biotools format
+    :param inputs_json: inputs part of a json tool
+    :return: list of dictionary in the json biotools format
+    :rtype: list
     """
-    func_list = []
-    inputs = {}
-    outputs = []
-    inputs_fix = []
-    dict_cases = {}
-    # inputs_case = {}
 
-    for input_tool in tool_meta_data[u'inputs']:
-        if input_tool[u'type'] == u'data':
-            inputs_fix.append(input_tool)
-        # repeat not in conditional
-        if input_tool[u'type'] == u'repeat':
-            for rep in input_tool[u'inputs']:
-                if rep[u'type'] == u'data':
-                    inputs_fix.append(rep)
-                elif rep[u'type'] == "conditional":
-                    build_case_inputs(dict_cases, rep)
-        if input_tool[u'type'] == "conditional":
-            build_case_inputs(dict_cases, input_tool)
+    def inputs_extract_data(data_json):
+        """
+        Save param type data from a json tool galaxy in a list
+        :param data_json:
+        :return: None
+        """
+        list_format = list()
+        for edam_format in data_json['edam_formats']:
+            list_format.append({'uri': edam_to_uri(edam_format), 'term': 'EDAM label placeholder'})
+        data_uri = find_edam_data(data_json['edam_formats'][0], mapping_edam)
+        if len(data_uri) == 1:  # set(data_json['edam_data'])) == 1:
+            listdata.append({'dataType': {'uri': edam_to_uri(data_uri), #json['edam_data'][0]),
+                                      'term': 'EDAM label placeholder'},
+                         'dataFormat': list_format,
+                         'dataHandle': ", ".join(data_json['extensions']),
+                         'dataDescription': data_json['name']
+                         })
+        else:
 
-            # __________________INPUT DICT _________________________
-    if len(dict_cases) == 0:
-        inputs["input_fix"] = build_input_for_json(inputs_fix, mapping_edam)
-    else:
-        for key, case in dict_cases.iteritems():
-            inputs[key] = build_input_for_json(case, mapping_edam) + build_input_for_json(inputs_fix, mapping_edam)
+            listdata.append({'dataType': {'uri': 'WARNING, NO EDAM DATA (or Several)', 'term': 'EDAM label placeholder'},
+                         'dataFormat': list_format,
+                         'dataHandle': ", ".join(data_json['extensions']),
+                         'dataDescription': data_json['name']
+                         })
 
-            # _____________OUTPUT DICT_______________________________________
 
-    for output in tool_meta_data[u'outputs']:
-        data_uri = find_edam_data(output[u'format'], mapping_edam)
-        if data_uri:
-            data_uri = "http://edamontology.org/data_0006"
-            # put a logger here to get the missing format
-            logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(
-                output[u'format']))
-        # print tool_meta_data['name'], term
-        uri = find_edam_format(output[u'format'], mapping_edam)
-        outputdict = {
-            u'dataType': {u'uri': data_uri, u'term': 'EDAM label placeholder'},
-            u'dataFormat': [{u'uri': uri, u'term': 'EDAM label placeholder'}],
-            u'dataHandle': '',
-            u'dataDescription': ''
-        }
-        outputs.append(outputdict)
+    def inputs_extract_repeat(repeat_json):
+        """
+        Recursive function in order to explore repeat param of a galaxy json tool
+        :param repeat_json: Repeat param part of a galaxy json tool
+        :return: None
+        """
+        for dictinprep in repeat_json['inputs']:
+            if dictinprep['type'] == "conditional":
+                inputs_extract_conditional(dictinprep)
+            elif dictinprep['type'] == "repeat":
+                inputs_extract_repeat(dictinprep)
+            elif dictinprep["type"] == "data":
+                inputs_extract_data(dictinprep)
 
-    if inputs.get("input_fix") is None:
-        for input_case_name, item in inputs.items():
-            func_dict = {
-                u'functionDescription': format_description(tool_meta_data[u'description']),
-                u'functionName': [{
-                    u'uri': "http://edamontology.org/operation_0004",
-                    u'term': 'EDAM label placeholder'
-                }],
-                u'output': outputs,
-                u'input': item,
-                u'functionHandle': input_case_name
-                # func_dict[u'annot'] = input_case_name
-            }
-            func_list.append(func_dict)
-    else:
-        func_dict = {
-            u'functionDescription': format_description(tool_meta_data[u'description']),
-            u'functionName': [{
-                u'uri': "http://edamontology.org/operation_0004",
-                u'term': 'EDAM label placeholder'
-            }],
-            u'output': outputs,
-            u'input': inputs[u"input_fix"],
-            u'functionHandle': 'MainFunction'
-        }
-        func_list.append(func_dict)
-    return func_list
+    def inputs_extract_conditional(conditional_json):
+        """
+        Recursive function in order to explore conditional param of a galaxy json tool
+        :param conditional_json: conditional param part of a galaxy json tool
+        :return: None
+        """
+        for case in conditional_json["cases"]:
+            for dictinpcond in case["inputs"]:
+                if dictinpcond['type'] == "conditional":
+                    inputs_extract_conditional(dictinpcond)
+                elif dictinpcond['type'] == "repeat":
+                    inputs_extract_repeat(dictinpcond)
+                elif dictinpcond["type"] == "data":
+                    inputs_extract_data(dictinpcond)
+
+    listdata = list()
+
+    for dictinp in inputs_json:
+
+        if dictinp['type'] == "conditional":
+            inputs_extract_conditional(dictinp)
+        elif dictinp['type'] == "repeat":
+            inputs_extract_repeat(dictinp)
+        elif dictinp["type"] == "data":
+            inputs_extract_data(dictinp)
+    return listdata
+
+
+def ouputs_extract(outputs_json, mapping_edam):
+    """
+    Extract type output param of a galaxy json tool outputs and return a list of dictionary in the json biotools format
+    :param outputs_json: output param of a galaxy json tool outputs
+    :return: list of dictionary in the json biotools format
+    :rtype: dictionary
+    """
+    listoutput = list()
+
+    try:
+        for output in outputs_json:
+            outputdict = {'dataType': {'uri': find_edam_data(output[u'format'], mapping_edam), 'term': 'EDAM label placeholder'},
+                          'dataFormat': [{'uri': edam_to_uri(output["edam_format"]), 'term': 'EDAM label placeholder'}],
+                          'dataHandle': output['format'], 'dataDescription': output['name']
+                          }
+            listoutput.append(outputdict)
+    except KeyError:
+        print "KeyError: no edam format found"
+
+    return listoutput
+
+
 
 
 def extract_edam_from_galaxy(mapping_edam=None):
@@ -595,16 +570,16 @@ def write_xml_files(tool_name, general_dict, tool_dir, xmltemplate=None):
             tool_file.write(str(template))
 
 
-def build_outputs(tools_metadata, conf, mapping_edam):
+def build_biotools_files(tools_metadata, conf, mapping_edam):
     """
     :param tools_metadata:
     :return:
     """
     for tool_meta in tools_metadata:
         tool_name = build_tool_name(tool_meta[u'id'])
-        function = build_fonction_dict(tool_meta, mapping_edam)
-        general_dict = build_metadata_one(tool_meta, conf)
-        general_dict[u"function"] = function
+        general_dict = build_general_dict(tool_meta, conf)
+
+        general_dict[u"function"] = build_function_dict(tool_meta, mapping_edam)
         # to obtain an uniq id in galaxy we need the toolshed repository, the owner, the xml toolid, the xml version,
         # if the tool provide from a toolshed, if not we need the xml toolid and the xml version only
         # The easiest : use id of the tool
@@ -616,6 +591,7 @@ def build_outputs(tools_metadata, conf, mapping_edam):
                             xmltemplate=conf.xmltemplate)
         else:
             write_xml_files(tool_name, general_dict, conf.tool_dir)
+
 
 
 def generate_template():
@@ -641,6 +617,7 @@ def config_parser(configfile):
 
 if __name__ == "__main__":
 
+   # print ""
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
 
@@ -670,6 +647,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     args = parser.parse_args()
+
     if not args.templateconfig:
         if not os.path.exists(args.config_file):
             raise IOError("{0} doesn't exist".format(args.config_file))
@@ -691,11 +669,16 @@ if __name__ == "__main__":
 
             tools_list = config.tools_default.split(',')
             for tool in TOOLS:
+                print(tool['id'])
                 if not tool['id'] in tools_list:
-                    tool_metadata = gi.tools.show_tool(tool_id=tool['id'], io_details=True, link_details=True)
-                    tools_meta_data.append(tool_metadata)
 
-            build_outputs(tools_meta_data, config, edam_dict)
+                    try:
+                        tool_metadata = gi.tools.show_tool(tool_id=tool['id'], io_details=True, link_details=True)
+                        tools_meta_data.append(tool_metadata)
+                    except ConnectionError, e:
+                        raise ConnectionError("Connection with exposed API method", e)
+
+            build_biotools_files(tools_meta_data, config, edam_dict)
 
         if config.onlypush:
             tools_dir = config.tool_dir
