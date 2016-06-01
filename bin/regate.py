@@ -1,4 +1,4 @@
-#!/home/odoppelt/projets/Galaxy_Work/ReGaTE/ReGaTE2016/ReGaTE_env/bin/python
+#!/home/odoppelt/projets/Galaxy_Work/ReGaTE/ReGaTE2016/venv/bin/python
 # -*- coding: utf-8 -*-
 """
 Created on Oct. 23, 2014
@@ -49,6 +49,9 @@ class Config(object):
             self.contactEmail = self.assign("galaxy_server", "contactEmail", ismandatory=True)
             self.ressourcename = self.assign("galaxy_server", "ressourcename", ismandatory=True)
             self.onlypush = self.assign("regate_specific_section", "onlypush", ismandatory=False, boolean=True)
+            self.prefix_toolname = self.assign("regate_specific_section", "prefix_toolname", ismandatory=False)
+            self.suffix_toolname = self.assign("regate_specific_section", "suffix_toolname", ismandatory=False)
+
             if self.onlypush:
                 self.pushtoelixir = self.assign("regate_specific_section", "pushtoelixir", ismandatory=True,
                                                 message="pushtoelixir option is mandatory if onlypush is True",
@@ -121,14 +124,24 @@ class Config(object):
             return False
 
 
-def build_tool_name(tool_id):
+def build_tool_name(tool_id, prefix, suffix):
     """
     @tool_id: tool_id
     builds the tool_name regarding its toolshed id
-   """
-    tbl = string.maketrans('.:/','___')
-    #warning unicode is not string
-    return str(tool_id).translate(tbl)
+    and the prefix/suffix defined in the config file
+    """
+    try:
+        tool_name = string.split(tool_id, '/')[-2]
+    except IndexError:
+        tool_name = tool_id
+
+    if prefix:
+        name = str(prefix) + '@' + tool_name
+    else:
+        name = tool_name
+    if suffix:
+        name = name + '@' + str(suffix)
+    return name
 
 
 def get_source_registry(tool_id):
@@ -143,10 +156,13 @@ def get_source_registry(tool_id):
         return ""
 
 
-def get_tool_name(tool_id):
+def build_filename(tool_id, version):
     try:
-        source = string.split(tool_id, '/')[-2]
-        return source
+        try:
+            source = string.split(tool_id, '/')[-2]
+        except IndexError:
+            source = tool_id
+        return source + "_" + version
     except ValueError:
         print "ValueError:", tool_id
         return ""
@@ -336,8 +352,8 @@ def inputs_extract(inputs_json, mapping_edam):
         for edam_format in data_json['edam_formats']:
             list_format.append({'uri': edam_to_uri(edam_format), 'term': 'EDAM label placeholder'})
         data_uri = find_edam_data(data_json['edam_formats'][0], mapping_edam)
-        if len(data_uri) == 1:  # set(data_json['edam_data'])) == 1:
-            listdata.append({'dataType': {'uri': edam_to_uri(data_uri), #json['edam_data'][0]),
+        if len(data_uri) == 1:
+            listdata.append({'dataType': {'uri': edam_to_uri(data_uri),
                                       'term': 'EDAM label placeholder'},
                          'dataFormat': list_format,
                          'dataHandle': ", ".join(data_json['extensions']),
@@ -576,7 +592,7 @@ def build_biotools_files(tools_metadata, conf, mapping_edam):
     :return:
     """
     for tool_meta in tools_metadata:
-        tool_name = build_tool_name(tool_meta[u'id'])
+        tool_name = build_tool_name(tool_meta[u'id'],conf.prefix_toolname, conf.suffix_toolname)
         general_dict = build_general_dict(tool_meta, conf)
 
         general_dict[u"function"] = build_function_dict(tool_meta, mapping_edam)
@@ -585,12 +601,13 @@ def build_biotools_files(tools_metadata, conf, mapping_edam):
         # The easiest : use id of the tool
         # general_dict[u"name"] = tool_meta[u'id']
         general_dict[u"name"] = tool_name
-        write_json_files(tool_name, general_dict, conf.tool_dir)
+        file_name = build_filename(tool_meta[u'id'], tool_meta[u'version'])
+        write_json_files(file_name, general_dict, conf.tool_dir)
         if conf.xmltemplate:
-            write_xml_files(tool_name, general_dict, conf.tool_dir,
+            write_xml_files(file_name, general_dict, conf.tool_dir,
                             xmltemplate=conf.xmltemplate)
         else:
-            write_xml_files(tool_name, general_dict, conf.tool_dir)
+            write_xml_files(file_name, general_dict, conf.tool_dir)
 
 
 
@@ -691,6 +708,7 @@ if __name__ == "__main__":
                 push_to_elix(config.login, config.host, config.ssl_verify, config.tool_dir, xsd=config.xsdbiotools)
             else:
                 push_to_elix(config.login, config.host, config.ssl_verify, config.tool_dir)
+
 
     elif args.templateconfig:
         generate_template()
