@@ -152,7 +152,7 @@ def get_source_registry(tool_id):
     try:
         return "/".join(tool_id.replace('repos','view',1).split('/')[0:-2])
     except ValueError:
-        print "ValueError:", tool_id
+        logger.warning("ValueError:", tool_id)
         return ""
 
 
@@ -180,7 +180,7 @@ def format_description(description):
         else:
             return description[0].upper() + description[1:size] + '.'
     except IndexError:
-        print description
+        logger.warning(description)
 
 
 
@@ -266,7 +266,7 @@ def edam_to_uri(edam):
         else:
             uri = "http://edamontology.org/{}_{:0>4d}".format(uri[1], int(uri[2]))
     except TypeError:
-        print "no edam data"
+        logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(edam))
         uri=""
     return uri
 
@@ -418,20 +418,17 @@ def ouputs_extract(outputs_json, mapping_edam):
     :rtype: dictionary
     """
     listoutput = list()
-
-    try:
-        for output in outputs_json:
+    for output in outputs_json:
+        try:
             outputdict = {'dataType': {'uri': find_edam_data(output[u'format'], mapping_edam), 'term': 'EDAM label placeholder'},
-                          'dataFormat': [{'uri': edam_to_uri(output["edam_format"]), 'term': 'EDAM label placeholder'}],
-                          'dataHandle': output['format'], 'dataDescription': output['name']
-                          }
+                     'dataFormat': [{'uri': edam_to_uri(output["edam_format"]), 'term': 'EDAM label placeholder'}],
+                     'dataHandle': output['format'], 'dataDescription': output['name']
+                      }
             listoutput.append(outputdict)
-    except KeyError:
-        print "KeyError: no edam format found"
+        except KeyError:
+            logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(output[u'format']))
 
     return listoutput
-
-
 
 
 def extract_edam_from_galaxy(mapping_edam=None):
@@ -491,7 +488,6 @@ def push_to_elix(login, host, ssl_verify, tool_dir, xsd=None):
     print resp
     print resp.headers
     print resp.status_code
-    pprint.pprint(resp)
     print "loading json"
     if xsd:
         xsdparse = etree.parse(xsd)
@@ -634,7 +630,6 @@ def config_parser(configfile):
 
 if __name__ == "__main__":
 
-   # print ""
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
 
@@ -686,9 +681,7 @@ if __name__ == "__main__":
 
             tools_list = config.tools_default.split(',')
             for tool in TOOLS:
-                print(tool['id'])
                 if not tool['id'] in tools_list:
-
                     try:
                         tool_metadata = gi.tools.show_tool(tool_id=tool['id'], io_details=True, link_details=True)
                         tools_meta_data.append(tool_metadata)
