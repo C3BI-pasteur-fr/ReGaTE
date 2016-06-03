@@ -88,7 +88,7 @@ class Config(object):
 
     def assign(self, section, key, ismandatory=True, message=None, boolean=False):
         """
-            return value if key exist in config.ini file or an error or None if not, depending on whether the option
+            return value if key exists in config.ini file or an error or None if not, depending on whether the option
             is mandatory or not
         """
         if ismandatory:
@@ -127,7 +127,7 @@ class Config(object):
 def build_tool_name(tool_id, prefix, suffix):
     """
     @tool_id: tool_id
-    builds the tool_name regarding its toolshed id
+    builds the tool_name with the tool id, its version
     and the prefix/suffix defined in the config file
     """
     try:
@@ -182,6 +182,81 @@ def format_description(description):
     except IndexError:
         logger.warning(description)
 
+
+def detect_duplicate(id_list):
+    ids = set()
+    duplicates = set()
+    for item in id_list:
+        if item in ids:
+            duplicates.add(item)
+        else:
+            ids.add(item)
+    return list(duplicates)
+
+
+def detect_toolid_duplicate(tool_list):
+    id_list = list()
+    for tool in tool_list:
+        id_list.append(build_filename(tool[u'id'], tool[u'version']))
+
+    duplicate_tools = detect_duplicate(id_list)
+    if duplicate_tools:
+        for dup in duplicate_tools:
+            logger.warning("This tool and this version is detected several times on the same galaxy instead".format(dup))
+
+
+def edam_to_uri(edam):
+    """
+    :param edam:
+    :returns edam uri from an edam term:
+    """
+    try:
+        uri = re.split("_|:", edam)
+        if len(uri) == 2:
+            uri = "http://edamontology.org/{}_{:0>4d}".format(uri[0], int(uri[1]))
+        else:
+            uri = "http://edamontology.org/{}_{:0>4d}".format(uri[1], int(uri[2]))
+    except TypeError:
+        logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(edam))
+        uri=""
+    return uri
+
+
+def find_edam_format(format_name, mapping_edam):
+    """
+    :param format_name:
+    :param mapping_edam:
+    :return: edam format from a format (extension) in galaxy
+    """
+    if format_name in mapping_edam:
+        uri = edam_to_uri(mapping_edam[format_name][0])
+        return uri
+    else:
+        uri = "http://edamontology.org/format_1915"
+        logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(format_name))
+        return uri
+
+
+def find_edam_data(format_name, mapping_edam):
+    """
+    :param format_name:
+    :param mapping_edam:
+    :return edam data of a defined format_name:
+    """
+    if format_name in mapping_edam:
+        list_uri = []
+        temp_list = mapping_edam[format_name][1:]
+        if "EDAM_data:0006" in temp_list and len(temp_list) > 1:
+            temp_list.remove("EDAM_data:0006")
+        if len(temp_list) == 1:
+            uri = edam_to_uri(temp_list[0])
+            list_uri.append(uri)
+        else:
+            uri = edam_to_uri(temp_list[0])
+            list_uri.append(uri)
+        return ", ".join(list_uri)
+    else:
+        return []
 
 
 def build_general_dict(tool_meta_data, conf):
@@ -254,60 +329,6 @@ def build_general_dict(tool_meta_data, conf):
     return gen_dict
 
 
-def edam_to_uri(edam):
-    """
-    :param edam:
-    :return:
-    """
-    try:
-        uri = re.split("_|:", edam)
-        if len(uri) == 2:
-            uri = "http://edamontology.org/{}_{:0>4d}".format(uri[0], int(uri[1]))
-        else:
-            uri = "http://edamontology.org/{}_{:0>4d}".format(uri[1], int(uri[2]))
-    except TypeError:
-        logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(edam))
-        uri=""
-    return uri
-
-
-def find_edam_format(format_name, mapping_edam):
-    """
-    :param format_name:
-    :param mapping_edam:
-    :return:
-    """
-    if format_name in mapping_edam:
-        uri = edam_to_uri(mapping_edam[format_name][0])
-        return uri
-    else:
-        uri = "http://edamontology.org/format_1915"
-        logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(format_name))
-        return uri
-
-
-def find_edam_data(format_name, mapping_edam):
-    """
-    :param format_name:
-    :param mapping_edam:
-    :return:
-    """
-    if format_name in mapping_edam:
-        list_uri = []
-        temp_list = mapping_edam[format_name][1:]
-        if "EDAM_data:0006" in temp_list and len(temp_list) > 1:
-            temp_list.remove("EDAM_data:0006")
-        if len(temp_list) == 1:
-            uri = edam_to_uri(temp_list[0])
-            list_uri.append(uri)
-        else:
-            uri = edam_to_uri(temp_list[0])
-            list_uri.append(uri)
-        return ", ".join(list_uri)
-    else:
-        return []
-
-
 def build_function_dict(json_tool, mapping_edam):
     """
     Extract information from a galaxy json tool and return a list of functions in the json biotools format
@@ -360,7 +381,6 @@ def inputs_extract(inputs_json, mapping_edam):
                          'dataDescription': data_json['name']
                          })
         else:
-
             listdata.append({'dataType': {'uri': 'WARNING, NO EDAM DATA (or Several)', 'term': 'EDAM label placeholder'},
                          'dataFormat': list_format,
                          'dataHandle': ", ".join(data_json['extensions']),
@@ -427,7 +447,6 @@ def ouputs_extract(outputs_json, mapping_edam):
             listoutput.append(outputdict)
         except KeyError:
             logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(output[u'format']))
-
     return listoutput
 
 
@@ -537,7 +556,6 @@ def clean_dict(jsondict):
     :param jsondict:
     :return:
     """
-
     for sonkey, sonvalue in jsondict.items():
         if sonvalue:
             if isinstance(sonvalue, dict):
@@ -680,14 +698,14 @@ if __name__ == "__main__":
                 edam_dict = build_edam_dict(os.path.join('$PREFIXDATA', 'yaml_mapping.yaml'))
 
             tools_list = config.tools_default.split(',')
+            detect_toolid_duplicate(TOOLS)
             for tool in TOOLS:
                 if not tool['id'] in tools_list:
                     try:
                         tool_metadata = gi.tools.show_tool(tool_id=tool['id'], io_details=True, link_details=True)
                         tools_meta_data.append(tool_metadata)
                     except ConnectionError, e:
-                        raise ConnectionError("Connection with exposed API method", e)
-
+                        logger.error("Connection with exposed API method for tool {0}".format(tool['id']), e)
             build_biotools_files(tools_meta_data, config, edam_dict)
 
         if config.onlypush:
