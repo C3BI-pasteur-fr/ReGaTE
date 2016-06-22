@@ -14,7 +14,6 @@ import sys
 import os
 import glob
 import re
-import pprint
 import string
 import argparse
 import json
@@ -70,14 +69,14 @@ class Config(object):
                 self.ssl_verify = self.assign("regate_specific_section", "ssl_verify", ismandatory=True,
                                               message="ssl_verify option is mandatory if pushtoelixir is True",
                                               boolean=True)
-                self.private = self.assign("regate_specific_section", "private", ismandatory=True,
-                                                 message="private option is mandatory if pushtoelixir is True",
-                                                 boolean=True)
+                self.accessibility = self.assign("regate_specific_section", "accessibility", ismandatory=True,
+                                                 message="accessibility option is mandatory if pushtoelixir is True")
             else:
                 self.login = self.assign("regate_specific_section", "login", ismandatory=False)
                 self.host = self.assign("regate_specific_section", "bioregistry_host", ismandatory=False)
                 self.ssl_verify = self.assign("regate_specific_section", "ssl_verify", ismandatory=False, boolean=True)
-            self.private = self.assign("regate_specific_section", "private", ismandatory=True, boolean=True)
+            self.accessibility = self.assign("regate_specific_section", "accessibility", ismandatory=True)
+            self. = self.assign("regate_specific_section", "private", ismandatory=True, boolean=True)
             self.tool_dir = self.assign("regate_specific_section", "tool_dir", ismandatory=True)
             self.yaml_file = self.assign("regate_specific_section", "yaml_file", ismandatory=False)
             self.xmltemplate = self.assign("regate_specific_section", "xmltemplate", ismandatory=False)
@@ -136,11 +135,11 @@ def build_tool_name(tool_id, prefix, suffix):
         tool_name = tool_id
 
     if prefix:
-        name = str(prefix) + '@' + tool_name
+        name = str(prefix) + ':' + tool_name
     else:
         name = tool_name
     if suffix:
-        name = name + '@' + str(suffix)
+        name = name + ':' + str(suffix)
     return name
 
 
@@ -150,7 +149,8 @@ def get_source_registry(tool_id):
     :return:
     """
     try:
-        return "/".join(tool_id.replace('repos','view',1).split('/')[0:-2])
+        source_registry = "/".join(tool_id.replace('repos','view',1).split('/')[0:-2])
+        return "https://"+ source_registry
     except ValueError:
         logger.warning("ValueError:", tool_id)
         return ""
@@ -202,10 +202,10 @@ def detect_toolid_duplicate(tool_list):
     duplicate_tools = detect_duplicate(id_list)
     if duplicate_tools:
         for dup in duplicate_tools:
-            logger.warning("This tool and this version is detected several times on the same galaxy instead".format(dup))
+            logger.warning("This tool and this version is detected several times on the same galaxy instance".format(dup))
 
 
-def edam_to_uri(edam):
+def edam_to_uri(edam, element):
     """
     :param edam:
     :returns edam uri from an edam term:
@@ -217,8 +217,11 @@ def edam_to_uri(edam):
         else:
             uri = "http://edamontology.org/{}_{:0>4d}".format(uri[1], int(uri[2]))
     except TypeError:
+        if element == 'data':
+            uri = "http://edamontology.org/data_0006"
+        else:
+            uri = "http://edamontology.org/format_1915"
         logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(edam))
-        uri=""
     return uri
 
 
@@ -229,7 +232,7 @@ def find_edam_format(format_name, mapping_edam):
     :return: edam format from a format (extension) in galaxy
     """
     if format_name in mapping_edam:
-        uri = edam_to_uri(mapping_edam[format_name][0])
+        uri = edam_to_uri(mapping_edam[format_name][0], 'format')
         return uri
     else:
         uri = "http://edamontology.org/format_1915"
@@ -249,14 +252,14 @@ def find_edam_data(format_name, mapping_edam):
         if "EDAM_data:0006" in temp_list and len(temp_list) > 1:
             temp_list.remove("EDAM_data:0006")
         if len(temp_list) == 1:
-            uri = edam_to_uri(temp_list[0])
+            uri = edam_to_uri(temp_list[0],'data')
             list_uri.append(uri)
         else:
-            uri = edam_to_uri(temp_list[0])
+            uri = edam_to_uri(temp_list[0], 'data')
             list_uri.append(uri)
         return ", ".join(list_uri)
     else:
-        return []
+        return "http://edamontology.org/data_0006"
 
 
 def build_general_dict(tool_meta_data, conf):
@@ -290,11 +293,11 @@ def build_general_dict(tool_meta_data, conf):
         }],
         u'topic': [{
             u'uri': "http://edamontology.org/topic_0003",
-            u'term': "EDAM label placeholder"
+            u'term': "Topic"
         }],
         u'publications': {u'publicationsPrimaryID': "None", u'publicationsOtherID': []},
         u'homepage': conf.galaxy_url,
-        u'accessibility': '"Private" if conf.private else "Public"',
+        u'accessibility': conf.accessibility,
         u'mirror': [],
         u'canonicalID': '',
         u'tag': [],
@@ -345,11 +348,11 @@ def build_function_dict(json_tool, mapping_edam):
         'functionDescription': json_tool['description'],
         'functionName': [{
             'uri': "http://edamontology.org/operation_0004",
-            'term': 'EDAM label placeholder'
+            'term': 'Operation'
         }],
         'output': listoutps,
         'input': listinps,
-        'functionHandle': " "
+        'functionHandle': "functionHandle"
     }
     list_func.append(func_dict)
     return list_func
@@ -371,17 +374,17 @@ def inputs_extract(inputs_json, mapping_edam):
         """
         list_format = list()
         for edam_format in data_json['edam_formats']:
-            list_format.append({'uri': edam_to_uri(edam_format), 'term': 'EDAM label placeholder'})
+            list_format.append({'uri': edam_to_uri(edam_format), 'term': 'Format'})
         data_uri = find_edam_data(data_json['edam_formats'][0], mapping_edam)
         if len(data_uri) == 1:
             listdata.append({'dataType': {'uri': edam_to_uri(data_uri),
-                                      'term': 'EDAM label placeholder'},
+                                      'term': 'Data'},
                          'dataFormat': list_format,
                          'dataHandle': ", ".join(data_json['extensions']),
                          'dataDescription': data_json['name']
                          })
         else:
-            listdata.append({'dataType': {'uri': 'WARNING, NO EDAM DATA (or Several)', 'term': 'EDAM label placeholder'},
+            listdata.append({'dataType': {'uri': 'WARNING, NO EDAM DATA (or Several)', 'term': 'Data'},
                          'dataFormat': list_format,
                          'dataHandle': ", ".join(data_json['extensions']),
                          'dataDescription': data_json['name']
@@ -440,8 +443,8 @@ def ouputs_extract(outputs_json, mapping_edam):
     listoutput = list()
     for output in outputs_json:
         try:
-            outputdict = {'dataType': {'uri': find_edam_data(output[u'format'], mapping_edam), 'term': 'EDAM label placeholder'},
-                     'dataFormat': [{'uri': edam_to_uri(output["edam_format"]), 'term': 'EDAM label placeholder'}],
+            outputdict = {'dataType': {'uri': find_edam_data(output[u'format'], mapping_edam), 'term': 'Data'},
+                     'dataFormat': [{'uri': edam_to_uri(output["edam_format"]), 'term': 'Format'}],
                      'dataHandle': output['format'], 'dataDescription': output['name']
                       }
             listoutput.append(outputdict)
@@ -482,8 +485,8 @@ def auth(login, host, ssl_verify):
     :return:
     """
     password = getpass.getpass()
-    resp = requests.post(os.path.join(host, '/api/auth/login'),
-                         '{"username": "{0},"password": {1}}'.format(login, password),
+    url = host + '/api/auth/login'
+    resp = requests.post(url, '{"username": "{0},"password": {1}}'.format(login, password),
                          headers={'Accept': 'application/json', 'Content-type': 'application/json'},
                          verify=ssl_verify).text
     return json.loads(resp)['token']
@@ -519,7 +522,8 @@ def push_to_elix(login, host, ssl_verify, tool_dir, xsd=None):
             xmltree = etree.parse(xmlfile, parser)
         except etree.XMLSyntaxError, err:
             print  "XML {0} is wrong formated, {1}".format(os.path.basename(xmlfile), err)
-        resp = requests.post(os.path.join(host, '/api/tool'), etree.tostring(xmltree, pretty_print=True),
+            url = host+"/api/tool"
+        resp = requests.post(url, etree.tostring(xmltree, pretty_print=True),
                              headers={'Accept': 'application/json', 'Content-type': 'application/xml',
                                       'Authorization': 'Token {0}'.format(token)}, verify=ssl_verify)
         if resp.status_code == 201:
