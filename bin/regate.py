@@ -76,7 +76,7 @@ class Config(object):
                 self.host = self.assign("regate_specific_section", "bioregistry_host", ismandatory=False)
                 self.ssl_verify = self.assign("regate_specific_section", "ssl_verify", ismandatory=False, boolean=True)
             self.accessibility = self.assign("regate_specific_section", "accessibility", ismandatory=True)
-            self. = self.assign("regate_specific_section", "private", ismandatory=True, boolean=True)
+            self.private = self.assign("regate_specific_section", "private", ismandatory=True, boolean=True)
             self.tool_dir = self.assign("regate_specific_section", "tool_dir", ismandatory=True)
             self.yaml_file = self.assign("regate_specific_section", "yaml_file", ismandatory=False)
             self.xmltemplate = self.assign("regate_specific_section", "xmltemplate", ismandatory=False)
