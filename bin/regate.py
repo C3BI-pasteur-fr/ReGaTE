@@ -1,4 +1,4 @@
-#!/home/odoppelt/projets/Galaxy_Work/ReGaTE/ReGaTE2016/venv/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Created on Oct. 23, 2014
