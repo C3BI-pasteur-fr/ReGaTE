@@ -1,4 +1,4 @@
-ReGaTE's README
+ReGaTE README file
 ======
 
 ReGaTE - Registration of Galaxy Tools in Elixir
