@@ -76,7 +76,6 @@ class Config(object):
                 self.host = self.assign("regate_specific_section", "bioregistry_host", ismandatory=False)
                 self.ssl_verify = self.assign("regate_specific_section", "ssl_verify", ismandatory=False, boolean=True)
             self.accessibility = self.assign("regate_specific_section", "accessibility", ismandatory=True)
-            self.private = self.assign("regate_specific_section", "private", ismandatory=True, boolean=True)
             self.tool_dir = self.assign("regate_specific_section", "tool_dir", ismandatory=True)
             self.yaml_file = self.assign("regate_specific_section", "yaml_file", ismandatory=False)
             self.xmltemplate = self.assign("regate_specific_section", "xmltemplate", ismandatory=False)
@@ -374,17 +373,16 @@ def inputs_extract(inputs_json, mapping_edam):
         """
         list_format = list()
         for edam_format in data_json['edam_formats']:
-            list_format.append({'uri': edam_to_uri(edam_format), 'term': 'Format'})
+            list_format.append({'uri': edam_to_uri(edam_format, 'format'), 'term' : "Format"})
         data_uri = find_edam_data(data_json['edam_formats'][0], mapping_edam)
         if len(data_uri) == 1:
-            listdata.append({'dataType': {'uri': edam_to_uri(data_uri),
-                                      'term': 'Data'},
+            listdata.append({'dataType': {'uri': edam_to_uri(data_uri, 'data'), 'term' : "Data"},
                          'dataFormat': list_format,
                          'dataHandle': ", ".join(data_json['extensions']),
                          'dataDescription': data_json['name']
                          })
         else:
-            listdata.append({'dataType': {'uri': 'WARNING, NO EDAM DATA (or Several)', 'term': 'Data'},
+            listdata.append({'dataType': {'uri': 'WARNING, NO EDAM DATA (or Several)', 'term': "Data"},
                          'dataFormat': list_format,
                          'dataHandle': ", ".join(data_json['extensions']),
                          'dataDescription': data_json['name']
@@ -443,8 +441,8 @@ def ouputs_extract(outputs_json, mapping_edam):
     listoutput = list()
     for output in outputs_json:
         try:
-            outputdict = {'dataType': {'uri': find_edam_data(output[u'format'], mapping_edam), 'term': 'Data'},
-                     'dataFormat': [{'uri': edam_to_uri(output["edam_format"]), 'term': 'Format'}],
+            outputdict = {'dataType': {'uri': find_edam_data(output[u'format'], mapping_edam), 'term' : "Data"},
+                     'dataFormat': [{'uri': edam_to_uri(output["edam_format"], 'format'), 'term' : "Format"}],
                      'dataHandle': output['format'], 'dataDescription': output['name']
                       }
             listoutput.append(outputdict)
@@ -700,7 +698,6 @@ if __name__ == "__main__":
                 edam_dict = build_edam_dict(config.yaml_file)
             else:
                 edam_dict = build_edam_dict(os.path.join('$PREFIXDATA', 'yaml_mapping.yaml'))
-
             tools_list = config.tools_default.split(',')
             detect_toolid_duplicate(TOOLS)
             for tool in TOOLS:
