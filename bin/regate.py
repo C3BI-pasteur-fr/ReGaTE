@@ -501,13 +501,16 @@ def push_to_elix(login, host, ssl_verify, tool_dir, xsd=None):
     print "authentication ok"
     ok_cnt = 0
     ko_cnt = 0
-    print "attempting to delete all registered services..."
-    resp = requests.delete(os.path.join(host, '/api/tool/{0}'.format(login)),
+    print "attempting to retrieve registered services..."
+    resp = requests.get(host + '/api/rest-auth/user/',
                            headers={'Accept': 'application/json', 'Content-type': 'application/json',
                                     'Authorization': 'Token {0}'.format(token)})
-    print resp
-    print resp.headers
-    print resp.status_code
+    resources = resp.json().get('resources')
+    print "attempting to delete all registered services..."
+    for resource in resources:
+        print "removing resource " + resource['id']
+        resp = requests.delete(host + '/api/tool/{0}'.format(resource['id']), headers={'Accept': 'application/json', 'Content-type': 'application/json',
+                                    'Authorization': 'Token {0}'.format(token)})
     print "loading json"
     if xsd:
         xsdparse = etree.parse(xsd)
