@@ -483,11 +483,11 @@ def auth(login, host, ssl_verify):
     :return:
     """
     password = getpass.getpass()
-    url = host + '/api/auth/login'
-    resp = requests.post(url, '{"username": "{0},"password": {1}}'.format(login, password),
+    url = host + '/api/rest-auth/login/'
+    resp = requests.post(url, '{{"username": "{0}","password": "{1}"}}'.format(login, password),
                          headers={'Accept': 'application/json', 'Content-type': 'application/json'},
-                         verify=ssl_verify).text
-    return json.loads(resp)['token']
+                         verify=ssl_verify) 
+    return resp.json()['key']
 
 
 def push_to_elix(login, host, ssl_verify, tool_dir, xsd=None):
