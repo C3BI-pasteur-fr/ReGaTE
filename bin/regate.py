@@ -382,7 +382,7 @@ def inputs_extract(inputs_json, mapping_edam):
                          'dataDescription': data_json['name']
                          })
         else:
-            listdata.append({'dataType': {'uri': 'WARNING, NO EDAM DATA (or Several)', 'term': "Data"},
+            listdata.append({'dataType': {'uri': 'http://edamontology.org/data_0006', 'term': "Data"},
                          'dataFormat': list_format,
                          'dataHandle': ", ".join(data_json['extensions']),
                          'dataDescription': data_json['name']
