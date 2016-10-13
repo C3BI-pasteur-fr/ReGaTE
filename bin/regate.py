@@ -522,8 +522,9 @@ def push_to_elix(login, host, ssl_verify, tool_dir, xsd=None):
         try:
             xmltree = etree.parse(xmlfile, parser)
         except etree.XMLSyntaxError, err:
-            print  "XML {0} is wrong formated, {1}".format(os.path.basename(xmlfile), err)
-            url = host+"/api/tool"
+            #print  "XML {0} is wrong formated, {1}".format(os.path.basename(xmlfile), err)
+            continue
+        url = host+"/api/tool"
         resp = requests.post(url, etree.tostring(xmltree, pretty_print=True),
                              headers={'Accept': 'application/json', 'Content-type': 'application/xml',
                                       'Authorization': 'Token {0}'.format(token)}, verify=ssl_verify)
