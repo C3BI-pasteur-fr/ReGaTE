@@ -654,6 +654,7 @@ def config_parser(configfile):
 
 if __name__ == "__main__":
 
+    requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
 
