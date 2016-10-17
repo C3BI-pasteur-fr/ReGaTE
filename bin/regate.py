@@ -283,7 +283,7 @@ def build_general_dict(tool_meta_data, conf):
         u'sourceRegistry': get_source_registry(tool_meta_data[u'id']),
         u'resourceType': ["Tool"],
         u'maturity': 'Stable',
-        u'platform': [{u'term': 'Linux'}],
+        u'platform': ['Linux'],
         u'interface': [{
             u'interfaceType': "Web UI",
             u'interfaceDocs': '',
