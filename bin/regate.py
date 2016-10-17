@@ -513,28 +513,40 @@ def push_to_elix(login, host, ssl_verify, tool_dir, xsd=None):
         resp = requests.delete(host + '/api/tool/{0}'.format(resource['id']), headers={'Accept': 'application/json', 'Content-type': 'application/json',
                                     'Authorization': 'Token {0}'.format(token)})
     print "loading json"
-    if xsd:
-        xsdparse = etree.parse(xsd)
-    else:
-        xsdparse = etree.parse(os.path.join('$PREFIXDATA', 'biotools.xsd'))
-    schema = etree.XMLSchema(xsdparse)
-    parser = etree.XMLParser(schema = schema)
-    for xmlfile in glob.glob(os.path.join(tool_dir, "*.xml")):
-        try:
-            xmltree = etree.parse(xmlfile, parser)
-        except etree.XMLSyntaxError, err:
-            #print  "XML {0} is wrong formated, {1}".format(os.path.basename(xmlfile), err)
-            continue
+    for jsonfile in glob.glob(os.path.join(tool_dir, "*.json")):
+        json_string = open(jsonfile, 'r').read()
         url = host+"/api/tool"
-        resp = requests.post(url, etree.tostring(xmltree, pretty_print=True),
-                             headers={'Accept': 'application/json', 'Content-type': 'application/xml',
+        resp = requests.post(url, json_string,
+                             headers={'Accept': 'application/json', 'Content-type': 'application/json',
                                       'Authorization': 'Token {0}'.format(token)}, verify=ssl_verify)
         if resp.status_code == 201:
-            print "{0} ok".format(os.path.basename(xmlfile))
+            print "{0} ok".format(os.path.basename(jsonfile))
             ok_cnt += 1
         else:
-            print "{0} ko, error: {1}".format(os.path.basename(xmlfile), resp.text)
+            print "{0} ko, error: {1}".format(os.path.basename(jsonfile), resp.text)
             ko_cnt += 1
+#    if xsd:
+#        xsdparse = etree.parse(xsd)
+#    else:
+#        xsdparse = etree.parse(os.path.join('$PREFIXDATA', 'biotools.xsd'))
+#    schema = etree.XMLSchema(xsdparse)
+#    parser = etree.XMLParser(schema = schema)
+#    for xmlfile in glob.glob(os.path.join(tool_dir, "*.xml")):
+#        try:
+#            xmltree = etree.parse(xmlfile, parser)
+#        except etree.XMLSyntaxError, err:
+#            #print  "XML {0} is wrong formated, {1}".format(os.path.basename(xmlfile), err)
+#            continue
+#        url = host+"/api/tool"
+#        resp = requests.post(url, etree.tostring(xmltree, pretty_print=True),
+#                             headers={'Accept': 'application/json', 'Content-type': 'application/xml',
+#                                      'Authorization': 'Token {0}'.format(token)}, verify=ssl_verify)
+#        if resp.status_code == 201:
+#            print "{0} ok".format(os.path.basename(xmlfile))
+#            ok_cnt += 1
+#        else:
+#            print "{0} ko, error: {1}".format(os.path.basename(xmlfile), resp.text)
+#            ko_cnt += 1
     print "import finished, ok={0}, ko={1}".format(ok_cnt, ko_cnt)
 
 
@@ -625,11 +637,12 @@ def build_biotools_files(tools_metadata, conf, mapping_edam):
         general_dict[u"id"] = tool_name
         file_name = build_filename(tool_meta[u'id'], tool_meta[u'version'])
         write_json_files(file_name, general_dict, conf.tool_dir)
-        if conf.xmltemplate:
-            write_xml_files(file_name, general_dict, conf.tool_dir,
-                            xmltemplate=conf.xmltemplate)
-        else:
-            write_xml_files(file_name, general_dict, conf.tool_dir)
+        # do not write XML files because they require source registry to be specified
+        #if conf.xmltemplate:
+        #    write_xml_files(file_name, general_dict, conf.tool_dir,
+        #                    xmltemplate=conf.xmltemplate)
+        #else:
+        #    write_xml_files(file_name, general_dict, conf.tool_dir)
 
 
 
