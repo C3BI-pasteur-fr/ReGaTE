@@ -134,11 +134,11 @@ def build_tool_name(tool_id, prefix, suffix):
         tool_name = tool_id
 
     if prefix:
-        name = str(prefix) + ':' + tool_name
+        name = str(prefix) + '-' + tool_name
     else:
         name = tool_name
     if suffix:
-        name = name + ':' + str(suffix)
+        name = name + '-' + str(suffix)
     return name
 
 
