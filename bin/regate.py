@@ -280,7 +280,8 @@ def build_general_dict(tool_meta_data, conf):
             "usesVersion": tool_meta_data[u'version']
         }],
         u'collection': [conf.ressourcename],
-        u'sourceRegistry': get_source_registry(tool_meta_data[u'id']),
+        # we need to find a 50 chars or less string for sourceRegistry
+        #u'sourceRegistry': get_source_registry(tool_meta_data[u'id']),
         u'resourceType': ["Tool"],
         u'maturity': 'Stable',
         u'platform': ['Linux'],
