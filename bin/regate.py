@@ -622,6 +622,7 @@ def build_biotools_files(tools_metadata, conf, mapping_edam):
         # The easiest : use id of the tool
         # general_dict[u"name"] = tool_meta[u'id']
         general_dict[u"name"] = tool_name
+        general_dict[u"id"] = tool_name
         file_name = build_filename(tool_meta[u'id'], tool_meta[u'version'])
         write_json_files(file_name, general_dict, conf.tool_dir)
         if conf.xmltemplate:
