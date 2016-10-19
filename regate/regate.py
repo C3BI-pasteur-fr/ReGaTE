@@ -488,6 +488,7 @@ def auth(login, host, ssl_verify):
     resp = requests.post(url, '{{"username": "{0}","password": "{1}"}}'.format(login, password),
                          headers={'Accept': 'application/json', 'Content-type': 'application/json'},
                          verify=ssl_verify) 
+    print resp.text
     return resp.json()['key']
 
 
@@ -727,6 +728,8 @@ if __name__ == "__main__":
                         tools_meta_data.append(tool_metadata)
                     except ConnectionError, e:
                         logger.error("Connection with exposed API method for tool {0}".format(tool['id']), e)
+            import yaml
+            print yaml.dump(tools_meta_data)
             build_biotools_files(tools_meta_data, config, edam_dict)
 
         if config.onlypush:
