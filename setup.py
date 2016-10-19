@@ -20,6 +20,7 @@ setup(
     packages=['regate'],
     install_requires=[
         'PyYAML',
+        'html5lib==1.0b8',
         'rdflib',
         'cheetah',
         'requests',

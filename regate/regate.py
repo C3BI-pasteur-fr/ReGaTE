@@ -32,6 +32,28 @@ from bioblend.galaxy import GalaxyInstance
 
 from logging.handlers import RotatingFileHandler
 
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
+formatter = logging.Formatter('%(asctime)s :: %(levelname)s :: %(message)s')
+
+# first logger
+file_handler = RotatingFileHandler('activity.log', 'a', 1000000, 1)
+
+file_handler.setLevel(logging.DEBUG)
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
+
+# second logger
+file_handler_edam = RotatingFileHandler('edam_mapping.log', 'a', 1000000, 1)
+
+file_handler_edam.setLevel(logging.WARNING)
+file_handler_edam.setFormatter(formatter)
+logger.addHandler(file_handler_edam)
+
+_ROOT = os.path.abspath(os.path.dirname(__file__))
+def get_data_path(path):
+    return os.path.join(_ROOT, 'data', path)
 
 class Config(object):
     """
@@ -488,7 +510,6 @@ def auth(login, host, ssl_verify):
     resp = requests.post(url, '{{"username": "{0}","password": "{1}"}}'.format(login, password),
                          headers={'Accept': 'application/json', 'Content-type': 'application/json'},
                          verify=ssl_verify) 
-    print resp.text
     return resp.json()['key']
 
 
@@ -611,7 +632,7 @@ def write_xml_files(tool_name, general_dict, tool_dir, xmltemplate=None):
     if xmltemplate:
         template_path = xmltemplate
     else:
-        template_path = os.path.join('$PREFIXDATA', 'xmltemplate.tmpl')
+        template_path = get_data_path('xmltemplate.tmpl')
 
     if not os.path.exists(tool_dir):
         os.mkdir(tool_dir)
@@ -651,7 +672,7 @@ def generate_template():
     """
     :return:
     """
-    template_config = os.path.join('$PREFIXDATA', 'regate.ini')
+    template_config = get_data_path('regate.ini')
     with open(template_config, 'r') as configtemplate:
         with open('regate.ini', 'w') as fp:
             for line in configtemplate:
@@ -668,27 +689,8 @@ def config_parser(configfile):
     return configuration
 
 
-if __name__ == "__main__":
-
+def run():
     requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
-    logger = logging.getLogger()
-    logger.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter('%(asctime)s :: %(levelname)s :: %(message)s')
-
-    # first logger
-    file_handler = RotatingFileHandler('activity.log', 'a', 1000000, 1)
-
-    file_handler.setLevel(logging.DEBUG)
-    file_handler.setFormatter(formatter)
-    logger.addHandler(file_handler)
-
-    # second logger
-    file_handler_edam = RotatingFileHandler('edam_mapping.log', 'a', 1000000, 1)
-
-    file_handler_edam.setLevel(logging.WARNING)
-    file_handler_edam.setFormatter(formatter)
-    logger.addHandler(file_handler_edam)
 
     parser = argparse.ArgumentParser(description="Galaxy instance tool\
         parsing, for integration in biotools/bioregistry")
@@ -718,7 +720,7 @@ if __name__ == "__main__":
             if config.yaml_file:
                 edam_dict = build_edam_dict(config.yaml_file)
             else:
-                edam_dict = build_edam_dict(os.path.join('$PREFIXDATA', 'yaml_mapping.yaml'))
+                edam_dict = build_edam_dict(get_data_path('yaml_mapping.yaml'))
             tools_list = config.tools_default.split(',')
             detect_toolid_duplicate(TOOLS)
             for tool in TOOLS:
@@ -728,8 +730,6 @@ if __name__ == "__main__":
                         tools_meta_data.append(tool_metadata)
                     except ConnectionError, e:
                         logger.error("Connection with exposed API method for tool {0}".format(tool['id']), e)
-            import yaml
-            print yaml.dump(tools_meta_data)
             build_biotools_files(tools_meta_data, config, edam_dict)
 
         if config.onlypush:

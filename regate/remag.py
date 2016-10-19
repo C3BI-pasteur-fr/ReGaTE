@@ -200,7 +200,7 @@ def galaxy_to_edamdict(url, key):
         dictmapping[str(key)] = [form_edam]
     return dictmapping
 
-if __name__ == "__main__":
+def run():
     parser = argparse.ArgumentParser(description="Galaxy instance tool\
         parsing, for integration in biotools/bioregistry")
 

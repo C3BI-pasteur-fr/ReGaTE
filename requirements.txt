@@ -1,3 +1,4 @@
+html5lib==1.0b8
 PyYAML==3.11
 rdflib==4.2.0
 cheetah==2.4.4
