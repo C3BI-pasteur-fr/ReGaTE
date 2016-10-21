@@ -253,12 +253,10 @@ def find_edam_format(format_name, mapping_edam):
     :return: edam format from a format (extension) in galaxy
     """
     if format_name in mapping_edam:
-        uri = edam_to_uri(mapping_edam[format_name][0], 'format')
-        return uri
+        edam_format = mapping_edam[format_name]['formats'][0]
     else:
-        uri = "http://edamontology.org/format_1915"
-        logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(format_name))
-        return uri
+        edam_format = {}
+    return edam_format
 
 
 def find_edam_data(format_name, mapping_edam):
@@ -269,18 +267,10 @@ def find_edam_data(format_name, mapping_edam):
     """
     if format_name in mapping_edam:
         list_uri = []
-        temp_list = mapping_edam[format_name][1:]
-        if "EDAM_data:0006" in temp_list and len(temp_list) > 1:
-            temp_list.remove("EDAM_data:0006")
-        if len(temp_list) == 1:
-            uri = edam_to_uri(temp_list[0],'data')
-            list_uri.append(uri)
-        else:
-            uri = edam_to_uri(temp_list[0], 'data')
-            list_uri.append(uri)
-        return ", ".join(list_uri)
+        edam_data = mapping_edam[format_name]['data'][0]
     else:
-        return "http://edamontology.org/data_0006"
+        edam_data = {}
+    return edam_data
 
 
 def build_general_dict(tool_meta_data, conf):
@@ -396,16 +386,16 @@ def inputs_extract(inputs_json, mapping_edam):
         """
         list_format = list()
         for edam_format in data_json['edam_formats']:
-            list_format.append({'uri': edam_to_uri(edam_format, 'format'), 'term' : "Format"})
+            list_format.append({'uri': edam_to_uri(edam_format, 'format')})
         data_uri = find_edam_data(data_json['edam_formats'][0], mapping_edam)
         if len(data_uri) == 1:
-            listdata.append({'dataType': {'uri': edam_to_uri(data_uri, 'data'), 'term' : "Data"},
+            listdata.append({'dataType': edam_to_uri(data_uri, 'data'),
                          'dataFormat': list_format,
                          'dataHandle': ", ".join(data_json['extensions']),
                          'dataDescription': data_json['name']
                          })
         else:
-            listdata.append({'dataType': {'uri': 'http://edamontology.org/data_0006', 'term': "Data"},
+            listdata.append({'dataType': {'uri': 'http://edamontology.org/data_0006'},
                          'dataFormat': list_format,
                          'dataHandle': ", ".join(data_json['extensions']),
                          'dataDescription': data_json['name']
@@ -464,8 +454,8 @@ def ouputs_extract(outputs_json, mapping_edam):
     listoutput = list()
     for output in outputs_json:
         try:
-            outputdict = {'dataType': {'uri': find_edam_data(output[u'format'], mapping_edam), 'term' : "Data"},
-                     'dataFormat': [{'uri': edam_to_uri(output["edam_format"], 'format'), 'term' : "Format"}],
+            outputdict = {'dataType': find_edam_data(output[u'format'], mapping_edam),
+                     'dataFormat': [find_edam_format(output[u'format'], mapping_edam)],
                      'dataHandle': output['format'], 'dataDescription': output['name']
                       }
             listoutput.append(outputdict)
@@ -474,14 +464,14 @@ def ouputs_extract(outputs_json, mapping_edam):
     return listoutput
 
 
-def extract_edam_from_galaxy(mapping_edam=None):
-    """
-    :param mapping_edam:
-    :return:
-    """
-    if not mapping_edam:
-        mapping_edam = {}
-    return mapping_edam
+#def extract_edam_from_galaxy(mapping_edam=None):
+#    """
+#    :param mapping_edam:
+#    :return:
+#    """
+#    if not mapping_edam:
+#        mapping_edam = {}
+#    return mapping_edam
 
 
 def build_edam_dict(yaml_file):
@@ -489,14 +479,14 @@ def build_edam_dict(yaml_file):
     :param yaml_file:
     :return:
     """
-    map_edam = extract_edam_from_galaxy()
+    #map_edam = extract_edam_from_galaxy()
     with open(yaml_file, "r") as file_edam:
-        temp_map_edam = yaml.load(file_edam)
-    for key, value in temp_map_edam.iteritems():
-        if key in map_edam:
-            map_edam[key] = map_edam[key] + temp_map_edam[key][1:]
-        else:
-            map_edam[key] = temp_map_edam[key]
+        map_edam = yaml.load(file_edam)
+        for key, value in map_edam.iteritems():
+            for term in value['formats']:
+                term['uri'] = edam_to_uri(term['uri'], 'format')
+            for term in value['data']:
+                term['uri'] = edam_to_uri(term['uri'], 'data')
     return map_edam
 
 

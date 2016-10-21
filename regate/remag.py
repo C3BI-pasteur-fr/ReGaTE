@@ -111,9 +111,15 @@ def edam_to_dict(edam_file):
                       ?format rdfs:subClassOf ?superformat .
                       ?superformat oboInOwl:inSubset <http://purl.obolibrary.org/obo/edam#formats>
                       }"""
+    query3 = """SELECT ?format ?label WHERE {
+                      ?format rdfs:label ?label.
+                      ?format oboInOwl:inSubset ?subset.
+                      FILTER (?subset = <http://purl.obolibrary.org/obo/edam#formats> ||
+                              ?subset = <http://purl.obolibrary.org/obo/edam#data>)}"""
     # Property = {"oboInOwl": "http://www.geneontology.org/formats/oboInOwl#"}
     format_with_formats = {}
     format_with_data = {}
+    term_labels = {}
     for row in g.query(query1):
         format_with_data[http_to_edamform(row[0])] = http_to_edamform(row[1])
     for row in g.query(query2):
@@ -123,7 +129,9 @@ def edam_to_dict(edam_file):
             format_with_formats[child_format].append(parent_format)
         else:
             format_with_formats[child_format] = [parent_format]
-    return format_with_formats, format_with_data
+    for row in g.query(query3):
+        term_labels[http_to_edamform(row[0].toPython())]=str(row[1].toPython())
+    return format_with_formats, format_with_data, term_labels
 
 
 def add_data(formats, relation_formats, relation_data, list_edam_data):
@@ -156,7 +164,7 @@ def add_data(formats, relation_formats, relation_data, list_edam_data):
         return list_edam_data
 
 
-def add_datas(dict_map, rel_format_formats, rel_format_data):
+def add_datas(dict_map, rel_format_formats, rel_format_data, term_labels):
     """
     :param dict_map:
     :param rel_format_formats:
@@ -167,7 +175,9 @@ def add_datas(dict_map, rel_format_formats, rel_format_data):
     for key, value in dict_map.iteritems():
         formats = copy.copy(value)
         datas = add_data(formats, rel_format_formats, rel_format_data, list_edam_data=[])
-        dict_map[key] = value + datas
+        datas_v = [{'uri':data_item,'term':term_labels.get(data_item,'')} for data_item in datas]
+        formats_v = [{'uri':format_item,'term':term_labels.get(format_item,'')} for format_item in value]
+        dict_map[key] = {'formats':formats_v, 'data':datas_v}
     return dict_map
 
 
@@ -217,9 +227,9 @@ def run():
             raise IOError("{0} doesn't exist".format(args.config_file))
         config = regate.Config(args.config_file, "remag")
         dict_mapping = galaxy_to_edamdict(config.galaxy_url_api, config.api_key)
-        relation_format_formats, relation_format_data = edam_to_dict(config.edam_file)
+        relation_format_formats, relation_format_data, term_labels = edam_to_dict(config.edam_file)
         yaml_file = config.output_yaml
-        dict_mapping = add_datas(dict_mapping, relation_format_formats, relation_format_data)
+        dict_mapping = add_datas(dict_mapping, relation_format_formats, relation_format_data, term_labels)
         dict_to_yaml(dict_mapping, yaml_file)
     elif args.templateconfig:
         regate.generate_template()
