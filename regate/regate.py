@@ -522,7 +522,8 @@ def push_to_elix(login, host, ssl_verify, tool_dir, xsd=None):
     print "attempting to delete all registered services..."
     for resource in resources:
         print "removing resource " + resource['id']
-        resp = requests.delete(host + '/api/tool/{0}'.format(resource['id']), headers={'Accept': 'application/json', 'Content-type': 'application/json',
+        # FIXME added /version/none because not specifying it currently raises an error on dev.bio.tools :(
+        resp = requests.delete(host + '/api/tool/{0}/version/none'.format(resource['id']), headers={'Accept': 'application/json', 'Content-type': 'application/json',
                                     'Authorization': 'Token {0}'.format(token)})
     print "loading json"
     for jsonfile in glob.glob(os.path.join(tool_dir, "*.json")):
