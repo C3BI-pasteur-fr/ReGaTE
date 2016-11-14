@@ -525,6 +525,10 @@ def push_to_elix(login, host, ssl_verify, tool_dir, xsd=None):
         # FIXME added /version/none because not specifying it currently raises an error on dev.bio.tools :(
         resp = requests.delete(host + '/api/tool/{0}/version/none'.format(resource['id']), headers={'Accept': 'application/json', 'Content-type': 'application/json',
                                     'Authorization': 'Token {0}'.format(token)})
+        if resp.status_code == 204:
+            print "{0} ok".format(resource['id'])
+        else:
+            print "{0} ko, error: {1} {2} (code: {3})".format(resource['id'], resp.text, resp.status_code)
     print "loading json"
     for jsonfile in glob.glob(os.path.join(tool_dir, "*.json")):
         json_string = open(jsonfile, 'r').read()
