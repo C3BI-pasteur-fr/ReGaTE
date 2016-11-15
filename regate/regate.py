@@ -68,7 +68,7 @@ class Config(object):
             self.tools_default = self.assign("galaxy_server", "tools_default", ismandatory=True)
             self.contactName = self.assign("galaxy_server", "contactName", ismandatory=True)
             self.contactEmail = self.assign("galaxy_server", "contactEmail", ismandatory=True)
-            self.ressourcename = self.assign("galaxy_server", "ressourcename", ismandatory=True)
+            self.resourcename = self.assign("galaxy_server", "resourcename", ismandatory=True)
             self.onlypush = self.assign("regate_specific_section", "onlypush", ismandatory=False, boolean=True)
             self.prefix_toolname = self.assign("regate_specific_section", "prefix_toolname", ismandatory=False)
             self.suffix_toolname = self.assign("regate_specific_section", "suffix_toolname", ismandatory=False)
@@ -291,7 +291,7 @@ def build_general_dict(tool_meta_data, conf):
                                                       tool_meta_data[u'id']),
             "usesVersion": tool_meta_data[u'version']
         }],
-        u'collection': [conf.ressourcename],
+        u'collection': [conf.resourcename],
         # we need to find a 50 chars or less string for sourceRegistry
         #u'sourceRegistry': get_source_registry(tool_meta_data[u'id']),
         u'resourceType': ["Tool"],
@@ -503,7 +503,7 @@ def auth(login, host, ssl_verify):
     return resp.json()['key']
 
 
-def push_to_elix(login, host, ssl_verify, tool_dir, xsd=None):
+def push_to_elix(login, host, ssl_verify, tool_dir, resourcename, xsd=None):
     """
     :param login:
     :param tool_dir:
@@ -519,16 +519,20 @@ def push_to_elix(login, host, ssl_verify, tool_dir, xsd=None):
                            headers={'Accept': 'application/json', 'Content-type': 'application/json',
                                     'Authorization': 'Token {0}'.format(token)})
     resources = resp.json().get('resources')
-    print "attempting to delete all registered services..."
+    print "attempting to delete all registered services in collection {0}...".format(resourcename)
     for resource in resources:
-        print "removing resource " + resource['id']
-        # FIXME added /version/none because not specifying it currently raises an error on dev.bio.tools :(
-        resp = requests.delete(host + '/api/tool/{0}/version/none'.format(resource['id']), headers={'Accept': 'application/json', 'Content-type': 'application/json',
+        resp = requests.get(host + '/api/tool/{0}/version/none'.format(resource['id']), headers={'Accept': 'application/json', 'Content-type': 'application/json',
                                     'Authorization': 'Token {0}'.format(token)})
-        if resp.status_code == 204:
-            print "{0} ok".format(resource['id'])
-        else:
-            print "{0} ko, error: {1} {2} (code: {3})".format(resource['id'], resp.text, resp.status_code)
+        res_full = resp.json()
+        if resourcename in res_full['collection']:
+            print "removing resource " + resource['id'] + " from " +  str(res_full['collection'])
+            # FIXME added /version/none because not specifying it currently raises an error on dev.bio.tools :(
+            resp = requests.delete(host + '/api/tool/{0}/version/none'.format(resource['id']), headers={'Accept': 'application/json', 'Content-type': 'application/json',
+                                        'Authorization': 'Token {0}'.format(token)})
+            if resp.status_code == 204:
+                print "{0} ok".format(resource['id'])
+            else:
+                print "{0} ko, error: {1} {2} (code: {3})".format(resource['id'], resp.text, resp.status_code)
     print "loading json"
     for jsonfile in glob.glob(os.path.join(tool_dir, "*.json")):
         json_string = open(jsonfile, 'r').read()
@@ -735,9 +739,9 @@ def run():
 
         if config.pushtoelixir:
             if config.xsdbiotools:
-                push_to_elix(config.login, config.host, config.ssl_verify, config.tool_dir, xsd=config.xsdbiotools)
+                push_to_elix(config.login, config.host, config.ssl_verify, config.tool_dir, config.resourcename, xsd=config.xsdbiotools)
             else:
-                push_to_elix(config.login, config.host, config.ssl_verify, config.tool_dir)
+                push_to_elix(config.login, config.host, config.ssl_verify, config.tool_dir, config.resourcename)
 
 
     elif args.templateconfig:
