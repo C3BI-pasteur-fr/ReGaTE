@@ -39,10 +39,14 @@ formatter = logging.Formatter('%(asctime)s :: %(levelname)s :: %(message)s')
 
 # first logger
 file_handler = RotatingFileHandler('activity.log', 'a', 1000000, 1)
-
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
+
+stream_handler = logging.StreamHandler()
+stream_handler.setLevel(logging.INFO)
+stream_handler.setFormatter(formatter)
+logger.addHandler(stream_handler)
 
 # second logger
 file_handler_edam = RotatingFileHandler('edam_mapping.log', 'a', 1000000, 1)
@@ -185,7 +189,7 @@ def build_filename(tool_id, version):
             source = tool_id
         return source + "_" + version
     except ValueError:
-        print "ValueError:", tool_id
+        logger.warning("ValueError:", tool_id)
         return ""
 
 
@@ -212,7 +216,7 @@ def detect_toolid_duplicate(tool_list):
     duplicate_tools = [item for item, count in collections.Counter(id_list).items() if count > 1]
     if duplicate_tools:
         for dup in duplicate_tools:
-            logger.warning("This tool and this version is detected several times on the same galaxy instance".format(dup))
+            logger.warning("The tool {0} is present multiple times on this instance with the same version.".format(dup))
 
 
 def edam_to_uri(edam, element):
@@ -525,31 +529,31 @@ def push_to_elix(login, host, ssl_verify, tool_dir, resourcename, xsd=None):
     :param tool_dir:
     :return:
     """
-    print "authenticating..."
+    logger.debug("authenticating...")
     token = auth(login, host, ssl_verify)
-    print "authentication ok"
+    logger.debug("authentication ok")
     ok_cnt = 0
     ko_cnt = 0
-    print "attempting to retrieve registered services..."
+    logger.debug("attempting to retrieve registered services...")
     resp = requests.get(host + '/api/rest-auth/user/',
                            headers={'Accept': 'application/json', 'Content-type': 'application/json',
                                     'Authorization': 'Token {0}'.format(token)})
     resources = resp.json().get('resources')
-    print "attempting to delete all registered services in collection {0}...".format(resourcename)
+    logger.debug("attempting to delete all registered services in collection {0}...".format(resourcename))
     for resource in resources:
         resp = requests.get(host + '/api/tool/{0}/version/none'.format(resource['id']), headers={'Accept': 'application/json', 'Content-type': 'application/json',
                                     'Authorization': 'Token {0}'.format(token)})
         res_full = resp.json()
         if resourcename in res_full['collection']:
-            print "removing resource " + resource['id']
+            logger.debug("removing resource " + resource['id'])
             # FIXME added /version/none because not specifying it currently raises an error on dev.bio.tools :(
             resp = requests.delete(host + '/api/tool/{0}/version/none'.format(resource['id']), headers={'Accept': 'application/json', 'Content-type': 'application/json',
                                         'Authorization': 'Token {0}'.format(token)})
             if resp.status_code == 204:
-                print "{0} ok".format(resource['id'])
+                logger.debug("{0} ok".format(resource['id']))
             else:
-                print "{0} ko, error: {1} {2} (code: {3})".format(resource['id'], resp.text, resp.status_code)
-    print "loading json"
+                logger.error("{0} ko, error: {1} {2} (code: {3})".format(resource['id'], resp.text, resp.status_code))
+    logger.debug("loading json")
     for jsonfile in glob.glob(os.path.join(tool_dir, "*.json")):
         json_string = open(jsonfile, 'r').read()
         url = host+"/api/tool"
@@ -557,10 +561,10 @@ def push_to_elix(login, host, ssl_verify, tool_dir, resourcename, xsd=None):
                              headers={'Accept': 'application/json', 'Content-type': 'application/json',
                                       'Authorization': 'Token {0}'.format(token)}, verify=ssl_verify)
         if resp.status_code == 201:
-            print "{0} ok".format(os.path.basename(jsonfile))
+            logger.debug("{0} ok".format(os.path.basename(jsonfile)))
             ok_cnt += 1
         else:
-            print "{0} ko, error: {1}".format(os.path.basename(jsonfile), resp.text)
+            logger.error("{0} ko, error: {1}".format(os.path.basename(jsonfile), resp.text))
             ko_cnt += 1
 #    if xsd:
 #        xsdparse = etree.parse(xsd)
@@ -584,7 +588,7 @@ def push_to_elix(login, host, ssl_verify, tool_dir, resourcename, xsd=None):
 #        else:
 #            print "{0} ko, error: {1}".format(os.path.basename(xmlfile), resp.text)
 #            ko_cnt += 1
-    print "import finished, ok={0}, ko={1}".format(ok_cnt, ko_cnt)
+    logger.info("import finished, ok={0}, ko={1}".format(ok_cnt, ko_cnt))
 
 
 def clean_list(jsonlist):
@@ -706,7 +710,7 @@ def config_parser(configfile):
 
 def run():
     requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
-
+    logging.getLogger("requests").setLevel(logging.ERROR)
     parser = argparse.ArgumentParser(description="Galaxy instance tool\
         parsing, for integration in biotools/bioregistry")
     parser.add_argument("--config_file", help="config.ini file for regate or remag")
