@@ -287,6 +287,7 @@ def build_general_dict(tool_meta_data, conf):
         description = 'Galaxy tool {0}.'.format(tool_meta_data[u'description'])
     gen_dict = {
         u'version': tool_meta_data[u'version'],
+        u'versionID': tool_meta_data[u'version'],
         u'description': description,
         u'uses': [{
             "usesName": tool_meta_data[u'id'],
