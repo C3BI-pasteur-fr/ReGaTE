@@ -292,7 +292,7 @@ def build_general_dict(tool_meta_data, conf):
         u'uses': [{
             "usesName": tool_meta_data[u'id'],
             "usesHomepage": "{0}?id={1}".format(conf.galaxy_url + '/root',
-                                                      tool_meta_data[u'id']),
+                                                      requests.utils.quote(tool_meta_data[u'id'])),
             "usesVersion": tool_meta_data[u'version']
         }],
         u'collection': [conf.resourcename],
