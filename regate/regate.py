@@ -23,7 +23,7 @@ import getpass
 import copy
 import logging
 import configparser
-
+import collections
 from lxml import etree
 
 from Cheetah.Template import Template
@@ -204,23 +204,12 @@ def format_description(description):
         logger.warning(description)
 
 
-def detect_duplicate(id_list):
-    ids = set()
-    duplicates = set()
-    for item in id_list:
-        if item in ids:
-            duplicates.add(item)
-        else:
-            ids.add(item)
-    return list(duplicates)
-
-
 def detect_toolid_duplicate(tool_list):
     id_list = list()
     for tool in tool_list:
         id_list.append(build_filename(tool[u'id'], tool[u'version']))
 
-    duplicate_tools = detect_duplicate(id_list)
+    duplicate_tools = [item for item, count in collections.Counter(id_list).items() if count > 1]
     if duplicate_tools:
         for dup in duplicate_tools:
             logger.warning("This tool and this version is detected several times on the same galaxy instance".format(dup))
