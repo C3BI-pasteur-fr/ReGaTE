@@ -532,7 +532,7 @@ def push_to_elix(login, host, ssl_verify, tool_dir, resourcename, xsd=None):
                                     'Authorization': 'Token {0}'.format(token)})
         res_full = resp.json()
         if resourcename in res_full['collection']:
-            print "removing resource " + resource['id'] + " from " +  str(res_full['collection'])
+            print "removing resource " + resource['id']
             # FIXME added /version/none because not specifying it currently raises an error on dev.bio.tools :(
             resp = requests.delete(host + '/api/tool/{0}/version/none'.format(resource['id']), headers={'Accept': 'application/json', 'Content-type': 'application/json',
                                         'Authorization': 'Token {0}'.format(token)})
