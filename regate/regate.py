@@ -359,7 +359,7 @@ def build_function_dict(json_tool, mapping_edam):
 
     listinps = inputs_extract(json_tool['inputs'], mapping_edam)
 
-    listoutps = ouputs_extract(json_tool['outputs'], mapping_edam)
+    listoutps = outputs_extract(json_tool['outputs'], mapping_edam, listinps)
     func_dict = {
         'functionDescription': json_tool['description'],
         'functionName': [{
@@ -448,7 +448,7 @@ def inputs_extract(inputs_json, mapping_edam):
     return listdata
 
 
-def ouputs_extract(outputs_json, mapping_edam):
+def outputs_extract(outputs_json, mapping_edam, biotools_inputs):
     """
     Extract type output param of a galaxy json tool outputs and return a list of dictionary in the json biotools format
     :param outputs_json: output param of a galaxy json tool outputs
@@ -457,14 +457,33 @@ def ouputs_extract(outputs_json, mapping_edam):
     """
     listoutput = list()
     for output in outputs_json:
-        try:
-            outputdict = {'dataType': find_edam_data(output[u'format'], mapping_edam),
-                     'dataFormat': [find_edam_format(output[u'format'], mapping_edam)],
-                     'dataHandle': output['format'], 'dataDescription': output['name']
-                      }
-            listoutput.append(outputdict)
-        except KeyError:
-            logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(output[u'format']))
+        if output['format']!='input':
+            try:
+                outputdict = {'dataType': find_edam_data(output[u'format'], mapping_edam),
+                         'dataFormat': [find_edam_format(output[u'format'], mapping_edam)],
+                         'dataHandle': output['format'], 'dataDescription': output['name']
+                          }
+            except KeyError:
+                    logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(output[u'format']))
+        else:
+            # FIXME: copying the datatype/format from the source would work if only the Galaxy API used 
+            # by bioblend sent the format_source information
+            #biotools_input_source = [biotools_input for biotools_input in biotools_inputs if biotools_input['dataHandle']==output['format_source']][0] 
+            #outputdict = {'dataType': biotools_input_source['dataType'],
+            #         'dataFormat': biotools_input_source['dataFormat'],
+            #         'dataHandle': output['format'], 'dataDescription': output['name']
+            #          }
+            outputdict = {'dataType': {
+                                       'uri': "http://edamontology.org/data_0006",
+                                       'term': 'Data'
+                                      },
+                          'dataFormat': [{
+                                        'uri': "http://edamontology.org/format_1915",
+                                        'term': 'Format'
+                                        }],
+                          'dataHandle': output['format'], 'dataDescription': output['name']
+                         }
+        listoutput.append(outputdict)
     return listoutput
 
 
