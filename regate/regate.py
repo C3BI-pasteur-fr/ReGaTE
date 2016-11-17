@@ -390,7 +390,8 @@ def inputs_extract(inputs_json, mapping_edam):
         """
         list_format = list()
         for edam_format in data_json['edam_formats']:
-            list_format.append({'uri': edam_to_uri(edam_format, 'format')})
+            if edam_format is not None:
+                list_format.append({'uri': edam_to_uri(edam_format, 'format')})
         data_uri = find_edam_data(data_json['edam_formats'][0], mapping_edam)
         if len(data_uri) == 1:
             listdata.append({'dataType': edam_to_uri(data_uri, 'data'),
