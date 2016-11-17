@@ -281,10 +281,13 @@ def build_general_dict(tool_meta_data, conf):
     :return: biotools dictionary
     :rtype: dictionary
     """
-
+    if tool_meta_data[u'description']!='':
+        description = format_description(tool_meta_data[u'description'])
+    else:
+        description = 'Galaxy tool {0}.'.format(tool_meta_data[u'description'])
     gen_dict = {
         u'version': tool_meta_data[u'version'],
-        u'description': format_description(tool_meta_data[u'description']),
+        u'description': description,
         u'uses': [{
             "usesName": tool_meta_data[u'id'],
             "usesHomepage": "{0}?id={1}".format(conf.galaxy_url + '/root',
