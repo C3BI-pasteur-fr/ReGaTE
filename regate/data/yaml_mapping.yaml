@@ -1,853 +1,2240 @@
 ab1:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 acedb:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 affybatch:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 afg:
-- EDAM_format:2561
-- EDAM_data:0006
+  data:
+  - term: Sequence assembly
+    uri: EDAM_data:0925
+  formats:
+  - term: Sequence assembly format (text)
+    uri: EDAM_format:2561
 arff:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 asn1:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 asn1-binary:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 axt:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 bam:
-- EDAM_format:2572
-- EDAM_data:0924
-- EDAM_data:1381
+  data:
+  - term: Sequence trace
+    uri: EDAM_data:0924
+  - term: Sequence alignment (pair)
+    uri: EDAM_data:1381
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: BAM
+    uri: EDAM_format:2572
 bcf:
-- EDAM_format:3020
-- EDAM_data:3498
+  data:
+  - term: Sequence variations
+    uri: EDAM_data:3498
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: BCF
+    uri: EDAM_format:3020
 bed:
-- EDAM_format:3003
-- EDAM_data:3002
+  data:
+  - term: Annotation track
+    uri: EDAM_data:3002
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: BED
+    uri: EDAM_format:3003
 bed12:
-- EDAM_format:3003
-- EDAM_data:3002
+  data:
+  - term: Annotation track
+    uri: EDAM_data:3002
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: BED
+    uri: EDAM_format:3003
 bed6:
-- EDAM_format:3003
-- EDAM_data:3002
+  data:
+  - term: Annotation track
+    uri: EDAM_data:3002
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: BED
+    uri: EDAM_format:3003
 bedgraph:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 bedstrict:
-- EDAM_format:3003
-- EDAM_data:3002
+  data:
+  - term: Annotation track
+    uri: EDAM_data:3002
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: BED
+    uri: EDAM_format:3003
 bgzip:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 bigbed:
-- EDAM_format:3004
-- EDAM_data:3002
+  data:
+  - term: Annotation track
+    uri: EDAM_data:3002
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: bigBed
+    uri: EDAM_format:3004
 bigwig:
-- EDAM_format:3006
-- EDAM_data:3002
+  data:
+  - term: Annotation track
+    uri: EDAM_data:3002
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: bigWig
+    uri: EDAM_format:3006
 biom1:
-- EDAM_format:3464
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: JSON
+    uri: EDAM_format:3464
 bmp:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
 bowtie_base_index:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 bowtie_color_index:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 btwisted:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 cai:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+cas:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 charge:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 checktrans:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 chips:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 chrint:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 cisml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 clustal:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 codata:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 codcmp:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 coderet:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 compseq:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 consensusxml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 cpgplot:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 cpgreport:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 cps:
-- EDAM_format:2333
-- EDAM_data:0006
-cram:
-- EDAM_format:3462
-- EDAM_data:1381
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 csfasta:
-- EDAM_format:1929
-- EDAM_data:0863
-- EDAM_data:0849
+  data:
+  - term: Sequence alignment
+    uri: EDAM_data:0863
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Sequence record
+    uri: EDAM_data:0849
+  formats:
+  - term: FASTA
+    uri: EDAM_format:1929
 csv:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 ct:
-- EDAM_format:3309
-- EDAM_data:0880
+  data:
+  - term: RNA secondary structure
+    uri: EDAM_data:0880
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: CT
+    uri: EDAM_format:3309
 cusp:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 customtrack:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 cut:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 cxb:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 dan:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 data:
-- EDAM_format:1915
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Format
+    uri: EDAM_format:1915
 data_manager_json:
-- EDAM_format:3464
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: JSON
+    uri: EDAM_format:3464
 dbmotif:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 dbn:
-- EDAM_format:1457
-- EDAM_data:0880
+  data:
+  - term: RNA secondary structure
+    uri: EDAM_data:0880
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Dot-bracket format
+    uri: EDAM_format:1457
 dbnsfp.tabular:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 diffseq:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 digest:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 dreg:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 eigenstratgeno:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 eigenstratpca:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 einverted:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 eland:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 elandmulti:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 embl:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 encodepeak:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 epestfind:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 eps:
-- EDAM_format:3466
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: EPS
+    uri: EDAM_format:3466
 equicktandem:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 eset:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 est2genome:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 etandem:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 excel:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 fasta:
-- EDAM_format:1929
-- EDAM_data:0863
-- EDAM_data:0849
+  data:
+  - term: Sequence alignment
+    uri: EDAM_data:0863
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Sequence record
+    uri: EDAM_data:0849
+  formats:
+  - term: FASTA
+    uri: EDAM_format:1929
 fastq:
-- EDAM_format:1930
-- EDAM_data:0924
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Sequence trace
+    uri: EDAM_data:0924
+  formats:
+  - term: FASTQ
+    uri: EDAM_format:1930
 fastqcssanger:
-- EDAM_format:1930
-- EDAM_data:0924
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Sequence trace
+    uri: EDAM_data:0924
+  formats:
+  - term: FASTQ
+    uri: EDAM_format:1930
 fastqillumina:
-- EDAM_format:1931
-- EDAM_data:0924
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Sequence trace
+    uri: EDAM_data:0924
+  formats:
+  - term: FASTQ-illumina
+    uri: EDAM_format:1931
 fastqsanger:
-- EDAM_format:1932
-- EDAM_data:0924
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Sequence trace
+    uri: EDAM_data:0924
+  formats:
+  - term: FASTQ-sanger
+    uri: EDAM_format:1932
 fastqsolexa:
-- EDAM_format:1933
-- EDAM_data:0924
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Sequence trace
+    uri: EDAM_data:0924
+  formats:
+  - term: FASTQ-solexa
+    uri: EDAM_format:1933
 feattable:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 featurexml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 fitch:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 fli:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 fped:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 fphe:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 fqtoc:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 freak:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 fuzznuc:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 fuzzpro:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 fuzztran:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 garnier:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 gatk_dbsnp:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 gatk_interval:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 gatk_recal:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 gatk_report:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 gatk_tranche:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
+gb:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+gbk:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 gcg:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+gd:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 geecee:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 gemini.sqlite:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 genbank:
-- EDAM_format:1936
-- EDAM_data:1255
-- EDAM_data:0849
+  data:
+  - term: Sequence features
+    uri: EDAM_data:1255
+  - term: Sequence record
+    uri: EDAM_data:0849
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: GenBank format
+    uri: EDAM_format:1936
 genetrack:
-- EDAM_format:2919
-- EDAM_data:3002
+  data:
+  - term: Annotation track
+    uri: EDAM_data:3002
+  formats:
+  - term: Sequence annotation track format
+    uri: EDAM_format:2919
 gff:
-- EDAM_format:2305
-- EDAM_data:1255
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Sequence features
+    uri: EDAM_data:1255
+  formats:
+  - term: GFF
+    uri: EDAM_format:2305
 gff3:
-- EDAM_format:1975
-- EDAM_data:1255
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Sequence features
+    uri: EDAM_data:1255
+  formats:
+  - term: GFF3
+    uri: EDAM_format:1975
 gg:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 gif:
-- EDAM_format:3467
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: GIF
+    uri: EDAM_format:3467
 gmaj.zip:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
+gmap_annotation:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+gmap_introns:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+gmap_snps:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+gmap_splicesites:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+gmapdb:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+gmapsnpindex:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+gsnap:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+gsnap_tally:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 gtf:
-- EDAM_format:2306
-- EDAM_data:1255
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Sequence features
+    uri: EDAM_data:1255
+  formats:
+  - term: GTF
+    uri: EDAM_format:2306
+gzip:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 h5:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 helixturnhelix:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 hennig86:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 hlf:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 hmm2:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 hmm3:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 hmoment:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 html:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 idpdb:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 idxml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 ig:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+iit:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 im:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
 interprophet_pepxml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 interval:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 interval_index:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
+introns.iit:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 ipynb:
-- EDAM_format:3464
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: JSON
+    uri: EDAM_format:3464
 isochore:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 jackknifer:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 jackknifernon:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 jpg:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
 json:
-- EDAM_format:3464
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: JSON
+    uri: EDAM_format:3464
 laj:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 lav:
-- EDAM_format:3014
-- EDAM_data:1381
+  data:
+  - term: Sequence alignment (pair)
+    uri: EDAM_data:1381
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: LAV
+    uri: EDAM_format:3014
 ldindep:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 len:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 linecount:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 lped:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
+lst:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 maf:
-- EDAM_format:3008
-- EDAM_data:3002
-- EDAM_data:0863
+  data:
+  - term: Annotation track
+    uri: EDAM_data:3002
+  - term: Sequence alignment
+    uri: EDAM_data:0863
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: MAF
+    uri: EDAM_format:3008
 mafcustomtrack:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 malist:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 markx0:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 markx1:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 markx10:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 markx2:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 markx3:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 mascotdat:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 match:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 mega:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 meganon:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 memexml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 mgf:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 motif:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+mpileup:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 ms2:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 msp:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 mz.sqlite:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 mzid:
-- EDAM_format:3247
-- EDAM_data:2536
+  data:
+  - term: Mass spectrometry data
+    uri: EDAM_data:2536
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: mzIdentML
+    uri: EDAM_format:3247
 mzml:
-- EDAM_format:3244
-- EDAM_data:2536
+  data:
+  - term: Mass spectrometry data
+    uri: EDAM_data:2536
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: mzML
+    uri: EDAM_format:3244
 mzq:
-- EDAM_format:3248
-- EDAM_data:2536
+  data:
+  - term: Mass spectrometry data
+    uri: EDAM_data:2536
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: mzQuantML
+    uri: EDAM_format:3248
 mzxml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 nametable:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 ncbi:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 needle:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 newcpgreport:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 newcpgseek:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 nex:
-- EDAM_format:1912
-- EDAM_data:0872
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Phylogenetic tree
+    uri: EDAM_data:0872
+  formats:
+  - term: Nexus format
+    uri: EDAM_format:1912
 nexus:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 nexusnon:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 nhx:
-- EDAM_format:1910
-- EDAM_data:0872
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Phylogenetic tree
+    uri: EDAM_data:0872
+  formats:
+  - term: newick
+    uri: EDAM_format:1910
+no_unzip.zip:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 noreturn:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 obo:
-- EDAM_format:2549
-- EDAM_data:0582
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Ontology
+    uri: EDAM_data:0582
+  formats:
+  - term: OBO
+    uri: EDAM_format:2549
 owl:
-- EDAM_format:3262
-- EDAM_data:0582
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Ontology
+    uri: EDAM_data:0582
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Ontology
+    uri: EDAM_data:0582
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: OWL/XML
+    uri: EDAM_format:3262
 oxlicg:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 oxligl:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 oxling:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 oxliss:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 oxlist:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 oxlits:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 pair:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 palindrome:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 pbed:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 pbm:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
 pcd:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
 pcx:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
 pdf:
-- EDAM_format:3508
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: PDF
+    uri: EDAM_format:3508
 pepcoil:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 pepinfo:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 pepstats:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 peptideprophet_pepxml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 peptideshaker_archive:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 pepxml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 pepxml.tsv:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 pgm:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
 pheno:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 phylip:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 phylipnon:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 phyloxml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 picard_interval_list:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 pileup:
-- EDAM_format:3015
-- EDAM_data:1381
+  data:
+  - term: Sequence alignment (pair)
+    uri: EDAM_data:1381
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Pileup
+    uri: EDAM_format:3015
 pir:
-- EDAM_format:2330
-- EDAM_data:0006
-plyascii:
-- EDAM_format:2330
-- EDAM_data:0006
-plybinary:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 png:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
 polydot:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 pphe:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 ppm:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
 preg:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 prettyseq:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 primersearch:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 protxml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 protxml.tsv:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 psd:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
 qcml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 qual:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 qual454:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 qualillumina:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 qualsolexa:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 qualsolid:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 rast:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
 raw_pepxml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 rdata:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 rdf:
-- EDAM_format:2376
-- EDAM_data:0582
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Ontology
+    uri: EDAM_data:0582
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: RDF format
+    uri: EDAM_format:2376
 regions:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 rexpbase:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 rgb:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
 rgenetics:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 rna_eps:
-- EDAM_format:3466
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: EPS
+    uri: EDAM_format:3466
 roadmaps:
-- EDAM_format:2561
-- EDAM_data:0006
+  data:
+  - term: Sequence assembly
+    uri: EDAM_data:0925
+  formats:
+  - term: Sequence assembly format (text)
+    uri: EDAM_format:2561
+roi:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 sam:
-- EDAM_format:2573
-- EDAM_data:0924
-- EDAM_data:1381
+  data:
+  - term: Sequence trace
+    uri: EDAM_data:0924
+  - term: Sequence alignment (pair)
+    uri: EDAM_data:1381
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: SAM
+    uri: EDAM_format:2573
 scf:
-- EDAM_format:1632
-- EDAM_data:0924
+  data:
+  - term: Sequence trace
+    uri: EDAM_data:0924
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: SCF
+    uri: EDAM_format:1632
+scidx:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 score:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 searchgui_archive:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
+segdup:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 seqtable:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 sequences:
-- EDAM_format:1929
-- EDAM_data:0863
-- EDAM_data:0849
+  data:
+  - term: Sequence alignment
+    uri: EDAM_data:0863
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Sequence record
+    uri: EDAM_data:0849
+  formats:
+  - term: FASTA
+    uri: EDAM_format:1929
 sf3:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 sff:
-- EDAM_format:3284
-- EDAM_data:0924
+  data:
+  - term: Sequence trace
+    uri: EDAM_data:0924
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: SFF
+    uri: EDAM_format:3284
 showfeat:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 showorf:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 sif:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 simple:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 sixpack:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 snpeffdb:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 snpmatrix:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
+snps.iit:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 snpsiftdbnsfp:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 snptest:
-- EDAM_format:2331
-- EDAM_data:2048
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 splib:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 splib_noindex:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+splicesites.iit:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 sqlite:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 sra:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 srs:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 srspair:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 staden:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+stampy_index:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 stockholm:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 strider:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 supermatcher:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+sv:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 svg:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
 swiss:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 syco:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 tabix:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 table:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 tabular:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 tagseq:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+tally.iit:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 tandem:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
+tar:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 taxonomy:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 textsearch:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 thermo.raw:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 tiff:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
 toolshed.gz:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 trafoxml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 traml:
-- EDAM_format:3246
-- EDAM_data:2536
+  data:
+  - term: Mass spectrometry data
+    uri: EDAM_data:2536
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TraML
+    uri: EDAM_format:3246
 twobit:
-- EDAM_format:3009
-- EDAM_data:0848
+  data:
+  - term: Raw sequence
+    uri: EDAM_data:0848
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: 2bit
+    uri: EDAM_format:3009
 txt:
-- EDAM_format:2330
-- EDAM_data:0006
-uniprotxml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
+text:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 vcf:
-- EDAM_format:3016
-- EDAM_data:3498
+  data:
+  - term: Sequence variations
+    uri: EDAM_data:3498
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: VCF
+    uri: EDAM_format:3016
 vcf_bgzip:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 vectorstrip:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 velvet:
-- EDAM_format:2331
-- EDAM_data:2048
-vtkascii:
-- EDAM_format:2330
-- EDAM_data:0006
-vtkbinary:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 wiff:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 wig:
-- EDAM_format:3005
-- EDAM_data:3002
+  data:
+  - term: Annotation track
+    uri: EDAM_data:3002
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: WIG
+    uri: EDAM_format:3005
 wobble:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 wordcount:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 xbm:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
 xgmml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 xls:
-- EDAM_format:3475
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: TSV
+    uri: EDAM_format:3475
 xlsx:
-- EDAM_format:2333
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Binary format
+    uri: EDAM_format:2333
 xmfa:
-- EDAM_format:2330
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: Textual format
+    uri: EDAM_format:2330
 xml:
-- EDAM_format:2332
-- EDAM_data:0006
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: XML
+    uri: EDAM_format:2332
 xpm:
-- EDAM_format:3547
-- EDAM_data:2968
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
