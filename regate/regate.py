@@ -388,17 +388,18 @@ def inputs_extract(inputs_json, mapping_edam):
                 list_format.append({'uri': edam_to_uri(edam_format, 'format')})
         data_uri = find_edam_data(data_json['edam_formats'][0], mapping_edam)
         if len(data_uri) == 1:
-            listdata.append({'dataType': edam_to_uri(data_uri, 'data'),
+            data_item = {'dataType': edam_to_uri(data_uri, 'data'),
                          'dataFormat': list_format,
                          'dataHandle': data_json['name'],
                          'dataDescription': data_json['label']
-                         })
+                        }
         else:
-            listdata.append({'dataType': {'uri': 'http://edamontology.org/data_0006'},
+            data_item = {'dataType': {'uri': 'http://edamontology.org/data_0006'},
                          'dataFormat': list_format,
                          'dataHandle': data_json['name'],
                          'dataDescription': data_json['label']
-                         })
+                        }
+        listdata.append(data_item)
 
 
     def inputs_extract_repeat(repeat_json):
