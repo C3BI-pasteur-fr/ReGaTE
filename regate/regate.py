@@ -11,6 +11,7 @@ Created on Oct. 23, 2014
 """
 
 import sys
+import re
 import os
 import glob
 import re
@@ -158,7 +159,7 @@ def build_tool_name(tool_id, prefix, suffix):
         tool_name = string.split(tool_id, '/')[-2]
     except IndexError:
         tool_name = tool_id
-
+    tool_name = re.sub('[^0-9a-zA-Z\_\-\.\~]', '-', tool_name)
     if prefix:
         name = str(prefix) + '-' + tool_name
     else:
