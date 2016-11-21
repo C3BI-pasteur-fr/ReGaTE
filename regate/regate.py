@@ -543,18 +543,28 @@ def push_to_elix(login, host, ssl_verify, tool_dir, resourcename, xsd=None):
     resources = resp.json().get('resources')
     logger.debug("attempting to delete all registered services in collection {0}...".format(resourcename))
     for resource in resources:
-        resp = requests.get(host + '/api/tool/{0}/version/none'.format(resource['id']), headers={'Accept': 'application/json', 'Content-type': 'application/json',
-                                    'Authorization': 'Token {0}'.format(token)})
-        res_full = resp.json()
-        if resourcename in res_full['collection']:
-            logger.debug("removing resource " + resource['id'])
-            # FIXME added /version/none because not specifying it currently raises an error on dev.bio.tools :(
-            resp = requests.delete(host + '/api/tool/{0}/version/none'.format(resource['id']), headers={'Accept': 'application/json', 'Content-type': 'application/json',
+        try:
+            logger.debug("checking resource {0}...".format(resource['id']))
+            res_url = host + '/api/tool/{0}/version/{1}'.format(resource['id'], resource.get('version', 'none'))
+            resp = requests.get(res_url, headers={'Accept': 'application/json', 'Content-type': 'application/json',
                                         'Authorization': 'Token {0}'.format(token)})
-            if resp.status_code == 204:
-                logger.debug("{0} ok".format(resource['id']))
-            else:
-                logger.error("{0} ko, error: {1} {2} (code: {3})".format(resource['id'], resp.text, resp.status_code))
+            if resp.status_code!=200:
+                res_url = host + '/api/tool/{0}/version/none'.format(resource['id'])
+                resp = requests.get(res_url, headers={'Accept': 'application/json', 'Content-type': 'application/json',
+                                            'Authorization': 'Token {0}'.format(token)})
+            res_full = resp.json()
+            logger.debug('{0} in {1}: {2}'.format(resourcename, res_full.get('collection',[]), resourcename in res_full.get('collection',[])))
+            if resourcename in res_full.get('collection',[]):
+                logger.debug("removing resource " + resource['id'])
+                # FIXME added /version/none because not specifying it currently raises an error on dev.bio.tools :(
+                resp = requests.delete(res_url, headers={'Accept': 'application/json', 'Content-type': 'application/json',
+                                            'Authorization': 'Token {0}'.format(token)})
+                if resp.status_code == 204:
+                    logger.debug("{0} ok".format(resource['id']))
+                else:
+                    logger.error("{0} ko, error: {1} {2} (code: {3})".format(resource['id'], resp.text, resp.status_code))
+        except Exception:
+            logger.error("Error removing resource {0}".format(resource['id']), exc_info=True)
     logger.debug("loading json")
     for jsonfile in glob.glob(os.path.join(tool_dir, "*.json")):
         json_string = open(jsonfile, 'r').read()
