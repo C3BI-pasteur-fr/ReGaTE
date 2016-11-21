@@ -26,6 +26,13 @@ afg:
   formats:
   - term: Sequence assembly format (text)
     uri: EDAM_format:2561
+agp:
+  data:
+  - term: Sequence assembly
+    uri: EDAM_data:0925
+  formats:
+  - term: AGP
+    uri: EDAM_format:3693
 arff:
   data:
   - term: Data
@@ -913,6 +920,13 @@ html:
   formats:
   - term: HTML
     uri: EDAM_format:2331
+HTML:
+  data:
+  - term: Report
+    uri: EDAM_data:2048
+  formats:
+  - term: HTML
+    uri: EDAM_format:2331
 idpdb:
   data:
   - term: Data
@@ -1311,6 +1325,15 @@ nhx:
   formats:
   - term: newick
     uri: EDAM_format:1910
+nwk:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Phylogenetic tree
+    uri: EDAM_data:0872
+  formats:
+  - term: newick
+    uri: EDAM_format:1910
 no_unzip.zip:
   data:
   - term: Data
@@ -1442,6 +1465,15 @@ pdf:
   formats:
   - term: PDF
     uri: EDAM_format:3508
+PDF:
+  data:
+  - term: Data
+    uri: EDAM_data:0006
+  - term: Data
+    uri: EDAM_data:0006
+  formats:
+  - term: PDF
+    uri: EDAM_format:3508
 pepcoil:
   data:
   - term: Data
@@ -1550,6 +1582,13 @@ pir:
   - term: Textual format
     uri: EDAM_format:2330
 png:
+  data:
+  - term: Image
+    uri: EDAM_data:2968
+  formats:
+  - term: Image format
+    uri: EDAM_format:3547
+PNG:
   data:
   - term: Image
     uri: EDAM_data:2968
