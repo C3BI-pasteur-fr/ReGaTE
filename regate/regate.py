@@ -650,7 +650,7 @@ def write_json_files(tool_name, general_dict, tool_dir):
     cleaned_dict = copy.deepcopy(general_dict)
     clean_dict(cleaned_dict)
     with open(os.path.join(tool_dir, tool_name + ".json"), 'w') as tool_file:
-            json.dump(cleaned_dict, tool_file, indent=4)
+        json.dump(cleaned_dict, tool_file, indent=4)
 
 
 def write_xml_files(tool_name, general_dict, tool_dir, xmltemplate=None):
