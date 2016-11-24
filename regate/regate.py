@@ -14,6 +14,7 @@ import sys
 import re
 import os
 import glob
+import shutil
 import re
 import string
 import argparse
@@ -648,8 +649,6 @@ def write_json_files(tool_name, general_dict, tool_dir):
     """
     cleaned_dict = copy.deepcopy(general_dict)
     clean_dict(cleaned_dict)
-    if not os.path.exists(tool_dir):
-        os.mkdir(tool_dir)
     with open(os.path.join(tool_dir, tool_name + ".json"), 'w') as tool_file:
             json.dump(cleaned_dict, tool_file, indent=4)
 
@@ -677,6 +676,10 @@ def build_biotools_files(tools_metadata, conf, mapping_edam):
     :param tools_metadata:
     :return:
     """
+    if os.path.exists(conf.tool_dir):
+        shutil.rmtree(conf.tool_dir)    
+    os.mkdir(conf.tool_dir)
+        
     for tool_meta in tools_metadata:
         tool_name = build_tool_name(tool_meta[u'id'],conf.prefix_toolname, conf.suffix_toolname)
         general_dict = build_general_dict(tool_meta, conf)
