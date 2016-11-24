@@ -57,6 +57,23 @@ file_handler_edam.setLevel(logging.WARNING)
 file_handler_edam.setFormatter(formatter)
 logger.addHandler(file_handler_edam)
 
+DEFAULT_EDAM_DATA = {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }
+DEFAULT_EDAM_FORMAT = {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                      }
+DEFAULT_EDAM_OPERATION = {
+                            "uri": "http://edamontology.org/operation_0004",
+                            "term": "Operation"
+                         } 
+DEFAULT_EDAM_TOPIC = {
+                        "uri": "http://edamontology.org/topic_0003",
+                        "term": "Topic"
+                     }
+
 _ROOT = os.path.abspath(os.path.dirname(__file__))
 def get_data_path(path):
     return os.path.join(_ROOT, 'data', path)
@@ -250,7 +267,7 @@ def find_edam_format(format_name, mapping_edam):
     if format_name in mapping_edam:
         edam_format = mapping_edam[format_name]['formats'][0]
     else:
-        edam_format = {}
+        edam_format = DEFAULT_EDAM_FORMAT
     return edam_format
 
 
@@ -264,7 +281,7 @@ def find_edam_data(format_name, mapping_edam):
         list_uri = []
         edam_data = mapping_edam[format_name]['data'][0]
     else:
-        edam_data = {}
+        edam_data = DEFAULT_EDAM_DATA
     return edam_data
 
 
@@ -302,10 +319,7 @@ def build_general_dict(tool_meta_data, conf):
             u'interfaceSpecURL': '',
             u'interfaceSpecFormat': ''
         }],
-        u'topic': [{
-            u'uri': "http://edamontology.org/topic_0003",
-            u'term': "Topic"
-        }],
+        u'topic': [DEFAULT_EDAM_TOPIC],
         u'publications': {u'publicationsPrimaryID': "None", u'publicationsOtherID': []},
         u'homepage': conf.galaxy_url,
         u'accessibility': conf.accessibility,
@@ -357,10 +371,7 @@ def build_function_dict(json_tool, mapping_edam):
     listoutps = outputs_extract(json_tool['outputs'], mapping_edam, listinps)
     func_dict = {
         'functionDescription': json_tool['description'],
-        'functionName': [{
-            'uri': "http://edamontology.org/operation_0004",
-            'term': 'Operation'
-        }],
+        'functionName': [DEFAULT_EDAM_OPERATION],
         'output': listoutps,
         'input': listinps,
         'functionHandle': "functionHandle"
@@ -384,19 +395,21 @@ def inputs_extract(inputs_json, mapping_edam):
         :return: None
         """
         list_format = list()
-        for edam_format in data_json['edam_formats']:
-            if edam_format is not None:
-                list_format.append({'uri': edam_to_uri(edam_format, 'format')})
-        data_uri = find_edam_data(data_json['edam_formats'][0], mapping_edam)
-        if len(data_uri) == 1:
-            data_item = {'dataType': edam_to_uri(data_uri, 'data'),
-                         'dataFormat': list_format,
+        #for edam_format in data_json['edam_formats']:
+        #    if edam_format is not None:
+        #        list_format.append({'uri': edam_to_uri(edam_format, 'format')})
+        #data_uri = find_edam_data(data_json['edam_formats'][0], mapping_edam)
+        data_types = [find_edam_data(extension, mapping_edam) for extension in data_json["extensions"]]
+        data_formats = [find_edam_format(extension, mapping_edam) for extension in data_json["extensions"]]
+        if len(data_types) == 1:
+            data_item = {'dataType': data_types[0],
+                         'dataFormat': data_formats,
                          'dataHandle': data_json['name'],
                          'dataDescription': data_json['label']
                         }
         else:
-            data_item = {'dataType': {'uri': 'http://edamontology.org/data_0006'},
-                         'dataFormat': list_format,
+            data_item = {'dataType': DEFAULT_EDAM_DATA,
+                         'dataFormat': data_formats,
                          'dataHandle': data_json['name'],
                          'dataDescription': data_json['label']
                         }
@@ -414,7 +427,7 @@ def inputs_extract(inputs_json, mapping_edam):
                 inputs_extract_conditional(dictinprep)
             elif dictinprep['type'] == "repeat":
                 inputs_extract_repeat(dictinprep)
-            elif dictinprep["type"] == "data":
+            elif dictinprep["type"] in ["data", "datacollection"]:
                 inputs_extract_data(dictinprep)
 
     def inputs_extract_conditional(conditional_json):
@@ -429,19 +442,19 @@ def inputs_extract(inputs_json, mapping_edam):
                     inputs_extract_conditional(dictinpcond)
                 elif dictinpcond['type'] == "repeat":
                     inputs_extract_repeat(dictinpcond)
-                elif dictinpcond["type"] == "data":
+                elif dictinpcond["type"] in ["data", "datacollection"]:
                     inputs_extract_data(dictinpcond)
 
     listdata = list()
-
     for dictinp in inputs_json:
-
         if dictinp['type'] == "conditional":
             inputs_extract_conditional(dictinp)
         elif dictinp['type'] == "repeat":
             inputs_extract_repeat(dictinp)
-        elif dictinp["type"] == "data":
+        elif dictinp["type"] in ["data", "datacollection"]:
             inputs_extract_data(dictinp)
+    #if any([len(data['dataType'])==0 or len(data['dataFormat'])==0 for data in listdata]):
+    #    logger.warning("data/formats mapping not found for inputs_json:" + str(inputs_json))
     return listdata
 
 
@@ -470,14 +483,8 @@ def outputs_extract(outputs_json, mapping_edam, biotools_inputs):
             #         'dataFormat': biotools_input_source['dataFormat'],
             #         'dataHandle': output['format'], 'dataDescription': output['name']
             #          }
-            outputdict = {'dataType': {
-                                       'uri': "http://edamontology.org/data_0006",
-                                       'term': 'Data'
-                                      },
-                          'dataFormat': [{
-                                        'uri': "http://edamontology.org/format_1915",
-                                        'term': 'Format'
-                                        }],
+            outputdict = {'dataType': DEFAULT_EDAM_DATA, 
+                          'dataFormat': [DEFAULT_EDAM_FORMAT],
                           'dataHandle': output['format'], 'dataDescription': output['name']
                          }
         listoutput.append(outputdict)
