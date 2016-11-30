@@ -27,8 +27,8 @@ import copy
 import logging
 import configparser
 import collections
-from lxml import etree
 
+from lxml import etree
 from Cheetah.Template import Template
 from bioblend.galaxy.client import ConnectionError
 from bioblend.galaxy import GalaxyInstance
@@ -672,8 +672,6 @@ def write_xml_files(tool_name, general_dict, tool_dir, xmltemplate=None):
     else:
         template_path = get_data_path('xmltemplate.tmpl')
 
-    if not os.path.exists(tool_dir):
-        os.mkdir(tool_dir)
     with open(os.path.join(tool_dir, tool_name + ".xml"), 'w') as tool_file:
             template = Template(file=template_path, searchList=[general_dict])
             tool_file.write(str(template))
@@ -684,9 +682,10 @@ def build_biotools_files(tools_metadata, conf, mapping_edam):
     :param tools_metadata:
     :return:
     """
-    if os.path.exists(conf.tool_dir):
-        shutil.rmtree(conf.tool_dir)    
-    os.mkdir(conf.tool_dir)
+    tool_dir = conf.tool_dir
+    if os.path.exists(tool_dir):
+        shutil.rmtree(tool_dir)
+    os.mkdir(tool_dir)
         
     for tool_meta in tools_metadata:
         tool_name = build_tool_name(tool_meta[u'id'],conf.prefix_toolname, conf.suffix_toolname)
@@ -700,13 +699,13 @@ def build_biotools_files(tools_metadata, conf, mapping_edam):
         general_dict[u"name"] = tool_name
         general_dict[u"id"] = tool_name
         file_name = build_filename(tool_meta[u'id'], tool_meta[u'version'])
-        write_json_files(file_name, general_dict, conf.tool_dir)
+        write_json_files(file_name, general_dict, tool_dir)
         # do not write XML files because they require source registry to be specified
         #if conf.xmltemplate:
-        #    write_xml_files(file_name, general_dict, conf.tool_dir,
+        #    write_xml_files(file_name, general_dict, tool_dir,
         #                    xmltemplate=conf.xmltemplate)
         #else:
-        #    write_xml_files(file_name, general_dict, conf.tool_dir)
+        #    write_xml_files(file_name, general_dict, tool_dir)
 
 
 
