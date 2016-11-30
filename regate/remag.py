@@ -5,6 +5,7 @@ Created on Jun. 16, 2014
 
 @author: Olivia Doppelt-Azeroual, CIB-C3BI, Institut Pasteur, Paris
 @author: Fabien Mareuil, CIB-C3BI, Institut Pasteur, Paris
+@author: Hervé Ménager, CIB-C3BI, Institut Pasteur, Paris
 @contact: fabien.mareuil@pasteur.fr
 @project: ReGaTE
 @githuborganization: bioinfo-center-pasteur-fr
