@@ -11,6 +11,10 @@
 Installation
 ************
 
+One-line install
+================
+
+    pip install git+https://github.com/C3BI-pasteur-fr/ReGaTE.git
 
 Requirements
 ===================
