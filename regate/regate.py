@@ -5,7 +5,6 @@ Created on Oct. 23, 2014
 
 @author: Olivia Doppelt-Azeroual, CIB-C3BI, Institut Pasteur, Paris
 @author: Fabien Mareuil, CIB-C3BI, Institut Pasteur, Paris
-@author: Hervé Ménager, CIB-C3BI, Institut Pasteur, Paris
 @contact: olivia.doppelt@pasteur.fr
 @project: ReGaTE
 @githuborganization: C3BI-pasteur-fr
@@ -27,8 +26,8 @@ import copy
 import logging
 import configparser
 import collections
-
 from lxml import etree
+
 from Cheetah.Template import Template
 from bioblend.galaxy.client import ConnectionError
 from bioblend.galaxy import GalaxyInstance
@@ -92,7 +91,7 @@ class Config(object):
             self.tools_default = self.assign("galaxy_server", "tools_default", ismandatory=True)
             self.contactName = self.assign("galaxy_server", "contactName", ismandatory=True)
             self.contactEmail = self.assign("galaxy_server", "contactEmail", ismandatory=True)
-            self.resourcename = self.assign("galaxy_server", "resourcename", ismandatory=True)
+            self.resourcename = self.assign("galaxy_server", "resourcename", ismandatory=False)
             self.onlypush = self.assign("regate_specific_section", "onlypush", ismandatory=False, boolean=True)
             self.prefix_toolname = self.assign("regate_specific_section", "prefix_toolname", ismandatory=False)
             self.suffix_toolname = self.assign("regate_specific_section", "suffix_toolname", ismandatory=False)
@@ -304,7 +303,7 @@ def build_general_dict(tool_meta_data, conf):
         u'description': description,
         u'uses': [{
             "usesName": tool_meta_data[u'id'],
-            "usesHomepage": "{0}?id={1}".format(conf.galaxy_url + '/root',
+            "usesHomepage": "{0}?tool_id={1}".format(conf.galaxy_url + '/tool_runner',
                                                       requests.utils.quote(tool_meta_data[u'id'])),
             "usesVersion": tool_meta_data[u'version']
         }],
@@ -619,6 +618,7 @@ def clean_list(jsonlist):
     :return:
     """
     nullindexlist = []
+
     for elem in range(len(jsonlist)):
         if isinstance(jsonlist[elem], dict):
             clean_dict(jsonlist[elem])
@@ -673,6 +673,8 @@ def write_xml_files(tool_name, general_dict, tool_dir, xmltemplate=None):
     else:
         template_path = get_data_path('xmltemplate.tmpl')
 
+    if not os.path.exists(tool_dir):
+        os.mkdir(tool_dir)
     with open(os.path.join(tool_dir, tool_name + ".xml"), 'w') as tool_file:
             template = Template(file=template_path, searchList=[general_dict])
             tool_file.write(str(template))
@@ -683,12 +685,12 @@ def build_biotools_files(tools_metadata, conf, mapping_edam):
     :param tools_metadata:
     :return:
     """
-    tool_dir = conf.tool_dir
-    if os.path.exists(tool_dir):
-        shutil.rmtree(tool_dir)
-    os.mkdir(tool_dir)
+    if os.path.exists(conf.tool_dir):
+        shutil.rmtree(conf.tool_dir)    
+    os.mkdir(conf.tool_dir)
         
     for tool_meta in tools_metadata:
+        print tool_meta[u'id']
         tool_name = build_tool_name(tool_meta[u'id'],conf.prefix_toolname, conf.suffix_toolname)
         general_dict = build_general_dict(tool_meta, conf)
 
@@ -700,13 +702,13 @@ def build_biotools_files(tools_metadata, conf, mapping_edam):
         general_dict[u"name"] = tool_name
         general_dict[u"id"] = tool_name
         file_name = build_filename(tool_meta[u'id'], tool_meta[u'version'])
-        write_json_files(file_name, general_dict, tool_dir)
+        write_json_files(file_name, general_dict, conf.tool_dir)
         # do not write XML files because they require source registry to be specified
         #if conf.xmltemplate:
-        #    write_xml_files(file_name, general_dict, tool_dir,
+        #    write_xml_files(file_name, general_dict, conf.tool_dir,
         #                    xmltemplate=conf.xmltemplate)
         #else:
-        #    write_xml_files(file_name, general_dict, tool_dir)
+        #    write_xml_files(file_name, general_dict, conf.tool_dir)
 
 
 
@@ -772,6 +774,7 @@ def run():
                         tools_meta_data.append(tool_metadata)
                     except ConnectionError, e:
                         logger.error("Error during connection with exposed API method for tool {0}".format(str(tool['id'])), exc_info=True)
+
             build_biotools_files(tools_meta_data, config, edam_dict)
 
         if config.onlypush:
