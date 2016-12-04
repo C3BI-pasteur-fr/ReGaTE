@@ -312,7 +312,7 @@ def build_general_dict(tool_meta_data, conf):
         # we need to find a 50 chars or less string for sourceRegistry
         #u'sourceRegistry': get_source_registry(tool_meta_data[u'id']),
         u'resourceType': ["Tool"],
-        u'maturity': 'Stable',
+        u'maturity': 'Mature',
         u'platform': ['Linux'],
         u'interface': [{
             u'interfaceType': "Web UI",
@@ -323,7 +323,7 @@ def build_general_dict(tool_meta_data, conf):
         u'topic': [DEFAULT_EDAM_TOPIC],
         u'publications': {u'publicationsPrimaryID': "None", u'publicationsOtherID': []},
         u'homepage': conf.galaxy_url,
-        u'accessibility': conf.accessibility,
+        u'accessibility': [conf.accessibility],
         u'mirror': [],
         u'canonicalID': '',
         u'tag': [],
@@ -353,7 +353,8 @@ def build_general_dict(tool_meta_data, conf):
             u'contactName': conf.contactName,
             u'contactTel': '',
             u'contactRole': []
-        }]
+        }],
+        'toolType': ['Web application']
     }
     return gen_dict
 
@@ -372,7 +373,7 @@ def build_function_dict(json_tool, mapping_edam):
     listoutps = outputs_extract(json_tool['outputs'], mapping_edam, listinps)
     func_dict = {
         'functionDescription': json_tool['description'],
-        'functionName': [DEFAULT_EDAM_OPERATION],
+        'operation': [DEFAULT_EDAM_OPERATION],
         'output': listoutps,
         'input': listinps,
         'functionHandle': "functionHandle"
