@@ -7,7 +7,7 @@ The full documentation is available on http://regate.readthedocs.io, including d
 
 ```bash
 pip install git+https://github.com/C3BI-pasteur-fr/ReGaTE.git
-regate –templateconfig
+regate --templateconfig
 vim regate.ini #here fill in the configuration variables sensibly before running regate
-regate –config_file regate.ini
+regate --config_file regate.ini
 ```
