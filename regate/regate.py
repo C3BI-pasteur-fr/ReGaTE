@@ -59,30 +59,35 @@ file_handler_edam.setFormatter(formatter)
 logger.addHandler(file_handler_edam)
 
 DEFAULT_EDAM_DATA = {
-                        "term": "Data", 
+    "term": "Data",
                         "uri": "http://edamontology.org/data_0006"
-                    }
+}
 DEFAULT_EDAM_FORMAT = {
-                            "term": "Textual format", 
+    "term": "Textual format",
                             "uri": "http://edamontology.org/format_2330"
-                      }
+}
 DEFAULT_EDAM_OPERATION = {
-                            "uri": "http://edamontology.org/operation_0004",
+    "uri": "http://edamontology.org/operation_0004",
                             "term": "Operation"
-                         } 
+}
 DEFAULT_EDAM_TOPIC = {
-                        "uri": "http://edamontology.org/topic_0003",
+    "uri": "http://edamontology.org/topic_0003",
                         "term": "Topic"
-                     }
+}
 
 _ROOT = os.path.abspath(os.path.dirname(__file__))
+
+
 def get_data_path(path):
     return os.path.join(_ROOT, 'data', path)
 
+
 class Config(object):
+
     """
     class config to parse and check the config.ini file
     """
+
     def __init__(self, configfile, script):
         self.conf = config_parser(configfile)
         self.galaxy_url_api = self.assign("galaxy_server", "galaxy_url_api", ismandatory=True)
@@ -194,8 +199,8 @@ def get_source_registry(tool_id):
     :return:
     """
     try:
-        source_registry = "/".join(tool_id.replace('repos','view',1).split('/')[0:-2])
-        return "https://"+ source_registry
+        source_registry = "/".join(tool_id.replace('repos', 'view', 1).split('/')[0:-2])
+        return "https://" + source_registry
     except ValueError:
         logger.warning("ValueError:", tool_id)
         return ""
@@ -294,7 +299,7 @@ def build_general_dict(tool_meta_data, conf):
     :return: biotools dictionary
     :rtype: dictionary
     """
-    if tool_meta_data[u'description']!='':
+    if tool_meta_data[u'description'] != '':
         description = format_description(tool_meta_data[u'description'])
     else:
         description = 'Galaxy tool {0}.'.format(tool_meta_data[u'description'])
@@ -309,7 +314,7 @@ def build_general_dict(tool_meta_data, conf):
         }],
         'collection': [conf.resourcename],
         # we need to find a 50 chars or less string for sourceRegistry
-        #u'sourceRegistry': get_source_registry(tool_meta_data[u'id']),
+        # u'sourceRegistry': get_source_registry(tool_meta_data[u'id']),
         'resourceType': ["Tool"],
         'maturity': 'Mature',
         'platform': ['Linux'],
@@ -322,7 +327,7 @@ def build_general_dict(tool_meta_data, conf):
         'topic': [DEFAULT_EDAM_TOPIC],
         'publications': {u'publicationsPrimaryID': "None", 'publicationsOtherID': []},
         'homepage': "{0}?tool_id={1}".format(conf.galaxy_url + '/tool_runner',
-                                                      requests.utils.quote(tool_meta_data[u'id'])),
+                                             requests.utils.quote(tool_meta_data[u'id'])),
         'accessibility': [conf.accessibility],
         'mirror': [],
         'canonicalID': '',
@@ -397,10 +402,10 @@ def inputs_extract(inputs_json, mapping_edam):
         :return: None
         """
         list_format = list()
-        #for edam_format in data_json['edam_formats']:
+        # for edam_format in data_json['edam_formats']:
         #    if edam_format is not None:
         #        list_format.append({'uri': edam_to_uri(edam_format, 'format')})
-        #data_uri = find_edam_data(data_json['edam_formats'][0], mapping_edam)
+        # data_uri = find_edam_data(data_json['edam_formats'][0], mapping_edam)
         data_types = [find_edam_data(extension, mapping_edam) for extension in data_json["extensions"]]
         data_formats = [find_edam_format(extension, mapping_edam) for extension in data_json["extensions"]]
         if len(data_types) == 1:
@@ -408,15 +413,14 @@ def inputs_extract(inputs_json, mapping_edam):
                          'dataFormat': data_formats,
                          'dataHandle': data_json['name'],
                          'dataDescription': data_json['label']
-                        }
+                         }
         else:
             data_item = {'dataType': DEFAULT_EDAM_DATA,
                          'dataFormat': data_formats,
                          'dataHandle': data_json['name'],
                          'dataDescription': data_json['label']
-                        }
+                         }
         listdata.append(data_item)
-
 
     def inputs_extract_repeat(repeat_json):
         """
@@ -455,7 +459,7 @@ def inputs_extract(inputs_json, mapping_edam):
             inputs_extract_repeat(dictinp)
         elif dictinp["type"] in ["data", "datacollection"]:
             inputs_extract_data(dictinp)
-    #if any([len(data['dataType'])==0 or len(data['dataFormat'])==0 for data in listdata]):
+    # if any([len(data['dataType'])==0 or len(data['dataFormat'])==0 for data in listdata]):
     #    logger.warning("data/formats mapping not found for inputs_json:" + str(inputs_json))
     return listdata
 
@@ -469,31 +473,32 @@ def outputs_extract(outputs_json, mapping_edam, biotools_inputs):
     """
     listoutput = list()
     for output in outputs_json:
-        if output['format']!='input':
+        if output['format'] != 'input':
             try:
                 outputdict = {'dataType': find_edam_data(output[u'format'], mapping_edam),
-                         'dataFormat': [find_edam_format(output[u'format'], mapping_edam)],
-                         'dataHandle': output['format'], 'dataDescription': output['name']
-                          }
+                              'dataFormat': [find_edam_format(output[u'format'], mapping_edam)],
+                              'dataHandle': output['format'], 'dataDescription': output['name']
+                              }
             except KeyError:
-                    logger.warning("EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(output[u'format']))
+                    logger.warning(
+                        "EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(output[u'format']))
         else:
-            # FIXME: copying the datatype/format from the source would work if only the Galaxy API used 
+            # FIXME: copying the datatype/format from the source would work if only the Galaxy API used
             # by bioblend sent the format_source information
-            #biotools_input_source = [biotools_input for biotools_input in biotools_inputs if biotools_input['dataHandle']==output['format_source']][0] 
-            #outputdict = {'dataType': biotools_input_source['dataType'],
+            # biotools_input_source = [biotools_input for biotools_input in biotools_inputs if biotools_input['dataHandle']==output['format_source']][0]
+            # outputdict = {'dataType': biotools_input_source['dataType'],
             #         'dataFormat': biotools_input_source['dataFormat'],
             #         'dataHandle': output['format'], 'dataDescription': output['name']
             #          }
-            outputdict = {'dataType': DEFAULT_EDAM_DATA, 
+            outputdict = {'dataType': DEFAULT_EDAM_DATA,
                           'dataFormat': [DEFAULT_EDAM_FORMAT],
                           'dataHandle': output['format'], 'dataDescription': output['name']
-                         }
+                          }
         listoutput.append(outputdict)
     return listoutput
 
 
-#def extract_edam_from_galaxy(mapping_edam=None):
+# def extract_edam_from_galaxy(mapping_edam=None):
 #    """
 #    :param mapping_edam:
 #    :return:
@@ -508,7 +513,7 @@ def build_edam_dict(yaml_file):
     :param yaml_file:
     :return:
     """
-    #map_edam = extract_edam_from_galaxy()
+    # map_edam = extract_edam_from_galaxy()
     with open(yaml_file, "r") as file_edam:
         map_edam = yaml.load(file_edam)
         for key, value in map_edam.iteritems():
@@ -529,9 +534,9 @@ def auth(login, host, ssl_verify):
         password = getpass.getpass()
         url = host + '/api/rest-auth/login/'
         resp = requests.post(url, '{{"username": "{0}","password": "{1}"}}'.format(login, password),
-                         headers={'Accept': 'application/json', 'Content-type': 'application/json'},
-                         verify=ssl_verify)
-        key = resp.json().get('key') 
+                             headers={'Accept': 'application/json', 'Content-type': 'application/json'},
+                             verify=ssl_verify)
+        key = resp.json().get('key')
     return key
 
 
@@ -548,8 +553,8 @@ def push_to_elix(login, host, ssl_verify, tool_dir, resourcename, xsd=None):
     ko_cnt = 0
     logger.debug("attempting to retrieve registered services...")
     resp = requests.get(host + '/api/rest-auth/user/',
-                           headers={'Accept': 'application/json', 'Content-type': 'application/json',
-                                    'Authorization': 'Token {0}'.format(token)})
+                        headers={'Accept': 'application/json', 'Content-type': 'application/json',
+                                 'Authorization': 'Token {0}'.format(token)})
     resources = resp.json().get('resources')
     logger.debug("attempting to delete all registered services in collection {0}...".format(resourcename))
     for resource in resources:
@@ -557,28 +562,31 @@ def push_to_elix(login, host, ssl_verify, tool_dir, resourcename, xsd=None):
             logger.debug("checking resource {0}...".format(resource['id']))
             res_url = host + '/api/tool/{0}/version/{1}'.format(resource['id'], resource.get('version', 'none'))
             resp = requests.get(res_url, headers={'Accept': 'application/json', 'Content-type': 'application/json',
-                                        'Authorization': 'Token {0}'.format(token)})
-            if resp.status_code!=200:
+                                                  'Authorization': 'Token {0}'.format(token)})
+            if resp.status_code != 200:
                 res_url = host + '/api/tool/{0}/version/none'.format(resource['id'])
                 resp = requests.get(res_url, headers={'Accept': 'application/json', 'Content-type': 'application/json',
-                                            'Authorization': 'Token {0}'.format(token)})
+                                                      'Authorization': 'Token {0}'.format(token)})
             res_full = resp.json()
-            logger.debug('{0} in {1}: {2}'.format(resourcename, res_full.get('collection',[]), resourcename in res_full.get('collection',[])))
-            if resourcename in res_full.get('collection',[]):
+            logger.debug('{0} in {1}: {2}'.format(resourcename, res_full.get(
+                'collection', []), resourcename in res_full.get('collection', [])))
+            if resourcename in res_full.get('collection', []):
                 logger.debug("removing resource " + resource['id'])
                 # FIXME added /version/none because not specifying it currently raises an error on dev.bio.tools :(
-                resp = requests.delete(res_url, headers={'Accept': 'application/json', 'Content-type': 'application/json',
-                                            'Authorization': 'Token {0}'.format(token)})
+                resp = requests.delete(
+                    res_url, headers={'Accept': 'application/json', 'Content-type': 'application/json',
+                                      'Authorization': 'Token {0}'.format(token)})
                 if resp.status_code == 204:
                     logger.debug("{0} ok".format(resource['id']))
                 else:
-                    logger.error("{0} ko, error: {1} {2} (code: {3})".format(resource['id'], resp.text, resp.status_code))
+                    logger.error("{0} ko, error: {1} {2} (code: {3})".format(
+                        resource['id'], resp.text, resp.status_code))
         except Exception:
             logger.error("Error removing resource {0}".format(resource['id']), exc_info=True)
     logger.debug("loading json")
     for jsonfile in glob.glob(os.path.join(tool_dir, "*.json")):
         json_string = open(jsonfile, 'r').read()
-        url = host+"/api/tool"
+        url = host + "/api/tool"
         resp = requests.post(url, json_string,
                              headers={'Accept': 'application/json', 'Content-type': 'application/json',
                                       'Authorization': 'Token {0}'.format(token)}, verify=ssl_verify)
@@ -598,7 +606,7 @@ def push_to_elix(login, host, ssl_verify, tool_dir, resourcename, xsd=None):
 #        try:
 #            xmltree = etree.parse(xmlfile, parser)
 #        except etree.XMLSyntaxError, err:
-#            #print  "XML {0} is wrong formated, {1}".format(os.path.basename(xmlfile), err)
+# print  "XML {0} is wrong formated, {1}".format(os.path.basename(xmlfile), err)
 #            continue
 #        url = host+"/api/tool"
 #        resp = requests.post(url, etree.tostring(xmltree, pretty_print=True),
@@ -687,9 +695,9 @@ def build_biotools_files(tools_metadata, conf, mapping_edam):
     if os.path.exists(tool_dir):
         shutil.rmtree(tool_dir)
     os.mkdir(tool_dir)
-        
+
     for tool_meta in tools_metadata:
-        tool_name = build_tool_name(tool_meta[u'id'],conf.prefix_toolname, conf.suffix_toolname)
+        tool_name = build_tool_name(tool_meta[u'id'], conf.prefix_toolname, conf.suffix_toolname)
         general_dict = build_general_dict(tool_meta, conf)
 
         general_dict[u"function"] = build_function_dict(tool_meta, mapping_edam)
@@ -702,12 +710,11 @@ def build_biotools_files(tools_metadata, conf, mapping_edam):
         file_name = build_filename(tool_meta[u'id'], tool_meta[u'version'])
         write_json_files(file_name, general_dict, tool_dir)
         # do not write XML files because they require source registry to be specified
-        #if conf.xmltemplate:
+        # if conf.xmltemplate:
         #    write_xml_files(file_name, general_dict, tool_dir,
         #                    xmltemplate=conf.xmltemplate)
-        #else:
+        # else:
         #    write_xml_files(file_name, general_dict, tool_dir)
-
 
 
 def generate_template():
@@ -771,7 +778,8 @@ def run():
                         tool_metadata = gi.tools.show_tool(tool_id=tool['id'], io_details=True, link_details=True)
                         tools_meta_data.append(tool_metadata)
                     except ConnectionError, e:
-                        logger.error("Error during connection with exposed API method for tool {0}".format(str(tool['id'])), exc_info=True)
+                        logger.error(
+                            "Error during connection with exposed API method for tool {0}".format(str(tool['id'])), exc_info=True)
             build_biotools_files(tools_meta_data, config, edam_dict)
 
         if config.onlypush:
@@ -782,10 +790,10 @@ def run():
 
         if config.pushtoelixir:
             if config.xsdbiotools:
-                push_to_elix(config.login, config.host, config.ssl_verify, config.tool_dir, config.resourcename, xsd=config.xsdbiotools)
+                push_to_elix(config.login, config.host, config.ssl_verify,
+                             config.tool_dir, config.resourcename, xsd=config.xsdbiotools)
             else:
                 push_to_elix(config.login, config.host, config.ssl_verify, config.tool_dir, config.resourcename)
-
 
     elif args.templateconfig:
         generate_template()
