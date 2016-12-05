@@ -16,7 +16,6 @@ import re
 import os
 import glob
 import shutil
-import re
 import string
 import argparse
 import json
@@ -60,19 +59,19 @@ logger.addHandler(file_handler_edam)
 
 DEFAULT_EDAM_DATA = {
     "term": "Data",
-                        "uri": "http://edamontology.org/data_0006"
+    "uri": "http://edamontology.org/data_0006"
 }
 DEFAULT_EDAM_FORMAT = {
     "term": "Textual format",
-                            "uri": "http://edamontology.org/format_2330"
+    "uri": "http://edamontology.org/format_2330"
 }
 DEFAULT_EDAM_OPERATION = {
     "uri": "http://edamontology.org/operation_0004",
-                            "term": "Operation"
+    "term": "Operation"
 }
 DEFAULT_EDAM_TOPIC = {
     "uri": "http://edamontology.org/topic_0003",
-                        "term": "Topic"
+    "term": "Topic"
 }
 
 _ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -284,7 +283,6 @@ def find_edam_data(format_name, mapping_edam):
     :return edam data of a defined format_name:
     """
     if format_name in mapping_edam:
-        list_uri = []
         edam_data = mapping_edam[format_name]['data'][0]
     else:
         edam_data = DEFAULT_EDAM_DATA
@@ -401,11 +399,6 @@ def inputs_extract(inputs_json, mapping_edam):
         :param data_json:
         :return: None
         """
-        list_format = list()
-        # for edam_format in data_json['edam_formats']:
-        #    if edam_format is not None:
-        #        list_format.append({'uri': edam_to_uri(edam_format, 'format')})
-        # data_uri = find_edam_data(data_json['edam_formats'][0], mapping_edam)
         data_types = [find_edam_data(extension, mapping_edam) for extension in data_json["extensions"]]
         data_formats = [find_edam_format(extension, mapping_edam) for extension in data_json["extensions"]]
         if len(data_types) == 1:
@@ -779,7 +772,8 @@ def run():
                         tools_meta_data.append(tool_metadata)
                     except ConnectionError, e:
                         logger.error(
-                            "Error during connection with exposed API method for tool {0}".format(str(tool['id'])), exc_info=True)
+                            "Error during connection with exposed API method for tool {0}".format(str(tool['id'])),
+                            exc_info=True)
             build_biotools_files(tools_meta_data, config, edam_dict)
 
         if config.onlypush:
