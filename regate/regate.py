@@ -299,60 +299,60 @@ def build_general_dict(tool_meta_data, conf):
     else:
         description = 'Galaxy tool {0}.'.format(tool_meta_data[u'description'])
     gen_dict = {
-        u'version': tool_meta_data[u'version'],
-        u'versionID': tool_meta_data[u'version'],
-        u'description': description,
-        u'uses': [{
-            "usesName": tool_meta_data[u'id'],
-            "usesHomepage": "{0}?tool_id={1}".format(conf.galaxy_url + '/tool_runner',
-                                                      requests.utils.quote(tool_meta_data[u'id'])),
+        'version': tool_meta_data[u'version'],
+        'versionID': tool_meta_data[u'version'],
+        'description': description,
+        'uses': [{
+            "usesName": 'Toolshed entry for "' + tool_meta_data[u'id'] + '"',
+            "usesHomepage": 'http://' + requests.utils.quote(tool_meta_data[u'id']),
             "usesVersion": tool_meta_data[u'version']
         }],
-        u'collection': [conf.resourcename],
+        'collection': [conf.resourcename],
         # we need to find a 50 chars or less string for sourceRegistry
         #u'sourceRegistry': get_source_registry(tool_meta_data[u'id']),
-        u'resourceType': ["Tool"],
-        u'maturity': 'Mature',
-        u'platform': ['Linux'],
-        u'interface': [{
-            u'interfaceType': "Web UI",
-            u'interfaceDocs': '',
-            u'interfaceSpecURL': '',
-            u'interfaceSpecFormat': ''
+        'resourceType': ["Tool"],
+        'maturity': 'Mature',
+        'platform': ['Linux'],
+        'interface': [{
+            'interfaceType': "Web UI",
+            'interfaceDocs': '',
+            'interfaceSpecURL': '',
+            'interfaceSpecFormat': ''
         }],
-        u'topic': [DEFAULT_EDAM_TOPIC],
-        u'publications': {u'publicationsPrimaryID': "None", u'publicationsOtherID': []},
-        u'homepage': conf.galaxy_url,
-        u'accessibility': [conf.accessibility],
-        u'mirror': [],
-        u'canonicalID': '',
-        u'tag': [],
-        u'elixirInfo': {
-            u'elixirStatus': '',
-            u'elixirNode': ''
+        'topic': [DEFAULT_EDAM_TOPIC],
+        'publications': {u'publicationsPrimaryID': "None", 'publicationsOtherID': []},
+        'homepage': "{0}?tool_id={1}".format(conf.galaxy_url + '/tool_runner',
+                                                      requests.utils.quote(tool_meta_data[u'id'])),
+        'accessibility': [conf.accessibility],
+        'mirror': [],
+        'canonicalID': '',
+        'tag': [],
+        'elixirInfo': {
+            'elixirStatus': '',
+            'elixirNode': ''
         },
-        u'language': [],
-        u'license': '',
-        u'cost': '',
-        u'docs': {
-            u'docsHome': '',
-            u'docsTermsOfUse': '',
-            u'docsDownload': '',
-            u'docsCitationInstructions': ''
+        'language': [],
+        'license': '',
+        'cost': '',
+        'docs': {
+            'docsHome': '',
+            'docsTermsOfUse': '',
+            'docsDownload': '',
+            'docsCitationInstructions': ''
         },
-        u'credits': {
-            u'creditsDeveloper': [],
-            u'creditsContributor': [],
-            u'creditsInstitution': [],
-            u'creditsInfrastructure': [],
-            u'creditsFunding': []
+        'credits': {
+            'creditsDeveloper': [],
+            'creditsContributor': [],
+            'creditsInstitution': [],
+            'creditsInfrastructure': [],
+            'creditsFunding': []
         },
-        u'contact': [{
-            u'contactEmail': conf.contactEmail,
-            u'contactURL': '',
-            u'contactName': conf.contactName,
-            u'contactTel': '',
-            u'contactRole': []
+        'contact': [{
+            'contactEmail': conf.contactEmail,
+            'contactURL': '',
+            'contactName': conf.contactName,
+            'contactTel': '',
+            'contactRole': []
         }],
         'toolType': ['Web application']
     }
