@@ -18,7 +18,7 @@ In order to run ReGaTE you need an account on the http://bio.tools server and on
 
 * Generate the regate.ini configuration file by typing
 
-    ``regate --templateconfig``
+    `regate --templateconfig`
     
 * Edit the regate.ini configuration file which was created in your working directory. The different variables to edit are **all** documented in the file itself. The ones that you **must** set are:
 
