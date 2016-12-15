@@ -235,7 +235,7 @@ def format_description(description):
 def detect_toolid_duplicate(tool_list):
     id_list = list()
     for tool in tool_list:
-        id_list.append(build_filename(tool[u'id'], tool[u'version']))
+        id_list.append(build_filename(tool['id'], tool['version']))
 
     duplicate_tools = [item for item, count in collections.Counter(id_list).items() if count > 1]
     if duplicate_tools:
@@ -297,22 +297,22 @@ def build_general_dict(tool_meta_data, conf):
     :return: biotools dictionary
     :rtype: dictionary
     """
-    if tool_meta_data[u'description'] != '':
-        description = format_description(tool_meta_data[u'description'])
+    if tool_meta_data['description'] != '':
+        description = format_description(tool_meta_data['description'])
     else:
-        description = 'Galaxy tool {0}.'.format(tool_meta_data[u'description'])
+        description = 'Galaxy tool {0}.'.format(tool_meta_data['description'])
     gen_dict = {
-        'version': tool_meta_data[u'version'],
-        'versionID': tool_meta_data[u'version'],
+        'version': tool_meta_data['version'],
+        'versionID': tool_meta_data['version'],
         'description': description,
         'uses': [{
-            "usesName": 'Toolshed entry for "' + tool_meta_data[u'id'] + '"',
-            "usesHomepage": 'http://' + requests.utils.quote(tool_meta_data[u'id']),
-            "usesVersion": tool_meta_data[u'version']
+            "usesName": 'Toolshed entry for "' + tool_meta_data['id'] + '"',
+            "usesHomepage": 'http://' + requests.utils.quote(tool_meta_data['id']),
+            "usesVersion": tool_meta_data['version']
         }],
         'collection': [conf.resourcename],
         # we need to find a 50 chars or less string for sourceRegistry
-        # u'sourceRegistry': get_source_registry(tool_meta_data[u'id']),
+        # 'sourceRegistry': get_source_registry(tool_meta_data['id']),
         'resourceType': ["Tool"],
         'maturity': 'Mature',
         'platform': ['Linux'],
@@ -323,9 +323,9 @@ def build_general_dict(tool_meta_data, conf):
             'interfaceSpecFormat': ''
         }],
         'topic': [DEFAULT_EDAM_TOPIC],
-        'publications': {u'publicationsPrimaryID': "None", 'publicationsOtherID': []},
+        'publications': {'publicationsPrimaryID': "None", 'publicationsOtherID': []},
         'homepage': "{0}?tool_id={1}".format(conf.galaxy_url + '/tool_runner',
-                                             requests.utils.quote(tool_meta_data[u'id'])),
+                                             requests.utils.quote(tool_meta_data['id'])),
         'accessibility': [conf.accessibility],
         'mirror': [],
         'canonicalID': '',
@@ -343,7 +343,7 @@ def build_general_dict(tool_meta_data, conf):
             'docsDownload': '',
             'docsCitationInstructions': ''
         },
-        'credits': {
+        'credit': {
             'creditsDeveloper': [],
             'creditsContributor': [],
             'creditsInstitution': [],
@@ -351,10 +351,10 @@ def build_general_dict(tool_meta_data, conf):
             'creditsFunding': []
         },
         'contact': [{
-            'contactEmail': conf.contactEmail,
-            'contactURL': '',
-            'contactName': conf.contactName,
-            'contactTel': '',
+            'email': conf.contactEmail,
+            'url': '',
+            'name': conf.contactName,
+            'tel': '',
             'contactRole': []
         }],
         'toolType': ['Web application']
@@ -402,14 +402,14 @@ def inputs_extract(inputs_json, mapping_edam):
         data_types = [find_edam_data(extension, mapping_edam) for extension in data_json["extensions"]]
         data_formats = [find_edam_format(extension, mapping_edam) for extension in data_json["extensions"]]
         if len(data_types) == 1:
-            data_item = {'dataType': data_types[0],
-                         'dataFormat': data_formats,
+            data_item = {'data': data_types[0],
+                         'format': data_formats,
                          'dataHandle': data_json['name'],
                          'dataDescription': data_json['label']
                          }
         else:
-            data_item = {'dataType': DEFAULT_EDAM_DATA,
-                         'dataFormat': data_formats,
+            data_item = {'data': DEFAULT_EDAM_DATA,
+                         'format': data_formats,
                          'dataHandle': data_json['name'],
                          'dataDescription': data_json['label']
                          }
@@ -468,13 +468,13 @@ def outputs_extract(outputs_json, mapping_edam, biotools_inputs):
     for output in outputs_json:
         if output['format'] != 'input':
             try:
-                outputdict = {'dataType': find_edam_data(output[u'format'], mapping_edam),
-                              'dataFormat': [find_edam_format(output[u'format'], mapping_edam)],
+                outputdict = {'data': find_edam_data(output['format'], mapping_edam),
+                              'format': [find_edam_format(output['format'], mapping_edam)],
                               'dataHandle': output['format'], 'dataDescription': output['name']
                               }
             except KeyError:
                     logger.warning(
-                        "EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(output[u'format']))
+                        "EDAM MAPPING: TERM ----{0}---- is missing from EDAM current version".format(output['format']))
         else:
             # FIXME: copying the datatype/format from the source would work if only the Galaxy API used
             # by bioblend sent the format_source information
@@ -483,8 +483,8 @@ def outputs_extract(outputs_json, mapping_edam, biotools_inputs):
             #         'dataFormat': biotools_input_source['dataFormat'],
             #         'dataHandle': output['format'], 'dataDescription': output['name']
             #          }
-            outputdict = {'dataType': DEFAULT_EDAM_DATA,
-                          'dataFormat': [DEFAULT_EDAM_FORMAT],
+            outputdict = {'data': DEFAULT_EDAM_DATA,
+                          'format': [DEFAULT_EDAM_FORMAT],
                           'dataHandle': output['format'], 'dataDescription': output['name']
                           }
         listoutput.append(outputdict)
@@ -657,10 +657,8 @@ def write_json_files(tool_name, general_dict, tool_dir):
     :param general_dict:
     :return:
     """
-    cleaned_dict = copy.deepcopy(general_dict)
-    clean_dict(cleaned_dict)
     with open(os.path.join(tool_dir, tool_name + ".json"), 'w') as tool_file:
-        json.dump(cleaned_dict, tool_file, indent=4)
+        json.dump(general_dict, tool_file, indent=4)
 
 
 def write_xml_files(tool_name, general_dict, tool_dir, xmltemplate=None):
@@ -678,6 +676,20 @@ def write_xml_files(tool_name, general_dict, tool_dir, xmltemplate=None):
             template = Template(file=template_path, searchList=[general_dict])
             tool_file.write(str(template))
 
+def map_tool(tool_meta, conf, mapping_edam):
+    tool_name = build_tool_name(tool_meta['id'], conf.prefix_toolname, conf.suffix_toolname)
+    general_dict = build_general_dict(tool_meta, conf)
+
+    general_dict["function"] = build_function_dict(tool_meta, mapping_edam)
+    # to obtain an uniq id in galaxy we need the toolshed repository, the owner, the xml toolid, the xml version,
+    # if the tool provide from a toolshed, if not we need the xml toolid and the xml version only
+    # The easiest : use id of the tool
+    # general_dict["name"] = tool_meta['id']
+    general_dict["name"] = tool_name
+    general_dict["id"] = tool_name[0:24]
+    cleaned_dict = copy.deepcopy(general_dict)
+    clean_dict(cleaned_dict)
+    return cleaned_dict 
 
 def build_biotools_files(tools_metadata, conf, mapping_edam):
     """
@@ -690,17 +702,8 @@ def build_biotools_files(tools_metadata, conf, mapping_edam):
     os.mkdir(tool_dir)
 
     for tool_meta in tools_metadata:
-        tool_name = build_tool_name(tool_meta[u'id'], conf.prefix_toolname, conf.suffix_toolname)
-        general_dict = build_general_dict(tool_meta, conf)
-
-        general_dict[u"function"] = build_function_dict(tool_meta, mapping_edam)
-        # to obtain an uniq id in galaxy we need the toolshed repository, the owner, the xml toolid, the xml version,
-        # if the tool provide from a toolshed, if not we need the xml toolid and the xml version only
-        # The easiest : use id of the tool
-        # general_dict[u"name"] = tool_meta[u'id']
-        general_dict[u"name"] = tool_name
-        general_dict[u"id"] = tool_name
-        file_name = build_filename(tool_meta[u'id'], tool_meta[u'version'])
+        general_dict = map_tool(tool_meta, conf, mapping_edam)
+        file_name = build_filename(tool_meta['id'], tool_meta['version'])
         write_json_files(file_name, general_dict, tool_dir)
         with open(tool_dir+'/'+file_name+'.yml', 'w') as outfile:
             yaml.safe_dump(tool_meta, outfile)
