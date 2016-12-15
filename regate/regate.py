@@ -702,6 +702,8 @@ def build_biotools_files(tools_metadata, conf, mapping_edam):
         general_dict[u"id"] = tool_name
         file_name = build_filename(tool_meta[u'id'], tool_meta[u'version'])
         write_json_files(file_name, general_dict, tool_dir)
+        with open(tool_dir+'/'+file_name+'.yml', 'w') as outfile:
+            yaml.safe_dump(tool_meta, outfile)
         # do not write XML files because they require source registry to be specified
         # if conf.xmltemplate:
         #    write_xml_files(file_name, general_dict, tool_dir,
