@@ -19,7 +19,7 @@ setup(
     url='https://github.com/bioinfo-center-pasteur-fr/ReGaTE',
     packages=['regate'],
     install_requires=[
-        'PyYAML',
+        'ruamel.yaml',
         'html5lib==1.0b8',
         'rdflib',
         'cheetah',

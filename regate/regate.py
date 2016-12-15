@@ -19,7 +19,7 @@ import shutil
 import string
 import argparse
 import json
-import yaml
+import ruamel.yaml
 import requests
 import getpass
 import copy
@@ -508,7 +508,7 @@ def build_edam_dict(yaml_file):
     """
     # map_edam = extract_edam_from_galaxy()
     with open(yaml_file, "r") as file_edam:
-        map_edam = yaml.load(file_edam)
+        map_edam = ruamel.yaml.load(file_edam, Loader=ruamel.yaml.Loader)
         for key, value in map_edam.iteritems():
             for term in value['formats']:
                 term['uri'] = edam_to_uri(term['uri'], 'format')
@@ -706,7 +706,7 @@ def build_biotools_files(tools_metadata, conf, mapping_edam):
         file_name = build_filename(tool_meta['id'], tool_meta['version'])
         write_json_files(file_name, general_dict, tool_dir)
         with open(tool_dir+'/'+file_name+'.yml', 'w') as outfile:
-            yaml.safe_dump(tool_meta, outfile)
+            ruamel.yaml.safe_dump(tool_meta, outfile)
         # do not write XML files because they require source registry to be specified
         # if conf.xmltemplate:
         #    write_xml_files(file_name, general_dict, tool_dir,

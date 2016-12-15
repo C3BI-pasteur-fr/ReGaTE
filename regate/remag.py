@@ -14,7 +14,7 @@ Created on Jun. 16, 2014
 import string
 import os
 import sys
-import yaml
+import ruamel.yaml
 import rdflib
 import argparse
 import regate
@@ -189,7 +189,7 @@ def dict_to_yaml(mapping_dict, yamlfile):
     :return:
     """
     stream = file(yamlfile, 'w')
-    yaml.dump(mapping_dict, stream, default_flow_style=False)
+    ruamel.yaml.dump(mapping_dict, stream, default_flow_style=False)
 
 
 def galaxy_to_edamdict(url, key):
