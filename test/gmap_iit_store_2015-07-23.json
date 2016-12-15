@@ -1,0 +1,235 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "gmap_iit_store-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "2015-07-23", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/gmap_gsnap/gmap_iit_store/2015-07-23", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "txt", 
+                    "dataDescription": "log", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "splicesites.iit", 
+                    "dataDescription": "splicesites_iit", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "introns.iit", 
+                    "dataDescription": "introns_iit", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "snps.iit", 
+                    "dataDescription": "snps_iit", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "iit", 
+                    "dataDescription": "map_iit", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Create a map store for known genes or SNPs", 
+            "input": [
+                {
+                    "dataHandle": "genes", 
+                    "dataDescription": "UCSC refGenes table", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "genes", 
+                    "dataDescription": "Genes as GTF", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "GTF", 
+                            "uri": "http://edamontology.org/format_2306"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "genes", 
+                    "dataDescription": "Genes in GFF3 format", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "GFF3", 
+                            "uri": "http://edamontology.org/format_1975"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "snps", 
+                    "dataDescription": "UCSC SNPs table", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "snpsex", 
+                    "dataDescription": "UCSC SNP Exceptions table", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "snps", 
+                    "dataDescription": "GMAP SNPs file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "annotation", 
+                    "dataDescription": "GMAP mapfile", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Create a map store for known genes or SNPs.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/gmap_gsnap/gmap_iit_store/2015-07-23", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/gmap_gsnap/gmap_iit_store/2015-07-23\"", 
+            "usesVersion": "2015-07-23"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "gmap_iit_store-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "2015-07-23", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

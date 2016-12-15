@@ -1,0 +1,109 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "Indices_diversity-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.1 beta", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/afelten/microbiome_analyses/Indices_diversity/0.1%20beta", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "txt", 
+                    "dataDescription": "output", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Compute Chao, Simpson and Shannon values from Sabund and Rabund files", 
+            "input": [
+                {
+                    "dataHandle": "Sabund", 
+                    "dataDescription": "Sabund file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "Rabund", 
+                    "dataDescription": "Rabund file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Compute Chao, Simpson and Shannon values from Sabund and Rabund files.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/afelten/microbiome_analyses/Indices_diversity/0.1%20beta", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/afelten/microbiome_analyses/Indices_diversity/0.1 beta\"", 
+            "usesVersion": "0.1 beta"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "Indices_diversity-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.1 beta", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

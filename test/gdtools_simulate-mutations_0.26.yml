@@ -1,0 +1,138 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/gdtools/fe6986ae4399/gdtools/gdtools_simulate-mutations.xml
+description: ''
+id: toolshed.pasteur.fr/repos/mvalade/gdtools/gdtools_simulate-mutations/0.26
+inputs:
+- argument: null
+  edam_formats: [format_1915]
+  extensions: [data]
+  help: File containing reference sequences in GenBank, GFF3, or FASTA format. Option
+    may be provided multiple times for multiple files (REQUIRED)
+  hidden: false
+  is_dynamic: false
+  label: Reference sequences file
+  model_class: DataToolParameter
+  multiple: false
+  name: reference
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: 'Valid types: SNP, INS, DEL, MOB, AMP, RMD',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22type%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Type of mutation to generate, model_class: TextToolParameter,
+  name: type, optional: false, size: null, type: text, value: null}
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: (DEFAULT=1000), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22number%22%20size%3D%2210%22%20value%3D%221000%22%3E',
+      is_dynamic: false, label: Number of mutations to generate, max: null, min: 0,
+      model_class: IntegerToolParameter, name: number, optional: false, size: null,
+      type: integer, value: '1000'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: nb
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22nb_mode%22%20name%3D%22nb_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22nb_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: 'Will you enter a number of mutations ?', model_class: BooleanToolParameter,
+    name: nb_mode, optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [txt]
+      help: Exclusion file containing regions no mutations will overlap, usually repeats
+      hidden: false
+      is_dynamic: false
+      label: ''
+      model_class: DataToolParameter
+      multiple: false
+      name: exclude
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: exclusion
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22exclusion_mode%22%20name%3D%22exclusion_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22exclusion_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: 'Will you enter a file containing regions no mutations
+      ?', model_class: BooleanToolParameter, name: exclusion_mode, optional: false,
+    truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: (DEFAULT=50), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22buffer%22%20size%3D%2210%22%20value%3D%2250%22%3E',
+      is_dynamic: false, label: Buffer distance between mutations and excluded intervals,
+      max: null, min: 0, model_class: IntegerToolParameter, name: buffer, optional: false,
+      size: null, type: integer, value: '50'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: buff
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22buff_mode%22%20name%3D%22buff_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22buff_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: 'Will you enter a buffer distance between mutations
+      ?', model_class: BooleanToolParameter, name: buff_mode, optional: false, truevalue: 'yes',
+    type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22seq%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Reference sequence id to use from reference file,
+      model_class: TextToolParameter, name: seq, optional: false, size: null, type: text,
+      value: null}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: sequence
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22sequence_mode%22%20name%3D%22sequence_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22sequence_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: 'Will you enter a reference sequence id of your file
+      ?', model_class: BooleanToolParameter, name: sequence_mode, optional: false,
+    truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22seed%22%20size%3D%2210%22%20value%3D%221000%22%3E',
+      is_dynamic: false, label: Seed for the random number generator, max: null, min: 0,
+      model_class: IntegerToolParameter, name: seed, optional: false, size: null,
+      type: integer, value: '1000'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: random
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22random_mode%22%20name%3D%22random_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22random_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: 'Will you enter a seed for the random number generator
+      ?', model_class: BooleanToolParameter, name: random_mode, optional: false, truevalue: 'yes',
+    type: boolean, value: false}
+  type: conditional
+- {argument: null, falsevalue: '', help: Verbose mode, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22verbose%22%20name%3D%22verbose%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22verbose%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Verbose mode, model_class: BooleanToolParameter, name: verbose,
+  optional: false, truevalue: --verbose, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Fgdtools%2Fgdtools_simulate-mutations%2F0.26
+min_width: -1
+model_class: Tool
+name: gdtools SIMULATE-MUTATIONS - v0.26
+outputs:
+- {edam_format: format_3475, format: gd, hidden: false, label: gdtools SIMULATE-MUTATIONS
+    GD output file, model_class: ToolOutput, name: output}
+panel_section_id: ngs:_snp/indel_annotation
+panel_section_name: 'NGS: SNP/Indel Annotation'
+target: galaxy_main
+version: '0.26'

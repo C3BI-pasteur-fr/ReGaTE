@@ -1,0 +1,95 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "muscle-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "3.8.31.1", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/muscle/3.8.31.1", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "fasta", 
+                    "dataDescription": "output", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "MUltiple Sequence Comparison by Log- Expectation", 
+            "input": [
+                {
+                    "dataHandle": "input", 
+                    "dataDescription": "Source file", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "MUltiple Sequence Comparison by Log- Expectation.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/muscle/3.8.31.1", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/muscle/3.8.31.1\"", 
+            "usesVersion": "3.8.31.1"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "muscle-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "3.8.31.1", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

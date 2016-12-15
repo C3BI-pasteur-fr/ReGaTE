@@ -1,0 +1,186 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/cf3e04ffae51/oneclick_phylogeny/phyml-sms_oneclick/phyml_sms_oneclick.xml
+description: Maximum likelihood-based inference of phylogenetic trees with Smart Model
+  Selection
+id: toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/phyml-sms_oneclick/1.3.1
+inputs:
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [phylip]
+  help: phylip format
+  hidden: false
+  is_dynamic: false
+  label: Alignment file
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: nt
+  - inputs: []
+    model_class: ConditionalWhen
+    value: aa
+  - inputs:
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [txt]
+      help: Precompute file containning sequence description (dna or protein)
+      hidden: false
+      is_dynamic: false
+      label: Information file
+      model_class: DataToolParameter
+      multiple: false
+      name: input_info
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: cfg
+  model_class: Conditional
+  name: sequence
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22seqtype%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22nt%22%3ENucleic%20acids%3C/option%3E%0A%3Coption%20value%3D%22aa%22%3EAmino%20acids%3C/option%3E%0A%3Coption%20value%3D%22cfg%22%3EInformation%20file%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Data type
+    model_class: SelectToolParameter
+    multiple: false
+    name: seqtype
+    optional: false
+    options:
+    - [Nucleic acids, nt, false]
+    - [Amino acids, aa, false]
+    - [Information file, cfg, false]
+    type: select
+    value: nt
+  type: conditional
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22stat_crit%22%3E%0A%3Coption%20value%3D%22aic%22%3EAIC%3C/option%3E%0A%3Coption%20value%3D%22bic%22%3EBIC%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Statistical criterion to select the model
+  model_class: SelectToolParameter
+  multiple: false
+  name: stat_crit
+  optional: false
+  options:
+  - [AIC, aic, false]
+  - [BIC, bic, false]
+  type: select
+  value: aic
+- argument: null
+  display: radio
+  help: ''
+  hidden: false
+  html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22move%22%20value%3D%22NNI%22%20id%3D%22move%7CNNI%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22move%7CNNI%22%3ENNI%20%28Nearest%20Neighbor%20Interchange%29%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22move%22%20value%3D%22SPR%22%20id%3D%22move%7CSPR%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22move%7CSPR%22%3ESPR%20%28Subtree%20Pruning%20and%20Regraphing%29%3C/label%3E%3C/div%3E'
+  is_dynamic: false
+  label: Tree topology search
+  model_class: SelectToolParameter
+  multiple: false
+  name: move
+  optional: false
+  options:
+  - [NNI (Nearest Neighbor Interchange), NNI, false]
+  - [SPR (Subtree Pruning and Regraphing), SPR, false]
+  type: select
+  value: NNI
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: sh
+  - inputs: []
+    model_class: ConditionalWhen
+    value: aBayes
+  - inputs:
+    - {area: false, argument: null, help: Must be a positive integer, hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22boot_number%22%20size%3D%2210%22%20value%3D%22100%22%3E',
+      is_dynamic: false, label: Number of bootstrap replicates, max: null, min: 1,
+      model_class: IntegerToolParameter, name: boot_number, optional: false, size: null,
+      type: integer, value: '100'}
+    model_class: ConditionalWhen
+    value: boot
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: support_condition
+  test_param:
+    argument: null
+    display: null
+    help: Use aLRT or aBayes to save computing time
+    hidden: false
+    html: '%3Cselect%20name%3D%22support%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22sh%22%3ESH-like%20aLRT%3C/option%3E%0A%3Coption%20value%3D%22aBayes%22%3EaBayes%3C/option%3E%0A%3Coption%20value%3D%22boot%22%3EBootstrap%3C/option%3E%0A%3Coption%20value%3D%22no%22%3ENo%20branch%20support%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Branch support
+    model_class: SelectToolParameter
+    multiple: false
+    name: support
+    optional: false
+    options:
+    - [SH-like aLRT, sh, false]
+    - [aBayes, aBayes, false]
+    - [Bootstrap, boot, false]
+    - [No branch support, 'no', false]
+    type: select
+    value: sh
+  type: conditional
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1915]
+      extensions: [data]
+      help: newick format
+      hidden: false
+      is_dynamic: false
+      label: Tree file
+      model_class: DataToolParameter
+      multiple: false
+      name: userInpuTree
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: 'true'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'false'
+  model_class: Conditional
+  name: inpuTree
+  test_param: {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22inputtree%22%20name%3D%22inputtree%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22inputtree%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Use input starting tree, model_class: BooleanToolParameter,
+    name: inputtree, optional: false, truevalue: 'true', type: boolean, value: false}
+  type: conditional
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22randstart%22%20size%3D%2210%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: Number of random starting trees, max: 10, min: 0, model_class: IntegerToolParameter,
+  name: randstart, optional: false, size: null, type: integer, value: '0'}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Foneclick_phylogeny%2Fphyml-sms_oneclick%2F1.3.1
+min_width: -1
+model_class: Tool
+name: PhyML-SMS OneClick
+outputs:
+- {edam_format: format_1910, format: nhx, hidden: false, label: PhyML Newick tree,
+  model_class: ToolOutput, name: output_tree}
+- {edam_format: format_2330, format: txt, hidden: false, label: PhyML Statistics,
+  model_class: ToolOutput, name: output_stats}
+- {edam_format: format_2330, format: txt, hidden: false, label: SMS Best Model, model_class: ToolOutput,
+  name: output_stdout}
+- {edam_format: format_2330, format: txt, hidden: false, label: SMS compare models,
+  model_class: ToolOutput, name: output_models}
+panel_section_id: oneclick_phylogeny
+panel_section_name: Oneclick Phylogeny
+target: galaxy_main
+version: 1.3.1

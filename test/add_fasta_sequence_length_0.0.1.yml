@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/screno/pasteur_fasta_facilities/3ce66cce9bda/pasteur_fasta_facilities/add_fasta_sequence_length.xml
+description: Add length of sequence to fasta header
+id: toolshed.pasteur.fr/repos/screno/pasteur_fasta_facilities/add_fasta_sequence_length/0.0.1
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Fasta dataset
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fscreno%2Fpasteur_fasta_facilities%2Fadd_fasta_sequence_length%2F0.0.1
+min_width: -1
+model_class: Tool
+name: Fasta Sequence Length
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: 'Sequence length
+    added on ${on_string}', model_class: ToolOutput, name: output}
+panel_section_id: fasta_manipulation
+panel_section_name: FASTA manipulation
+target: galaxy_main
+version: 0.0.1

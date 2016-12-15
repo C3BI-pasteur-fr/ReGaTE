@@ -1,0 +1,153 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/gdtools/fe6986ae4399/gdtools/gdtools_annotate.xml
+description: Merge multiple GenomeDiff input files
+id: toolshed.pasteur.fr/repos/mvalade/gdtools/gdtools_annotate/0.26
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: If your genome of interest is not listed, contact the Bioinformatics team
+      hidden: false
+      html: '%3Cselect%20name%3D%22fixed_genome%22%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: Select a reference genome
+      model_class: SelectToolParameter
+      multiple: false
+      name: fixed_genome
+      optional: false
+      options: []
+      type: select
+    model_class: ConditionalWhen
+    value: indexed
+  - inputs:
+    - default: 1
+      help: null
+      inputs:
+      - argument: null
+        edam_formats: [format_1915]
+        extensions: [data]
+        help: FASTA, Genbank, GFF file
+        hidden: false
+        is_dynamic: false
+        label: fasta_path
+        model_class: DataToolParameter
+        multiple: false
+        name: fasta_path
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      max: __Infinity__
+      min: 1
+      model_class: Repeat
+      name: ref_series
+      title: Reference Genome
+      type: repeat
+    model_class: ConditionalWhen
+    value: history
+  model_class: Conditional
+  name: reference
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22source%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22indexed%22%3EUse%20a%20built-in%20genome%3C/option%3E%0A%3Coption%20value%3D%22history%22%3EUse%20one%20from%20the%20history%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Will you select a reference genome from your history or use a built-in
+      genome?
+    model_class: SelectToolParameter
+    multiple: false
+    name: source
+    optional: false
+    options:
+    - [Use a built-in genome, indexed, false]
+    - [Use one from the history, history, false]
+    type: select
+    value: indexed
+  type: conditional
+- default: 1
+  help: null
+  inputs:
+  - argument: null
+    edam_formats: [format_3475]
+    extensions: [gd]
+    help: GenomeDiff file
+    hidden: false
+    is_dynamic: false
+    label: GD file dataset
+    model_class: DataToolParameter
+    multiple: false
+    name: genomediff_file
+    optional: false
+    options:
+      hda: []
+      hdca: []
+    type: data
+  max: __Infinity__
+  min: 1
+  model_class: Repeat
+  name: nb_genomediff
+  title: GenomeDiff Files
+  type: repeat
+- argument: null
+  display: null
+  help: 'Valid output formats: HTML    Descriptive table viewable in a web browser;
+    GD      GenomeDiff with added annotation of mutations; PHYLIP  Alignment file
+    suitable for input into PHYLIP (You must provide more than one input GD file in
+    PHYLIP mode.)'
+  hidden: false
+  html: '%3Cselect%20name%3D%22format%22%3E%0A%3Coption%20value%3D%22HTML%22%3EHMTL%3C/option%3E%0A%3Coption%20value%3D%22GD%22%3EGD%3C/option%3E%0A%3Coption%20value%3D%22PHYLIP%22%3EPHYLIP%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Type of output file to generate.
+  model_class: SelectToolParameter
+  multiple: false
+  name: format
+  optional: false
+  options:
+  - [HMTL, HTML, false]
+  - [GD, GD, false]
+  - [PHYLIP, PHYLIP, false]
+  type: select
+  value: HTML
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22ignore_pseudogenes%22%20name%3D%22ignore_pseudogenes%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22ignore_pseudogenes%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Treat pseudogenes as normal genes for calling AA changes,
+  model_class: BooleanToolParameter, name: ignore_pseudogenes, optional: false, truevalue: --ignore-pseudogenes,
+  type: boolean, value: false}
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: (0=OFF) (DEFAULT=10), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22repeat_header%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+      is_dynamic: false, label: 'In HTML mode, repeat the header line every this many
+        rows', max: null, min: null, model_class: IntegerToolParameter, name: repeat_header,
+      optional: false, size: null, type: integer, value: '10'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: header
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22header_mode%22%20name%3D%22header_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22header_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: 'Will you crepeat the header line ?', model_class: BooleanToolParameter,
+    name: header_mode, optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22phylogeny_aware%22%20name%3D%22phylogeny_aware%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22phylogeny_aware%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Check the optional 'phylogeny_id' field when deciding
+    if entries are equivalent, model_class: BooleanToolParameter, name: phylogeny_aware,
+  optional: false, truevalue: --phylogeny-aware, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Fgdtools%2Fgdtools_annotate%2F0.26
+min_width: -1
+model_class: Tool
+name: gdtools COMPARE/ANNOTATE - v0.26
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '', model_class: ToolOutput,
+  name: gdtools ANNOTATE HTML output}
+- {edam_format: format_3475, format: gd, hidden: false, label: '', model_class: ToolOutput,
+  name: gdtools ANNOTATE GD output}
+- {edam_format: format_2330, format: phylip, hidden: false, label: '', model_class: ToolOutput,
+  name: gdtools ANNOTATE PHYLIP output}
+panel_section_id: ngs:_snp/indel_annotation
+panel_section_name: 'NGS: SNP/Indel Annotation'
+target: galaxy_main
+version: '0.26'

@@ -1,0 +1,1058 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/gatk2/a56159e8cb9b/gatk2/base_recalibrator.xml
+description: on BAM files
+id: toolshed.pasteur.fr/repos/fmareuil/gatk2/gatk2_base_recalibrator/2.4-9
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_2572]
+      extensions: [bam]
+      help: -I,--input_file &lt;input_file&gt;
+      hidden: false
+      is_dynamic: false
+      label: BAM file
+      model_class: DataToolParameter
+      multiple: false
+      name: input_bam
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      display: null
+      help: -R,--reference_sequence &lt;reference_sequence&gt;. For more informations
+        about genomes, see https://biomaj.it.pasteur.fr/BmajWatcher/
+      hidden: false
+      html: '%3Cselect%20name%3D%22ref_file%22%3E%0A%3Coption%20value%3D%22btaurus%22%3Ebtaurus%3C/option%3E%0A%3Coption%20value%3D%22calbicans5314%22%3Ecalbicans5314%3C/option%3E%0A%3Coption%20value%3D%22calbicansWO1%22%3EcalbicansWO1%3C/option%3E%0A%3Coption%20value%3D%22cfamiliaris%22%3Ecfamiliaris%3C/option%3E%0A%3Coption%20value%3D%22chiroptera%22%3Echiroptera%3C/option%3E%0A%3Coption%20value%3D%22cneoformansH99%22%3EcneoformansH99%3C/option%3E%0A%3Coption%20value%3D%22cneoformansJEC21%22%3EcneoformansJEC21%3C/option%3E%0A%3Coption%20value%3D%22csabaeus%22%3Ecsabaeus%3C/option%3E%0A%3Coption%20value%3D%22dmelanogaster%22%3Edmelanogaster%3C/option%3E%0A%3Coption%20value%3D%22ecaballus%22%3Eecaballus%3C/option%3E%0A%3Coption%20value%3D%22fcatus%22%3Efcatus%3C/option%3E%0A%3Coption%20value%3D%22hg19%22%3Ehg19%3C/option%3E%0A%3Coption%20value%3D%22hg18%22%3Ehg18%3C/option%3E%0A%3Coption%20value%3D%22mlucifugus%22%3Emlucifugus%3C/option%3E%0A%3Coption%20value%3D%22mm10%22%3Emm10%3C/option%3E%0A%3Coption%20value%3D%22mm9%22%3Emm9%3C/option%3E%0A%3Coption%20value%3D%22mm8%22%3Emm8%3C/option%3E%0A%3Coption%20value%3D%22pfalciparum%22%3Epfalciparum%3C/option%3E%0A%3Coption%20value%3D%22pvampyrus%22%3Epvampyrus%3C/option%3E%0A%3Coption%20value%3D%22pvivax%22%3Epvivax%3C/option%3E%0A%3Coption%20value%3D%22scerevisiae%22%3Escerevisiae%3C/option%3E%0A%3Coption%20value%3D%22spombe%22%3Espombe%3C/option%3E%0A%3Coption%20value%3D%22sscrofa%22%3Esscrofa%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: Using reference genome
+      model_class: SelectToolParameter
+      multiple: false
+      name: ref_file
+      optional: false
+      options:
+      - [btaurus, btaurus, false]
+      - [calbicans5314, calbicans5314, false]
+      - [calbicansWO1, calbicansWO1, false]
+      - [cfamiliaris, cfamiliaris, false]
+      - [chiroptera, chiroptera, false]
+      - [cneoformansH99, cneoformansH99, false]
+      - [cneoformansJEC21, cneoformansJEC21, false]
+      - [csabaeus, csabaeus, false]
+      - [dmelanogaster, dmelanogaster, false]
+      - [ecaballus, ecaballus, false]
+      - [fcatus, fcatus, false]
+      - [hg19, hg19, false]
+      - [hg18, hg18, false]
+      - [mlucifugus, mlucifugus, false]
+      - [mm10, mm10, false]
+      - [mm9, mm9, false]
+      - [mm8, mm8, false]
+      - [pfalciparum, pfalciparum, false]
+      - [pvampyrus, pvampyrus, false]
+      - [pvivax, pvivax, false]
+      - [scerevisiae, scerevisiae, false]
+      - [spombe, spombe, false]
+      - [sscrofa, sscrofa, false]
+      type: select
+      value: btaurus
+    model_class: ConditionalWhen
+    value: cached
+  - inputs:
+    - argument: null
+      edam_formats: [format_2572]
+      extensions: [bam]
+      help: -I,--input_file &lt;input_file&gt;
+      hidden: false
+      is_dynamic: false
+      label: BAM file
+      model_class: DataToolParameter
+      multiple: false
+      name: input_bam
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [fasta]
+      help: -R,--reference_sequence &lt;reference_sequence&gt;
+      hidden: false
+      is_dynamic: true
+      label: Using reference file
+      model_class: DataToolParameter
+      multiple: false
+      name: ref_file
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: history
+  model_class: Conditional
+  name: reference_source
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22reference_source_selector%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22cached%22%3ELocally%20cached%3C/option%3E%0A%3Coption%20value%3D%22history%22%3EHistory%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Choose the source for the reference list
+    model_class: SelectToolParameter
+    multiple: false
+    name: reference_source_selector
+    optional: false
+    options:
+    - [Locally cached, cached, false]
+    - [History, history, false]
+    type: select
+    value: cached
+  type: conditional
+- argument: null
+  display: checkboxes
+  help: -cov,--covariate &lt;covariate&gt;
+  hidden: false
+  html: '%3Cdiv%20class%3D%22checkUncheckAllPlaceholder%22%20checkbox_name%3D%22covariates%22%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22covariates%22%20value%3D%22ReadGroupCovariate%22%20id%3D%22covariates%7CReadGroupCovariate%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22covariates%7CReadGroupCovariate%22%3EReadGroupCovariate%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22covariates%22%20value%3D%22QualityScoreCovariate%22%20id%3D%22covariates%7CQualityScoreCovariate%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22covariates%7CQualityScoreCovariate%22%3EQualityScoreCovariate%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22covariates%22%20value%3D%22CycleCovariate%22%20id%3D%22covariates%7CCycleCovariate%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22covariates%7CCycleCovariate%22%3ECycleCovariate%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22covariates%22%20value%3D%22RepeatLengthCovariate%22%20id%3D%22covariates%7CRepeatLengthCovariate%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22covariates%7CRepeatLengthCovariate%22%3ERepeatLengthCovariate%3C/label%3E%3C/div%3E'
+  is_dynamic: false
+  label: Covariates to be used in the recalibration
+  model_class: SelectToolParameter
+  multiple: true
+  name: covariates
+  optional: true
+  options:
+  - [ReadGroupCovariate, ReadGroupCovariate, false]
+  - [QualityScoreCovariate, QualityScoreCovariate, false]
+  - [CycleCovariate, CycleCovariate, false]
+  - [RepeatLengthCovariate, RepeatLengthCovariate, false]
+  type: select
+  value: ReadGroupCovariate
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maximum_cycle_value%22%20size%3D%225%22%20value%3D%22500%22%3E',
+  is_dynamic: false, label: the maximum cycle value permitted for the Cycle covariate,
+  max: null, min: null, model_class: IntegerToolParameter, name: maximum_cycle_value,
+  optional: false, size: '5', type: integer, value: '500'}
+- default: 0
+  help: -knownSites,--knownSites &lt;knownSites&gt;
+  inputs:
+  - cases:
+    - inputs:
+      - argument: null
+        edam_formats: [format_3016, format_3475, format_3003]
+        extensions: [vcf, gatk_dbsnp, bed]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: ROD file
+        model_class: DataToolParameter
+        multiple: false
+        name: input_rod
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      model_class: ConditionalWhen
+      value: dbsnp
+    - inputs:
+      - argument: null
+        edam_formats: [format_3016, format_3475, format_3003]
+        extensions: [vcf, gatk_dbsnp, bed]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: ROD file
+        model_class: DataToolParameter
+        multiple: false
+        name: input_rod
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      model_class: ConditionalWhen
+      value: snps
+    - inputs:
+      - argument: null
+        edam_formats: [format_3016, format_3475, format_3003]
+        extensions: [vcf, gatk_dbsnp, bed]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: ROD file
+        model_class: DataToolParameter
+        multiple: false
+        name: input_rod
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      model_class: ConditionalWhen
+      value: indels
+    - inputs:
+      - argument: null
+        edam_formats: [format_3016, format_3475, format_3003]
+        extensions: [vcf, gatk_dbsnp, bed]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: ROD file
+        model_class: DataToolParameter
+        multiple: false
+        name: input_rod
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      model_class: ConditionalWhen
+      value: mask
+    - inputs:
+      - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22custom_rod_name%22%20size%3D%2210%22%20value%3D%22Unknown%22%3E',
+        is_dynamic: false, label: ROD Name, model_class: TextToolParameter, name: custom_rod_name,
+        optional: false, size: null, type: text, value: Unknown}
+      - argument: null
+        edam_formats: [format_3016, format_3475, format_3003]
+        extensions: [vcf, gatk_dbsnp, bed]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: ROD file
+        model_class: DataToolParameter
+        multiple: false
+        name: input_rod
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      model_class: ConditionalWhen
+      value: custom
+    model_class: Conditional
+    name: rod_bind_type
+    test_param:
+      argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22rod_bind_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22dbsnp%22%3E%0A%3Coption%20value%3D%22dbsnp%22%20selected%3EdbSNP%3C/option%3E%0A%3Coption%20value%3D%22snps%22%3ESNPs%3C/option%3E%0A%3Coption%20value%3D%22indels%22%3EINDELs%3C/option%3E%0A%3Coption%20value%3D%22mask%22%3EMask%3C/option%3E%0A%3Coption%20value%3D%22custom%22%3ECustom%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Binding Type
+      model_class: SelectToolParameter
+      multiple: false
+      name: rod_bind_type_selector
+      optional: false
+      options:
+      - [dbSNP, dbsnp, true]
+      - [SNPs, snps, false]
+      - [INDELs, indels, false]
+      - [Mask, mask, false]
+      - [Custom, custom, false]
+      type: select
+      value: dbsnp
+    type: conditional
+  max: __Infinity__
+  min: 0
+  model_class: Repeat
+  name: rod_bind
+  title: Binding for reference-ordered data
+  type: repeat
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: basic
+  - inputs:
+    - default: 0
+      help: -ped,--pedigree &lt;pedigree&gt;
+      inputs:
+      - argument: null
+        edam_formats: [format_2330]
+        extensions: [txt]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: Pedigree files for samples
+        model_class: DataToolParameter
+        multiple: false
+        name: pedigree_file
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      max: __Infinity__
+      min: 0
+      model_class: Repeat
+      name: pedigree
+      title: Pedigree file
+      type: repeat
+    - default: 0
+      help: -pedString,--pedigreeString &lt;pedigreeString&gt;
+      inputs:
+      - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pedigree_string%22%20size%3D%2210%22%20value%3D%22%22%3E',
+        is_dynamic: false, label: Pedigree string for samples, model_class: TextToolParameter,
+        name: pedigree_string, optional: false, size: null, type: text, value: ''}
+      max: __Infinity__
+      min: 0
+      model_class: Repeat
+      name: pedigree_string_repeat
+      title: Pedigree string
+      type: repeat
+    - argument: null
+      display: null
+      help: -pedValidationType,--pedigreeValidationType &lt;pedigreeValidationType&gt;
+      hidden: false
+      html: '%3Cselect%20name%3D%22pedigree_validation_type%22%20last_selected_value%3D%22STRICT%22%3E%0A%3Coption%20value%3D%22STRICT%22%20selected%3ESTRICT%3C/option%3E%0A%3Coption%20value%3D%22SILENT%22%3ESILENT%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: How strict should we be in validating the pedigree information
+      model_class: SelectToolParameter
+      multiple: false
+      name: pedigree_validation_type
+      optional: false
+      options:
+      - [STRICT, STRICT, true]
+      - [SILENT, SILENT, false]
+      type: select
+      value: STRICT
+    - default: 0
+      help: -rf,--read_filter &lt;read_filter&gt;
+      inputs:
+      - cases:
+        - inputs: []
+          model_class: ConditionalWhen
+          value: BadCigar
+        - inputs: []
+          model_class: ConditionalWhen
+          value: BadMate
+        - inputs: []
+          model_class: ConditionalWhen
+          value: DuplicateRead
+        - inputs: []
+          model_class: ConditionalWhen
+          value: FailsVendorQualityCheck
+        - inputs: []
+          model_class: ConditionalWhen
+          value: MalformedRead
+        - inputs:
+          - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_mapping_quality_score%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+            is_dynamic: false, label: Minimum read mapping quality required to consider
+              a read for calling, max: null, min: null, model_class: IntegerToolParameter,
+            name: min_mapping_quality_score, optional: false, size: null, type: integer,
+            value: '10'}
+          model_class: ConditionalWhen
+          value: MappingQuality
+        - inputs: []
+          model_class: ConditionalWhen
+          value: MappingQualityUnavailable
+        - inputs: []
+          model_class: ConditionalWhen
+          value: MappingQualityZero
+        - inputs: []
+          model_class: ConditionalWhen
+          value: MateSameStrand
+        - inputs:
+          - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxInsertSize%22%20size%3D%2210%22%20value%3D%221000000%22%3E',
+            is_dynamic: false, label: Discard reads with insert size greater than
+              the specified value, max: null, min: null, model_class: IntegerToolParameter,
+            name: maxInsertSize, optional: false, size: null, type: integer, value: '1000000'}
+          model_class: ConditionalWhen
+          value: MaxInsertSize
+        - inputs:
+          - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxReadLength%22%20size%3D%2210%22%20value%3D%2276%22%3E',
+            is_dynamic: false, label: Max Read Length, max: null, min: null, model_class: IntegerToolParameter,
+            name: maxReadLength, optional: false, size: null, type: integer, value: '76'}
+          model_class: ConditionalWhen
+          value: MaxReadLength
+        - inputs: []
+          model_class: ConditionalWhen
+          value: MissingReadGroup
+        - inputs: []
+          model_class: ConditionalWhen
+          value: NoOriginalQualityScores
+        - inputs: []
+          model_class: ConditionalWhen
+          value: NotPrimaryAlignment
+        - inputs: []
+          model_class: ConditionalWhen
+          value: Platform454
+        - inputs:
+          - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22PLFilterName%22%20size%3D%2210%22%20value%3D%22%22%3E',
+            is_dynamic: false, label: 'Discard reads with RG:PL attribute containing
+              this string', model_class: TextToolParameter, name: PLFilterName, optional: false,
+            size: null, type: text, value: ''}
+          model_class: ConditionalWhen
+          value: Platform
+        - inputs: []
+          model_class: ConditionalWhen
+          value: PlatformUnit
+        - inputs: []
+          model_class: ConditionalWhen
+          value: ReadGroupBlackList
+        - inputs:
+          - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22readName%22%20size%3D%2210%22%20value%3D%22%22%3E',
+            is_dynamic: false, label: Filter out all reads except those with this
+              read name, model_class: TextToolParameter, name: readName, optional: false,
+            size: null, type: text, value: ''}
+          model_class: ConditionalWhen
+          value: ReadName
+        - inputs:
+          - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22filterPositive%22%20name%3D%22filterPositive%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22filterPositive%22%20value%3D%22true%22%3E',
+            is_dynamic: false, label: Discard reads on the forward strand, model_class: BooleanToolParameter,
+            name: filterPositive, optional: false, truevalue: --filterPositive, type: boolean,
+            value: false}
+          model_class: ConditionalWhen
+          value: ReadStrand
+        - inputs:
+          - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22default_mapping_quality%22%20size%3D%2210%22%20value%3D%2260%22%3E',
+            is_dynamic: false, label: Default read mapping quality to assign to all
+              reads, max: null, min: null, model_class: IntegerToolParameter, name: default_mapping_quality,
+            optional: false, size: null, type: integer, value: '60'}
+          model_class: ConditionalWhen
+          value: ReassignMappingQuality
+        - inputs:
+          - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sample_to_keep%22%20size%3D%2210%22%20value%3D%22%22%3E',
+            is_dynamic: false, label: 'The name of the sample(s) to keep, filtering
+              out all others', model_class: TextToolParameter, name: sample_to_keep,
+            optional: false, size: null, type: text, value: ''}
+          model_class: ConditionalWhen
+          value: Sample
+        - inputs:
+          - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read_group_to_keep%22%20size%3D%2210%22%20value%3D%2276%22%3E',
+            is_dynamic: false, label: 'The name of the read group to keep, filtering
+              out all others', max: null, min: null, model_class: IntegerToolParameter,
+            name: read_group_to_keep, optional: false, size: null, type: integer,
+            value: '76'}
+          model_class: ConditionalWhen
+          value: SingleReadGroup
+        - inputs: []
+          model_class: ConditionalWhen
+          value: UnmappedRead
+        model_class: Conditional
+        name: read_filter_type
+        test_param:
+          argument: null
+          display: null
+          help: ''
+          hidden: false
+          html: '%3Cselect%20name%3D%22read_filter_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22MaxReadLength%22%3E%0A%3Coption%20value%3D%22BadCigar%22%3EBadCigar%3C/option%3E%0A%3Coption%20value%3D%22BadMate%22%3EBadMate%3C/option%3E%0A%3Coption%20value%3D%22DuplicateRead%22%3EDuplicateRead%3C/option%3E%0A%3Coption%20value%3D%22FailsVendorQualityCheck%22%3EFailsVendorQualityCheck%3C/option%3E%0A%3Coption%20value%3D%22MalformedRead%22%3EMalformedRead%3C/option%3E%0A%3Coption%20value%3D%22MappingQuality%22%3EMappingQuality%3C/option%3E%0A%3Coption%20value%3D%22MappingQualityUnavailable%22%3EMappingQualityUnavailable%3C/option%3E%0A%3Coption%20value%3D%22MappingQualityZero%22%3EMappingQualityZero%3C/option%3E%0A%3Coption%20value%3D%22MateSameStrand%22%3EMateSameStrand%3C/option%3E%0A%3Coption%20value%3D%22MaxInsertSize%22%3EMaxInsertSize%3C/option%3E%0A%3Coption%20value%3D%22MaxReadLength%22%20selected%3EMaxReadLength%3C/option%3E%0A%3Coption%20value%3D%22MissingReadGroup%22%3EMissingReadGroup%3C/option%3E%0A%3Coption%20value%3D%22NoOriginalQualityScores%22%3ENoOriginalQualityScores%3C/option%3E%0A%3Coption%20value%3D%22NotPrimaryAlignment%22%3ENotPrimaryAlignment%3C/option%3E%0A%3Coption%20value%3D%22Platform454%22%3EPlatform454%3C/option%3E%0A%3Coption%20value%3D%22Platform%22%3EPlatform%3C/option%3E%0A%3Coption%20value%3D%22PlatformUnit%22%3EPlatformUnit%3C/option%3E%0A%3Coption%20value%3D%22ReadGroupBlackList%22%3EReadGroupBlackList%3C/option%3E%0A%3Coption%20value%3D%22ReadName%22%3EReadName%3C/option%3E%0A%3Coption%20value%3D%22ReadStrand%22%3EReadStrand%3C/option%3E%0A%3Coption%20value%3D%22ReassignMappingQuality%22%3EReassignMappingQuality%3C/option%3E%0A%3Coption%20value%3D%22Sample%22%3ESample%3C/option%3E%0A%3Coption%20value%3D%22SingleReadGroup%22%3ESingleReadGroup%3C/option%3E%0A%3Coption%20value%3D%22UnmappedRead%22%3EUnmappedRead%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Read Filter Type
+          model_class: SelectToolParameter
+          multiple: false
+          name: read_filter_type_selector
+          optional: false
+          options:
+          - [BadCigar, BadCigar, false]
+          - [BadMate, BadMate, false]
+          - [DuplicateRead, DuplicateRead, false]
+          - [FailsVendorQualityCheck, FailsVendorQualityCheck, false]
+          - [MalformedRead, MalformedRead, false]
+          - [MappingQuality, MappingQuality, false]
+          - [MappingQualityUnavailable, MappingQualityUnavailable, false]
+          - [MappingQualityZero, MappingQualityZero, false]
+          - [MateSameStrand, MateSameStrand, false]
+          - [MaxInsertSize, MaxInsertSize, false]
+          - [MaxReadLength, MaxReadLength, true]
+          - [MissingReadGroup, MissingReadGroup, false]
+          - [NoOriginalQualityScores, NoOriginalQualityScores, false]
+          - [NotPrimaryAlignment, NotPrimaryAlignment, false]
+          - [Platform454, Platform454, false]
+          - [Platform, Platform, false]
+          - [PlatformUnit, PlatformUnit, false]
+          - [ReadGroupBlackList, ReadGroupBlackList, false]
+          - [ReadName, ReadName, false]
+          - [ReadStrand, ReadStrand, false]
+          - [ReassignMappingQuality, ReassignMappingQuality, false]
+          - [Sample, Sample, false]
+          - [SingleReadGroup, SingleReadGroup, false]
+          - [UnmappedRead, UnmappedRead, false]
+          type: select
+          value: MaxReadLength
+        type: conditional
+      max: __Infinity__
+      min: 0
+      model_class: Repeat
+      name: read_filter
+      title: Read Filter
+      type: repeat
+    - default: 0
+      help: -L,--intervals &lt;intervals&gt;
+      inputs:
+      - argument: null
+        edam_formats: [format_3003, format_2330, format_3475, format_3016]
+        extensions: [bed, gatk_interval, picard_interval_list, vcf]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: Genomic intervals
+        model_class: DataToolParameter
+        multiple: false
+        name: input_intervals
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      max: __Infinity__
+      min: 0
+      model_class: Repeat
+      name: input_interval_repeat
+      title: Operate on Genomic intervals
+      type: repeat
+    - default: 0
+      help: -XL,--excludeIntervals &lt;excludeIntervals&gt;
+      inputs:
+      - argument: null
+        edam_formats: [format_3003, format_2330, format_3475, format_3016]
+        extensions: [bed, gatk_interval, picard_interval_list, vcf]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: Genomic intervals
+        model_class: DataToolParameter
+        multiple: false
+        name: input_exclude_intervals
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      max: __Infinity__
+      min: 0
+      model_class: Repeat
+      name: input_exclude_interval_repeat
+      title: Exclude Genomic intervals
+      type: repeat
+    - argument: null
+      display: null
+      help: -isr,--interval_set_rule &lt;interval_set_rule&gt;
+      hidden: false
+      html: '%3Cselect%20name%3D%22interval_set_rule%22%20last_selected_value%3D%22UNION%22%3E%0A%3Coption%20value%3D%22UNION%22%20selected%3EUNION%3C/option%3E%0A%3Coption%20value%3D%22INTERSECTION%22%3EINTERSECTION%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Interval set rule
+      model_class: SelectToolParameter
+      multiple: false
+      name: interval_set_rule
+      optional: false
+      options:
+      - [UNION, UNION, true]
+      - [INTERSECTION, INTERSECTION, false]
+      type: select
+      value: UNION
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: NONE
+      - inputs:
+        - cases:
+          - inputs:
+            - {area: false, argument: null, help: '-dfrac,--downsample_to_fraction
+                &lt;downsample_to_fraction&gt;', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22downsample_to_value%22%20size%3D%2210%22%20value%3D%221%22%3E',
+              is_dynamic: false, label: 'Fraction [0.0-1.0] of reads to downsample
+                to', max: 1.0, min: 0.0, model_class: FloatToolParameter, name: downsample_to_value,
+              optional: false, size: null, type: float, value: '1'}
+            model_class: ConditionalWhen
+            value: downsample_to_fraction
+          - inputs:
+            - {area: false, argument: null, help: '-dcov,--downsample_to_coverage
+                &lt;downsample_to_coverage&gt;', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22downsample_to_value%22%20size%3D%2210%22%20value%3D%220%22%3E',
+              is_dynamic: false, label: Coverage to downsample to at any given locus,
+              max: null, min: null, model_class: IntegerToolParameter, name: downsample_to_value,
+              optional: false, size: null, type: integer, value: '0'}
+            model_class: ConditionalWhen
+            value: downsample_to_coverage
+          model_class: Conditional
+          name: downsample_to_type
+          test_param:
+            argument: null
+            display: null
+            help: ''
+            hidden: false
+            html: '%3Cselect%20name%3D%22downsample_to_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22downsample_to_fraction%22%3E%0A%3Coption%20value%3D%22downsample_to_fraction%22%20selected%3EDownsample%20by%20Fraction%3C/option%3E%0A%3Coption%20value%3D%22downsample_to_coverage%22%3EDownsample%20by%20Coverage%3C/option%3E%0A%3C/select%3E'
+            is_dynamic: false
+            label: Downsample method
+            model_class: SelectToolParameter
+            multiple: false
+            name: downsample_to_type_selector
+            optional: false
+            options:
+            - [Downsample by Fraction, downsample_to_fraction, true]
+            - [Downsample by Coverage, downsample_to_coverage, false]
+            type: select
+            value: downsample_to_fraction
+          type: conditional
+        model_class: ConditionalWhen
+        value: ALL_READS
+      - inputs:
+        - cases:
+          - inputs:
+            - {area: false, argument: null, help: '-dfrac,--downsample_to_fraction
+                &lt;downsample_to_fraction&gt;', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22downsample_to_value%22%20size%3D%2210%22%20value%3D%221%22%3E',
+              is_dynamic: false, label: 'Fraction [0.0-1.0] of reads to downsample
+                to', max: 1.0, min: 0.0, model_class: FloatToolParameter, name: downsample_to_value,
+              optional: false, size: null, type: float, value: '1'}
+            model_class: ConditionalWhen
+            value: downsample_to_fraction
+          - inputs:
+            - {area: false, argument: null, help: '-dcov,--downsample_to_coverage
+                &lt;downsample_to_coverage&gt;', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22downsample_to_value%22%20size%3D%2210%22%20value%3D%220%22%3E',
+              is_dynamic: false, label: Coverage to downsample to at any given locus,
+              max: null, min: null, model_class: IntegerToolParameter, name: downsample_to_value,
+              optional: false, size: null, type: integer, value: '0'}
+            model_class: ConditionalWhen
+            value: downsample_to_coverage
+          model_class: Conditional
+          name: downsample_to_type
+          test_param:
+            argument: null
+            display: null
+            help: ''
+            hidden: false
+            html: '%3Cselect%20name%3D%22downsample_to_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22downsample_to_fraction%22%3E%0A%3Coption%20value%3D%22downsample_to_fraction%22%20selected%3EDownsample%20by%20Fraction%3C/option%3E%0A%3Coption%20value%3D%22downsample_to_coverage%22%3EDownsample%20by%20Coverage%3C/option%3E%0A%3C/select%3E'
+            is_dynamic: false
+            label: Downsample method
+            model_class: SelectToolParameter
+            multiple: false
+            name: downsample_to_type_selector
+            optional: false
+            options:
+            - [Downsample by Fraction, downsample_to_fraction, true]
+            - [Downsample by Coverage, downsample_to_coverage, false]
+            type: select
+            value: downsample_to_fraction
+          type: conditional
+        model_class: ConditionalWhen
+        value: BY_SAMPLE
+      model_class: Conditional
+      name: downsampling_type
+      test_param:
+        argument: null
+        display: null
+        help: -dt,--downsampling_type &lt;downsampling_type&gt;
+        hidden: false
+        html: '%3Cselect%20name%3D%22downsampling_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22NONE%22%3E%0A%3Coption%20value%3D%22NONE%22%20selected%3ENONE%3C/option%3E%0A%3Coption%20value%3D%22ALL_READS%22%3EALL_READS%3C/option%3E%0A%3Coption%20value%3D%22BY_SAMPLE%22%3EBY_SAMPLE%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Type of reads downsampling to employ at a given locus
+        model_class: SelectToolParameter
+        multiple: false
+        name: downsampling_type_selector
+        optional: false
+        options:
+        - [NONE, NONE, true]
+        - [ALL_READS, ALL_READS, false]
+        - [BY_SAMPLE, BY_SAMPLE, false]
+        type: select
+        value: NONE
+      type: conditional
+    - argument: null
+      display: null
+      help: -baq,--baq &lt;baq&gt;
+      hidden: false
+      html: '%3Cselect%20name%3D%22baq%22%20last_selected_value%3D%22OFF%22%3E%0A%3Coption%20value%3D%22OFF%22%20selected%3EOFF%3C/option%3E%0A%3Coption%20value%3D%22CALCULATE_AS_NECESSARY%22%3ECALCULATE_AS_NECESSARY%3C/option%3E%0A%3Coption%20value%3D%22RECALCULATE%22%3ERECALCULATE%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Type of BAQ calculation to apply in the engine
+      model_class: SelectToolParameter
+      multiple: false
+      name: baq
+      optional: false
+      options:
+      - ['OFF', 'OFF', true]
+      - [CALCULATE_AS_NECESSARY, CALCULATE_AS_NECESSARY, false]
+      - [RECALCULATE, RECALCULATE, false]
+      type: select
+      value: 'OFF'
+    - {area: false, argument: null, help: 'Default value is 40. 30 is perhaps better
+        for whole genome call sets. -baqGOP,--baqGapOpenPenalty &lt;baqGapOpenPenalty&gt;',
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22baq_gap_open_penalty%22%20size%3D%2210%22%20value%3D%2240%22%3E',
+      is_dynamic: false, label: BAQ gap open penalty (Phred Scaled), max: null, min: null,
+      model_class: FloatToolParameter, name: baq_gap_open_penalty, optional: false,
+      size: null, type: float, value: '40'}
+    - {argument: null, falsevalue: '', help: '-OQ,--useOriginalQualities', hidden: false,
+      html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22use_original_qualities%22%20name%3D%22use_original_qualities%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22use_original_qualities%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Use the original base quality scores from the OQ tag,
+      model_class: BooleanToolParameter, name: use_original_qualities, optional: false,
+      truevalue: --useOriginalQualities, type: boolean, value: false}
+    - {area: false, argument: null, help: '-DBQ,--defaultBaseQualities &lt;defaultBaseQualities&gt;',
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22default_base_qualities%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+      is_dynamic: false, label: 'Value to be used for all base quality scores, when
+        some are missing', max: null, min: null, model_class: IntegerToolParameter,
+      name: default_base_qualities, optional: false, size: null, type: integer, value: '-1'}
+    - argument: null
+      display: null
+      help: -S,--validation_strictness &lt;validation_strictness&gt;
+      hidden: false
+      html: '%3Cselect%20name%3D%22validation_strictness%22%20last_selected_value%3D%22STRICT%22%3E%0A%3Coption%20value%3D%22STRICT%22%20selected%3ESTRICT%3C/option%3E%0A%3Coption%20value%3D%22LENIENT%22%3ELENIENT%3C/option%3E%0A%3Coption%20value%3D%22SILENT%22%3ESILENT%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: How strict should we be with validation
+      model_class: SelectToolParameter
+      multiple: false
+      name: validation_strictness
+      optional: false
+      options:
+      - [STRICT, STRICT, true]
+      - [LENIENT, LENIENT, false]
+      - [SILENT, SILENT, false]
+      type: select
+      value: STRICT
+    - argument: null
+      display: null
+      help: -im,--interval_merging &lt;interval_merging&gt;
+      hidden: false
+      html: '%3Cselect%20name%3D%22interval_merging%22%20last_selected_value%3D%22ALL%22%3E%0A%3Coption%20value%3D%22ALL%22%20selected%3EALL%3C/option%3E%0A%3Coption%20value%3D%22OVERLAPPING_ONLY%22%3EOVERLAPPING_ONLY%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Interval merging rule
+      model_class: SelectToolParameter
+      multiple: false
+      name: interval_merging
+      optional: false
+      options:
+      - [ALL, ALL, true]
+      - [OVERLAPPING_ONLY, OVERLAPPING_ONLY, false]
+      type: select
+      value: ALL
+    - default: 0
+      help: -rgbl,--read_group_black_list &lt;read_group_black_list&gt;
+      inputs:
+      - cases:
+        - inputs:
+          - argument: null
+            edam_formats: [format_2330]
+            extensions: [txt]
+            help: ''
+            hidden: false
+            is_dynamic: false
+            label: Read group black list file
+            model_class: DataToolParameter
+            multiple: false
+            name: read_group_black_list
+            optional: false
+            options:
+              hda: []
+              hdca: []
+            type: data
+          model_class: ConditionalWhen
+          value: file
+        - inputs:
+          - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read_group_black_list%22%20size%3D%2210%22%20value%3D%22tag%3Astring%22%3E',
+            is_dynamic: false, label: 'Read group black list tag:string', model_class: TextToolParameter,
+            name: read_group_black_list, optional: false, size: null, type: text,
+            value: 'tag:string'}
+          model_class: ConditionalWhen
+          value: text
+        model_class: Conditional
+        name: read_group_black_list_type
+        test_param:
+          argument: null
+          display: null
+          help: ''
+          hidden: false
+          html: '%3Cselect%20name%3D%22read_group_black_list_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22file%22%3E%0A%3Coption%20value%3D%22file%22%20selected%3EFilters%20in%20file%3C/option%3E%0A%3Coption%20value%3D%22text%22%3ESpecify%20filters%20as%20a%20string%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Type of reads read group black list
+          model_class: SelectToolParameter
+          multiple: false
+          name: read_group_black_list_type_selector
+          optional: false
+          options:
+          - [Filters in file, file, true]
+          - [Specify filters as a string, text, false]
+          type: select
+          value: file
+        type: conditional
+      max: __Infinity__
+      min: 0
+      model_class: Repeat
+      name: read_group_black_list_repeat
+      title: Read group black list
+      type: repeat
+    - {argument: null, falsevalue: '', help: --disable_experimental_low_memory_sharding,
+      hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22disable_experimental_low_memory_sharding%22%20name%3D%22disable_experimental_low_memory_sharding%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22disable_experimental_low_memory_sharding%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Disable experimental low-memory sharding functionality.,
+      model_class: BooleanToolParameter, name: disable_experimental_low_memory_sharding,
+      optional: false, truevalue: --disable_experimental_low_memory_sharding, type: boolean,
+      value: false}
+    - {argument: null, falsevalue: '', help: '-ndrs,--nonDeterministicRandomSeed',
+      hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22non_deterministic_random_seed%22%20name%3D%22non_deterministic_random_seed%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22non_deterministic_random_seed%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: 'Makes the GATK behave non deterministically, that
+        is, the random numbers generated will be different in every run', model_class: BooleanToolParameter,
+      name: non_deterministic_random_seed, optional: false, truevalue: --nonDeterministicRandomSeed,
+      type: boolean, value: false}
+    - {argument: null, falsevalue: '', help: -fixMisencodedQuals / --fix_misencoded_quality_scores,
+      hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22fix_misencoded_quality_scores%22%20name%3D%22fix_misencoded_quality_scores%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22fix_misencoded_quality_scores%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: 'Fix mis-encoded base quality scores. Q0 == ASCII
+        33 according to the SAM specification, whereas Illumina encoding starts at
+        Q64. The idea here is simple: we just iterate over all reads and subtract
+        31 from every quality score.', model_class: BooleanToolParameter, name: fix_misencoded_quality_scores,
+      optional: false, truevalue: --fix_misencoded_quality_scores, type: boolean,
+      value: false}
+    model_class: ConditionalWhen
+    value: advanced
+  model_class: Conditional
+  name: gatk_param_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22gatk_param_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22basic%22%3E%0A%3Coption%20value%3D%22basic%22%20selected%3EBasic%3C/option%3E%0A%3Coption%20value%3D%22advanced%22%3EAdvanced%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Basic or Advanced GATK options
+    model_class: SelectToolParameter
+    multiple: false
+    name: gatk_param_type_selector
+    optional: false
+    options:
+    - [Basic, basic, true]
+    - [Advanced, advanced, false]
+    type: select
+    value: basic
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: basic
+  - inputs:
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: default
+      - inputs:
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22default_read_group%22%20size%3D%2210%22%20value%3D%22Unknown%22%3E',
+          is_dynamic: false, label: If a read has no read group then default to the
+            provided String, model_class: TextToolParameter, name: default_read_group,
+          optional: false, size: null, type: text, value: Unknown}
+        model_class: ConditionalWhen
+        value: set
+      model_class: Conditional
+      name: default_read_group_type
+      test_param:
+        argument: null
+        display: null
+        help: --default_read_group
+        hidden: false
+        html: '%3Cselect%20name%3D%22default_read_group_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22default%22%3E%0A%3Coption%20value%3D%22default%22%20selected%3EDon%27t%20Set%3C/option%3E%0A%3Coption%20value%3D%22set%22%3ESet%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Set default Read Group
+        model_class: SelectToolParameter
+        multiple: false
+        name: default_read_group_type_selector
+        optional: false
+        options:
+        - [Don't Set, default, true]
+        - [Set, set, false]
+        type: select
+        value: default
+      type: conditional
+    - argument: null
+      display: null
+      help: --default_platform
+      hidden: false
+      html: '%3Cselect%20name%3D%22default_platform%22%20last_selected_value%3D%22default%22%3E%0A%3Coption%20value%3D%22default%22%20selected%3EDon%27t%20Set%3C/option%3E%0A%3Coption%20value%3D%22illumina%22%3Eillumina%3C/option%3E%0A%3Coption%20value%3D%22454%22%3E454%3C/option%3E%0A%3Coption%20value%3D%22solid%22%3Esolid%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Set default Platform
+      model_class: SelectToolParameter
+      multiple: false
+      name: default_platform
+      optional: false
+      options:
+      - [Don't Set, default, true]
+      - [illumina, illumina, false]
+      - ['454', '454', false]
+      - [solid, solid, false]
+      type: select
+      value: default
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: default
+      - inputs:
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22force_read_group%22%20size%3D%2210%22%20value%3D%22Unknown%22%3E',
+          is_dynamic: false, label: 'If provided, the read group ID of EVERY read
+            will be forced to be the provided String.', model_class: TextToolParameter,
+          name: force_read_group, optional: false, size: null, type: text, value: Unknown}
+        model_class: ConditionalWhen
+        value: set
+      model_class: Conditional
+      name: force_read_group_type
+      test_param:
+        argument: null
+        display: null
+        help: --force_read_group
+        hidden: false
+        html: '%3Cselect%20name%3D%22force_read_group_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22default%22%3E%0A%3Coption%20value%3D%22default%22%20selected%3EDon%27t%20Force%3C/option%3E%0A%3Coption%20value%3D%22set%22%3EForce%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Force Read Group
+        model_class: SelectToolParameter
+        multiple: false
+        name: force_read_group_type_selector
+        optional: false
+        options:
+        - [Don't Force, default, true]
+        - [Force, set, false]
+        type: select
+        value: default
+      type: conditional
+    - argument: null
+      display: null
+      help: --force_platform
+      hidden: false
+      html: '%3Cselect%20name%3D%22force_platform%22%20last_selected_value%3D%22default%22%3E%0A%3Coption%20value%3D%22default%22%20selected%3EDon%27t%20Force%3C/option%3E%0A%3Coption%20value%3D%22illumina%22%3Eillumina%3C/option%3E%0A%3Coption%20value%3D%22454%22%3E454%3C/option%3E%0A%3Coption%20value%3D%22solid%22%3Esolid%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Force Platform
+      model_class: SelectToolParameter
+      multiple: false
+      name: force_platform
+      optional: false
+      options:
+      - [Don't Force, default, true]
+      - [illumina, illumina, false]
+      - ['454', '454', false]
+      - [solid, solid, false]
+      type: select
+      value: default
+    - {argument: null, falsevalue: '', help: --exception_if_no_tile, hidden: false,
+      html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22exception_if_no_tile%22%20name%3D%22exception_if_no_tile%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22exception_if_no_tile%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Throw an exception when no tile can be found, model_class: BooleanToolParameter,
+      name: exception_if_no_tile, optional: false, truevalue: --exception_if_no_tile,
+      type: boolean, value: false}
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: default
+      - inputs:
+        - argument: null
+          display: null
+          help: -sMode,--solid_recal_mode &lt;solid_recal_mode&gt;
+          hidden: false
+          html: '%3Cselect%20name%3D%22solid_recal_mode%22%20last_selected_value%3D%22default%22%3E%0A%3Coption%20value%3D%22default%22%20selected%3EDon%27t%20set%3C/option%3E%0A%3Coption%20value%3D%22DO_NOTHING%22%3EDO_NOTHING%3C/option%3E%0A%3Coption%20value%3D%22SET_Q_ZERO%22%3ESET_Q_ZERO%3C/option%3E%0A%3Coption%20value%3D%22SET_Q_ZERO_BASE_N%22%3ESET_Q_ZERO_BASE_N%3C/option%3E%0A%3Coption%20value%3D%22REMOVE_REF_BIAS%22%3EREMOVE_REF_BIAS%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: How should we recalibrate solid bases in which the reference was
+            inserted
+          model_class: SelectToolParameter
+          multiple: false
+          name: solid_recal_mode
+          optional: false
+          options:
+          - [Don't set, default, true]
+          - [DO_NOTHING, DO_NOTHING, false]
+          - [SET_Q_ZERO, SET_Q_ZERO, false]
+          - [SET_Q_ZERO_BASE_N, SET_Q_ZERO_BASE_N, false]
+          - [REMOVE_REF_BIAS, REMOVE_REF_BIAS, false]
+          type: select
+          value: default
+        - argument: null
+          display: null
+          help: -solid_nocall_strategy,--solid_nocall_strategy &lt;solid_nocall_strategy&gt;
+          hidden: false
+          html: '%3Cselect%20name%3D%22solid_nocall_strategy%22%20last_selected_value%3D%22default%22%3E%0A%3Coption%20value%3D%22default%22%20selected%3EDon%27t%20set%3C/option%3E%0A%3Coption%20value%3D%22THROW_EXCEPTION%22%3ETHROW_EXCEPTION%3C/option%3E%0A%3Coption%20value%3D%22LEAVE_READ_UNRECALIBRATED%22%3ELEAVE_READ_UNRECALIBRATED%3C/option%3E%0A%3Coption%20value%3D%22PURGE_READ%22%3EPURGE_READ%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Behavior of the recalibrator when it encounters no calls
+          model_class: SelectToolParameter
+          multiple: false
+          name: solid_nocall_strategy
+          optional: false
+          options:
+          - [Don't set, default, true]
+          - [THROW_EXCEPTION, THROW_EXCEPTION, false]
+          - [LEAVE_READ_UNRECALIBRATED, LEAVE_READ_UNRECALIBRATED, false]
+          - [PURGE_READ, PURGE_READ, false]
+          type: select
+          value: default
+        model_class: ConditionalWhen
+        value: set
+      model_class: Conditional
+      name: solid_options_type
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22solid_options_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22default%22%3E%0A%3Coption%20value%3D%22default%22%20selected%3EDon%27t%20Set%3C/option%3E%0A%3Coption%20value%3D%22set%22%3ESet%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Set SOLiD specific options
+        model_class: SelectToolParameter
+        multiple: false
+        name: solid_options_type_selector
+        optional: false
+        options:
+        - [Don't Set, default, true]
+        - [Set, set, false]
+        type: select
+        value: default
+      type: conditional
+    - {area: false, argument: null, help: window_size_nqs, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22window_size_nqs%22%20size%3D%2210%22%20value%3D%225%22%3E',
+      is_dynamic: false, label: Window size used by MinimumNQSCovariate, max: null,
+      min: null, model_class: IntegerToolParameter, name: window_size_nqs, optional: false,
+      size: null, type: integer, value: '5'}
+    - {area: false, argument: null, help: '-nback,--homopolymer_nback &lt;homopolymer_nback&gt;',
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22homopolymer_nback%22%20size%3D%2210%22%20value%3D%227%22%3E',
+      is_dynamic: false, label: number of previous bases to look at in HomopolymerCovariate,
+      max: null, min: null, model_class: IntegerToolParameter, name: homopolymer_nback,
+      optional: false, size: null, type: integer, value: '7'}
+    model_class: ConditionalWhen
+    value: advanced
+  model_class: Conditional
+  name: analysis_param_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22analysis_param_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22basic%22%3E%0A%3Coption%20value%3D%22basic%22%20selected%3EBasic%3C/option%3E%0A%3Coption%20value%3D%22advanced%22%3EAdvanced%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Basic or Advanced Analysis options
+    model_class: SelectToolParameter
+    multiple: false
+    name: analysis_param_type_selector
+    optional: false
+    options:
+    - [Basic, basic, true]
+    - [Advanced, advanced, false]
+    type: select
+    value: basic
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: pdf
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22tag%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22yes%22%3Eyes%3C/option%3E%0A%3Coption%20value%3D%22no%22%3Eno%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: pdf output
+    model_class: SelectToolParameter
+    multiple: false
+    name: tag
+    optional: false
+    options:
+    - ['yes', 'yes', false]
+    - ['no', 'no', false]
+    type: select
+    value: 'yes'
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fgatk2%2Fgatk2_base_recalibrator%2F2.4-9
+min_width: -1
+model_class: Tool
+name: Base Recalibrator
+outputs:
+- {edam_format: format_3475, format: csv, hidden: false, label: '${tool.name} on ${on_string}
+    (Covariate File)', model_class: ToolOutput, name: output_recal}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}
+    (log)', model_class: ToolOutput, name: output_log}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}
+    (pdf File)', model_class: ToolOutput, name: output_pdf}
+panel_section_id: ngs:_gatk_tools_version_2.4-9
+panel_section_name: 'NGS: GATK Tools version 2.4-9'
+target: galaxy_main
+version: 2.4-9

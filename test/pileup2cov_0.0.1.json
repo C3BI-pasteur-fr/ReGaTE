@@ -1,0 +1,123 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "pileup2cov-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.0.1", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/mpileup_convertor/pileup2cov/0.0.1", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "tabular", 
+                    "dataDescription": "output", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Convert a .mpileup file into a SynTView .coverage file", 
+            "input": [
+                {
+                    "dataHandle": "mpileupfile", 
+                    "dataDescription": "Coverage input file in .mpileup format (see http://samtools.sourceforge.net/)", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "mpileupfile", 
+                    "dataDescription": "Coverage input file in .mpileup format (see http://samtools.sourceforge.net/)", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "ref_file", 
+                    "dataDescription": "Fasta file of the reference genome (needed to get the true length of genome as .mpileup file doesn't include 0 coverage positions", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Convert a .mpileup file into a SynTView .coverage file.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/mpileup_convertor/pileup2cov/0.0.1", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/mpileup_convertor/pileup2cov/0.0.1\"", 
+            "usesVersion": "0.0.1"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "pileup2cov-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.0.1", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/genbank_to_gene/c22802cac1f3/genbank_to_gene/genbank_to_gene_fasta.xml
+description: Convert a Genbank file into the .ffn (gene) file
+id: toolshed.pasteur.fr/repos/fmareuil/genbank_to_gene/genbank_to_gene/0.0.2
+inputs:
+- argument: null
+  edam_formats: [format_2330, format_2330]
+  extensions: [gb, gbk]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: ''
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fgenbank_to_gene%2Fgenbank_to_gene%2F0.0.2
+min_width: -1
+model_class: Tool
+name: Genbank to gene fasta
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+panel_section_id: convert
+panel_section_name: Convert Formats
+target: galaxy_main
+version: 0.0.2

@@ -1,0 +1,32 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/frogs/36109d143f38/frogs/biom_to_stdBiom.xml
+description: Converts a FROGS BIOM in fully compatible BIOM.
+id: toolshed.pasteur.fr/repos/mvalade/frogs/FROGS_biom_to_stdBiom/1.1.0
+inputs:
+- argument: null
+  edam_formats: [format_3464]
+  extensions: [biom1]
+  help: 'The FROGS BIOM file to convert (format: BIOM).'
+  hidden: false
+  is_dynamic: false
+  label: Abundance file
+  model_class: DataToolParameter
+  multiple: false
+  name: input_biom
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Ffrogs%2FFROGS_biom_to_stdBiom%2F1.1.0
+min_width: -1
+model_class: Tool
+name: FROGS BIOM to std BIOM
+outputs:
+- {edam_format: format_3464, format: biom1, hidden: false, label: '${tool.name}: abundance.biom',
+  model_class: ToolOutput, name: output_biom}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}:
+    blast_metadata.tsv', model_class: ToolOutput, name: output_metadata}
+panel_section_id: frogs_metagenomic_pipeline
+panel_section_name: FROGS Metagenomic pipeline
+target: galaxy_main
+version: 1.1.0

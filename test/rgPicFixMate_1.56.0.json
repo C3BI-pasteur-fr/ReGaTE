@@ -1,0 +1,99 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "rgPicFixMate-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "1.56.0", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/rgPicFixMate/1.56.0", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "bam", 
+                    "dataDescription": "out_file", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "for paired data", 
+            "input": [
+                {
+                    "dataHandle": "input_file", 
+                    "dataDescription": "SAM/BAM dataset to fix", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }, 
+                        {
+                            "term": "SAM", 
+                            "uri": "http://edamontology.org/format_2573"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "For paired data.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/rgPicFixMate/1.56.0", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/rgPicFixMate/1.56.0\"", 
+            "usesVersion": "1.56.0"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "rgPicFixMate-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "1.56.0", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

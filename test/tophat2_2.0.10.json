@@ -1,0 +1,239 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "tophat2-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "2.0.10", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/tophat2/tophat2/2.0.10", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "txt", 
+                    "dataDescription": "align_summary", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "tabular", 
+                    "dataDescription": "fusions", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "bed", 
+                    "dataDescription": "insertions", 
+                    "data": {
+                        "term": "Annotation track", 
+                        "uri": "http://edamontology.org/data_3002"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BED", 
+                            "uri": "http://edamontology.org/format_3003"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "bed", 
+                    "dataDescription": "deletions", 
+                    "data": {
+                        "term": "Annotation track", 
+                        "uri": "http://edamontology.org/data_3002"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BED", 
+                            "uri": "http://edamontology.org/format_3003"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "bed", 
+                    "dataDescription": "junctions", 
+                    "data": {
+                        "term": "Annotation track", 
+                        "uri": "http://edamontology.org/data_3002"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BED", 
+                            "uri": "http://edamontology.org/format_3003"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "bam", 
+                    "dataDescription": "accepted_hits", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Gapped-read mapper for RNA-seq data", 
+            "input": [
+                {
+                    "dataHandle": "input1", 
+                    "dataDescription": "RNA-Seq FASTQ file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "input1", 
+                    "dataDescription": "RNA-Seq FASTQ file, forward reads", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "input2", 
+                    "dataDescription": "RNA-Seq FASTQ file, reverse reads", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "ownFile", 
+                    "dataDescription": "Select the reference genome", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "gene_annotation_model", 
+                    "dataDescription": "Gene Model Annotations", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "GTF", 
+                            "uri": "http://edamontology.org/format_2306"
+                        }, 
+                        {
+                            "term": "GFF3", 
+                            "uri": "http://edamontology.org/format_1975"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "raw_juncs", 
+                    "dataDescription": "Raw Junctions", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Gapped-read mapper for RNA-seq data.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/tophat2/tophat2/2.0.10", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/tophat2/tophat2/2.0.10\"", 
+            "usesVersion": "2.0.10"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "tophat2-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "2.0.10", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

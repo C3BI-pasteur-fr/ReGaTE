@@ -1,0 +1,122 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/2f92cb75946c/picard_pasteur_wrapper/picard_FastqToSam.xml
+description: creates an unaligned BAM file
+id: toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/picard_FastqToSam/1.56.0
+inputs:
+- argument: null
+  edam_formats: [format_1932, format_1931, format_1933, format_1930]
+  extensions: [fastqsanger, fastqillumina, fastqsolexa, fastqcssanger]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: FASTQ file
+  model_class: DataToolParameter
+  multiple: false
+  name: input_fastq1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1932, format_1931, format_1933, format_1930]
+  extensions: [fastqsanger, fastqillumina, fastqsolexa, fastqcssanger]
+  help: Only needed when using paired end data.
+  hidden: false
+  is_dynamic: true
+  label: Second FASTQ of paired end data
+  model_class: DataToolParameter
+  multiple: false
+  name: input_fastq2
+  optional: true
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read_group_name%22%20size%3D%2210%22%20value%3D%22A%22%3E',
+  is_dynamic: false, label: Read Group Name, model_class: TextToolParameter, name: read_group_name,
+  optional: false, size: null, type: text, value: A}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sample_name%22%20size%3D%2210%22%20value%3D%22unknown%20sample%22%3E',
+  is_dynamic: false, label: Sample Name, model_class: TextToolParameter, name: sample_name,
+  optional: false, size: null, type: text, value: unknown sample}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: basic
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22library_name%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Library Name, model_class: TextToolParameter, name: library_name,
+      optional: false, size: null, type: text, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22platform_unit%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Platform Unit, model_class: TextToolParameter, name: platform_unit,
+      optional: false, size: null, type: text, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22platform%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Platform, model_class: TextToolParameter, name: platform,
+      optional: false, size: null, type: text, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sequencing_center%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Sequencing Center, model_class: TextToolParameter,
+      name: sequencing_center, optional: false, size: null, type: text, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22predicted_insert_size%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Predicted Insert Size, max: null, min: null, model_class: IntegerToolParameter,
+      name: predicted_insert_size, optional: true, size: null, type: integer, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22description%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Description, model_class: TextToolParameter, name: description,
+      optional: false, size: null, type: text, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22run_date%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Run Date, model_class: TextToolParameter, name: run_date,
+      optional: false, size: null, type: text, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_q%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Min Q, max: null, min: null, model_class: IntegerToolParameter,
+      name: min_q, optional: true, size: null, type: integer, value: '0'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_q%22%20size%3D%2210%22%20value%3D%2293%22%3E',
+      is_dynamic: false, label: Max Q, max: null, min: null, model_class: IntegerToolParameter,
+      name: max_q, optional: true, size: null, type: integer, value: '93'}
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22sort_order%22%20last_selected_value%3D%22coordinate%22%3E%0A%3Coption%20value%3D%22coordinate%22%20selected%3Ecoordinate%3C/option%3E%0A%3Coption%20value%3D%22queryname%22%3Equeryname%3C/option%3E%0A%3Coption%20value%3D%22unsorted%22%3Eunsorted%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Sort order
+      model_class: SelectToolParameter
+      multiple: false
+      name: sort_order
+      optional: false
+      options:
+      - [coordinate, coordinate, true]
+      - [queryname, queryname, false]
+      - [unsorted, unsorted, false]
+      type: select
+      value: coordinate
+    model_class: ConditionalWhen
+    value: advanced
+  model_class: Conditional
+  name: param_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22param_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22basic%22%3E%0A%3Coption%20value%3D%22basic%22%20selected%3EBasic%3C/option%3E%0A%3Coption%20value%3D%22advanced%22%3EAdvanced%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Basic or Advanced options
+    model_class: SelectToolParameter
+    multiple: false
+    name: param_type_selector
+    optional: false
+    options:
+    - [Basic, basic, true]
+    - [Advanced, advanced, false]
+    type: select
+    value: basic
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fpicard_pasteur_wrapper%2Fpicard_FastqToSam%2F1.56.0
+min_width: -1
+model_class: Tool
+name: FASTQ to BAM
+outputs:
+- {edam_format: format_2572, format: bam, hidden: false, label: '', model_class: ToolOutput,
+  name: output_bam}
+panel_section_id: ngs:_picard_tools
+panel_section_name: 'NGS: Picard Tools'
+target: galaxy_main
+version: 1.56.0

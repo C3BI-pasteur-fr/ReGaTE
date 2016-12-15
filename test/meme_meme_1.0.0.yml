@@ -1,0 +1,690 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/meme/meme.xml
+description: '- Multiple Em for Motif Elicitation'
+id: meme_meme
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Sequences
+  model_class: DataToolParameter
+  multiple: false
+  name: input1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: basic
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sf%22%20size%3D%2210%22%20value%3D%22Galaxy%20FASTA%20Input%22%3E',
+      is_dynamic: false, label: Name of sequence set, model_class: TextToolParameter,
+      name: sf, optional: false, size: null, type: text, value: Galaxy FASTA Input}
+    - cases:
+      - inputs:
+        - cases:
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22prior_b%22%20size%3D%2210%22%20value%3D%220.01%22%3E',
+              is_dynamic: false, label: strength of prior on model parameters, max: null,
+              min: null, model_class: FloatToolParameter, name: prior_b, optional: false,
+              size: null, type: float, value: '0.01'}
+            - argument: null
+              edam_formats: [format_2330]
+              extensions: [txt]
+              help: ''
+              hidden: false
+              is_dynamic: false
+              label: Dirichlet prior file
+              model_class: DataToolParameter
+              multiple: false
+              name: plib
+              optional: true
+              options:
+                hda: []
+                hdca: []
+              type: data
+            model_class: ConditionalWhen
+            value: dirichlet
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22prior_b%22%20size%3D%2210%22%20value%3D%220%22%3E',
+              is_dynamic: false, label: strength of prior on model parameters, max: null,
+              min: null, model_class: FloatToolParameter, name: prior_b, optional: false,
+              size: null, type: float, value: '0'}
+            - argument: null
+              edam_formats: [format_2330]
+              extensions: [txt]
+              help: ''
+              hidden: false
+              is_dynamic: false
+              label: Dirichlet prior file
+              model_class: DataToolParameter
+              multiple: false
+              name: plib
+              optional: true
+              options:
+                hda: []
+                hdca: []
+              type: data
+            model_class: ConditionalWhen
+            value: dmix
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22prior_b%22%20size%3D%2210%22%20value%3D%220%22%3E',
+              is_dynamic: false, label: strength of prior on model parameters, max: null,
+              min: null, model_class: FloatToolParameter, name: prior_b, optional: false,
+              size: null, type: float, value: '0'}
+            - argument: null
+              edam_formats: [format_2330]
+              extensions: [txt]
+              help: ''
+              hidden: false
+              is_dynamic: false
+              label: Dirichlet prior file
+              model_class: DataToolParameter
+              multiple: false
+              name: plib
+              optional: true
+              options:
+                hda: []
+                hdca: []
+              type: data
+            model_class: ConditionalWhen
+            value: mega
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22prior_b%22%20size%3D%2210%22%20value%3D%220%22%3E',
+              is_dynamic: false, label: strength of prior on model parameters, max: null,
+              min: null, model_class: FloatToolParameter, name: prior_b, optional: false,
+              size: null, type: float, value: '0'}
+            - argument: null
+              edam_formats: [format_2330]
+              extensions: [txt]
+              help: ''
+              hidden: false
+              is_dynamic: false
+              label: Dirichlet prior file
+              model_class: DataToolParameter
+              multiple: false
+              name: plib
+              optional: true
+              options:
+                hda: []
+                hdca: []
+              type: data
+            model_class: ConditionalWhen
+            value: megap
+          - inputs: []
+            model_class: ConditionalWhen
+            value: addone
+          model_class: Conditional
+          name: prior_type
+          test_param:
+            argument: null
+            display: null
+            help: ''
+            hidden: false
+            html: '%3Cselect%20name%3D%22prior_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22dmix%22%3E%0A%3Coption%20value%3D%22dirichlet%22%3Esimple%20Dirichlet%20prior%3C/option%3E%0A%3Coption%20value%3D%22dmix%22%20selected%3Emixture%20of%20Dirichlets%20prior%3C/option%3E%0A%3Coption%20value%3D%22mega%22%3Eextremely%20low%20variance%20dmix%3C/option%3E%0A%3Coption%20value%3D%22megap%22%3Emega%20for%20all%20but%20last%20iteration%20of%20EM%3B%20dmix%20on%20last%20iteration%3C/option%3E%0A%3Coption%20value%3D%22addone%22%3Eadd%20%2B1%20to%20each%20observed%20count%3C/option%3E%0A%3C/select%3E'
+            is_dynamic: false
+            label: Choice of prior
+            model_class: SelectToolParameter
+            multiple: false
+            name: prior_type_selector
+            optional: false
+            options:
+            - [simple Dirichlet prior, dirichlet, false]
+            - [mixture of Dirichlets prior, dmix, true]
+            - [extremely low variance dmix, mega, false]
+            - [mega for all but last iteration of EM; dmix on last iteration, megap,
+              false]
+            - [add +1 to each observed count, addone, false]
+            type: select
+            value: dmix
+          type: conditional
+        - cases:
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22spfuzz%22%20size%3D%2210%22%20value%3D%220.5%22%3E',
+              is_dynamic: false, label: Fuzziness of the mapping, max: null, min: null,
+              model_class: FloatToolParameter, name: spfuzz, optional: false, size: null,
+              type: float, value: '0.5'}
+            model_class: ConditionalWhen
+            value: uni
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22spfuzz%22%20size%3D%2210%22%20value%3D%22120%22%3E',
+              is_dynamic: false, label: Fuzziness of the mapping, max: null, min: null,
+              model_class: IntegerToolParameter, name: spfuzz, optional: false, size: null,
+              type: integer, value: '120'}
+            model_class: ConditionalWhen
+            value: pam
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22cons%22%20size%3D%2210%22%20value%3D%22%22%3E',
+              is_dynamic: false, label: Starting point from string, model_class: TextToolParameter,
+              name: cons, optional: false, size: null, type: text, value: ''}
+            model_class: ConditionalWhen
+            value: cons
+          model_class: Conditional
+          name: spmap_type
+          test_param:
+            argument: null
+            display: null
+            help: ''
+            hidden: false
+            html: '%3Cselect%20name%3D%22spmap_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22pam%22%3E%0A%3Coption%20value%3D%22uni%22%3Euni%3C/option%3E%0A%3Coption%20value%3D%22pam%22%20selected%3Epam%3C/option%3E%0A%3Coption%20value%3D%22cons%22%3EUse%20starting%20point%20from%20string%3C/option%3E%0A%3C/select%3E'
+            is_dynamic: false
+            label: EM starting points
+            model_class: SelectToolParameter
+            multiple: false
+            name: spmap_type_selector
+            optional: false
+            options:
+            - [uni, uni, false]
+            - [pam, pam, true]
+            - [Use starting point from string, cons, false]
+            type: select
+            value: pam
+          type: conditional
+        model_class: ConditionalWhen
+        value: protein
+      - inputs:
+        - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22revcomp%22%20name%3D%22revcomp%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22revcomp%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Check reverse complement, model_class: BooleanToolParameter,
+          name: revcomp, optional: false, truevalue: -revcomp, type: boolean, value: false}
+        - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22pal%22%20name%3D%22pal%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22pal%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Check for palindromes, model_class: BooleanToolParameter,
+          name: pal, optional: false, truevalue: -pal, type: boolean, value: false}
+        - cases:
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22prior_b%22%20size%3D%2210%22%20value%3D%220.01%22%3E',
+              is_dynamic: false, label: strength of prior on model parameters, max: null,
+              min: null, model_class: FloatToolParameter, name: prior_b, optional: false,
+              size: null, type: float, value: '0.01'}
+            - argument: null
+              edam_formats: [format_2330]
+              extensions: [txt]
+              help: ''
+              hidden: false
+              is_dynamic: false
+              label: Dirichlet prior file
+              model_class: DataToolParameter
+              multiple: false
+              name: plib
+              optional: true
+              options:
+                hda: []
+                hdca: []
+              type: data
+            model_class: ConditionalWhen
+            value: dirichlet
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22prior_b%22%20size%3D%2210%22%20value%3D%220%22%3E',
+              is_dynamic: false, label: strength of prior on model parameters, max: null,
+              min: null, model_class: FloatToolParameter, name: prior_b, optional: false,
+              size: null, type: float, value: '0'}
+            - argument: null
+              edam_formats: [format_2330]
+              extensions: [txt]
+              help: ''
+              hidden: false
+              is_dynamic: false
+              label: Dirichlet prior file
+              model_class: DataToolParameter
+              multiple: false
+              name: plib
+              optional: true
+              options:
+                hda: []
+                hdca: []
+              type: data
+            model_class: ConditionalWhen
+            value: dmix
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22prior_b%22%20size%3D%2210%22%20value%3D%220%22%3E',
+              is_dynamic: false, label: strength of prior on model parameters, max: null,
+              min: null, model_class: FloatToolParameter, name: prior_b, optional: false,
+              size: null, type: float, value: '0'}
+            - argument: null
+              edam_formats: [format_2330]
+              extensions: [txt]
+              help: ''
+              hidden: false
+              is_dynamic: false
+              label: Dirichlet prior file
+              model_class: DataToolParameter
+              multiple: false
+              name: plib
+              optional: true
+              options:
+                hda: []
+                hdca: []
+              type: data
+            model_class: ConditionalWhen
+            value: mega
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22prior_b%22%20size%3D%2210%22%20value%3D%220%22%3E',
+              is_dynamic: false, label: strength of prior on model parameters, max: null,
+              min: null, model_class: FloatToolParameter, name: prior_b, optional: false,
+              size: null, type: float, value: '0'}
+            - argument: null
+              edam_formats: [format_2330]
+              extensions: [txt]
+              help: ''
+              hidden: false
+              is_dynamic: false
+              label: Dirichlet prior file
+              model_class: DataToolParameter
+              multiple: false
+              name: plib
+              optional: true
+              options:
+                hda: []
+                hdca: []
+              type: data
+            model_class: ConditionalWhen
+            value: megap
+          - inputs: []
+            model_class: ConditionalWhen
+            value: addone
+          model_class: Conditional
+          name: prior_type
+          test_param:
+            argument: null
+            display: null
+            help: ''
+            hidden: false
+            html: '%3Cselect%20name%3D%22prior_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22dirichlet%22%3E%0A%3Coption%20value%3D%22dirichlet%22%20selected%3Esimple%20Dirichlet%20prior%3C/option%3E%0A%3Coption%20value%3D%22dmix%22%3Emixture%20of%20Dirichlets%20prior%3C/option%3E%0A%3Coption%20value%3D%22mega%22%3Eextremely%20low%20variance%20dmix%3C/option%3E%0A%3Coption%20value%3D%22megap%22%3Emega%20for%20all%20but%20last%20iteration%20of%20EM%3B%20dmix%20on%20last%20iteration%3C/option%3E%0A%3Coption%20value%3D%22addone%22%3Eadd%20%2B1%20to%20each%20observed%20count%3C/option%3E%0A%3C/select%3E'
+            is_dynamic: false
+            label: Sequence Alphabet
+            model_class: SelectToolParameter
+            multiple: false
+            name: prior_type_selector
+            optional: false
+            options:
+            - [simple Dirichlet prior, dirichlet, true]
+            - [mixture of Dirichlets prior, dmix, false]
+            - [extremely low variance dmix, mega, false]
+            - [mega for all but last iteration of EM; dmix on last iteration, megap,
+              false]
+            - [add +1 to each observed count, addone, false]
+            type: select
+            value: dirichlet
+          type: conditional
+        - cases:
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22spfuzz%22%20size%3D%2210%22%20value%3D%220.5%22%3E',
+              is_dynamic: false, label: Fuzziness of the mapping, max: null, min: null,
+              model_class: FloatToolParameter, name: spfuzz, optional: false, size: null,
+              type: float, value: '0.5'}
+            model_class: ConditionalWhen
+            value: uni
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22spfuzz%22%20size%3D%2210%22%20value%3D%22120%22%3E',
+              is_dynamic: false, label: Fuzziness of the mapping, max: null, min: null,
+              model_class: IntegerToolParameter, name: spfuzz, optional: false, size: null,
+              type: integer, value: '120'}
+            model_class: ConditionalWhen
+            value: pam
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22cons%22%20size%3D%2210%22%20value%3D%22%22%3E',
+              is_dynamic: false, label: Starting point from string, model_class: TextToolParameter,
+              name: cons, optional: false, size: null, type: text, value: ''}
+            model_class: ConditionalWhen
+            value: cons
+          model_class: Conditional
+          name: spmap_type
+          test_param:
+            argument: null
+            display: null
+            help: ''
+            hidden: false
+            html: '%3Cselect%20name%3D%22spmap_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22uni%22%3E%0A%3Coption%20value%3D%22uni%22%20selected%3Euni%3C/option%3E%0A%3Coption%20value%3D%22pam%22%3Epam%3C/option%3E%0A%3Coption%20value%3D%22cons%22%3EUse%20starting%20point%20from%20string%3C/option%3E%0A%3C/select%3E'
+            is_dynamic: false
+            label: EM starting points
+            model_class: SelectToolParameter
+            multiple: false
+            name: spmap_type_selector
+            optional: false
+            options:
+            - [uni, uni, true]
+            - [pam, pam, false]
+            - [Use starting point from string, cons, false]
+            type: select
+            value: uni
+          type: conditional
+        model_class: ConditionalWhen
+        value: dna
+      model_class: Conditional
+      name: alphabet_type
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22alphabet_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22dna%22%3E%0A%3Coption%20value%3D%22protein%22%3EProtein%3C/option%3E%0A%3Coption%20value%3D%22dna%22%20selected%3EDNA%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Sequence Alphabet
+        model_class: SelectToolParameter
+        multiple: false
+        name: alphabet_type_selector
+        optional: false
+        options:
+        - [Protein, protein, false]
+        - [DNA, dna, true]
+        type: select
+        value: dna
+      type: conditional
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22nmotifs%22%20size%3D%2210%22%20value%3D%221%22%3E',
+      is_dynamic: false, label: Number of different motifs to search, max: null, min: null,
+      model_class: IntegerToolParameter, name: nmotifs, optional: false, size: null,
+      type: integer, value: '1'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22evt%22%20size%3D%2210%22%20value%3D%22inf%22%3E',
+      is_dynamic: false, label: E-value to stop looking for motifs, max: null, min: null,
+      model_class: FloatToolParameter, name: evt, optional: false, size: null, type: float,
+      value: inf}
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: oops
+      - inputs:
+        - cases:
+          - inputs: []
+            model_class: ConditionalWhen
+            value: default
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22nsites%22%20size%3D%2210%22%20value%3D%221%22%3E',
+              is_dynamic: false, label: Search nsites number of occurrences, max: null,
+              min: null, model_class: IntegerToolParameter, name: nsites, optional: false,
+              size: null, type: integer, value: '1'}
+            model_class: ConditionalWhen
+            value: nsites
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minsites%22%20size%3D%2210%22%20value%3D%221%22%3E',
+              is_dynamic: false, label: minsites, max: null, min: null, model_class: IntegerToolParameter,
+              name: minsites, optional: false, size: null, type: integer, value: '1'}
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxsites%22%20size%3D%2210%22%20value%3D%2250%22%3E',
+              is_dynamic: false, label: maxsites, max: null, min: null, model_class: IntegerToolParameter,
+              name: maxsites, optional: false, size: null, type: integer, value: '50'}
+            model_class: ConditionalWhen
+            value: min_max_sites
+          model_class: Conditional
+          name: motif_occurrence_type
+          test_param:
+            argument: null
+            display: null
+            help: ''
+            hidden: false
+            html: '%3Cselect%20name%3D%22motif_occurrence_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22default%22%3E%0A%3Coption%20value%3D%22default%22%20selected%3EUse%20defaults%3C/option%3E%0A%3Coption%20value%3D%22nsites%22%3Ensites%3C/option%3E%0A%3Coption%20value%3D%22min_max_sites%22%3Emin%20and%20max%20sites%3C/option%3E%0A%3C/select%3E'
+            is_dynamic: false
+            label: Number of motif occurrences
+            model_class: SelectToolParameter
+            multiple: false
+            name: motif_occurrence_type_selector
+            optional: false
+            options:
+            - [Use defaults, default, true]
+            - [nsites, nsites, false]
+            - [min and max sites, min_max_sites, false]
+            type: select
+            value: default
+          type: conditional
+        model_class: ConditionalWhen
+        value: zoops
+      - inputs:
+        - cases:
+          - inputs: []
+            model_class: ConditionalWhen
+            value: default
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22nsites%22%20size%3D%2210%22%20value%3D%221%22%3E',
+              is_dynamic: false, label: Search nsites number of occurrences, max: null,
+              min: null, model_class: IntegerToolParameter, name: nsites, optional: false,
+              size: null, type: integer, value: '1'}
+            model_class: ConditionalWhen
+            value: nsites
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minsites%22%20size%3D%2210%22%20value%3D%221%22%3E',
+              is_dynamic: false, label: minsites, max: null, min: null, model_class: IntegerToolParameter,
+              name: minsites, optional: false, size: null, type: integer, value: '1'}
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxsites%22%20size%3D%2210%22%20value%3D%2250%22%3E',
+              is_dynamic: false, label: maxsites, max: null, min: null, model_class: IntegerToolParameter,
+              name: maxsites, optional: false, size: null, type: integer, value: '50'}
+            model_class: ConditionalWhen
+            value: min_max_sites
+          model_class: Conditional
+          name: motif_occurrence_type
+          test_param:
+            argument: null
+            display: null
+            help: ''
+            hidden: false
+            html: '%3Cselect%20name%3D%22motif_occurrence_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22default%22%3E%0A%3Coption%20value%3D%22default%22%20selected%3EUse%20defaults%3C/option%3E%0A%3Coption%20value%3D%22nsites%22%3Ensites%3C/option%3E%0A%3Coption%20value%3D%22min_max_sites%22%3Emin%20and%20max%20sites%3C/option%3E%0A%3C/select%3E'
+            is_dynamic: false
+            label: Number of motif occurrences
+            model_class: SelectToolParameter
+            multiple: false
+            name: motif_occurrence_type_selector
+            optional: false
+            options:
+            - [Use defaults, default, true]
+            - [nsites, nsites, false]
+            - [min and max sites, min_max_sites, false]
+            type: select
+            value: default
+          type: conditional
+        model_class: ConditionalWhen
+        value: anr
+      model_class: Conditional
+      name: mod_type
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22mod_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22zoops%22%3E%0A%3Coption%20value%3D%22oops%22%3EOne%20Occurrence%20Per%20Sequence%3C/option%3E%0A%3Coption%20value%3D%22zoops%22%20selected%3EZero%20or%20One%20Occurrence%20Per%20Sequence%3C/option%3E%0A%3Coption%20value%3D%22anr%22%3EAny%20Number%20of%20Repetitions%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Expected motif distribution
+        model_class: SelectToolParameter
+        multiple: false
+        name: mod_type_selector
+        optional: false
+        options:
+        - [One Occurrence Per Sequence, oops, false]
+        - [Zero or One Occurrence Per Sequence, zoops, true]
+        - [Any Number of Repetitions, anr, false]
+        type: select
+        value: zoops
+      type: conditional
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22wnsites%22%20size%3D%2210%22%20value%3D%220.8%22%3E',
+      is_dynamic: false, label: Weight on the prior on nsites, max: null, min: null,
+      model_class: FloatToolParameter, name: wnsites, optional: false, size: null,
+      type: float, value: '0.8'}
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22width%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+          is_dynamic: false, label: Width of motif to search, max: null, min: null,
+          model_class: IntegerToolParameter, name: width, optional: false, size: null,
+          type: integer, value: '10'}
+        model_class: ConditionalWhen
+        value: exact
+      - inputs:
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minw%22%20size%3D%2210%22%20value%3D%228%22%3E',
+          is_dynamic: false, label: Min width of motif to search, max: null, min: null,
+          model_class: IntegerToolParameter, name: minw, optional: false, size: null,
+          type: integer, value: '8'}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxw%22%20size%3D%2210%22%20value%3D%2250%22%3E',
+          is_dynamic: false, label: Max width of motif to search, max: null, min: null,
+          model_class: IntegerToolParameter, name: maxw, optional: false, size: null,
+          type: integer, value: '50'}
+        model_class: ConditionalWhen
+        value: range
+      model_class: Conditional
+      name: motif_width_type
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22motif_width_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22range%22%3E%0A%3Coption%20value%3D%22exact%22%3EExact%20width%3C/option%3E%0A%3Coption%20value%3D%22range%22%20selected%3ESpecify%20a%20range%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Motif width type
+        model_class: SelectToolParameter
+        multiple: false
+        name: motif_width_type_selector
+        optional: false
+        options:
+        - [Exact width, exact, false]
+        - [Specify a range, range, true]
+        type: select
+        value: range
+      type: conditional
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: nomatrim
+      - inputs:
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22wg%22%20size%3D%2210%22%20value%3D%2211%22%3E',
+          is_dynamic: false, label: Gap cost, max: null, min: null, model_class: IntegerToolParameter,
+          name: wg, optional: false, size: null, type: integer, value: '11'}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22ws%22%20size%3D%2210%22%20value%3D%221%22%3E',
+          is_dynamic: false, label: Space cost, max: null, min: null, model_class: IntegerToolParameter,
+          name: ws, optional: false, size: null, type: integer, value: '1'}
+        - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22noendgaps%22%20name%3D%22noendgaps%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22noendgaps%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Do not penalize endgaps, model_class: BooleanToolParameter,
+          name: noendgaps, optional: false, truevalue: -noendgaps, type: boolean,
+          value: false}
+        model_class: ConditionalWhen
+        value: trim
+      model_class: Conditional
+      name: motif_trim_type
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22motif_trim_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22trim%22%3E%0A%3Coption%20value%3D%22nomatrim%22%3ENo%20motif%20trim%3C/option%3E%0A%3Coption%20value%3D%22trim%22%20selected%3ETrim%20motif%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Motif trim type
+        model_class: SelectToolParameter
+        multiple: false
+        name: motif_trim_type_selector
+        optional: false
+        options:
+        - [No motif trim, nomatrim, false]
+        - [Trim motif, trim, true]
+        type: select
+        value: trim
+      type: conditional
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [txt]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Background Model
+      model_class: DataToolParameter
+      multiple: false
+      name: bfile
+      optional: true
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [txt]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Position-Specific Prior
+      model_class: DataToolParameter
+      multiple: false
+      name: pspfile
+      optional: true
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxiter%22%20size%3D%2210%22%20value%3D%2250%22%3E',
+      is_dynamic: false, label: Number of iterations of EM to run, max: null, min: null,
+      model_class: IntegerToolParameter, name: maxiter, optional: false, size: null,
+      type: integer, value: '50'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22distance%22%20size%3D%2210%22%20value%3D%220.001%22%3E',
+      is_dynamic: false, label: Convergence criterion, max: null, min: null, model_class: FloatToolParameter,
+      name: distance, optional: false, size: null, type: float, value: '0.001'}
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: no_x_branch
+      - inputs:
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22bfactor%22%20size%3D%2210%22%20value%3D%223%22%3E',
+          is_dynamic: false, label: Number of iterations of branching, max: null,
+          min: null, model_class: IntegerToolParameter, name: bfactor, optional: false,
+          size: null, type: integer, value: '3'}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22heapsize%22%20size%3D%2210%22%20value%3D%2264%22%3E',
+          is_dynamic: false, label: Maximum number of heaps to use, max: null, min: null,
+          model_class: IntegerToolParameter, name: heapsize, optional: false, size: null,
+          type: integer, value: '64'}
+        model_class: ConditionalWhen
+        value: x_branch
+      model_class: Conditional
+      name: branching_type
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22branching_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no_x_branch%22%3E%0A%3Coption%20value%3D%22x_branch%22%3EPerform%20x-branching%3C/option%3E%0A%3Coption%20value%3D%22no_x_branch%22%20selected%3ENo%20x-branching%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: x-branching type
+        model_class: SelectToolParameter
+        multiple: false
+        name: branching_type_selector
+        optional: false
+        options:
+        - [Perform x-branching, x_branch, false]
+        - [No x-branching, no_x_branch, true]
+        type: select
+        value: no_x_branch
+      type: conditional
+    model_class: ConditionalWhen
+    value: advanced
+  model_class: Conditional
+  name: options_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22options_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22basic%22%3E%0A%3Coption%20value%3D%22basic%22%20selected%3EBasic%3C/option%3E%0A%3Coption%20value%3D%22advanced%22%3EAdvanced%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Options Configuration
+    model_class: SelectToolParameter
+    multiple: false
+    name: options_type_selector
+    optional: false
+    options:
+    - [Basic, basic, true]
+    - [Advanced, advanced, false]
+    type: select
+    value: basic
+  type: conditional
+- {argument: null, falsevalue: COMMERCIAL_USE, help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22non_commercial_use%22%20name%3D%22non_commercial_use%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22non_commercial_use%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: I certify that I am not using this tool for commercial
+    purposes., model_class: BooleanToolParameter, name: non_commercial_use, optional: false,
+  truevalue: NON_COMMERCIAL_USE, type: boolean, value: false}
+link: /tool_runner?tool_id=meme_meme
+min_width: -1
+model_class: Tool
+name: MEME
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '${tool.name} on
+    ${on_string} (html)', model_class: ToolOutput, name: html_outfile}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}
+    (text)', model_class: ToolOutput, name: txt_outfile}
+- {edam_format: format_2332, format: memexml, hidden: false, label: '${tool.name}
+    on ${on_string} (xml)', model_class: ToolOutput, name: xml_outfile}
+panel_section_id: motifs
+panel_section_name: Motif Tools
+target: galaxy_main
+version: 1.0.0

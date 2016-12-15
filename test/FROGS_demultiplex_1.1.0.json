@@ -1,0 +1,165 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "FROGS_demultiplex-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "1.1.0", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/mvalade/frogs/FROGS_demultiplex/1.1.0", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "data", 
+                    "dataDescription": "demultiplexed_archive", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Format", 
+                            "uri": "http://edamontology.org/format_1915"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "data", 
+                    "dataDescription": "undemultiplexed_archive", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Format", 
+                            "uri": "http://edamontology.org/format_1915"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "tabular", 
+                    "dataDescription": "summary", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Split by samples the reads in function of inner barcode.", 
+            "input": [
+                {
+                    "dataHandle": "barcode_file", 
+                    "dataDescription": "Barcode file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "fastq_input1", 
+                    "dataDescription": "Select first set of reads", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "fastq_input2", 
+                    "dataDescription": "Select second set of reads", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "fastq_input1", 
+                    "dataDescription": "Select fastq dataset", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Split by samples the reads in function of inner barcode.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/mvalade/frogs/FROGS_demultiplex/1.1.0", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/mvalade/frogs/FROGS_demultiplex/1.1.0\"", 
+            "usesVersion": "1.1.0"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "FROGS_demultiplex-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "1.1.0", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

@@ -1,0 +1,123 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "rankoptimizer-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.0.5", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/odoppelt/taxonomy_analysis/rankoptimizer/0.0.5", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "xml", 
+                    "dataDescription": "outputXML", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "XML", 
+                            "uri": "http://edamontology.org/format_2332"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "html", 
+                    "dataDescription": "outputHTML", 
+                    "data": {
+                        "term": "Report", 
+                        "uri": "http://edamontology.org/data_2048"
+                    }, 
+                    "format": [
+                        {
+                            "term": "HTML", 
+                            "uri": "http://edamontology.org/format_2331"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "txt", 
+                    "dataDescription": "outputTXT", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "rankoptimizer report taxonomic abundance, based on BLAST hits. rankoptimizer analyze only (p)taxoptimizer output file.", 
+            "input": [
+                {
+                    "dataHandle": "input", 
+                    "dataDescription": "taxoptimizer output file (format: blast m8 OC taxonomy DE )", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Rankoptimizer report taxonomic abundance, based on BLAST hits. rankoptimizer analyze only (p)taxoptimizer output file.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/odoppelt/taxonomy_analysis/rankoptimizer/0.0.5", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/odoppelt/taxonomy_analysis/rankoptimizer/0.0.5\"", 
+            "usesVersion": "0.0.5"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "rankoptimizer-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.0.5", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

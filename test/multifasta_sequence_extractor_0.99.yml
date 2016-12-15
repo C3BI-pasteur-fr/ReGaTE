@@ -1,0 +1,62 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/screno/pasteur_fasta_facilities/3ce66cce9bda/pasteur_fasta_facilities/multifasta_sequence_extractor.xml
+description: Extract/Exclude one or more sequence(s) from a multifasta file using
+  a dataset of identifiers.
+id: toolshed.pasteur.fr/repos/screno/pasteur_fasta_facilities/multifasta_sequence_extractor/0.99
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: Fasta dataset
+  hidden: false
+  is_dynamic: false
+  label: fasta or multifasta file
+  model_class: DataToolParameter
+  multiple: false
+  name: fasta_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [lst]
+  help: File with 1 column indication sequence identifier -l)
+  hidden: false
+  is_dynamic: false
+  label: ID file
+  model_class: DataToolParameter
+  multiple: false
+  name: id_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22whattodo%22%3E%0A%3Coption%20value%3D%22%22%20selected%3EExtract%20listed%20sequences%3C/option%3E%0A%3Coption%20value%3D%22-x%22%3EExclude%20listed%20sequences%20%28-x%29%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Extract or exclude sequences with name given in the list
+  model_class: SelectToolParameter
+  multiple: false
+  name: whattodo
+  optional: false
+  options:
+  - [Extract listed sequences, '', true]
+  - [Exclude listed sequences (-x), -x, false]
+  type: select
+  value: ''
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fscreno%2Fpasteur_fasta_facilities%2Fmultifasta_sequence_extractor%2F0.99
+min_width: -1
+model_class: Tool
+name: Multifasta sequence(s) extractor
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: '${tool.name} on
+    ${on_string}: Fasta', model_class: ToolOutput, name: output}
+panel_section_id: fasta_manipulation
+panel_section_name: FASTA manipulation
+target: galaxy_main
+version: '0.99'

@@ -1,0 +1,54 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/galaxy/getWigDistance.xml
+description: Compute the average data around some genomic coordinates using WIG files
+  (thus covering a large proportion of the genome).
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/getWigDistance/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_1975]
+  extensions: [gff3]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Input Gff3 File (compulsory option)
+  model_class: DataToolParameter
+  multiple: false
+  name: inputGff3File
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3005]
+  extensions: [wig]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Input Wig File (compulsory option)
+  model_class: DataToolParameter
+  multiple: false
+  name: inputWigFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: Distance around position.Be Careful! The value
+    must be upper than 0, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22distance%22%20size%3D%2210%22%20value%3D%221000%22%3E',
+  is_dynamic: false, label: distance option (compulsory option), max: null, min: null,
+  model_class: IntegerToolParameter, name: distance, optional: false, size: null,
+  type: integer, value: '1000'}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22strand%22%20name%3D%22strand%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22strand%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: consider both strands separately., model_class: BooleanToolParameter,
+  name: strand, optional: false, truevalue: -s, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FgetWigDistance%2F1.0.0
+min_width: -1
+model_class: Tool
+name: get wig distance
+outputs:
+- {edam_format: format_3547, format: png, hidden: false, label: '[getWigDistance]
+    PNG output File', model_class: ToolOutput, name: outputFile}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

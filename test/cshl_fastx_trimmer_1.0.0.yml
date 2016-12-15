@@ -1,0 +1,35 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.g2.bx.psu.edu/repos/devteam/fastx_trimmer/d77c9c6ecf68/fastx_trimmer/fastx_trimmer.xml
+description: ''
+id: toolshed.g2.bx.psu.edu/repos/devteam/fastx_trimmer/cshl_fastx_trimmer/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_1929, format_1933, format_1932]
+  extensions: [fasta, fastqsolexa, fastqsanger]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Library to clip
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22first%22%20size%3D%224%22%20value%3D%221%22%3E',
+  is_dynamic: false, label: First base to keep, max: null, min: null, model_class: IntegerToolParameter,
+  name: first, optional: false, size: '4', type: integer, value: '1'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22last%22%20size%3D%224%22%20value%3D%2221%22%3E',
+  is_dynamic: false, label: Last base to keep, max: null, min: null, model_class: IntegerToolParameter,
+  name: last, optional: false, size: '4', type: integer, value: '21'}
+link: /tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Fdevteam%2Ffastx_trimmer%2Fcshl_fastx_trimmer%2F1.0.0
+min_width: -1
+model_class: Tool
+name: Trim sequences
+outputs:
+- {format: input, hidden: false, label: '', model_class: ToolOutput, name: output}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: 1.0.0

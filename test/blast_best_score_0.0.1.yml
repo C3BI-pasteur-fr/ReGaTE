@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/pgp_tools/56cc9a712e77/pgp_tools/best_score_blast.xml
+description: Returns the list best hits from a list of BLAST results.
+id: toolshed.pasteur.fr/repos/odoppelt/pgp_tools/blast_best_score/0.0.1
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: blast results file
+  model_class: DataToolParameter
+  multiple: false
+  name: input_blast
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Fpgp_tools%2Fblast_best_score%2F0.0.1
+min_width: -1
+model_class: Tool
+name: blast_best_score
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${input_blast.name}.best_score',
+  model_class: ToolOutput, name: output}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: 0.0.1

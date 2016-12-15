@@ -1,0 +1,123 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "bam2fastq-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "1.1.0", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/screno/bam2fastq/bam2fastq/1.1.0", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "fastqsanger", 
+                    "dataDescription": "output_single", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "fastqsanger", 
+                    "dataDescription": "output1", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "fastqsanger", 
+                    "dataDescription": "output2", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "extract reads from a bam file and write them in fastq format", 
+            "input": [
+                {
+                    "dataHandle": "input_bam", 
+                    "dataDescription": "Bam dataset from your history", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Extract reads from a bam file and write them in fastq format.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/screno/bam2fastq/bam2fastq/1.1.0", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/screno/bam2fastq/bam2fastq/1.1.0\"", 
+            "usesVersion": "1.1.0"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "bam2fastq-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "1.1.0", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

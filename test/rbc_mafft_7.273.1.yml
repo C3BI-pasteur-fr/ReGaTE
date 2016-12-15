@@ -1,0 +1,240 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/mafft/2a3bfd5fb815/mafft/mafft.xml
+description: Multiple alignment program for amino acid or nucleotide sequences
+id: toolshed.pasteur.fr/repos/fmareuil/mafft/rbc_mafft/7.273.1
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: Amino acid or nucleotide sequences in FASTA format.
+  hidden: false
+  is_dynamic: false
+  label: Sequences to align
+  model_class: DataToolParameter
+  multiple: false
+  name: inputSequences
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22datatype%22%3E%0A%3Coption%20value%3D%22%22%3EAuto%20detection%3C/option%3E%0A%3Coption%20value%3D%22--nuc%22%3ENucleic%20acids%3C/option%3E%0A%3Coption%20value%3D%22--amino%22%3EAmino%20acids%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Data type
+  model_class: SelectToolParameter
+  multiple: false
+  name: datatype
+  optional: false
+  options:
+  - [Auto detection, '', false]
+  - [Nucleic acids, --nuc, false]
+  - [Amino acids, --amino, false]
+  type: select
+  value: ''
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: mafft-fftns
+  - inputs: []
+    model_class: ConditionalWhen
+    value: mafft --auto
+  - inputs: []
+    model_class: ConditionalWhen
+    value: mafft-fftnsi
+  - inputs: []
+    model_class: ConditionalWhen
+    value: mafft-nwns
+  - inputs: []
+    model_class: ConditionalWhen
+    value: mafft-nwnsi
+  - inputs: []
+    model_class: ConditionalWhen
+    value: mafft-einsi
+  - inputs: []
+    model_class: ConditionalWhen
+    value: mafft-ginsi
+  - inputs: []
+    model_class: ConditionalWhen
+    value: mafft-linsi
+  - inputs: []
+    model_class: ConditionalWhen
+    value: mafft-qinsi
+  - inputs: []
+    model_class: ConditionalWhen
+    value: mafft-xinsi
+  - inputs:
+    - argument: null
+      display: radio
+      help: Distance method must be chosen regarding your data
+      hidden: false
+      html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22distance_method%22%20value%3D%22--6merpair%22%20id%3D%22distance_method%7C--6merpair%22%20checked%3D%27checked%27%3E%3Clabel%20class%3D%22inline%22%20for%3D%22distance_method%7C--6merpair%22%3EShared%206mers%20distance%20%28fastest%29%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22distance_method%22%20value%3D%22--globalpair%22%20id%3D%22distance_method%7C--globalpair%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22distance_method%7C--globalpair%22%3EGlobal%20alignment%20%28Needleman-Wunsch%29%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22distance_method%22%20value%3D%22--localpair%22%20id%3D%22distance_method%7C--localpair%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22distance_method%7C--localpair%22%3ELocal%20alignment%20%28Smith-Waterman%29%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22distance_method%22%20value%3D%22--genafpair%22%20id%3D%22distance_method%7C--genafpair%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22distance_method%7C--genafpair%22%3ELocal%2C%20affine%20gap%20cost%3C/label%3E%3C/div%3E'
+      is_dynamic: false
+      label: Distance method
+      model_class: SelectToolParameter
+      multiple: false
+      name: distance_method
+      optional: false
+      options:
+      - [Shared 6mers distance (fastest), --6merpair, true]
+      - [Global alignment (Needleman-Wunsch), --globalpair, false]
+      - [Local alignment (Smith-Waterman), --localpair, false]
+      - ['Local, affine gap cost', --genafpair, false]
+      type: select
+      value: --6merpair
+    - {area: false, argument: null, help: Valid with 6mer distance, hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22retree%22%20size%3D%2210%22%20value%3D%222%22%3E',
+      is_dynamic: false, label: Guide tree is built this number of times in the progressive
+        stage., max: 100, min: 1, model_class: IntegerToolParameter, name: retree,
+      optional: false, size: null, type: integer, value: '2'}
+    - {area: false, argument: null, help: 1000 for maximum quality, hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22iterations%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Maximum number of iterations, max: 1000, min: 0, model_class: IntegerToolParameter,
+      name: iterations, optional: false, size: null, type: integer, value: '0'}
+    model_class: ConditionalWhen
+    value: custom
+  model_class: Conditional
+  name: cond_flavour
+  test_param:
+    argument: null
+    display: null
+    help: Run mafft with pre-defined input parameters. Specification of these parameters
+      can be found in the help section.
+    hidden: false
+    html: '%3Cselect%20name%3D%22flavourType%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22mafft-fftns%22%3E%0A%3Coption%20value%3D%22mafft%20--auto%22%3Eauto%3C/option%3E%0A%3Coption%20value%3D%22mafft-fftns%22%20selected%3Efftns%3C/option%3E%0A%3Coption%20value%3D%22mafft-fftnsi%22%3Efftnsi%3C/option%3E%0A%3Coption%20value%3D%22mafft-nwns%22%3Enwns%3C/option%3E%0A%3Coption%20value%3D%22mafft-nwnsi%22%3Enwnsi%3C/option%3E%0A%3Coption%20value%3D%22mafft-einsi%22%3Eeinsi%3C/option%3E%0A%3Coption%20value%3D%22mafft-ginsi%22%3Eginsi%3C/option%3E%0A%3Coption%20value%3D%22mafft-linsi%22%3Elinsi%3C/option%3E%0A%3Coption%20value%3D%22mafft-qinsi%22%3Eqinsi%3C/option%3E%0A%3Coption%20value%3D%22mafft-xinsi%22%3Exinsi%3C/option%3E%0A%3Coption%20value%3D%22custom%22%3ECustom%20Parameters%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: MAFFT flavour
+    model_class: SelectToolParameter
+    multiple: false
+    name: flavourType
+    optional: false
+    options:
+    - [auto, mafft --auto, false]
+    - [fftns, mafft-fftns, true]
+    - [fftnsi, mafft-fftnsi, false]
+    - [nwns, mafft-nwns, false]
+    - [nwnsi, mafft-nwnsi, false]
+    - [einsi, mafft-einsi, false]
+    - [ginsi, mafft-ginsi, false]
+    - [linsi, mafft-linsi, false]
+    - [qinsi, mafft-qinsi, false]
+    - [xinsi, mafft-xinsi, false]
+    - [Custom Parameters, custom, false]
+    type: select
+    value: mafft-fftns
+  type: conditional
+- {area: false, argument: null, help: 'Offset value, which works like gap extension
+    penalty, for group-to-group alignment. For E-INS-i, 0 is recommended to allow
+    large gaps', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22ep%22%20size%3D%2210%22%20value%3D%220.123%22%3E',
+  is_dynamic: false, label: Gap extend penalty, max: null, min: null, model_class: FloatToolParameter,
+  name: ep, optional: false, size: null, type: float, value: '0.123'}
+- {area: false, argument: null, help: 1.53 default value, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22op%22%20size%3D%2210%22%20value%3D%221.53%22%3E',
+  is_dynamic: false, label: Gap opening penalty, max: null, min: null, model_class: FloatToolParameter,
+  name: op, optional: false, size: null, type: float, value: '1.53'}
+- argument: null
+  display: radio
+  help: Generate reverse complement sequences, as necessary, and align them together
+    with the remaining sequences
+  hidden: false
+  html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22adjustdirection%22%20value%3D%22--adjustdirection%22%20id%3D%22adjustdirection%7C--adjustdirection%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22adjustdirection%7C--adjustdirection%22%3Eadjust%20direction%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22adjustdirection%22%20value%3D%22%20%22%20id%3D%22adjustdirection%7C%20%22%20checked%3D%27checked%27%3E%3Clabel%20class%3D%22inline%22%20for%3D%22adjustdirection%7C%20%22%3Edo%20not%20adjust%20direction%3C/label%3E%3C/div%3E'
+  is_dynamic: false
+  label: Direction of nucleotide sequences
+  model_class: SelectToolParameter
+  multiple: false
+  name: adjustdirection
+  optional: false
+  options:
+  - [adjust direction, --adjustdirection, false]
+  - [do not adjust direction, ' ', true]
+  type: select
+  value: ' '
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: ''
+  - inputs:
+    - argument: null
+      display: radio
+      help: ''
+      hidden: false
+      html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22BLOSUM%22%20value%3D%2230%22%20id%3D%22BLOSUM%7C30%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22BLOSUM%7C30%22%3E30%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22BLOSUM%22%20value%3D%2245%22%20id%3D%22BLOSUM%7C45%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22BLOSUM%7C45%22%3E45%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22BLOSUM%22%20value%3D%2262%22%20id%3D%22BLOSUM%7C62%22%20checked%3D%27checked%27%3E%3Clabel%20class%3D%22inline%22%20for%3D%22BLOSUM%7C62%22%3E62%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22BLOSUM%22%20value%3D%2280%22%20id%3D%22BLOSUM%7C80%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22BLOSUM%7C80%22%3E80%3C/label%3E%3C/div%3E'
+      is_dynamic: false
+      label: Coefficient of the BLOSUM matrix
+      model_class: SelectToolParameter
+      multiple: false
+      name: BLOSUM
+      optional: false
+      options:
+      - ['30', '30', false]
+      - ['45', '45', false]
+      - ['62', '62', true]
+      - ['80', '80', false]
+      type: select
+      value: '62'
+    model_class: ConditionalWhen
+    value: BLOSUM
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22PAM%22%20size%3D%2210%22%20value%3D%2280%22%3E',
+      is_dynamic: false, label: Coefficient of the PAM matrix, max: 350, min: 1, model_class: IntegerToolParameter,
+      name: PAM, optional: false, size: null, type: integer, value: '80'}
+    model_class: ConditionalWhen
+    value: PAM
+  model_class: Conditional
+  name: matrix_condition
+  test_param:
+    argument: null
+    display: radio
+    help: Usefull only for amino acids
+    hidden: false
+    html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22matrix%22%20refresh_on_change%3D%22true%22%20value%3D%22%22%20id%3D%22matrix%7C%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22matrix%7C%22%3ENo%20matrix%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22matrix%22%20refresh_on_change%3D%22true%22%20value%3D%22BLOSUM%22%20id%3D%22matrix%7CBLOSUM%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22matrix%7CBLOSUM%22%3EBLOSUM%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22matrix%22%20refresh_on_change%3D%22true%22%20value%3D%22PAM%22%20id%3D%22matrix%7CPAM%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22matrix%7CPAM%22%3EPAM%3C/label%3E%3C/div%3E'
+    is_dynamic: false
+    label: Matrix selection
+    model_class: SelectToolParameter
+    multiple: false
+    name: matrix
+    optional: false
+    options:
+    - [No matrix, '', false]
+    - [BLOSUM, BLOSUM, false]
+    - [PAM, PAM, false]
+    type: select
+    value: ''
+  type: conditional
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22reorder%22%20name%3D%22reorder%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22reorder%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'Reorder output?', model_class: BooleanToolParameter,
+  name: reorder, optional: false, truevalue: --reorder, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22getTree%22%20name%3D%22getTree%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22getTree%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'Display alignment tree ?', model_class: BooleanToolParameter,
+  name: getTree, optional: false, truevalue: --treeout, type: boolean, value: false}
+- argument: null
+  display: null
+  help: Either FASTA or ClustalW
+  hidden: false
+  html: '%3Cselect%20name%3D%22outputFormat%22%3E%0A%3Coption%20value%3D%22%22%20selected%3EFASTA%3C/option%3E%0A%3Coption%20value%3D%22--clustalout%22%3EClustalW%3C/option%3E%0A%3Coption%20value%3D%22--phylipout%22%3EPhylip%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Output format
+  model_class: SelectToolParameter
+  multiple: false
+  name: outputFormat
+  optional: false
+  options:
+  - [FASTA, '', true]
+  - [ClustalW, --clustalout, false]
+  - [Phylip, --phylipout, false]
+  type: select
+  value: ''
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fmafft%2Frbc_mafft%2F7.273.1
+min_width: -1
+model_class: Tool
+name: MAFFT
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: '${tool.name} on
+    ${on_string}', model_class: ToolOutput, name: outputAlignment}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} Guide
+    Tree', model_class: ToolOutput, name: outputTree}
+panel_section_id: phylogeny
+panel_section_name: Phylogeny
+target: galaxy_main
+version: 7.273.1

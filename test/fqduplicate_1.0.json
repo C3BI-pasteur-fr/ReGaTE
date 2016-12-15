@@ -1,0 +1,135 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "fqduplicate-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "1.0", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/odoppelt/fqtools/fqduplicate/1.0", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "lst", 
+                    "dataDescription": "output", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Detect duplicate reads. Outputs a list of read names corresponding to reads already seen in the dataset with a better quality sum score (duplicates)", 
+            "input": [
+                {
+                    "dataHandle": "input", 
+                    "dataDescription": "Illumina Single-Read fastq dataset from your history", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-illumina", 
+                            "uri": "http://edamontology.org/format_1931"
+                        }, 
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "input1", 
+                    "dataDescription": "Illumina paired-end Read 1 Fastq dataset from your history", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-illumina", 
+                            "uri": "http://edamontology.org/format_1931"
+                        }, 
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "input2", 
+                    "dataDescription": "Illumina paired-end Read 2 Fastq dataset from your history", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-illumina", 
+                            "uri": "http://edamontology.org/format_1931"
+                        }, 
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Detect duplicate reads. Outputs a list of read names corresponding to reads already seen in the dataset with a better quality sum score (duplicates).", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/odoppelt/fqtools/fqduplicate/1.0", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/odoppelt/fqtools/fqduplicate/1.0\"", 
+            "usesVersion": "1.0"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "fqduplicate-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "1.0", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

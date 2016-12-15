@@ -1,0 +1,129 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/rgenetics/rgClustalw.xml
+description: multiple sequence alignment program for DNA or proteins
+id: clustalw
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Fasta File
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22outname%22%20size%3D%2250%22%20value%3D%22Clustal_run%22%3E',
+  is_dynamic: false, label: Name for output files to make it easy to remember what
+    you did, model_class: TextToolParameter, name: outname, optional: false, size: '50',
+  type: text, value: Clustal_run}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22dnarna%22%20last_selected_value%3D%22DNA%22%3E%0A%3Coption%20value%3D%22DNA%22%20selected%3EDNA%20nucleotide%20sequences%3C/option%3E%0A%3Coption%20value%3D%22PROTEIN%22%3EProtein%20sequences%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Data Type
+  model_class: SelectToolParameter
+  multiple: false
+  name: dnarna
+  optional: false
+  options:
+  - [DNA nucleotide sequences, DNA, true]
+  - [Protein sequences, PROTEIN, false]
+  type: select
+  value: DNA
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: fasta
+  - inputs: []
+    model_class: ConditionalWhen
+    value: phylip
+  model_class: Conditional
+  name: outcontrol
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22outform%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22phylip%22%3EPhylip%20format%3C/option%3E%0A%3Coption%20value%3D%22fasta%22%3EFasta%20format%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Output alignment format
+    model_class: SelectToolParameter
+    multiple: false
+    name: outform
+    optional: false
+    options:
+    - [Phylip format, phylip, false]
+    - [Fasta format, fasta, false]
+    type: select
+    value: phylip
+  type: conditional
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22out_order%22%3E%0A%3Coption%20value%3D%22ALIGNED%22%3Ealigned%3C/option%3E%0A%3Coption%20value%3D%22INPUT%22%3Esame%20order%20as%20input%20file%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Output Order
+  model_class: SelectToolParameter
+  multiple: false
+  name: out_order
+  optional: false
+  options:
+  - [aligned, ALIGNED, false]
+  - [same order as input file, INPUT, false]
+  type: select
+  value: ALIGNED
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: complete
+  - inputs:
+    - {area: false, argument: null, help: sequence range to write, hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22seq_range_start%22%20size%3D%225%22%20value%3D%221%22%3E',
+      is_dynamic: false, label: start point, max: null, min: null, model_class: IntegerToolParameter,
+      name: seq_range_start, optional: false, size: '5', type: integer, value: '1'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22seq_range_end%22%20size%3D%225%22%20value%3D%2299999%22%3E',
+      is_dynamic: false, label: end point, max: null, min: null, model_class: IntegerToolParameter,
+      name: seq_range_end, optional: false, size: '5', type: integer, value: '99999'}
+    model_class: ConditionalWhen
+    value: part
+  model_class: Conditional
+  name: range
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22mode%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22complete%22%3Ecomplete%20alignment%3C/option%3E%0A%3Coption%20value%3D%22part%22%3Eonly%20part%20of%20the%20alignment%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Output complete alignment (or specify part to output)
+    model_class: SelectToolParameter
+    multiple: false
+    name: mode
+    optional: false
+    options:
+    - [complete alignment, complete, false]
+    - [only part of the alignment, part, false]
+    type: select
+    value: complete
+  type: conditional
+link: /tool_runner?tool_id=clustalw
+min_width: -1
+model_class: Tool
+name: ClustalW
+outputs:
+- {edam_format: format_2330, format: clustal, hidden: false, label: '${outname}_output.${outcontrol.outform}',
+  model_class: ToolOutput, name: output}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${outname}_clustal_log.txt',
+  model_class: ToolOutput, name: outlog}
+panel_section_id: clustal
+panel_section_name: Multiple Alignments
+target: galaxy_main
+version: '0.1'

@@ -1,0 +1,263 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "meme_meme-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "1.0.0", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=meme_meme", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "html", 
+                    "dataDescription": "html_outfile", 
+                    "data": {
+                        "term": "Report", 
+                        "uri": "http://edamontology.org/data_2048"
+                    }, 
+                    "format": [
+                        {
+                            "term": "HTML", 
+                            "uri": "http://edamontology.org/format_2331"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "txt", 
+                    "dataDescription": "txt_outfile", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "memexml", 
+                    "dataDescription": "xml_outfile", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "XML", 
+                            "uri": "http://edamontology.org/format_2332"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "- Multiple Em for Motif Elicitation", 
+            "input": [
+                {
+                    "dataHandle": "input1", 
+                    "dataDescription": "Sequences", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "plib", 
+                    "dataDescription": "Dirichlet prior file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "plib", 
+                    "dataDescription": "Dirichlet prior file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "plib", 
+                    "dataDescription": "Dirichlet prior file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "plib", 
+                    "dataDescription": "Dirichlet prior file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "plib", 
+                    "dataDescription": "Dirichlet prior file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "plib", 
+                    "dataDescription": "Dirichlet prior file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "plib", 
+                    "dataDescription": "Dirichlet prior file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "plib", 
+                    "dataDescription": "Dirichlet prior file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "bfile", 
+                    "dataDescription": "Background Model", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "pspfile", 
+                    "dataDescription": "Position-Specific Prior", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "- Multiple Em for Motif Elicitation.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://meme_meme", 
+            "usesName": "Toolshed entry for \"meme_meme\"", 
+            "usesVersion": "1.0.0"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "meme_meme-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "1.0.0", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

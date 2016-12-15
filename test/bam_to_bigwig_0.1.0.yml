@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/bam_to_bigwig/955029d0ddeb/bam_to_bigwig/bam_to_bigwig.xml
+description: Calculates coverage from a BAM alignment file
+id: toolshed.pasteur.fr/repos/fmareuil/bam_to_bigwig/bam_to_bigwig/0.1.0
+inputs:
+- argument: null
+  edam_formats: [format_2572]
+  extensions: [bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: BAM alignment file
+  model_class: DataToolParameter
+  multiple: false
+  name: align
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fbam_to_bigwig%2Fbam_to_bigwig%2F0.1.0
+min_width: -1
+model_class: Tool
+name: BAM to BigWig
+outputs:
+- {edam_format: format_3006, format: bigwig, hidden: false, label: '', model_class: ToolOutput,
+  name: out}
+panel_section_id: samtools
+panel_section_name: 'NGS: SAM Tools'
+target: galaxy_main
+version: 0.1.0

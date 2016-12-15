@@ -1,0 +1,174 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/ngs_simulation/ngs_simulation.xml
+description: Illumina runs
+id: ngs_simulation
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: if your genome of interest is not listed - contact Galaxy team
+      hidden: false
+      html: '%3Cselect%20name%3D%22genome%22%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: Select a built-in genome
+      model_class: SelectToolParameter
+      multiple: false
+      name: genome
+      optional: false
+      options: []
+      type: select
+    model_class: ConditionalWhen
+    value: built-in
+  - inputs:
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input genome (FASTA format)
+      model_class: DataToolParameter
+      multiple: false
+      name: input1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: history
+  model_class: Conditional
+  name: in_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22input_type%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22built-in%22%3EBuilt-in%3C/option%3E%0A%3Coption%20value%3D%22history%22%3EHistory%20file%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Use a built-in FASTA file or one from the history?
+    model_class: SelectToolParameter
+    multiple: false
+    name: input_type
+    optional: false
+    options:
+    - [Built-in, built-in, false]
+    - [History file, history, false]
+    type: select
+    value: built-in
+  type: conditional
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read_len%22%20size%3D%2210%22%20value%3D%2276%22%3E',
+  is_dynamic: false, label: Read length, max: null, min: null, model_class: IntegerToolParameter,
+  name: read_len, optional: false, size: null, type: integer, value: '76'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22avg_coverage%22%20size%3D%2210%22%20value%3D%22200%22%3E',
+  is_dynamic: false, label: Average coverage, max: null, min: null, model_class: IntegerToolParameter,
+  name: avg_coverage, optional: false, size: null, type: integer, value: '200'}
+- {area: false, argument: null, help: Quality score if integer 1 or greater; error
+    rate if between 0 and 1, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22error_rate%22%20size%3D%2210%22%20value%3D%220.001%22%3E',
+  is_dynamic: false, label: Error rate or quality score, max: null, min: null, model_class: FloatToolParameter,
+  name: error_rate, optional: false, size: null, type: float, value: '0.001'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22num_sims%22%20size%3D%2210%22%20value%3D%22100%22%3E',
+  is_dynamic: false, label: The number of simulations to run, max: null, min: null,
+  model_class: IntegerToolParameter, name: num_sims, optional: false, size: null,
+  type: integer, value: '100'}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22polymorphism%22%20multiple%3E%0A%3Coption%20value%3D%220.001%22%3E0.001%3C/option%3E%0A%3Coption%20value%3D%220.002%22%3E0.002%3C/option%3E%0A%3Coption%20value%3D%220.003%22%3E0.003%3C/option%3E%0A%3Coption%20value%3D%220.004%22%3E0.004%3C/option%3E%0A%3Coption%20value%3D%220.005%22%3E0.005%3C/option%3E%0A%3Coption%20value%3D%220.006%22%3E0.006%3C/option%3E%0A%3Coption%20value%3D%220.007%22%3E0.007%3C/option%3E%0A%3Coption%20value%3D%220.008%22%3E0.008%3C/option%3E%0A%3Coption%20value%3D%220.009%22%3E0.009%3C/option%3E%0A%3Coption%20value%3D%220.01%22%3E0.01%3C/option%3E%0A%3Coption%20value%3D%220.02%22%3E0.02%3C/option%3E%0A%3Coption%20value%3D%220.03%22%3E0.03%3C/option%3E%0A%3Coption%20value%3D%220.04%22%3E0.04%3C/option%3E%0A%3Coption%20value%3D%220.05%22%3E0.05%3C/option%3E%0A%3Coption%20value%3D%220.06%22%3E0.06%3C/option%3E%0A%3Coption%20value%3D%220.07%22%3E0.07%3C/option%3E%0A%3Coption%20value%3D%220.08%22%3E0.08%3C/option%3E%0A%3Coption%20value%3D%220.09%22%3E0.09%3C/option%3E%0A%3Coption%20value%3D%220.1%22%3E0.1%3C/option%3E%0A%3Coption%20value%3D%220.2%22%3E0.2%3C/option%3E%0A%3Coption%20value%3D%220.3%22%3E0.3%3C/option%3E%0A%3Coption%20value%3D%220.4%22%3E0.4%3C/option%3E%0A%3Coption%20value%3D%220.5%22%3E0.5%3C/option%3E%0A%3Coption%20value%3D%220.6%22%3E0.6%3C/option%3E%0A%3Coption%20value%3D%220.7%22%3E0.7%3C/option%3E%0A%3Coption%20value%3D%220.8%22%3E0.8%3C/option%3E%0A%3Coption%20value%3D%220.9%22%3E0.9%3C/option%3E%0A%3Coption%20value%3D%221.0%22%3E1.0%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Frequency/ies for minor allele
+  model_class: SelectToolParameter
+  multiple: true
+  name: polymorphism
+  optional: true
+  options:
+  - ['0.001', '0.001', false]
+  - ['0.002', '0.002', false]
+  - ['0.003', '0.003', false]
+  - ['0.004', '0.004', false]
+  - ['0.005', '0.005', false]
+  - ['0.006', '0.006', false]
+  - ['0.007', '0.007', false]
+  - ['0.008', '0.008', false]
+  - ['0.009', '0.009', false]
+  - ['0.01', '0.01', false]
+  - ['0.02', '0.02', false]
+  - ['0.03', '0.03', false]
+  - ['0.04', '0.04', false]
+  - ['0.05', '0.05', false]
+  - ['0.06', '0.06', false]
+  - ['0.07', '0.07', false]
+  - ['0.08', '0.08', false]
+  - ['0.09', '0.09', false]
+  - ['0.1', '0.1', false]
+  - ['0.2', '0.2', false]
+  - ['0.3', '0.3', false]
+  - ['0.4', '0.4', false]
+  - ['0.5', '0.5', false]
+  - ['0.6', '0.6', false]
+  - ['0.7', '0.7', false]
+  - ['0.8', '0.8', false]
+  - ['0.9', '0.9', false]
+  - ['1.0', '1.0', false]
+  type: select
+  value: '0.001'
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22detection_thresh%22%20multiple%3E%0A%3Coption%20value%3D%220.001%22%3E0.001%3C/option%3E%0A%3Coption%20value%3D%220.002%22%3E0.002%3C/option%3E%0A%3Coption%20value%3D%220.003%22%3E0.003%3C/option%3E%0A%3Coption%20value%3D%220.004%22%3E0.004%3C/option%3E%0A%3Coption%20value%3D%220.005%22%3E0.005%3C/option%3E%0A%3Coption%20value%3D%220.006%22%3E0.006%3C/option%3E%0A%3Coption%20value%3D%220.007%22%3E0.007%3C/option%3E%0A%3Coption%20value%3D%220.008%22%3E0.008%3C/option%3E%0A%3Coption%20value%3D%220.009%22%3E0.009%3C/option%3E%0A%3Coption%20value%3D%220.01%22%3E0.01%3C/option%3E%0A%3Coption%20value%3D%220.02%22%3E0.02%3C/option%3E%0A%3Coption%20value%3D%220.03%22%3E0.03%3C/option%3E%0A%3Coption%20value%3D%220.04%22%3E0.04%3C/option%3E%0A%3Coption%20value%3D%220.05%22%3E0.05%3C/option%3E%0A%3Coption%20value%3D%220.06%22%3E0.06%3C/option%3E%0A%3Coption%20value%3D%220.07%22%3E0.07%3C/option%3E%0A%3Coption%20value%3D%220.08%22%3E0.08%3C/option%3E%0A%3Coption%20value%3D%220.09%22%3E0.09%3C/option%3E%0A%3Coption%20value%3D%220.1%22%3E0.1%3C/option%3E%0A%3Coption%20value%3D%220.2%22%3E0.2%3C/option%3E%0A%3Coption%20value%3D%220.3%22%3E0.3%3C/option%3E%0A%3Coption%20value%3D%220.4%22%3E0.4%3C/option%3E%0A%3Coption%20value%3D%220.5%22%3E0.5%3C/option%3E%0A%3Coption%20value%3D%220.6%22%3E0.6%3C/option%3E%0A%3Coption%20value%3D%220.7%22%3E0.7%3C/option%3E%0A%3Coption%20value%3D%220.8%22%3E0.8%3C/option%3E%0A%3Coption%20value%3D%220.9%22%3E0.9%3C/option%3E%0A%3Coption%20value%3D%221.0%22%3E1.0%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Detection thresholds
+  model_class: SelectToolParameter
+  multiple: true
+  name: detection_thresh
+  optional: true
+  options:
+  - ['0.001', '0.001', false]
+  - ['0.002', '0.002', false]
+  - ['0.003', '0.003', false]
+  - ['0.004', '0.004', false]
+  - ['0.005', '0.005', false]
+  - ['0.006', '0.006', false]
+  - ['0.007', '0.007', false]
+  - ['0.008', '0.008', false]
+  - ['0.009', '0.009', false]
+  - ['0.01', '0.01', false]
+  - ['0.02', '0.02', false]
+  - ['0.03', '0.03', false]
+  - ['0.04', '0.04', false]
+  - ['0.05', '0.05', false]
+  - ['0.06', '0.06', false]
+  - ['0.07', '0.07', false]
+  - ['0.08', '0.08', false]
+  - ['0.09', '0.09', false]
+  - ['0.1', '0.1', false]
+  - ['0.2', '0.2', false]
+  - ['0.3', '0.3', false]
+  - ['0.4', '0.4', false]
+  - ['0.5', '0.5', false]
+  - ['0.6', '0.6', false]
+  - ['0.7', '0.7', false]
+  - ['0.8', '0.8', false]
+  - ['0.9', '0.9', false]
+  - ['1.0', '1.0', false]
+  type: select
+  value: '0.001'
+- {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22summary_out%22%20name%3D%22summary_out%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22summary_out%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Include a (text) summary file for all the simulations,
+  model_class: BooleanToolParameter, name: summary_out, optional: false, truevalue: 'true',
+  type: boolean, value: true}
+link: /tool_runner?tool_id=ngs_simulation
+min_width: -1
+model_class: Tool
+name: Simulate
+outputs:
+- {edam_format: format_3547, format: png, hidden: false, label: '', model_class: ToolOutput,
+  name: output_png}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '', model_class: ToolOutput,
+  name: output_summary}
+panel_section_id: ngs-simulation
+panel_section_name: 'NGS: Simulation'
+target: galaxy_main
+version: 1.0.0

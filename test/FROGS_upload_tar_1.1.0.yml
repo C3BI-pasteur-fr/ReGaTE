@@ -1,0 +1,20 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/upload_tar/816a64bb7d40/upload_tar/upload_tar.xml
+description: from your computer
+id: toolshed.pasteur.fr/repos/fmareuil/upload_tar/FROGS_upload_tar/1.1.0
+inputs:
+- {argument: null, help: '', hidden: true, html: '%3Cinput%20type%3D%22hidden%22%20name%3D%22async_datasets%22%20value%3D%22None%22%3E',
+  is_dynamic: false, label: '', model_class: HiddenToolParameter, name: async_datasets,
+  optional: false, type: hidden, value: None}
+- {argument: null, help: 'Which format? See help below', hidden: true, html: '%3Cinput%20type%3D%22hidden%22%20name%3D%22file_type%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: File Format, model_class: HiddenToolParameter, name: file_type,
+  optional: false, type: hidden, value: null}
+- {model_class: UploadDataset, name: files, type: upload_dataset}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fupload_tar%2FFROGS_upload_tar%2F1.1.0
+min_width: -1
+model_class: Tool
+name: FROGS Upload archive
+outputs: []
+panel_section_id: getext
+panel_section_name: Get Data
+target: galaxy_main
+version: 1.1.0

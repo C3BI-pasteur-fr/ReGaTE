@@ -1,0 +1,85 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/2f92cb75946c/picard_pasteur_wrapper/picard_AddOrReplaceReadGroups.xml
+description: ''
+id: toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/picard_ARRG/1.56.0
+inputs:
+- argument: null
+  edam_formats: [format_2572, format_2573]
+  extensions: [bam, sam]
+  help: If empty, upload or import a SAM/BAM dataset.
+  hidden: false
+  is_dynamic: false
+  label: SAM/BAM dataset to add or replace read groups in
+  model_class: DataToolParameter
+  multiple: false
+  name: inputFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: The most important read group tag. Galaxy will
+    use a value of '1' if nothing provided., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgid%22%20size%3D%2210%22%20value%3D%221%22%3E',
+  is_dynamic: false, label: Read group ID (ID tag), model_class: TextToolParameter,
+  name: rgid, optional: false, size: null, type: text, value: '1'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgsm%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Read group sample name (SM tag), model_class: TextToolParameter,
+  name: rgsm, optional: false, size: null, type: text, value: ''}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rglb%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Read group library (LB tag), model_class: TextToolParameter,
+  name: rglb, optional: false, size: null, type: text, value: ''}
+- {area: false, argument: null, help: 'illumina, solid, 454, pacbio, helicos', hidden: false,
+  html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgpl%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Read group platform (PL tag), model_class: TextToolParameter,
+  name: rgpl, optional: false, size: null, type: text, value: ''}
+- {area: false, argument: null, help: 'like run barcode, etc.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgpu%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Read group platform unit, model_class: TextToolParameter,
+  name: rgpu, optional: false, size: null, type: text, value: ''}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: preSet
+  - inputs:
+    - {area: false, argument: null, help: Leave set to <null> for default (none),
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgcn%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Read group sequencing center name, model_class: TextToolParameter,
+      name: rgcn, optional: false, size: null, type: text, value: ''}
+    - {area: false, argument: null, help: Leave set to <null> for default (none),
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgds%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Read group description, model_class: TextToolParameter,
+      name: rgds, optional: false, size: null, type: text, value: ''}
+    model_class: ConditionalWhen
+    value: full
+  model_class: Conditional
+  name: readGroupOpts
+  test_param:
+    argument: null
+    display: null
+    help: Allows you to set RGCN and RGDS.
+    hidden: false
+    html: '%3Cselect%20name%3D%22rgOpts%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22preSet%22%3EUse%20pre-set%20defaults%3C/option%3E%0A%3Coption%20value%3D%22full%22%3ESet%20optional%20arguments%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Specify additional (optional) arguments
+    model_class: SelectToolParameter
+    multiple: false
+    name: rgOpts
+    optional: false
+    options:
+    - [Use pre-set defaults, preSet, false]
+    - [Set optional arguments, full, false]
+    type: select
+    value: preSet
+  type: conditional
+- {argument: null, falsevalue: sam, help: Uncheck for sam output, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22outputFormat%22%20name%3D%22outputFormat%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22outputFormat%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Output bam instead of sam, model_class: BooleanToolParameter,
+  name: outputFormat, optional: false, truevalue: bam, type: boolean, value: true}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fpicard_pasteur_wrapper%2Fpicard_ARRG%2F1.56.0
+min_width: -1
+model_class: Tool
+name: Add or Replace Groups
+outputs:
+- {edam_format: format_2572, format: bam, hidden: false, label: '${tool.name} on ${on_string}:
+    ${outputFormat} with read groups replaced', model_class: ToolOutput, name: outFile}
+panel_section_id: ngs:_picard_tools
+panel_section_name: 'NGS: Picard Tools'
+target: galaxy_main
+version: 1.56.0

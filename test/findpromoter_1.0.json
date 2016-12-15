@@ -1,0 +1,109 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "findpromoter-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "1.0", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/promoteur_tools/findpromoter/1.0", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "csv", 
+                    "dataDescription": "output", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "program to search for a promoter motif and optionally, an adapter sequence from a source species on a target species", 
+            "input": [
+                {
+                    "dataHandle": "seq_suffix", 
+                    "dataDescription": "sequences file", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "blast_in", 
+                    "dataDescription": "Blast output of source sequences to target genome (Pairwise text format)", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Program to search for a promoter motif and optionally, an adapter sequence from a source species on a target species.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/promoteur_tools/findpromoter/1.0", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/promoteur_tools/findpromoter/1.0\"", 
+            "usesVersion": "1.0"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "findpromoter-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "1.0", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

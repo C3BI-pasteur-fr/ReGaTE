@@ -1,0 +1,88 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/bedtools_pasteur/02951b8c385e/bedtools_pasteur/intersectBed_bam.xml
+description: ''
+id: toolshed.pasteur.fr/repos/fmareuil/bedtools_pasteur/bedtools_intersectbed_bam/0.1.0
+inputs:
+- argument: null
+  edam_formats: [format_2572]
+  extensions: [bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Which alignments in this BAM file
+  model_class: DataToolParameter
+  multiple: false
+  name: inputA
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3003]
+  extensions: [bed]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: overlap intervals in this BED file?
+  model_class: DataToolParameter
+  multiple: false
+  name: inputB
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: '', help: 'If set, the coverage will be calculated
+    based the spliced intervals only. For BAM files, this inspects the CIGAR N operation
+    to infer the blocks for computing coverage. For BED12 files, this inspects the
+    BlockCount, BlockStarts, and BlockEnds fields (i.e., columns 10,11,12). If this
+    option is not set, coverage will be calculated based on the interval''s START/END
+    coordinates, and would include introns in the case of RNAseq data.', hidden: false,
+  html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22split%22%20name%3D%22split%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22split%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Treat split/spliced BAM or BED12 entries as distinct BED
+    intervals when computing coverage., model_class: BooleanToolParameter, name: split,
+  optional: false, truevalue: -split, type: boolean, value: true}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22strand%22%3E%0A%3Coption%20value%3D%22%22%3EOverlaps%20on%20either%20strand%3C/option%3E%0A%3Coption%20value%3D%22-s%22%3EOnly%20overlaps%20occurring%20on%20the%20%2A%2Asame%2A%2A%20strand.%3C/option%3E%0A%3Coption%20value%3D%22-S%22%3EOnly%20overlaps%20occurring%20on%20the%20%2A%2Aopposite%2A%2A%20strand.%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Calculate coverage based on
+  model_class: SelectToolParameter
+  multiple: false
+  name: strand
+  optional: false
+  options:
+  - [Overlaps on either strand, '', false]
+  - [Only overlaps occurring on the **same** strand., -s, false]
+  - [Only overlaps occurring on the **opposite** strand., -S, false]
+  type: select
+  value: ''
+- {area: false, argument: null, help: 'Alignments are only retained if the overlap
+    with the an interval in the BED file comprises at least this fraction of the BAM
+    alignment''s length.  For example, to require that the overlap affects 50% of
+    the BAM alignment, use 0.50', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fraction%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Minimum overlap required as a fraction of the BAM alignment,
+  model_class: TextToolParameter, name: fraction, optional: true, size: null, type: text,
+  value: null}
+- {argument: null, falsevalue: '', help: 'If set, the overlap between the BAM alignment
+    and the BED interval must affect the above fraction of both the alignment and
+    the BED interval.', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22reciprocal%22%20name%3D%22reciprocal%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22reciprocal%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Require reciprocal overlap., model_class: BooleanToolParameter,
+  name: reciprocal, optional: false, truevalue: -r, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22invert%22%20name%3D%22invert%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22invert%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Report only those alignments that **do not** overlap the
+    BED file., model_class: BooleanToolParameter, name: invert, optional: false, truevalue: -v,
+  type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fbedtools_pasteur%2Fbedtools_intersectbed_bam%2F0.1.0
+min_width: -1
+model_class: Tool
+name: Intersect BAM alignments with intervals in another files
+outputs:
+- {edam_format: format_2572, format: bam, hidden: false, label: 'Intersection of ${inputA.name}
+    and ${inputB.name}', model_class: ToolOutput, name: output}
+panel_section_id: ngs:_bedtools
+panel_section_name: 'NGS: BedTools'
+target: galaxy_main
+version: 0.1.0

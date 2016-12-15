@@ -1,0 +1,209 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/cf3e04ffae51/oneclick_phylogeny/noisy_oneclick/noisy_oneclick.xml
+description: Cleaning aligned sequences
+id: toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/noisy_oneclick/1.5.12.1
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: Fasta format
+  hidden: false
+  is_dynamic: false
+  label: Source file
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: D
+  - inputs: []
+    model_class: ConditionalWhen
+    value: P
+  - inputs: []
+    model_class: ConditionalWhen
+    value: R
+  - inputs:
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [txt]
+      help: Precompute file containning sequence description (dna or protein)
+      hidden: false
+      is_dynamic: false
+      label: Information file
+      model_class: DataToolParameter
+      multiple: false
+      name: input_info
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: cfg
+  model_class: Conditional
+  name: sequence
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22seqtype%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22D%22%3EDNA%3C/option%3E%0A%3Coption%20value%3D%22P%22%3EProtein%3C/option%3E%0A%3Coption%20value%3D%22R%22%3ERNA%3C/option%3E%0A%3Coption%20value%3D%22cfg%22%3EConfig%20file%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Sequence Coding
+    model_class: SelectToolParameter
+    multiple: false
+    name: seqtype
+    optional: false
+    options:
+    - [DNA, D, false]
+    - [Protein, P, false]
+    - [RNA, R, false]
+    - [Config file, cfg, false]
+    type: select
+    value: D
+  type: conditional
+- {area: false, argument: null, help: Columns with a score below FLOAT are removed
+    from the output alignment., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22cutoff%22%20size%3D%2210%22%20value%3D%220.8%22%3E',
+  is_dynamic: false, label: 'cut-off  [ 0-1 ]', max: 1.0, min: 0.0, model_class: FloatToolParameter,
+  name: cutoff, optional: false, size: null, type: float, value: '0.8'}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22distance%22%3E%0A%3Coption%20value%3D%22HAMMING%22%3EHAMMING%3C/option%3E%0A%3Coption%20value%3D%22GTR%22%3EGTR%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Distance methode used by NeighbotNet
+  model_class: SelectToolParameter
+  multiple: false
+  name: distance
+  optional: false
+  options:
+  - [HAMMING, HAMMING, false]
+  - [GTR, GTR, false]
+  type: select
+  value: HAMMING
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: ''
+  - inputs:
+    - argument: null
+      edam_formats: [null]
+      extensions: [text]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: matrix file
+      model_class: DataToolParameter
+      multiple: false
+      name: matrixfile
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: 'true'
+  model_class: Conditional
+  name: usematrix
+  test_param: {argument: null, falsevalue: '', help: default is calculate distances
+      with nnet, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22matrix%22%20name%3D%22matrix%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22matrix%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Use matrix file, model_class: BooleanToolParameter,
+    name: matrix, optional: false, truevalue: 'true', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: ''
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22chars%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Missing chars list, model_class: TextToolParameter,
+      name: chars, optional: false, size: null, type: text, value: null}
+    model_class: ConditionalWhen
+    value: 'true'
+  model_class: Conditional
+  name: missingchar
+  test_param: {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22setmissingchar%22%20name%3D%22setmissingchar%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22setmissingchar%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Set list of missing chars, model_class: BooleanToolParameter,
+    name: setmissingchar, optional: false, truevalue: 'true', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: nnet
+  - inputs: []
+    model_class: ConditionalWhen
+    value: qnet
+  - inputs: []
+    model_class: ConditionalWhen
+    value: all
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22randpermut%22%20size%3D%2210%22%20value%3D%221000%22%3E',
+      is_dynamic: false, label: random permutation, max: null, min: null, model_class: IntegerToolParameter,
+      name: randpermut, optional: false, size: null, type: integer, value: '1000'}
+    model_class: ConditionalWhen
+    value: rand
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22randpermutlist%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Comma-seperated string of INT, model_class: TextToolParameter,
+      name: randpermutlist, optional: false, size: null, type: text, value: null}
+    model_class: ConditionalWhen
+    value: list
+  model_class: Conditional
+  name: orderingmethode
+  test_param:
+    argument: null
+    display: radio
+    help: ''
+    hidden: false
+    html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22ordering%22%20refresh_on_change%3D%22true%22%20value%3D%22nnet%22%20id%3D%22ordering%7Cnnet%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22ordering%7Cnnet%22%3ENeighborNet%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22ordering%22%20refresh_on_change%3D%22true%22%20value%3D%22qnet%22%20id%3D%22ordering%7Cqnet%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22ordering%7Cqnet%22%3EQNet%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22ordering%22%20refresh_on_change%3D%22true%22%20value%3D%22rand%22%20id%3D%22ordering%7Crand%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22ordering%7Crand%22%3ESample%20INT%20random%20permutation%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22ordering%22%20refresh_on_change%3D%22true%22%20value%3D%22list%22%20id%3D%22ordering%7Clist%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22ordering%7Clist%22%3EList%20of%20index%20MSA%20ordering%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22ordering%22%20refresh_on_change%3D%22true%22%20value%3D%22all%22%20id%3D%22ordering%7Call%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22ordering%7Call%22%3EAll%20permutations%3C/label%3E%3C/div%3E'
+    is_dynamic: false
+    label: Choose ordering method
+    model_class: SelectToolParameter
+    multiple: false
+    name: ordering
+    optional: false
+    options:
+    - [NeighborNet, nnet, false]
+    - [QNet, qnet, false]
+    - [Sample INT random permutation, rand, false]
+    - [List of index MSA ordering, list, false]
+    - [All permutations, all, false]
+    type: select
+    value: nnet
+  type: conditional
+- {argument: null, falsevalue: --noconstant, help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22constant%22%20name%3D%22constant%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22constant%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Constant columns in output alignment, model_class: BooleanToolParameter,
+  name: constant, optional: false, truevalue: '', type: boolean, value: true}
+- {argument: null, falsevalue: --nogap, help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22gap%22%20name%3D%22gap%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22gap%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Count gap symbol as character state, model_class: BooleanToolParameter,
+  name: gap, optional: false, truevalue: '', type: boolean, value: true}
+- {area: false, argument: null, help: Calculate a running average over the reliability
+    score of INT columns and use this smoothed values to remove unreliable columns
+    from the MAS.s, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22smooth%22%20size%3D%2210%22%20value%3D%221%22%3E',
+  is_dynamic: false, label: Running average over INT columns, max: 1000, min: 0, model_class: IntegerToolParameter,
+  name: smooth, optional: false, size: null, type: integer, value: '1'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22shuffles%22%20size%3D%2210%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: Perform INT random shuffles per column of the MSA, max: 1000,
+  min: 0, model_class: IntegerToolParameter, name: shuffles, optional: false, size: null,
+  type: integer, value: '0'}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Foneclick_phylogeny%2Fnoisy_oneclick%2F1.5.12.1
+min_width: -1
+model_class: Tool
+name: Noisy OneClick
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: Noisy Cleaned sequencies,
+  model_class: ToolOutput, name: output1}
+- {edam_format: format_3466, format: eps, hidden: false, label: Noisy Cleaned sequencies
+    image, model_class: ToolOutput, name: output2}
+- {edam_format: format_2330, format: txt, hidden: false, label: Noisy Cleaned sequencies
+    information, model_class: ToolOutput, name: output3}
+panel_section_id: oneclick_phylogeny
+panel_section_name: Oneclick Phylogeny
+target: galaxy_main
+version: 1.5.12.1

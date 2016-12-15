@@ -1,0 +1,165 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "fqCleaner-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.4.1.1", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/odoppelt/fqcleaner/fqCleaner/0.4.1.1", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "fastqsanger", 
+                    "dataDescription": "output", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "fastqsanger", 
+                    "dataDescription": "output2", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "fastqsanger", 
+                    "dataDescription": "output_singlet", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Mini workflow for preprocessing fastq files, it includes quality trimming, duplicate and artefacts filters for FASTQ read files", 
+            "input": [
+                {
+                    "dataHandle": "read1", 
+                    "dataDescription": "Original fastq file from your history", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "read1", 
+                    "dataDescription": "Read 1 fastq dataset from your history", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "read2", 
+                    "dataDescription": "Read 2 fastq dataset from your history", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "ownFile", 
+                    "dataDescription": "Select a contaminant sequence fasta file from history", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Mini workflow for preprocessing fastq files, it includes quality trimming, duplicate and artefacts filters for FASTQ read files.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/odoppelt/fqcleaner/fqCleaner/0.4.1.1", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/odoppelt/fqcleaner/fqCleaner/0.4.1.1\"", 
+            "usesVersion": "0.4.1.1"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "fqCleaner-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.4.1.1", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

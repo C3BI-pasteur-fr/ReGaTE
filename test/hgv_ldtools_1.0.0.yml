@@ -1,0 +1,37 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/phenotype_association/ldtools.xml
+description: linkage disequilibrium and tag SNPs
+id: hgv_ldtools
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Dataset
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rsquare%22%20size%3D%2210%22%20value%3D%220.64%22%3E',
+  is_dynamic: false, label: r<sup>2</sup> threshold, max: null, min: null, model_class: FloatToolParameter,
+  name: rsquare, optional: false, size: null, type: float, value: '0.64'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22freq%22%20size%3D%2210%22%20value%3D%220.00%22%3E',
+  is_dynamic: false, label: Minimum allele frequency threshold, max: null, min: null,
+  model_class: FloatToolParameter, name: freq, optional: false, size: null, type: float,
+  value: '0.00'}
+link: /tool_runner?tool_id=hgv_ldtools
+min_width: -1
+model_class: Tool
+name: LD
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+panel_section_id: hgv
+panel_section_name: Phenotype Association
+target: galaxy_main
+version: 1.0.0

@@ -1,0 +1,210 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/breseq/12d6e3745b2e/breseq/breseq_bam2cov.xml
+description: Create a coverage plot or table for the specified region
+id: toolshed.pasteur.fr/repos/mvalade/breseq/breseq_bam2cov/0.26
+inputs:
+- argument: null
+  edam_formats: [format_2572]
+  extensions: [bam]
+  help: BAM database file
+  hidden: false
+  is_dynamic: false
+  label: bam_path
+  model_class: DataToolParameter
+  multiple: false
+  name: bam_path
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: FASTA file
+  hidden: false
+  is_dynamic: false
+  label: fasta_path
+  model_class: DataToolParameter
+  multiple: false
+  name: fasta_path
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- default: 1
+  help: null
+  inputs:
+  - {area: false, argument: null, help: 'Regions to create alignments for. Must be
+      provided as sequence regions in the format ACCESSION:START-END, where ACCESSION
+      is a valid identifier for one of the sequences in the FASTA file, and START
+      and END are 1-indexed coordinates of the beginning and end positions. Any read
+      overlapping these positions will be shown. A separate output file is created
+      for each region. Regions may be provided at the end of the command line as unnamed
+      arguments', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22accession%22%20size%3D%2210%22%20value%3D%22%22%3E',
+    is_dynamic: false, label: ACCESSION is a valid identifier for one of the sequences
+      in the FASTA file, model_class: TextToolParameter, name: accession, optional: false,
+    size: null, type: text, value: null}
+  - {area: false, argument: null, help: 'Regions to create alignments for. Must be
+      provided as sequence regions in the format ACCESSION:START-END, where ACCESSION
+      is a valid identifier for one of the sequences in the FASTA file, and START
+      and END are 1-indexed coordinates of the beginning and end positions. Any read
+      overlapping these positions will be shown. A separate output file is created
+      for each region. Regions may be provided at the end of the command line as unnamed
+      arguments', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22start%22%20size%3D%2210%22%20value%3D%221%22%3E',
+    is_dynamic: false, label: START and END are 1-indexed coordinates of the beginning
+      and end positions., max: null, min: 1, model_class: IntegerToolParameter, name: start,
+    optional: false, size: null, type: integer, value: '1'}
+  - {area: false, argument: null, help: 'Regions to create alignments for. Must be
+      provided as sequence regions in the format ACCESSION:START-END, where ACCESSION
+      is a valid identifier for one of the sequences in the FASTA file, and START
+      and END are 1-indexed coordinates of the beginning and end positions. Any read
+      overlapping these positions will be shown. A separate output file is created
+      for each region. Regions may be provided at the end of the command line as unnamed
+      arguments', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22end%22%20size%3D%2210%22%20value%3D%221%22%3E',
+    is_dynamic: false, label: START and END are 1-indexed coordinates of the beginning
+      and end positions., max: null, min: 1, model_class: IntegerToolParameter, name: end,
+    optional: false, size: null, type: integer, value: '1'}
+  max: __Infinity__
+  min: 1
+  model_class: Repeat
+  name: nb_regions
+  title: Alignment regions number
+  type: repeat
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: PNG
+  - inputs: []
+    model_class: ConditionalWhen
+    value: PDF
+  - inputs: []
+    model_class: ConditionalWhen
+    value: tab
+  model_class: Conditional
+  name: outputformat
+  test_param:
+    argument: null
+    display: null
+    help: 'Format of output plot(s): PNG or PDF (DEFAULT=PNG) or create tab-delimited
+      file of coverage instead of a plot'
+    hidden: false
+    html: '%3Cselect%20name%3D%22format_mode%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22PNG%22%3E%0A%3Coption%20value%3D%22PNG%22%20selected%3EPNG%3C/option%3E%0A%3Coption%20value%3D%22PDF%22%3EPDF%3C/option%3E%0A%3Coption%20value%3D%22tab%22%3ETable%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Output's file format
+    model_class: SelectToolParameter
+    multiple: false
+    name: format_mode
+    optional: false
+    options:
+    - [PNG, PNG, true]
+    - [PDF, PDF, false]
+    - [Table, tab, false]
+    type: select
+    value: PNG
+  type: conditional
+- {argument: null, falsevalue: '', help: 'Only plot/tabulate the total coverage at
+    a position. That is, do not output the coverage on each genomic strand', hidden: false,
+  html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22total_coverage%22%20name%3D%22total_coverage%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22total_coverage%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Total coverage, model_class: BooleanToolParameter, name: total_coverage,
+  optional: false, truevalue: --total-only, type: boolean, value: false}
+- {area: false, argument: null, help: Number of positions to output coverage information
+    for in interval (0=ALL) (DEFAULT=600), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22resolution%22%20size%3D%2210%22%20value%3D%22600%22%3E',
+  is_dynamic: false, label: Number of positions to output coverage information, max: null,
+  min: 0, model_class: IntegerToolParameter, name: resolution, optional: false, size: null,
+  type: integer, value: '600'}
+- cases:
+  - inputs:
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: 'If the show-average option is provided,
+            then this is a factor that will be multiplied times the average coverage
+            (e.g., 1.5 x avg). Otherwise, this is a coverage value (e.g., 100-fold
+            coverage)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fixed_coverage_factor%22%20size%3D%2210%22%20value%3D%221.5%22%3E',
+          is_dynamic: false, label: Fix the maximum value on plots the coverage scale
+            in plots, max: null, min: 0.0, model_class: FloatToolParameter, name: fixed_coverage_factor,
+          optional: false, size: null, type: float, value: '1.5'}
+        model_class: ConditionalWhen
+        value: 'yes'
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'no'
+      model_class: Conditional
+      name: coverage_factor
+      test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22coverage_factor_mode%22%20name%3D%22coverage_factor_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22coverage_factor_mode%22%20value%3D%22true%22%3E',
+        is_dynamic: false, label: Coverage Mode, model_class: BooleanToolParameter,
+        name: coverage_factor_mode, optional: false, truevalue: 'yes', type: boolean,
+        value: false}
+      type: conditional
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs:
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: 'If the show-average option is provided,
+            then this is a factor that will be multiplied times the average coverage
+            (e.g., 1.5 x avg). Otherwise, this is a coverage value (e.g., 100-fold
+            coverage)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fixed_coverage_value%22%20size%3D%2210%22%20value%3D%22100%22%3E',
+          is_dynamic: false, label: Fix the maximum value on plots the coverage scale
+            in plots, max: null, min: 0, model_class: IntegerToolParameter, name: fixed_coverage_value,
+          optional: false, size: null, type: integer, value: '100'}
+        model_class: ConditionalWhen
+        value: 'yes'
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'no'
+      model_class: Conditional
+      name: coverage_value
+      test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22coverage_value_mode%22%20name%3D%22coverage_value_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22coverage_value_mode%22%20value%3D%22true%22%3E',
+        is_dynamic: false, label: Coverage Mode, model_class: BooleanToolParameter,
+        name: coverage_value_mode, optional: false, truevalue: 'yes', type: boolean,
+        value: false}
+      type: conditional
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: average
+  test_param: {argument: null, falsevalue: 'no', help: Show the average coverage across
+      the reference sequence as a horizontal line. Only possible if used in the main
+      output directory of breseq output, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22average_mode%22%20name%3D%22average_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22average_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Average Mode, model_class: BooleanToolParameter, name: average_mode,
+    optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: 'In tiling mode, the size of each tile that
+        will be output as a separate file', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22tilesize%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: '', max: null, min: 0, model_class: IntegerToolParameter,
+      name: tilesize, optional: false, size: null, type: integer, value: '0'}
+    - {area: false, argument: null, help: 'In tiling mode, overlap between adjacent
+        tiles (1/2 of this value is added to each side of every tile)', hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22tileoverlap%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: '', max: null, min: 0, model_class: IntegerToolParameter,
+      name: tileoverlap, optional: false, size: null, type: integer, value: '0'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: tiling
+  test_param: {argument: null, falsevalue: 'no', help: produce plots that span reference
+      sequences from end to end, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22tiling_mode%22%20name%3D%22tiling_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22tiling_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Tiling Mode, model_class: BooleanToolParameter, name: tiling_mode,
+    optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Fbreseq%2Fbreseq_bam2cov%2F0.26
+min_width: -1
+model_class: Tool
+name: Breseq BAM2COV - v0.26
+outputs:
+- {edam_format: format_3547, format: png, hidden: false, label: '', model_class: ToolOutput,
+  name: report}
+- {edam_format: format_3508, format: pdf, hidden: false, label: '', model_class: ToolOutput,
+  name: report1}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '', model_class: ToolOutput,
+  name: report2}
+panel_section_id: ngs:_snp/indel_annotation
+panel_section_name: 'NGS: SNP/Indel Annotation'
+target: galaxy_main
+version: '0.26'

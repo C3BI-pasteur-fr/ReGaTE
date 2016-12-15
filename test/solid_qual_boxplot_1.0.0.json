@@ -1,0 +1,95 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "solid_qual_boxplot-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "1.0.0", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=solid_qual_boxplot", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "output", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "for SOLiD data", 
+            "input": [
+                {
+                    "dataHandle": "input", 
+                    "dataDescription": "Statistics report file (output of 'Quality Statistics for SOLiD data' tool)", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "For SOLiD data.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://solid_qual_boxplot", 
+            "usesName": "Toolshed entry for \"solid_qual_boxplot\"", 
+            "usesVersion": "1.0.0"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "solid_qual_boxplot-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "1.0.0", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

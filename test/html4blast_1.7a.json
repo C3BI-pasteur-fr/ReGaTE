@@ -1,0 +1,95 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "html4blast-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "1.7a", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/mblastall/html4blast/1.7a", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "html", 
+                    "dataDescription": "output", 
+                    "data": {
+                        "term": "Report", 
+                        "uri": "http://edamontology.org/data_2048"
+                    }, 
+                    "format": [
+                        {
+                            "term": "HTML", 
+                            "uri": "http://edamontology.org/format_2331"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Create a html report from a blast result", 
+            "input": [
+                {
+                    "dataHandle": "input", 
+                    "dataDescription": "Blast result, txt format", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Create a html report from a blast result.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/mblastall/html4blast/1.7a", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/mblastall/html4blast/1.7a\"", 
+            "usesVersion": "1.7a"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "html4blast-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "1.7a", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

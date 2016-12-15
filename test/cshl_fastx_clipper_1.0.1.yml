@@ -1,0 +1,118 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.g2.bx.psu.edu/repos/devteam/fastx_clipper/2fe2d2b9e8e4/fastx_clipper/fastx_clipper.xml
+description: adapter sequences
+id: toolshed.g2.bx.psu.edu/repos/devteam/fastx_clipper/cshl_fastx_clipper/1.0.1
+inputs:
+- argument: null
+  edam_formats: [format_1929, format_1932, format_1933, format_1931]
+  extensions: [fasta, fastqsanger, fastqsolexa, fastqillumina]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Library to clip
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minlength%22%20size%3D%224%22%20value%3D%2215%22%3E',
+  is_dynamic: false, label: 'Minimum sequence length (after clipping, sequences shorter
+    than this length will be discarded)', max: null, min: null, model_class: IntegerToolParameter,
+  name: minlength, optional: false, size: '4', type: integer, value: '15'}
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22clip_sequence%22%20size%3D%2230%22%20value%3D%22AATTGGCC%22%3E',
+      is_dynamic: false, label: Enter custom clipping sequence, model_class: TextToolParameter,
+      name: clip_sequence, optional: false, size: '30', type: text, value: AATTGGCC}
+    model_class: ConditionalWhen
+    value: user
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22clip_sequence%22%3E%0A%3Coption%20value%3D%22TGTAGGCC%22%3EDummy-Adapter%20%28don%27t%20use%20me%29%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: Choose Adapter
+      model_class: SelectToolParameter
+      multiple: false
+      name: clip_sequence
+      optional: false
+      options:
+      - [Dummy-Adapter (don't use me), TGTAGGCC, false]
+      type: select
+      value: TGTAGGCC
+    model_class: ConditionalWhen
+    value: prebuilt
+  model_class: Conditional
+  name: clip_source
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22clip_source_list%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22prebuilt%22%3E%0A%3Coption%20value%3D%22prebuilt%22%20selected%3EStandard%20%28select%20from%20the%20list%20below%29%3C/option%3E%0A%3Coption%20value%3D%22user%22%3EEnter%20custom%20sequence%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Source
+    model_class: SelectToolParameter
+    multiple: false
+    name: clip_source_list
+    optional: false
+    options:
+    - [Standard (select from the list below), prebuilt, true]
+    - [Enter custom sequence, user, false]
+    type: select
+    value: prebuilt
+  type: conditional
+- {area: false, argument: null, help: use this for hairpin barcoding. keep at 0 unless
+    you know what you're doing., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22keepdelta%22%20size%3D%222%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: enter non-zero value to keep the adapter sequence and
+    x bases that follow it, max: null, min: null, model_class: IntegerToolParameter,
+  name: keepdelta, optional: false, size: '2', type: integer, value: '0'}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22KEEP_N%22%3E%0A%3Coption%20value%3D%22%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22-n%22%3ENo%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Discard sequences with unknown (N) bases
+  model_class: SelectToolParameter
+  multiple: false
+  name: KEEP_N
+  optional: false
+  options:
+  - ['Yes', '', false]
+  - ['No', -n, false]
+  type: select
+  value: ''
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22DISCARD_OPTIONS%22%3E%0A%3Coption%20value%3D%22-c%22%3EOutput%20only%20clipped%20sequences%20%28i.e.%20sequences%20which%20contained%20the%20adapter%29%3C/option%3E%0A%3Coption%20value%3D%22-C%22%3EOutput%20only%20non-clipped%20sequences%20%28i.e.%20sequences%20which%20did%20not%20contained%20the%20adapter%29%3C/option%3E%0A%3Coption%20value%3D%22%22%3EOutput%20both%20clipped%20and%20non-clipped%20sequences%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Output options
+  model_class: SelectToolParameter
+  multiple: false
+  name: DISCARD_OPTIONS
+  optional: false
+  options:
+  - [Output only clipped sequences (i.e. sequences which contained the adapter), -c,
+    false]
+  - [Output only non-clipped sequences (i.e. sequences which did not contained the
+      adapter), -C, false]
+  - [Output both clipped and non-clipped sequences, '', false]
+  type: select
+  value: -c
+link: /tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Fdevteam%2Ffastx_clipper%2Fcshl_fastx_clipper%2F1.0.1
+min_width: -1
+model_class: Tool
+name: Clip
+outputs:
+- {format: input, hidden: false, label: '', model_class: ToolOutput, name: output}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: 1.0.1

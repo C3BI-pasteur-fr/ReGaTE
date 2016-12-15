@@ -1,0 +1,31 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/solid_tools/solid_qual_stats.xml
+description: for SOLiD data
+id: solid_qual_stats
+inputs:
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [qualsolid]
+  help: If your dataset doesn't show up in the menu, click the pencil icon next to
+    your dataset and set the datatype to 'qualsolid'
+  hidden: false
+  is_dynamic: false
+  label: SOLiD qual file
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=solid_qual_stats
+min_width: -1
+model_class: Tool
+name: Compute quality statistics
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '', model_class: ToolOutput,
+  name: output1}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: 1.0.0

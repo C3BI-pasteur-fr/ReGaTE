@@ -1,0 +1,169 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "fastme_oneclick-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "2.1.5.1", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/fastme_oneclick/2.1.5.1", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "nwk", 
+                    "dataDescription": "outputTree", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "newick", 
+                            "uri": "http://edamontology.org/format_1910"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "txt", 
+                    "dataDescription": "outputLog", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "nwk", 
+                    "dataDescription": "outputBoostrap", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "newick", 
+                            "uri": "http://edamontology.org/format_1910"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "txt", 
+                    "dataDescription": "outputMatrix", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Distance-based inference of phylogenetic trees", 
+            "input": [
+                {
+                    "dataHandle": "input", 
+                    "dataDescription": "Fastme input", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }, 
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "userInputTree", 
+                    "dataDescription": "Tree file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Format", 
+                            "uri": "http://edamontology.org/format_1915"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "input_info", 
+                    "dataDescription": "Config file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Distance-based inference of phylogenetic trees.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/fastme_oneclick/2.1.5.1", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/fastme_oneclick/2.1.5.1\"", 
+            "usesVersion": "2.1.5.1"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "fastme_oneclick-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "2.1.5.1", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

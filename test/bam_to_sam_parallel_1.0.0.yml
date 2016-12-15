@@ -1,0 +1,39 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/DiffExpAnal/bam_to_sam_parallel.xml
+description: converts a list of BAM format files to SAM format
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/bam_to_sam_parallel/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: BAM File LIST to Convert
+  model_class: DataToolParameter
+  multiple: false
+  name: input1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22header%22%20name%3D%22header%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22header%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Include header in output, model_class: BooleanToolParameter,
+  name: header, optional: false, truevalue: --header, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: This option creates a tar file for all out
+    results., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22tar%22%20name%3D%22tar%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22tar%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: tar option, model_class: BooleanToolParameter, name: tar,
+  optional: false, truevalue: -t, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2Fbam_to_sam_parallel%2F1.0.0
+min_width: -1
+model_class: Tool
+name: BAM to SAM
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: 'converted SAM LIST
+    files ', model_class: ToolOutput, name: output1}
+- {edam_format: format_2330, format: tar, hidden: false, label: '', model_class: ToolOutput,
+  name: outputTarFile}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

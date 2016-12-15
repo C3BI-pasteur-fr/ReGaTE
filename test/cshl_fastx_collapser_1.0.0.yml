@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.g2.bx.psu.edu/repos/devteam/fastx_collapser/13c2d9e8c6d5/fastx_collapser/fastx_collapser.xml
+description: sequences
+id: toolshed.g2.bx.psu.edu/repos/devteam/fastx_collapser/cshl_fastx_collapser/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_1929, format_1932, format_1933]
+  extensions: [fasta, fastqsanger, fastqsolexa]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Library to collapse
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Fdevteam%2Ffastx_collapser%2Fcshl_fastx_collapser%2F1.0.0
+min_width: -1
+model_class: Tool
+name: Collapse
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: 1.0.0

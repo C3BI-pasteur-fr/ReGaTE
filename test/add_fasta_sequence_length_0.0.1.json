@@ -1,0 +1,95 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "add_fasta_sequence_lengt", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.0.1", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/screno/pasteur_fasta_facilities/add_fasta_sequence_length/0.0.1", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "fasta", 
+                    "dataDescription": "output", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Add length of sequence to fasta header", 
+            "input": [
+                {
+                    "dataHandle": "input", 
+                    "dataDescription": "Fasta dataset", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Add length of sequence to fasta header.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/screno/pasteur_fasta_facilities/add_fasta_sequence_length/0.0.1", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/screno/pasteur_fasta_facilities/add_fasta_sequence_length/0.0.1\"", 
+            "usesVersion": "0.0.1"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "add_fasta_sequence_length-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.0.1", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

@@ -1,0 +1,305 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "spades-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "3.9.0", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/spades/spades/3.9.0", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "fasta", 
+                    "dataDescription": "out_contigs", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "tabular", 
+                    "dataDescription": "out_contig_stats", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "fasta", 
+                    "dataDescription": "out_scaffolds", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "tabular", 
+                    "dataDescription": "out_scaffold_stats", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "txt", 
+                    "dataDescription": "out_log", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "SPAdes genome assembler for regular and single-cell projects", 
+            "input": [
+                {
+                    "dataHandle": "fwd_reads", 
+                    "dataDescription": "Forward reads", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "rev_reads", 
+                    "dataDescription": "Reverse reads", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "interleaved_reads", 
+                    "dataDescription": "Interleaved paired reads", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "unpaired_reads", 
+                    "dataDescription": "Unpaired reads", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "pacbio_reads", 
+                    "dataDescription": "PacBio CLR reads.", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "nanopore_reads", 
+                    "dataDescription": "Nanopore reads.", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "sanger_reads", 
+                    "dataDescription": "Sanger reads", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "sanger_reads", 
+                    "dataDescription": "Sanger reads", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "trusted_contigs", 
+                    "dataDescription": "Trusted contigs", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "trusted_contigs", 
+                    "dataDescription": "Trusted contigs", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "untrusted_contigs", 
+                    "dataDescription": "Untrusted contigs", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "untrusted_contigs", 
+                    "dataDescription": "Untrusted contigs", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "SPAdes genome assembler for regular and single-cell projects.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/spades/spades/3.9.0", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/spades/spades/3.9.0\"", 
+            "usesVersion": "3.9.0"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "spades-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "3.9.0", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

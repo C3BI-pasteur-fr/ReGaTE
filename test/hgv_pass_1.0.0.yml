@@ -1,0 +1,43 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/phenotype_association/pass.xml
+description: significant transcription factor binding sites from ChIP data
+id: hgv_pass
+inputs:
+- argument: null
+  edam_formats: [format_2305]
+  extensions: [gff]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Dataset
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_window%22%20size%3D%2210%22%20value%3D%222%22%3E',
+  is_dynamic: false, label: 'Smallest window size (by # of probes)', max: null, min: null,
+  model_class: IntegerToolParameter, name: min_window, optional: false, size: null,
+  type: integer, value: '2'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_window%22%20size%3D%2210%22%20value%3D%226%22%3E',
+  is_dynamic: false, label: 'Largest window size (by # of probes)', max: null, min: null,
+  model_class: IntegerToolParameter, name: max_window, optional: false, size: null,
+  type: integer, value: '6'}
+- {area: false, argument: null, help: 'N.B.: this is a <em>count</em>, not a rate.',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22false_num%22%20size%3D%2210%22%20value%3D%225.0%22%3E',
+  is_dynamic: false, label: Expected total number of false positive intervals to be
+    called, max: null, min: null, model_class: FloatToolParameter, name: false_num,
+  optional: false, size: null, type: float, value: '5.0'}
+link: /tool_runner?tool_id=hgv_pass
+min_width: -1
+model_class: Tool
+name: PASS
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+panel_section_id: hgv
+panel_section_name: Phenotype Association
+target: galaxy_main
+version: 1.0.0

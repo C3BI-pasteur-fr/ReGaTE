@@ -1,0 +1,45 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/afelten/microbiome_analyses/cacc5a90438f/microbiome_analyses/Indices_diversity.xml
+description: Compute Chao, Simpson and Shannon values from Sabund and Rabund files
+id: toolshed.pasteur.fr/repos/afelten/microbiome_analyses/Indices_diversity/0.1 beta
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Sabund file
+  model_class: DataToolParameter
+  multiple: false
+  name: Sabund
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Rabund file
+  model_class: DataToolParameter
+  multiple: false
+  name: Rabund
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fafelten%2Fmicrobiome_analyses%2FIndices_diversity%2F0.1+beta
+min_width: -1
+model_class: Tool
+name: Chao / Simpson / Shannon
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '$${on_string}: Chao,
+    Simpson, Shannon', model_class: ToolOutput, name: output}
+panel_section_id: microbiome_analysis
+panel_section_name: Microbiome Analysis
+target: galaxy_main
+version: 0.1 beta

@@ -1,0 +1,257 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/genbankconverters/575a15fe88cd/genbankconverters/genbank2gff3.xml
+description: ''
+id: toolshed.pasteur.fr/repos/odoppelt/genbankconverters/genbank2GFF3/0.0.3
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_2330, format_2330]
+      extensions: [gb, gbk]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select a Genbank dataset
+      model_class: DataToolParameter
+      multiple: false
+      name: input_dataset
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: genbank
+  - inputs:
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [embl]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select an EMBL  dataset
+      model_class: DataToolParameter
+      multiple: false
+      name: input_dataset
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: embl
+  - inputs:
+    - argument: null
+      edam_formats: [null]
+      extensions: [uniprot]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select a UniProt dataset
+      model_class: DataToolParameter
+      multiple: false
+      name: input_dataset
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: uniprot
+  model_class: Conditional
+  name: input_format
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22input_format_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22genbank%22%3E%0A%3Coption%20value%3D%22genbank%22%20selected%3EGenbank%3C/option%3E%0A%3Coption%20value%3D%22embl%22%3EEMBL%3C/option%3E%0A%3Coption%20value%3D%22uniprot%22%3EUniProt%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Format of the input dataset(s)
+    model_class: SelectToolParameter
+    multiple: false
+    name: input_format_selector
+    optional: false
+    options:
+    - [Genbank, genbank, true]
+    - [EMBL, embl, false]
+    - [UniProt, uniprot, false]
+    type: select
+    value: genbank
+  type: conditional
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22ethresh%22%20size%3D%2210%22%20value%3D%222%22%3E',
+  is_dynamic: false, label: Error threshold for unflattener. Set this high (>2) to
+    ignore all unflattener errors, max: null, min: null, model_class: IntegerToolParameter,
+  name: ethresh, optional: false, size: null, type: integer, value: '2'}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22summary%22%20name%3D%22summary%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22summary%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Print a summary of the features in each contig, model_class: BooleanToolParameter,
+  name: summary, optional: false, truevalue: --summary, type: boolean, value: false}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: pre_set
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22gff_version%22%20last_selected_value%3D%22--GFF_VERSION%203%22%3E%0A%3Coption%20value%3D%22--GFF_VERSION%203%22%20selected%3E3%3C/option%3E%0A%3Coption%20value%3D%22--GFF_VERSION%202.5%22%3E2.5%3C/option%3E%0A%3Coption%20value%3D%22--GFF_VERSION%202%22%3E2%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Select a GFF version for your output
+      model_class: SelectToolParameter
+      multiple: false
+      name: gff_version
+      optional: false
+      options:
+      - ['3', --GFF_VERSION 3, true]
+      - ['2.5', --GFF_VERSION 2.5, false]
+      - ['2', --GFF_VERSION 2, false]
+      type: select
+      value: --GFF_VERSION 3
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22model%22%20last_selected_value%3D%22--CDS%22%3E%0A%3Coption%20value%3D%22--CDS%22%20selected%3ECDS-exon%3C/option%3E%0A%3Coption%20value%3D%22--noCDS%22%3Egene-RNA-protein-exon%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Keep CDS-exons (default) or convert to alternate gene-RNA-protein-exon
+      model_class: SelectToolParameter
+      multiple: false
+      name: model
+      optional: false
+      options:
+      - [CDS-exon, --CDS, true]
+      - [gene-RNA-protein-exon, --noCDS, false]
+      type: select
+      value: --CDS
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22noinfer%22%20name%3D%22noinfer%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22noinfer%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Don't infer exon/mRNA subfeatures, model_class: BooleanToolParameter,
+      name: noinfer, optional: false, truevalue: --noinfer, type: boolean, value: false}
+    - argument: null
+      edam_formats: [format_2549]
+      extensions: [obo]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select an OBO ontology dataset to use for feature type mapping (Optional)
+      model_class: DataToolParameter
+      multiple: false
+      name: obo_ontology
+      optional: true
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - default: 0
+      help: null
+      inputs:
+      - argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22val%22%20last_selected_value%3D%22CDS%22%3E%0A%3Coption%20value%3D%22attenuator%22%3Eattenuator%3C/option%3E%0A%3Coption%20value%3D%22C_region%22%3EC_region%3C/option%3E%0A%3Coption%20value%3D%22CAAT_signal%22%3ECAAT_signal%3C/option%3E%0A%3Coption%20value%3D%22CDS%22%20selected%3ECDS%3C/option%3E%0A%3Coption%20value%3D%22D-loop%22%3ED-loop%3C/option%3E%0A%3Coption%20value%3D%22D_segment%22%3ED_segment%3C/option%3E%0A%3Coption%20value%3D%22enhancer%22%3Eenhancer%3C/option%3E%0A%3Coption%20value%3D%22exon%22%3Eexon%3C/option%3E%0A%3Coption%20value%3D%22gap%22%3Egap%3C/option%3E%0A%3Coption%20value%3D%22GC_signal%22%3EGC_signal%3C/option%3E%0A%3Coption%20value%3D%22gene%22%3Egene%3C/option%3E%0A%3Coption%20value%3D%22iDNA%22%3EiDNA%3C/option%3E%0A%3Coption%20value%3D%22intron%22%3Eintron%3C/option%3E%0A%3Coption%20value%3D%22J_segment%22%3EJ_segment%3C/option%3E%0A%3Coption%20value%3D%22LTR%22%3ELTR%3C/option%3E%0A%3Coption%20value%3D%22mat_peptide%22%3Emat_peptide%3C/option%3E%0A%3Coption%20value%3D%22misc_binding%22%3Emisc_binding%3C/option%3E%0A%3Coption%20value%3D%22misc_difference%22%3Emisc_difference%3C/option%3E%0A%3Coption%20value%3D%22misc_feature%22%3Emisc_feature%3C/option%3E%0A%3Coption%20value%3D%22misc_recomb%22%3Emisc_recomb%3C/option%3E%0A%3Coption%20value%3D%22misc_RNA%22%3Emisc_RNA%3C/option%3E%0A%3Coption%20value%3D%22misc_signal%22%3Emisc_signal%3C/option%3E%0A%3Coption%20value%3D%22misc_structure%22%3Emisc_structure%3C/option%3E%0A%3Coption%20value%3D%22mobile_element%22%3Emobile_element%3C/option%3E%0A%3Coption%20value%3D%22modified_base%22%3Emodified_base%3C/option%3E%0A%3Coption%20value%3D%22mRNA%22%3EmRNA%3C/option%3E%0A%3Coption%20value%3D%22ncRNA%22%3EncRNA%3C/option%3E%0A%3Coption%20value%3D%22N_region%22%3EN_region%3C/option%3E%0A%3Coption%20value%3D%22old_sequence%22%3Eold_sequence%3C/option%3E%0A%3Coption%20value%3D%22operon%22%3Eoperon%3C/option%3E%0A%3Coption%20value%3D%22oriT%22%3EoriT%3C/option%3E%0A%3Coption%20value%3D%22polyA_signal%22%3EpolyA_signal%3C/option%3E%0A%3Coption%20value%3D%22polyA_site%22%3EpolyA_site%3C/option%3E%0A%3Coption%20value%3D%22precursor_RNA%22%3Eprecursor_RNA%3C/option%3E%0A%3Coption%20value%3D%22prim_transcript%22%3Eprim_transcript%3C/option%3E%0A%3Coption%20value%3D%22primer_bind%22%3Eprimer_bind%3C/option%3E%0A%3Coption%20value%3D%22promoter%22%3Epromoter%3C/option%3E%0A%3Coption%20value%3D%22protein_bind%22%3Eprotein_bind%3C/option%3E%0A%3Coption%20value%3D%22RBS%22%3ERBS%3C/option%3E%0A%3Coption%20value%3D%22repeat_region%22%3Erepeat_region%3C/option%3E%0A%3Coption%20value%3D%22rep_origin%22%3Erep_origin%3C/option%3E%0A%3Coption%20value%3D%22rRNA%22%3ErRNA%3C/option%3E%0A%3Coption%20value%3D%22S_region%22%3ES_region%3C/option%3E%0A%3Coption%20value%3D%22sig_peptide%22%3Esig_peptide%3C/option%3E%0A%3Coption%20value%3D%22source%22%3Esource%3C/option%3E%0A%3Coption%20value%3D%22stem_loop%22%3Estem_loop%3C/option%3E%0A%3Coption%20value%3D%22STS%22%3ESTS%3C/option%3E%0A%3Coption%20value%3D%22TATA_signal%22%3ETATA_signal%3C/option%3E%0A%3Coption%20value%3D%22terminator%22%3Eterminator%3C/option%3E%0A%3Coption%20value%3D%22tmRNA%22%3EtmRNA%3C/option%3E%0A%3Coption%20value%3D%22transit_peptide%22%3Etransit_peptide%3C/option%3E%0A%3Coption%20value%3D%22tRNA%22%3EtRNA%3C/option%3E%0A%3Coption%20value%3D%22unsure%22%3Eunsure%3C/option%3E%0A%3Coption%20value%3D%22V_region%22%3EV_region%3C/option%3E%0A%3Coption%20value%3D%22V_segment%22%3EV_segment%3C/option%3E%0A%3Coption%20value%3D%22variation%22%3Evariation%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Select your feature
+        model_class: SelectToolParameter
+        multiple: false
+        name: val
+        optional: false
+        options:
+        - [attenuator, attenuator, false]
+        - [C_region, C_region, false]
+        - [CAAT_signal, CAAT_signal, false]
+        - [CDS, CDS, true]
+        - [D-loop, D-loop, false]
+        - [D_segment, D_segment, false]
+        - [enhancer, enhancer, false]
+        - [exon, exon, false]
+        - [gap, gap, false]
+        - [GC_signal, GC_signal, false]
+        - [gene, gene, false]
+        - [iDNA, iDNA, false]
+        - [intron, intron, false]
+        - [J_segment, J_segment, false]
+        - [LTR, LTR, false]
+        - [mat_peptide, mat_peptide, false]
+        - [misc_binding, misc_binding, false]
+        - [misc_difference, misc_difference, false]
+        - [misc_feature, misc_feature, false]
+        - [misc_recomb, misc_recomb, false]
+        - [misc_RNA, misc_RNA, false]
+        - [misc_signal, misc_signal, false]
+        - [misc_structure, misc_structure, false]
+        - [mobile_element, mobile_element, false]
+        - [modified_base, modified_base, false]
+        - [mRNA, mRNA, false]
+        - [ncRNA, ncRNA, false]
+        - [N_region, N_region, false]
+        - [old_sequence, old_sequence, false]
+        - [operon, operon, false]
+        - [oriT, oriT, false]
+        - [polyA_signal, polyA_signal, false]
+        - [polyA_site, polyA_site, false]
+        - [precursor_RNA, precursor_RNA, false]
+        - [prim_transcript, prim_transcript, false]
+        - [primer_bind, primer_bind, false]
+        - [promoter, promoter, false]
+        - [protein_bind, protein_bind, false]
+        - [RBS, RBS, false]
+        - [repeat_region, repeat_region, false]
+        - [rep_origin, rep_origin, false]
+        - [rRNA, rRNA, false]
+        - [S_region, S_region, false]
+        - [sig_peptide, sig_peptide, false]
+        - [source, source, false]
+        - [stem_loop, stem_loop, false]
+        - [STS, STS, false]
+        - [TATA_signal, TATA_signal, false]
+        - [terminator, terminator, false]
+        - [tmRNA, tmRNA, false]
+        - [transit_peptide, transit_peptide, false]
+        - [tRNA, tRNA, false]
+        - [unsure, unsure, false]
+        - [V_region, V_region, false]
+        - [V_segment, V_segment, false]
+        - [variation, variation, false]
+        type: select
+        value: CDS
+      max: __Infinity__
+      min: 0
+      model_class: Repeat
+      name: filters
+      title: Genbank feature type(s) to ignore
+      type: repeat
+    model_class: ConditionalWhen
+    value: full
+  model_class: Conditional
+  name: advanced_opts
+  test_param:
+    argument: null
+    display: null
+    help: If you want full control use Full Parameter List
+    hidden: false
+    html: '%3Cselect%20name%3D%22type%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22pre_set%22%3E%0A%3Coption%20value%3D%22pre_set%22%20selected%3ECommonly%20Used%3C/option%3E%0A%3Coption%20value%3D%22full%22%3EFull%20Parameter%20List%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Advanced Options
+    model_class: SelectToolParameter
+    multiple: false
+    name: type
+    optional: false
+    options:
+    - [Commonly Used, pre_set, true]
+    - [Full Parameter List, full, false]
+    type: select
+    value: pre_set
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Fgenbankconverters%2Fgenbank2GFF3%2F0.0.3
+min_width: -1
+model_class: Tool
+name: Genbank/EMBL/UniProt to GFF converter
+outputs:
+- {edam_format: format_1975, format: gff3, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+- {edam_format: format_2330, format: txt, hidden: false, label: '', model_class: ToolOutput,
+  name: out_summary}
+panel_section_id: convert
+panel_section_name: Convert Formats
+target: galaxy_main
+version: 0.0.3

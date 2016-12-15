@@ -1,0 +1,37 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/DiffExpAnal/countNumber_parallel.xml
+description: Calculate the number of reads(annotations) overlapping for each transcript.
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/countNumber_parallel/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Please choose your txt format file (which contains a list of gff3 overlapping
+    results files).
+  model_class: DataToolParameter
+  multiple: false
+  name: inputTxt
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: '', help: This option creates a tar file for all out
+    results, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22tar%22%20name%3D%22tar%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22tar%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: tar option, model_class: BooleanToolParameter, name: tar,
+  optional: false, truevalue: -t, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FcountNumber_parallel%2F1.0.0
+min_width: -1
+model_class: Tool
+name: countNumber_parallel
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: countNumber Output,
+  model_class: ToolOutput, name: outputTxt}
+- {edam_format: format_2330, format: tar, hidden: false, label: '', model_class: ToolOutput,
+  name: outputTarFile}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

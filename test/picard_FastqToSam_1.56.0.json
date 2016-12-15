@@ -1,0 +1,133 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "picard_FastqToSam-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "1.56.0", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/picard_FastqToSam/1.56.0", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "bam", 
+                    "dataDescription": "output_bam", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "creates an unaligned BAM file", 
+            "input": [
+                {
+                    "dataHandle": "input_fastq1", 
+                    "dataDescription": "FASTQ file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }, 
+                        {
+                            "term": "FASTQ-illumina", 
+                            "uri": "http://edamontology.org/format_1931"
+                        }, 
+                        {
+                            "term": "FASTQ-solexa", 
+                            "uri": "http://edamontology.org/format_1933"
+                        }, 
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "input_fastq2", 
+                    "dataDescription": "Second FASTQ of paired end data", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }, 
+                        {
+                            "term": "FASTQ-illumina", 
+                            "uri": "http://edamontology.org/format_1931"
+                        }, 
+                        {
+                            "term": "FASTQ-solexa", 
+                            "uri": "http://edamontology.org/format_1933"
+                        }, 
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Creates an unaligned BAM file.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/picard_FastqToSam/1.56.0", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/picard_FastqToSam/1.56.0\"", 
+            "usesVersion": "1.56.0"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "picard_FastqToSam-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "1.56.0", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

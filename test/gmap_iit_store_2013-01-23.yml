@@ -1,0 +1,275 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/gmap_gsnap/727552d0c045/gmap_gsnap/iit_store.xml
+description: Create a map store for known genes or SNPs
+id: toolshed.pasteur.fr/repos/fmareuil/gmap_gsnap/gmap_iit_store/2013-01-23
+inputs:
+- cases:
+  - inputs:
+    - cases:
+      - inputs:
+        - argument: null
+          edam_formats: [format_3475]
+          extensions: [tabular]
+          help: 'Example: ftp://hgdownload.cse.ucsc.edu/goldenPath/hg18/database/refGene.txt.gz'
+          hidden: false
+          is_dynamic: false
+          label: UCSC refGenes table
+          model_class: DataToolParameter
+          multiple: false
+          name: genes
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        - {area: false, argument: null, help: Note that alignment tracks in UCSC sometimes
+            have an extra column on the left., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22col_skip%22%20size%3D%2210%22%20value%3D%221%22%3E',
+          is_dynamic: false, label: Columns to skip before the id/name column (default
+            1), max: null, min: null, model_class: IntegerToolParameter, name: col_skip,
+          optional: false, size: null, type: integer, value: '1'}
+        model_class: ConditionalWhen
+        value: refGeneTable
+      - inputs:
+        - argument: null
+          edam_formats: [format_2306]
+          extensions: [gtf]
+          help: ''
+          hidden: false
+          is_dynamic: false
+          label: Genes as GTF
+          model_class: DataToolParameter
+          multiple: false
+          name: genes
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        model_class: ConditionalWhen
+        value: gtf
+      - inputs:
+        - argument: null
+          edam_formats: [format_1975]
+          extensions: [gff3]
+          help: ''
+          hidden: false
+          is_dynamic: false
+          label: Genes in GFF3 format
+          model_class: DataToolParameter
+          multiple: false
+          name: genes
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        model_class: ConditionalWhen
+        value: gff3
+      model_class: Conditional
+      name: src
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22src_format%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22refGeneTable%22%3ErefGenes%20table%20from%20UCSC%20table%20browser%3C/option%3E%0A%3Coption%20value%3D%22gtf%22%3EGTF%3C/option%3E%0A%3Coption%20value%3D%22gff3%22%3EGFF3%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Add splice and intron info from
+        model_class: SelectToolParameter
+        multiple: false
+        name: src_format
+        optional: false
+        options:
+        - [refGenes table from UCSC table browser, refGeneTable, false]
+        - [GTF, gtf, false]
+        - [GFF3, gff3, false]
+        type: select
+        value: refGeneTable
+      type: conditional
+    - argument: null
+      display: checkboxes
+      help: ''
+      hidden: false
+      html: '%3Cdiv%20class%3D%22checkUncheckAllPlaceholder%22%20checkbox_name%3D%22maps%22%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22maps%22%20value%3D%22splicesites%22%20id%3D%22maps%7Csplicesites%22%20checked%3D%27checked%27%3E%3Clabel%20class%3D%22inline%22%20for%3D%22maps%7Csplicesites%22%3Esplicesites.iit%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22maps%22%20value%3D%22introns%22%20id%3D%22maps%7Cintrons%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22maps%7Cintrons%22%3Eintrons.iit%3C/label%3E%3C/div%3E'
+      is_dynamic: false
+      label: Add splice and intron info from
+      model_class: SelectToolParameter
+      multiple: true
+      name: maps
+      optional: true
+      options:
+      - [splicesites.iit, splicesites, true]
+      - [introns.iit, introns, false]
+      type: select
+      value: splicesites
+    model_class: ConditionalWhen
+    value: genes
+  - inputs:
+    - cases:
+      - inputs:
+        - argument: null
+          edam_formats: [format_3475]
+          extensions: [tabular]
+          help: 'Example: ftp://hgdownload.cse.ucsc.edu/goldenPath/hg18/database/snp130.txt.gz'
+          hidden: false
+          is_dynamic: false
+          label: UCSC SNPs table
+          model_class: DataToolParameter
+          multiple: false
+          name: snps
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        - argument: null
+          edam_formats: [format_3475]
+          extensions: [tabular]
+          help: 'Example: ftp://hgdownload.cse.ucsc.edu/goldenPath/hg18/database/snp130Exceptions.txt.gz'
+          hidden: false
+          is_dynamic: false
+          label: UCSC SNP Exceptions table
+          model_class: DataToolParameter
+          multiple: false
+          name: snpsex
+          optional: true
+          options:
+            hda: []
+            hdca: []
+          type: data
+        - argument: null
+          display: null
+          help: ''
+          hidden: false
+          html: '%3Cselect%20name%3D%22weight%22%20last_selected_value%3D%221%22%3E%0A%3Coption%20value%3D%221%22%20selected%3E1%20%28High%29%3C/option%3E%0A%3Coption%20value%3D%222%22%3E2%20%28Medium%29%3C/option%3E%0A%3Coption%20value%3D%223%22%3E3%20%28All%29%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Include SNPs with at least Confidence Level
+          model_class: SelectToolParameter
+          multiple: false
+          name: weight
+          optional: false
+          options:
+          - [1 (High), '1', true]
+          - [2 (Medium), '2', false]
+          - [3 (All), '3', false]
+          type: select
+          value: '1'
+        model_class: ConditionalWhen
+        value: snpTable
+      - inputs:
+        - argument: null
+          edam_formats: [format_2330]
+          extensions: [gmap_snps]
+          help: 'Format (3 columns):<B>                     <br>>rs62211261 21:14379270
+            CG                     <br>>rs62211262 21:14379281 CG                     </B>                     <br>Each
+            line must start with a > character, then be followed by an                     identifier
+            (which may have duplicates).  Then there should be the                     chromosomal
+            coordinate of the SNP.  (Coordinates are all 1-based, so                     the
+            first character of a chromosome is number 1.)  Finally, there                     should
+            be the two possible alleles: ( AC AG AT CG CT GT or AN CN GN TN)                     <br>These
+            alleles must correspond to the possible nucleotides on the plus strand
+            of the genome.                       If the one of these two letters does
+            not match the allele in the reference                     sequence, that
+            SNP will be ignored in subsequent processing as a probable error.                     The
+            N stands for any other allele.'
+          hidden: false
+          is_dynamic: false
+          label: GMAP SNPs file
+          model_class: DataToolParameter
+          multiple: false
+          name: snps
+          optional: true
+          options:
+            hda: []
+            hdca: []
+          type: data
+        model_class: ConditionalWhen
+        value: snpFile
+      model_class: Conditional
+      name: src
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22src_format%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22snpTable%22%3EUCSC%20SNP%20Table%3C/option%3E%0A%3Coption%20value%3D%22snpFile%22%3EGMAP%20SNP%20File%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Add SNP info from
+        model_class: SelectToolParameter
+        multiple: false
+        name: src_format
+        optional: false
+        options:
+        - [UCSC SNP Table, snpTable, false]
+        - [GMAP SNP File, snpFile, false]
+        type: select
+        value: snpTable
+      type: conditional
+    model_class: ConditionalWhen
+    value: snps
+  - inputs:
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [gmap_annotation]
+      help: 'Format (2 or columns): <B>                 <br>>label coords optional_tag                 <br>optional_annotation
+        (which may be zero, one, or multiple lines)                 </B>                 <br>Each
+        line must start with a > character, then be followed by an identifier (which
+        may have duplicates).                   <br>Then there should be the chromosomal
+        coordinate range.  (Coordinates are all 1-based, so the first character of
+        a chromosome is number 1.)                   <br>The coords should be of the
+        form                 <br> chr:position                 <br>  chr:startposition..endposition                 <br>The
+        term chr:position is equivalent to chr:position..position.                   <br>If
+        you want to indicate that the interval is on the minus strand or reverse direction,
+        then endposition may be less than startposition.                   '
+      hidden: false
+      is_dynamic: false
+      label: GMAP mapfile
+      model_class: DataToolParameter
+      multiple: false
+      name: annotation
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gmap
+  model_class: Conditional
+  name: map
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22type%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22genes%22%3EIntrons%20and%20Splice%20sites%3C/option%3E%0A%3Coption%20value%3D%22snps%22%3ESNPs%3C/option%3E%0A%3Coption%20value%3D%22gmap%22%3EGMAP%20Annotation%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Make map for
+    model_class: SelectToolParameter
+    multiple: false
+    name: type
+    optional: false
+    options:
+    - [Introns and Splice sites, genes, false]
+    - [SNPs, snps, false]
+    - [GMAP Annotation, gmap, false]
+    type: select
+    value: genes
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fgmap_gsnap%2Fgmap_iit_store%2F2013-01-23
+min_width: -1
+model_class: Tool
+name: GMAP IIT
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}:
+    log', model_class: ToolOutput, name: log}
+- {edam_format: format_2330, format: splicesites.iit, hidden: false, label: '${tool.name}
+    on ${on_string} splicesites.iit', model_class: ToolOutput, name: splicesites_iit}
+- {edam_format: format_2330, format: introns.iit, hidden: false, label: '${tool.name}
+    on ${on_string} introns.iit', model_class: ToolOutput, name: introns_iit}
+- {edam_format: format_2330, format: snps.iit, hidden: false, label: '${tool.name}
+    on ${on_string} snps.iit', model_class: ToolOutput, name: snps_iit}
+- {edam_format: format_2330, format: iit, hidden: false, label: '${tool.name} on ${on_string}
+    map.iit', model_class: ToolOutput, name: map_iit}
+panel_section_id: ngs:_rnaseq_and_short-read_nucleotide
+panel_section_name: 'NGS: RNAseq and short-read Nucleotide'
+target: galaxy_main
+version: '2013-01-23'

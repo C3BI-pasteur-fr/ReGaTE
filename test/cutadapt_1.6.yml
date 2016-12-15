@@ -1,0 +1,528 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/cutadapt_v2/d8402f467458/cutadapt_v2/cutadapt.xml
+description: Remove adapter sequences from Fastq/Fasta
+id: toolshed.pasteur.fr/repos/mvalade/cutadapt_v2/cutadapt/1.6
+inputs:
+- argument: null
+  edam_formats: [format_1930, null, null, null, null]
+  extensions: [fastq, ' fastqsanger', ' fastqillumina', ' fastqsolexa', ' fasta']
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Fastq file to trim
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1930, null, null, null, null]
+      extensions: [fastq, ' fastqsanger', ' fastqillumina', ' fastqsolexa', ' fasta']
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Paired fastq file (NOT trimmed)
+      model_class: DataToolParameter
+      multiple: false
+      name: input2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: 'true'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'false'
+  model_class: Conditional
+  name: paired_end
+  test_param: {argument: null, falsevalue: 'false', help: This option will keep a
+      second file synchronized if you use one of the filtering options that discards
+      reads. It will NOT trim adapters off of the second read. You must run Cutadapt
+      a second time on the output of the first run to trim adapters from both reads
+      (see Cutadapt documentation for details)., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22paired_end_boolean%22%20name%3D%22paired_end_boolean%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22paired_end_boolean%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Track Paired Reads, model_class: BooleanToolParameter,
+    name: paired_end_boolean, optional: false, truevalue: 'true', type: boolean, value: false}
+  type: conditional
+- default: 0
+  help: Sequence of an adapter that was ligated to the 3' end.  The adapter itself
+    and anything that follows is trimmed.
+  inputs:
+  - cases:
+    - inputs:
+      - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22adapter_name%22%20size%3D%2230%22%20value%3D%22%22%3E',
+        is_dynamic: false, label: Enter custom 3' adapter name (Optional), model_class: TextToolParameter,
+        name: adapter_name, optional: false, size: '30', type: text, value: ''}
+      - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22adapter%22%20size%3D%2230%22%20value%3D%22AATTGGCC%22%3E',
+        is_dynamic: false, label: Enter custom 3' adapter sequence, model_class: TextToolParameter,
+        name: adapter, optional: false, size: '30', type: text, value: AATTGGCC}
+      model_class: ConditionalWhen
+      value: user
+    - inputs:
+      - argument: null
+        edam_formats: [format_1929]
+        extensions: [fasta]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: Choose a fasta file with 3' adapter sequences
+        model_class: DataToolParameter
+        multiple: false
+        name: adapter_file
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      model_class: ConditionalWhen
+      value: fasta
+    - inputs:
+      - argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22adapter%22%3E%0A%3Coption%20value%3D%22TGTAGGCC%22%3EDummy-Adapter%20%28do%20not%20use%20me%29%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: true
+        label: Choose 3' adapter
+        model_class: SelectToolParameter
+        multiple: false
+        name: adapter
+        optional: false
+        options:
+        - [Dummy-Adapter (do not use me), TGTAGGCC, false]
+        type: select
+        value: TGTAGGCC
+      model_class: ConditionalWhen
+      value: prebuilt
+    model_class: Conditional
+    name: adapter_source
+    test_param:
+      argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22adapter_source_list%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22prebuilt%22%3E%0A%3Coption%20value%3D%22prebuilt%22%20selected%3EStandard%20%28select%20from%20the%20list%20below%29%3C/option%3E%0A%3Coption%20value%3D%22user%22%3EEnter%20custom%20sequence%3C/option%3E%0A%3Coption%20value%3D%22fasta%22%3EChoose%20a%20fasta%20file%20with%20adapter%20sequences%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Source
+      model_class: SelectToolParameter
+      multiple: false
+      name: adapter_source_list
+      optional: false
+      options:
+      - [Standard (select from the list below), prebuilt, true]
+      - [Enter custom sequence, user, false]
+      - [Choose a fasta file with adapter sequences, fasta, false]
+      type: select
+      value: prebuilt
+    type: conditional
+  max: __Infinity__
+  min: 0
+  model_class: Repeat
+  name: adapters
+  title: 3' Adapters
+  type: repeat
+- default: 0
+  help: Sequence of an adapter that was ligated to the 5' or 3' end.  If the adapter
+    is found within the read or overlapping the 3' end of the read, the behavior is
+    the same as for the -a option. If the adapter overlaps the 5' end (beginning of
+    the read), the initial portion of the read matching the adapter is trimmed, but
+    anything that follows is kept. If multiple -a or -b options are given, only the
+    best matching adapter is trimmed.
+  inputs:
+  - cases:
+    - inputs:
+      - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22anywhere_adapter_name%22%20size%3D%2230%22%20value%3D%22%22%3E',
+        is_dynamic: false, label: Enter custom 5' or 3' adapter name (Optional), model_class: TextToolParameter,
+        name: anywhere_adapter_name, optional: false, size: '30', type: text, value: ''}
+      - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22anywhere_adapter%22%20size%3D%2230%22%20value%3D%22AATTGGCC%22%3E',
+        is_dynamic: false, label: Enter custom 5' or 3' adapter sequence, model_class: TextToolParameter,
+        name: anywhere_adapter, optional: false, size: '30', type: text, value: AATTGGCC}
+      model_class: ConditionalWhen
+      value: user
+    - inputs:
+      - argument: null
+        edam_formats: [format_1929]
+        extensions: [fasta]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: Choose a fasta file with 5' or 3' adapter sequences
+        model_class: DataToolParameter
+        multiple: false
+        name: anywhere_adapter_file
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      model_class: ConditionalWhen
+      value: fasta
+    - inputs:
+      - argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22anywhere_adapter%22%3E%0A%3Coption%20value%3D%22TGTAGGCC%22%3EDummy-Adapter%20%28do%20not%20use%20me%29%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: true
+        label: Choose 5' or 3' adapter
+        model_class: SelectToolParameter
+        multiple: false
+        name: anywhere_adapter
+        optional: false
+        options:
+        - [Dummy-Adapter (do not use me), TGTAGGCC, false]
+        type: select
+        value: TGTAGGCC
+      model_class: ConditionalWhen
+      value: prebuilt
+    model_class: Conditional
+    name: anywhere_adapter_source
+    test_param:
+      argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22anywhere_adapter_source_list%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22prebuilt%22%3E%0A%3Coption%20value%3D%22prebuilt%22%20selected%3EStandard%20%28select%20from%20the%20list%20below%29%3C/option%3E%0A%3Coption%20value%3D%22user%22%3EEnter%20custom%20sequence%3C/option%3E%0A%3Coption%20value%3D%22fasta%22%3EChoose%20a%20fasta%20file%20with%20adapter%20sequences%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Source
+      model_class: SelectToolParameter
+      multiple: false
+      name: anywhere_adapter_source_list
+      optional: false
+      options:
+      - [Standard (select from the list below), prebuilt, true]
+      - [Enter custom sequence, user, false]
+      - [Choose a fasta file with adapter sequences, fasta, false]
+      type: select
+      value: prebuilt
+    type: conditional
+  max: __Infinity__
+  min: 0
+  model_class: Repeat
+  name: anywhere_adapters
+  title: 5' or 3' (Anywhere) Adapters
+  type: repeat
+- default: 0
+  help: Sequence of an adapter that was ligated to the 5' end.  If the adapter sequence
+    starts with the character '^', the adapter is 'anchored'. An anchored adapter
+    must appear in its entirety at the 5' end of the read (it is a prefix of the read).
+    A non-anchored adapter may appear partially at the 5' end, or it may occur within
+    the read. If it is found within a read, the sequence preceding the adapter is
+    also trimmed. In all cases the adapter itself is trimmed.
+  inputs:
+  - cases:
+    - inputs:
+      - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22front_adapter_name%22%20size%3D%2230%22%20value%3D%22%22%3E',
+        is_dynamic: false, label: Enter custom 5' adapter name (Optional), model_class: TextToolParameter,
+        name: front_adapter_name, optional: false, size: '30', type: text, value: ''}
+      - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22front_adapter%22%20size%3D%2230%22%20value%3D%22AATTGGCC%22%3E',
+        is_dynamic: false, label: Enter custom 5' adapter sequence, model_class: TextToolParameter,
+        name: front_adapter, optional: false, size: '30', type: text, value: AATTGGCC}
+      model_class: ConditionalWhen
+      value: user
+    - inputs:
+      - argument: null
+        edam_formats: [format_1929]
+        extensions: [fasta]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: Choose a fasta file with 5' adapter sequences
+        model_class: DataToolParameter
+        multiple: false
+        name: front_adapter_file
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      model_class: ConditionalWhen
+      value: fasta
+    - inputs:
+      - argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22front_adapter%22%3E%0A%3Coption%20value%3D%22TGTAGGCC%22%3EDummy-Adapter%20%28do%20not%20use%20me%29%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: true
+        label: Choose 5' adapter
+        model_class: SelectToolParameter
+        multiple: false
+        name: front_adapter
+        optional: false
+        options:
+        - [Dummy-Adapter (do not use me), TGTAGGCC, false]
+        type: select
+        value: TGTAGGCC
+      model_class: ConditionalWhen
+      value: prebuilt
+    model_class: Conditional
+    name: front_adapter_source
+    test_param:
+      argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22front_adapter_source_list%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22prebuilt%22%3E%0A%3Coption%20value%3D%22prebuilt%22%20selected%3EStandard%20%28select%20from%20the%20list%20below%29%3C/option%3E%0A%3Coption%20value%3D%22user%22%3EEnter%20custom%20sequence%3C/option%3E%0A%3Coption%20value%3D%22fasta%22%3EChoose%20a%20fasta%20file%20with%20adapter%20sequences%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Source
+      model_class: SelectToolParameter
+      multiple: false
+      name: front_adapter_source_list
+      optional: false
+      options:
+      - [Standard (select from the list below), prebuilt, true]
+      - [Enter custom sequence, user, false]
+      - [Choose a fasta file with adapter sequences, fasta, false]
+      type: select
+      value: prebuilt
+    type: conditional
+  max: __Infinity__
+  min: 0
+  model_class: Repeat
+  name: front_adapters
+  title: 5' (Front) Adapters
+  type: repeat
+- {area: false, argument: null, help: Maximum allowed error rate (no. of errors divided
+    by the length of the matching region)., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22error_rate%22%20size%3D%2210%22%20value%3D%220.1%22%3E',
+  is_dynamic: false, label: Maximum error rate, max: 1.0, min: 0.0, model_class: FloatToolParameter,
+  name: error_rate, optional: false, size: null, type: float, value: '0.1'}
+- {argument: null, falsevalue: '', help: 'Do not allow indels in the alignments. That
+    is, allow only mismatches. This option is currently only supported for anchored
+    5'' adapters (''^ADAPTER'') (default: both mismatches and indels are allowed).',
+  hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_indels%22%20name%3D%22no_indels%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_indels%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Do not allow indels (Use ONLY with anchored 5' (front)
+    adapters)., model_class: BooleanToolParameter, name: no_indels, optional: false,
+  truevalue: --no-indels, type: boolean, value: false}
+- {area: false, argument: null, help: Try to remove adapters at most COUNT times.
+    Useful when an adapter gets appended multiple times., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22count%22%20size%3D%2210%22%20value%3D%221%22%3E',
+  is_dynamic: false, label: Match times, max: null, min: 1, model_class: IntegerToolParameter,
+  name: count, optional: false, size: null, type: integer, value: '1'}
+- {area: false, argument: null, help: 'Minimum overlap length. If the overlap between
+    the adapter and the sequence is shorter than LENGTH, the read is not modified.
+    This reduces the number of bases trimmed purely due to short random adapter matches.',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22overlap%22%20size%3D%2210%22%20value%3D%223%22%3E',
+  is_dynamic: false, label: Minimum overlap length, max: null, min: 1, model_class: IntegerToolParameter,
+  name: overlap, optional: false, size: null, type: integer, value: '3'}
+- {argument: null, falsevalue: '', help: Allow 'N's in the read as matches to the
+    adapter., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22match_read_wildcards%22%20name%3D%22match_read_wildcards%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22match_read_wildcards%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Match Read Wildcards, model_class: BooleanToolParameter,
+  name: match_read_wildcards, optional: false, truevalue: --match-read-wildcards,
+  type: boolean, value: false}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: default
+  - inputs:
+    - {argument: null, falsevalue: '', help: Discard reads that contain the adapter
+        instead of trimming them. Use the 'Minimum overlap length' option in order
+        to avoid throwing away too many randomly matching reads!, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22discard%22%20name%3D%22discard%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22discard%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Discard Trimmed Reads, model_class: BooleanToolParameter,
+      name: discard, optional: false, truevalue: --discard, type: boolean, value: false}
+    - {argument: null, falsevalue: '', help: Discard reads that do not contain the
+        adapter., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22discard_untrimmed%22%20name%3D%22discard_untrimmed%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22discard_untrimmed%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Discard Untrimmed Reads, model_class: BooleanToolParameter,
+      name: discard_untrimmed, optional: false, truevalue: --discard-untrimmed, type: boolean,
+      value: false}
+    - {area: false, argument: null, help: 'Discard trimmed reads that are shorter
+        than LENGTH.  Reads that are too short even before adapter removal are also
+        discarded. In colorspace, an initial primer is not counted. Value of 0 means
+        no minimum length.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Minimum length, max: null, min: 0, model_class: IntegerToolParameter,
+      name: min, optional: true, size: null, type: integer, value: '0'}
+    - {area: false, argument: null, help: 'Discard trimmed reads that are longer than
+        LENGTH.  Reads that are too long even before adapter removal are also discarded.
+        In colorspace, an initial primer is not counted. Value of 0 means no maximum
+        length.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Maximum length, max: null, min: 0, model_class: IntegerToolParameter,
+      name: max, optional: true, size: null, type: integer, value: '0'}
+    - {argument: null, falsevalue: '', help: 'Match and redirect reads to output/untrimmed-output
+        as usual, but don''t remove the adapters (default: trim the adapters).', hidden: false,
+      html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_trim%22%20name%3D%22no_trim%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_trim%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Do not trim adapters, model_class: BooleanToolParameter,
+      name: no_trim, optional: false, truevalue: --no-trim, type: boolean, value: false}
+    - {argument: null, falsevalue: '', help: 'Mask adapter bases with ''N'' instead
+        of trimming them (default: trim adapters).', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22mask_adapter%22%20name%3D%22mask_adapter%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22mask_adapter%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Mask Adapters, model_class: BooleanToolParameter,
+      name: mask_adapter, optional: false, truevalue: --mask-adapter, type: boolean,
+      value: false}
+    model_class: ConditionalWhen
+    value: filter
+  model_class: Conditional
+  name: output_filtering_options
+  test_param:
+    argument: null
+    display: null
+    help: Options for filtering processed reads by those that contain the adapter
+      or by minimum or maximum length
+    hidden: false
+    html: '%3Cselect%20name%3D%22output_filtering%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22default%22%3EDefault%20%28no%20filtering%29%3C/option%3E%0A%3Coption%20value%3D%22filter%22%3ESet%20Filters%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Output filtering options
+    model_class: SelectToolParameter
+    multiple: false
+    name: output_filtering
+    optional: false
+    options:
+    - [Default (no filtering), default, false]
+    - [Set Filters, filter, false]
+    type: select
+    value: default
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: default
+  - inputs:
+    - {argument: null, falsevalue: 'false', help: Write information about each read
+        and its adapter matches to a file., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22info_file%22%20name%3D%22info_file%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22info_file%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Info File, model_class: BooleanToolParameter, name: info_file,
+      optional: false, truevalue: 'true', type: boolean, value: false}
+    - {argument: null, falsevalue: 'false', help: 'When the adapter matches in the
+        middle of a read, write the rest (after the adapter) into a file.', hidden: false,
+      html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22rest_file%22%20name%3D%22rest_file%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22rest_file%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Rest of Read, model_class: BooleanToolParameter, name: rest_file,
+      optional: false, truevalue: 'true', type: boolean, value: false}
+    - {argument: null, falsevalue: 'false', help: When the adapter has wildcard bases
+        ('N's) write adapter bases matching wildcard positions to file., hidden: false,
+      html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22wildcard_file%22%20name%3D%22wildcard_file%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22wildcard_file%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Wildcard File, model_class: BooleanToolParameter,
+      name: wildcard_file, optional: false, truevalue: 'true', type: boolean, value: false}
+    - {argument: null, falsevalue: 'false', help: 'Write reads that are too short
+        (according to minimum length specified) to a file. (default: discard reads)',
+      hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22too_short_file%22%20name%3D%22too_short_file%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22too_short_file%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Too Short Reads, model_class: BooleanToolParameter,
+      name: too_short_file, optional: false, truevalue: 'true', type: boolean, value: false}
+    - {argument: null, falsevalue: 'false', help: 'Write reads that are too long (according
+        to maximum length specified) to a file. (default: discard reads)', hidden: false,
+      html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22too_long_file%22%20name%3D%22too_long_file%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22too_long_file%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Too Long Reads, model_class: BooleanToolParameter,
+      name: too_long_file, optional: false, truevalue: 'true', type: boolean, value: false}
+    - {argument: null, falsevalue: 'false', help: 'Write reads that do not contain
+        the adapter to a separate file, instead of writing them to the regular output
+        file.  (default: output to same file as trimmed)', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22untrimmed_file%22%20name%3D%22untrimmed_file%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22untrimmed_file%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Untrimmed Reads, model_class: BooleanToolParameter,
+      name: untrimmed_file, optional: false, truevalue: 'true', type: boolean, value: false}
+    model_class: ConditionalWhen
+    value: additional
+  model_class: Conditional
+  name: output_params
+  test_param:
+    argument: null
+    display: null
+    help: By default all reads will be put in the same file.  However, reads with
+      adapters matching in the middle, unmatched reads, and too-short reads can be
+      saved in separate files.
+    hidden: false
+    html: '%3Cselect%20name%3D%22output_type%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22default%22%3EDefault%3C/option%3E%0A%3Coption%20value%3D%22additional%22%3EAdditional%20output%20files%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Additional output options
+    model_class: SelectToolParameter
+    multiple: false
+    name: output_type
+    optional: false
+    options:
+    - [Default, default, false]
+    - [Additional output files, additional, false]
+    type: select
+    value: default
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: none
+  - inputs:
+    - {area: false, argument: null, help: 'Remove bases from the beginning or end
+        of each read before trimming adapters. If positive, the bases are removed
+        from the beginning of each read. If negative, the bases are removed from the
+        end of each read.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22cut%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Cut bases from reads before adapter trimming, max: null,
+      min: null, model_class: IntegerToolParameter, name: cut, optional: true, size: null,
+      type: integer, value: '0'}
+    - {area: false, argument: null, help: Trim low-quality ends from reads before
+        adapter removal. The algorithm is the same as the one used by BWA (Subtract
+        CUTOFF from all qualities; compute partial sums from all indices to the end
+        of the sequence; cut sequence at the index at which the sum is minimal). Value
+        of 0 means no quality trimming., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22quality_cutoff%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Quality cutoff, max: null, min: 0, model_class: IntegerToolParameter,
+      name: quality_cutoff, optional: true, size: null, type: integer, value: '0'}
+    - {area: false, argument: null, help: Add this prefix to read names, hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22prefix%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Prefix, model_class: TextToolParameter, name: prefix,
+      optional: false, size: null, type: text, value: null}
+    - {area: false, argument: null, help: Add this suffix to read names, hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22suffix%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Suffix, model_class: TextToolParameter, name: suffix,
+      optional: false, size: null, type: text, value: null}
+    - {area: false, argument: null, help: Remove this suffix from read names if present.,
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22strip_suffix%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Strip suffix, model_class: TextToolParameter, name: strip_suffix,
+      optional: false, size: null, type: text, value: null}
+    - {area: false, argument: null, help: 'Search for TAG followed by a decimal number
+        in the name of the read (description/comment field of the FASTA or FASTQ file).
+        Replace the decimal number with the correct length of the trimmed read. For
+        example, use --length-tag ''length='' to search for fields like ''length=123''.',
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22length_tag%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Length Tag, model_class: TextToolParameter, name: length_tag,
+      optional: false, size: null, type: text, value: null}
+    - {argument: null, falsevalue: '', help: Workaround to avoid segmentation faults
+        in BWA, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22zero_cap%22%20name%3D%22zero_cap%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22zero_cap%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Change negative quality values to zero (0), model_class: BooleanToolParameter,
+      name: zero_cap, optional: false, truevalue: --zero-cap, type: boolean, value: false}
+    model_class: ConditionalWhen
+    value: modify
+  model_class: Conditional
+  name: read_modification_params
+  test_param:
+    argument: null
+    display: null
+    help: Various options to trim reads based on quality, modify read names and quality
+      scores
+    hidden: false
+    html: '%3Cselect%20name%3D%22read_modification%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22none%22%3ENo%20Read%20Modifications%3C/option%3E%0A%3Coption%20value%3D%22modify%22%3ESet%20Modification%20Options%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Additional modifications to reads
+    model_class: SelectToolParameter
+    multiple: false
+    name: read_modification
+    optional: false
+    options:
+    - [No Read Modifications, none, false]
+    - [Set Modification Options, modify, false]
+    type: select
+    value: none
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Fcutadapt_v2%2Fcutadapt%2F1.6
+min_width: -1
+model_class: Tool
+name: Cutadapt
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}
+    (Report)', model_class: ToolOutput, name: report}
+- {format: input, hidden: false, label: '${tool.name} on ${on_string} (Reads)', model_class: ToolOutput,
+  name: output}
+- {format: input, hidden: false, label: '${tool.name} on ${on_string} (Paired Reads)',
+  model_class: ToolOutput, name: paired_output}
+- {format: input, hidden: false, label: '${tool.name} on ${on_string} (Rest of Reads)',
+  model_class: ToolOutput, name: rest_output}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}
+    (Wildcard File)', model_class: ToolOutput, name: wild_output}
+- {format: input, hidden: false, label: '${tool.name} on ${on_string} (Too Short Reads)',
+  model_class: ToolOutput, name: too_short_output}
+- {format: input, hidden: false, label: '${tool.name} on ${on_string} (Too Long Reads)',
+  model_class: ToolOutput, name: too_long_output}
+- {format: input, hidden: false, label: '${tool.name} on ${on_string} (Untrimmed Reads)',
+  model_class: ToolOutput, name: untrimmed_output}
+- {format: input, hidden: false, label: '${tool.name} on ${on_string} (Untrimmed Paired
+    Reads)', model_class: ToolOutput, name: untrimmed_paired_output}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}
+    (Info File)', model_class: ToolOutput, name: info_file}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: '1.6'

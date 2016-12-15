@@ -1,0 +1,53 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/screno/ngs_roi2/76a612f15b38/ngs_roi2/roi_sort.xml
+description: Sort ROI file
+id: toolshed.pasteur.fr/repos/screno/ngs_roi2/roi_sort/0.2.2
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [roi]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: ROI file to sort.
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22by%22%3E%0A%3Coption%20value%3D%22position%22%3Eposition%3C/option%3E%0A%3Coption%20value%3D%22text_column%22%3Ecolumn%20as%20text%3C/option%3E%0A%3Coption%20value%3D%22numeric_column%22%3Ecolumn%20as%20number%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Sort by
+  model_class: SelectToolParameter
+  multiple: false
+  name: by
+  optional: false
+  options:
+  - [position, position, false]
+  - [column as text, text_column, false]
+  - [column as number, numeric_column, false]
+  type: select
+  value: position
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22column%22%20size%3D%2210%22%20value%3D%225%22%3E',
+  is_dynamic: false, label: Column to sort by, max: null, min: null, model_class: IntegerToolParameter,
+  name: column, optional: false, size: null, type: integer, value: '5'}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22reverse%22%20name%3D%22reverse%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22reverse%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: reverse, model_class: BooleanToolParameter, name: reverse,
+  optional: false, truevalue: -r, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fscreno%2Fngs_roi2%2Froi_sort%2F0.2.2
+min_width: -1
+model_class: Tool
+name: ROI Sorting
+outputs:
+- {edam_format: format_3475, format: roi, hidden: false, label: '${input.name}_sorted_${by}',
+  model_class: ToolOutput, name: output}
+panel_section_id: ngs:_roi_tools
+panel_section_name: 'NGS: Roi Tools'
+target: galaxy_main
+version: 0.2.2

@@ -1,0 +1,75 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/gdtools/fe6986ae4399/gdtools/gdtools_apply.xml
+description: ''
+id: toolshed.pasteur.fr/repos/mvalade/gdtools/gdtools_apply/0.26
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [gd]
+  help: GenomeDiff file
+  hidden: false
+  is_dynamic: false
+  label: GD input file
+  model_class: DataToolParameter
+  multiple: false
+  name: genomediff_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: 'Output file format (Options: FASTA, GFF3) (DEFAULT=FASTA)'
+  hidden: false
+  html: '%3Cselect%20name%3D%22format%22%20last_selected_value%3D%22FASTA%22%3E%0A%3Coption%20value%3D%22FASTA%22%20selected%3EFASTA%3C/option%3E%0A%3Coption%20value%3D%22GFF3%22%3EGFF3%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Output file format
+  model_class: SelectToolParameter
+  multiple: false
+  name: format
+  optional: false
+  options:
+  - [FASTA, FASTA, true]
+  - [GFF3, GFF3, false]
+  type: select
+  value: FASTA
+- default: 1
+  help: null
+  inputs:
+  - argument: null
+    edam_formats: [format_1915]
+    extensions: [data]
+    help: File containing reference sequences in GenBank, GFF3, or FASTA format. If
+      provided, will validate seq_ids and positions in the GD file using these.  Option
+      may be provided multiple times for multiple files. (OPTIONAL)
+    hidden: false
+    is_dynamic: false
+    label: Reference sequences file
+    model_class: DataToolParameter
+    multiple: false
+    name: reference
+    optional: false
+    options:
+      hda: []
+      hdca: []
+    type: data
+  max: __Infinity__
+  min: 1
+  model_class: Repeat
+  name: condition_number
+  title: Number of conditions
+  type: repeat
+- {argument: null, falsevalue: '', help: Verbose mode, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22verbose%22%20name%3D%22verbose%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22verbose%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Verbose mode, model_class: BooleanToolParameter, name: verbose,
+  optional: false, truevalue: --verbose, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Fgdtools%2Fgdtools_apply%2F0.26
+min_width: -1
+model_class: Tool
+name: gdtools APPLY - v0.26
+outputs:
+- {edam_format: format_3475, format: gd, hidden: false, label: gdtools APPLY FASTA
+    output file, model_class: ToolOutput, name: output}
+panel_section_id: ngs:_snp/indel_annotation
+panel_section_name: 'NGS: SNP/Indel Annotation'
+target: galaxy_main
+version: '0.26'

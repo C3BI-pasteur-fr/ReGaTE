@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.g2.bx.psu.edu/repos/peterjc/samtools_idxstats/d4412c04d7b1/samtools_idxstats/tools/samtools_idxstats/samtools_idxstats.xml
+description: samtools idxstats
+id: toolshed.g2.bx.psu.edu/repos/peterjc/samtools_idxstats/samtools_idxstats/0.0.1
+inputs:
+- argument: null
+  edam_formats: [format_2572]
+  extensions: [bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Input BAM file
+  model_class: DataToolParameter
+  multiple: false
+  name: input_bam
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Fpeterjc%2Fsamtools_idxstats%2Fsamtools_idxstats%2F0.0.1
+min_width: -1
+model_class: Tool
+name: BAM mapping statistics
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: $input_bam.name
+    (idxstats), model_class: ToolOutput, name: out_tabular}
+panel_section_id: samtools
+panel_section_name: 'NGS: SAM Tools'
+target: galaxy_main
+version: 0.0.1

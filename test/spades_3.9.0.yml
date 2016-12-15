@@ -1,0 +1,508 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/spades/ea60b4cd3fbe/spades/spades.xml
+description: SPAdes genome assembler for regular and single-cell projects
+id: toolshed.pasteur.fr/repos/fmareuil/spades/spades/3.9.0
+inputs:
+- {argument: null, falsevalue: '', help: This option is required for MDA (single-cell)
+    data., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22sc%22%20name%3D%22sc%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22sc%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'Single-cell?', model_class: BooleanToolParameter, name: sc,
+  optional: false, truevalue: --sc, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22onlyassembler%22%20name%3D%22onlyassembler%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22onlyassembler%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'Run only assembly? (without read error correction)',
+  model_class: BooleanToolParameter, name: onlyassembler, optional: false, truevalue: --only-assembler,
+  type: boolean, value: false}
+- {argument: null, falsevalue: '', help: "Tries to reduce number of mismatches and\
+    \ short indels. Also runs MismatchCorrector \u2013 a post processing tool, which\
+    \ uses BWA tool (comes with SPAdes).", hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22careful%22%20name%3D%22careful%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22careful%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'Careful correction?', model_class: BooleanToolParameter,
+  name: careful, optional: false, truevalue: --careful, type: boolean, value: true}
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: 'Comma-separated list of k-mer sizes to
+        be used (all values must be odd, less than 128, listed in ascending order,
+        and smaller than the read length). The default value is 21,33,55.', hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22kmers%22%20size%3D%2210%22%20value%3D%2221%2C33%2C55%22%3E',
+      is_dynamic: false, label: 'K-mers to use, separated by commas', model_class: TextToolParameter,
+      name: kmers, optional: false, size: null, type: text, value: '21,33,55'}
+    model_class: ConditionalWhen
+    value: 'false'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'true'
+  model_class: Conditional
+  name: kmer_choice
+  test_param: {argument: null, falsevalue: 'false', help: k-mer choices can be chosen
+      by SPAdes instead of being entered manually, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22auto_kmer_choice%22%20name%3D%22auto_kmer_choice%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22auto_kmer_choice%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Automatically choose k-mer values, model_class: BooleanToolParameter,
+    name: auto_kmer_choice, optional: false, truevalue: 'true', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'off'
+  - inputs:
+    - {area: false, argument: null, help: 'coverage cutoff value (a positive float
+        number, or ''auto'', or ''off'') [default: ''off'']', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22cutoff%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Coverage cutoff value, max: null, min: null, model_class: FloatToolParameter,
+      name: cutoff, optional: false, size: null, type: float, value: ''}
+    model_class: ConditionalWhen
+    value: value
+  - inputs: []
+    model_class: ConditionalWhen
+    value: auto
+  model_class: Conditional
+  name: cov
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22state%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22off%22%3EOff%3C/option%3E%0A%3Coption%20value%3D%22value%22%3EUser%20Specific%3C/option%3E%0A%3Coption%20value%3D%22auto%22%3EAuto%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Coverage Cutoff
+    model_class: SelectToolParameter
+    multiple: false
+    name: state
+    optional: false
+    options:
+    - ['Off', 'off', false]
+    - [User Specific, value, false]
+    - [Auto, auto, false]
+    type: select
+    value: 'off'
+  type: conditional
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22iontorrent%22%20name%3D%22iontorrent%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22iontorrent%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'Libraries are IonTorrent reads?', model_class: BooleanToolParameter,
+  name: iontorrent, optional: false, truevalue: --iontorrent, type: boolean, value: false}
+- default: 1
+  help: It is not possible to specify only mate-pair libraries. Scaffolds are not
+    produced if neither a paired-end nor a mate-pair library is provided.
+  inputs:
+  - argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22lib_type%22%3E%0A%3Coption%20value%3D%22paired_end%22%3EPaired-end%20/%20Single%20reads%3C/option%3E%0A%3Coption%20value%3D%22mate_paired%22%3EMate%20pairs%3C/option%3E%0A%3Coption%20value%3D%22high_mate_paired%22%3EHigh%20Quality%20Mate%20pairs%3C/option%3E%0A%3Coption%20value%3D%22nxmate_paired%22%3ELucigen%20NxMate%20pairs%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Library type
+    model_class: SelectToolParameter
+    multiple: false
+    name: lib_type
+    optional: false
+    options:
+    - [Paired-end / Single reads, paired_end, false]
+    - [Mate pairs, mate_paired, false]
+    - [High Quality Mate pairs, high_mate_paired, false]
+    - [Lucigen NxMate pairs, nxmate_paired, false]
+    type: select
+    value: paired_end
+  - argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22orientation%22%20last_selected_value%3D%22fr%22%3E%0A%3Coption%20value%3D%22fr%22%20selected%3E-%26gt%3B%20%26lt%3B-%20%28fr%29%3C/option%3E%0A%3Coption%20value%3D%22rf%22%3E%26lt%3B-%20-%26gt%3B%20%28rf%29%3C/option%3E%0A%3Coption%20value%3D%22ff%22%3E-%26gt%3B%20-%26gt%3B%20%28ff%29%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Orientation
+    model_class: SelectToolParameter
+    multiple: false
+    name: orientation
+    optional: false
+    options:
+    - [-> <- (fr), fr, true]
+    - [<- -> (rf), rf, false]
+    - [-> -> (ff), ff, false]
+    type: select
+    value: fr
+  - default: 1
+    help: null
+    inputs:
+    - cases:
+      - inputs:
+        - argument: null
+          edam_formats: [format_1930]
+          extensions: [fastq]
+          help: FASTQ format
+          hidden: false
+          is_dynamic: false
+          label: Forward reads
+          model_class: DataToolParameter
+          multiple: false
+          name: fwd_reads
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        - argument: null
+          edam_formats: [format_1930]
+          extensions: [fastq]
+          help: FASTQ format
+          hidden: false
+          is_dynamic: false
+          label: Reverse reads
+          model_class: DataToolParameter
+          multiple: false
+          name: rev_reads
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        model_class: ConditionalWhen
+        value: separate
+      - inputs:
+        - argument: null
+          edam_formats: [format_1930]
+          extensions: [fastq]
+          help: FASTQ format
+          hidden: false
+          is_dynamic: false
+          label: Interleaved paired reads
+          model_class: DataToolParameter
+          multiple: false
+          name: interleaved_reads
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        model_class: ConditionalWhen
+        value: interleaved
+      - inputs:
+        - argument: null
+          edam_formats: [format_1930]
+          extensions: [fastq]
+          help: FASTQ format
+          hidden: false
+          is_dynamic: false
+          label: Unpaired reads
+          model_class: DataToolParameter
+          multiple: false
+          name: unpaired_reads
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        model_class: ConditionalWhen
+        value: unpaired
+      - inputs:
+        - argument: null
+          extensions: [fastq]
+          help: FASTQ format
+          hidden: false
+          is_dynamic: false
+          label: Paired-end reads collection
+          model_class: DataCollectionToolParameter
+          multiple: false
+          name: fastq_collection
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data_collection
+        model_class: ConditionalWhen
+        value: paired-collection
+      model_class: Conditional
+      name: file_type
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22type%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22separate%22%3ESeparate%20input%20files%3C/option%3E%0A%3Coption%20value%3D%22interleaved%22%3EInterleaved%20files%3C/option%3E%0A%3Coption%20value%3D%22unpaired%22%3EUnpaired/Single%20reads%3C/option%3E%0A%3Coption%20value%3D%22paired-collection%22%3EPaired%20List%20Collection%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Select file format
+        model_class: SelectToolParameter
+        multiple: false
+        name: type
+        optional: false
+        options:
+        - [Separate input files, separate, false]
+        - [Interleaved files, interleaved, false]
+        - [Unpaired/Single reads, unpaired, false]
+        - [Paired List Collection, paired-collection, false]
+        type: select
+        value: separate
+      type: conditional
+    max: __Infinity__
+    min: 1
+    model_class: Repeat
+    name: files
+    title: Files
+    type: repeat
+  max: __Infinity__
+  min: 1
+  model_class: Repeat
+  name: libraries
+  title: Libraries
+  type: repeat
+- default: 0
+  help: null
+  inputs:
+  - argument: null
+    edam_formats: [format_1930]
+    extensions: [fastq]
+    help: FASTQ format. For PacBio pre-corrected or CCS reads, use single reads above.
+    hidden: false
+    is_dynamic: false
+    label: PacBio CLR reads.
+    model_class: DataToolParameter
+    multiple: false
+    name: pacbio_reads
+    optional: false
+    options:
+      hda: []
+      hdca: []
+    type: data
+  max: __Infinity__
+  min: 0
+  model_class: Repeat
+  name: pacbio
+  title: PacBio CLR reads
+  type: repeat
+- default: 0
+  help: null
+  inputs:
+  - argument: null
+    edam_formats: [format_1930]
+    extensions: [fastq]
+    help: FASTQ format. For Nanopore, use single reads above.
+    hidden: false
+    is_dynamic: false
+    label: Nanopore reads.
+    model_class: DataToolParameter
+    multiple: false
+    name: nanopore_reads
+    optional: false
+    options:
+      hda: []
+      hdca: []
+    type: data
+  max: __Infinity__
+  min: 0
+  model_class: Repeat
+  name: nanopore
+  title: Nanopore reads
+  type: repeat
+- default: 0
+  help: null
+  inputs:
+  - cases:
+    - inputs:
+      - argument: null
+        edam_formats: [format_1929]
+        extensions: [fasta]
+        help: FASTA format
+        hidden: false
+        is_dynamic: false
+        label: Sanger reads
+        model_class: DataToolParameter
+        multiple: false
+        name: sanger_reads
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      model_class: ConditionalWhen
+      value: fasta
+    - inputs:
+      - argument: null
+        edam_formats: [format_1930]
+        extensions: [fastq]
+        help: FASTQ format
+        hidden: false
+        is_dynamic: false
+        label: Sanger reads
+        model_class: DataToolParameter
+        multiple: false
+        name: sanger_reads
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      model_class: ConditionalWhen
+      value: fastq
+    model_class: Conditional
+    name: file_type
+    test_param:
+      argument: null
+      display: null
+      help: No read correction is done on Sanger reads, no need to provide quality
+        information.
+      hidden: false
+      html: '%3Cselect%20name%3D%22type%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22fasta%22%3Efasta%3C/option%3E%0A%3Coption%20value%3D%22fastq%22%3Efastq%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Select file format
+      model_class: SelectToolParameter
+      multiple: false
+      name: type
+      optional: false
+      options:
+      - [fasta, fasta, false]
+      - [fastq, fastq, false]
+      type: select
+      value: fasta
+    type: conditional
+  max: __Infinity__
+  min: 0
+  model_class: Repeat
+  name: sanger
+  title: Sanger reads
+  type: repeat
+- default: 0
+  help: Reliable contigs of the same genome, which are likely to have no misassemblies
+    and small rate of other errors (e.g. mismatches and indels). This option is not
+    intended for contigs of the related species.
+  inputs:
+  - cases:
+    - inputs:
+      - argument: null
+        edam_formats: [format_1929]
+        extensions: [fasta]
+        help: FASTA format
+        hidden: false
+        is_dynamic: false
+        label: Trusted contigs
+        model_class: DataToolParameter
+        multiple: false
+        name: trusted_contigs
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      model_class: ConditionalWhen
+      value: fasta
+    - inputs:
+      - argument: null
+        edam_formats: [format_1930]
+        extensions: [fastq]
+        help: FASTQ format
+        hidden: false
+        is_dynamic: false
+        label: Trusted contigs
+        model_class: DataToolParameter
+        multiple: false
+        name: trusted_contigs
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      model_class: ConditionalWhen
+      value: fastq
+    model_class: Conditional
+    name: file_type
+    test_param:
+      argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22type%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22fasta%22%3Efasta%3C/option%3E%0A%3Coption%20value%3D%22fastq%22%3Efastq%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Select file format
+      model_class: SelectToolParameter
+      multiple: false
+      name: type
+      optional: false
+      options:
+      - [fasta, fasta, false]
+      - [fastq, fastq, false]
+      type: select
+      value: fasta
+    type: conditional
+  max: __Infinity__
+  min: 0
+  model_class: Repeat
+  name: trustedcontigs
+  title: Trusted contigs
+  type: repeat
+- default: 0
+  help: Contigs of the same genome, quality of which is average or unknown. Contigs
+    of poor quality can be used but may introduce errors in the assembly. This option
+    is also not intended for contigs of the related species.
+  inputs:
+  - cases:
+    - inputs:
+      - argument: null
+        edam_formats: [format_1929]
+        extensions: [fasta]
+        help: FASTA format
+        hidden: false
+        is_dynamic: false
+        label: Untrusted contigs
+        model_class: DataToolParameter
+        multiple: false
+        name: untrusted_contigs
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      model_class: ConditionalWhen
+      value: fasta
+    - inputs:
+      - argument: null
+        edam_formats: [format_1930]
+        extensions: [fastq]
+        help: FASTQ format
+        hidden: false
+        is_dynamic: false
+        label: Untrusted contigs
+        model_class: DataToolParameter
+        multiple: false
+        name: untrusted_contigs
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      model_class: ConditionalWhen
+      value: fastq
+    model_class: Conditional
+    name: file_type
+    test_param:
+      argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22type%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22fasta%22%3Efasta%3C/option%3E%0A%3Coption%20value%3D%22fastq%22%3Efastq%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Select file format
+      model_class: SelectToolParameter
+      multiple: false
+      name: type
+      optional: false
+      options:
+      - [fasta, fasta, false]
+      - [fastq, fastq, false]
+      type: select
+      value: fasta
+    type: conditional
+  max: __Infinity__
+  min: 0
+  model_class: Repeat
+  name: untrustedcontigs
+  title: Untrusted contigs
+  type: repeat
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fspades%2Fspades%2F3.9.0
+min_width: -1
+model_class: Tool
+name: spades
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: SPAdes contigs (fasta),
+  model_class: ToolOutput, name: out_contigs}
+- {edam_format: format_3475, format: tabular, hidden: false, label: SPAdes contig
+    stats, model_class: ToolOutput, name: out_contig_stats}
+- {edam_format: format_1929, format: fasta, hidden: false, label: SPAdes scaffolds
+    (fasta), model_class: ToolOutput, name: out_scaffolds}
+- {edam_format: format_3475, format: tabular, hidden: false, label: SPAdes scaffold
+    stats, model_class: ToolOutput, name: out_scaffold_stats}
+- {edam_format: format_2330, format: txt, hidden: false, label: SPAdes log, model_class: ToolOutput,
+  name: out_log}
+panel_section_id: ngs:_spades
+panel_section_name: 'NGS: Assembly package SPAdes'
+target: galaxy_main
+version: 3.9.0

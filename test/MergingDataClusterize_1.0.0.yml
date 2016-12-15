@@ -1,0 +1,166 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/galaxy/clusterize.xml
+description: Clusterizes the reads when their genomic intervals overlap.
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/MergingDataClusterize/1.0.0
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3003]
+      extensions: [bed]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: bed
+  - inputs:
+    - argument: null
+      edam_formats: [format_2305]
+      extensions: [gff]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff
+  - inputs:
+    - argument: null
+      edam_formats: [null]
+      extensions: [gff2]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff2
+  - inputs:
+    - argument: null
+      edam_formats: [format_1975]
+      extensions: [gff3]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff3
+  - inputs:
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [csv]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: csv
+  - inputs:
+    - argument: null
+      edam_formats: [format_2573]
+      extensions: [sam]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: sam
+  model_class: Conditional
+  name: formatType
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22FormatInputFileName%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22bed%22%3Ebed%3C/option%3E%0A%3Coption%20value%3D%22gff%22%3Egff%3C/option%3E%0A%3Coption%20value%3D%22gff2%22%3Egff2%3C/option%3E%0A%3Coption%20value%3D%22gff3%22%3Egff3%3C/option%3E%0A%3Coption%20value%3D%22csv%22%3Ecsv%3C/option%3E%0A%3Coption%20value%3D%22sam%22%3Esam%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Input File Format
+    model_class: SelectToolParameter
+    multiple: false
+    name: FormatInputFileName
+    optional: false
+    options:
+    - [bed, bed, false]
+    - [gff, gff, false]
+    - [gff2, gff2, false]
+    - [gff3, gff3, false]
+    - [csv, csv, false]
+    - [sam, sam, false]
+    type: select
+    value: bed
+  type: conditional
+- {argument: null, falsevalue: '', help: This option clusterizes only the same strand
+    reads, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22colinear%22%20name%3D%22colinear%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22colinear%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: colinear option, model_class: BooleanToolParameter, name: colinear,
+  optional: false, truevalue: -c, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: This option normalize (attention!! Only for
+    GFF3 file!!!!!), hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22normalize%22%20name%3D%22normalize%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22normalize%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: normalize option for only GFF3 file format, model_class: BooleanToolParameter,
+  name: normalize, optional: false, truevalue: -n, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: This option create a log file, hidden: false,
+  html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22log%22%20name%3D%22log%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22log%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: log option, model_class: BooleanToolParameter, name: log,
+  optional: false, truevalue: -l, type: boolean, value: false}
+- {area: false, argument: null, help: Limit the maximum distance between two reads,
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22distance%22%20size%3D%2210%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: distance option, max: null, min: null, model_class: IntegerToolParameter,
+  name: distance, optional: false, size: null, type: integer, value: '0'}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FMergingDataClusterize%2F1.0.0
+min_width: -1
+model_class: Tool
+name: Clusterize
+outputs:
+- {edam_format: format_1975, format: gff3, hidden: false, label: '[clusterize]output
+    file', model_class: ToolOutput, name: outputFileGff}
+- {edam_format: format_2330, format: txt, hidden: false, label: '[clusterize]output
+    file', model_class: ToolOutput, name: outputFileLog}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

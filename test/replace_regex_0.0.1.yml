@@ -1,0 +1,43 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/screno/text_manipulation_utilities/33e682e280fd/text_manipulation_utilities/replace_regex.xml
+description: in a text dataset
+id: toolshed.pasteur.fr/repos/screno/text_manipulation_utilities/replace_regex/0.0.1
+inputs:
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Input text dataset
+  model_class: DataToolParameter
+  multiple: false
+  name: text_dataset
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: Here you can enter text or regular expression
+    (for syntax check lower part of this frame), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pattern_to_search%22%20size%3D%2240%22%20value%3D%22%5E%26gt%3B%28%5B0-9A-Za-z%5D%29%2B%22%3E',
+  is_dynamic: false, label: The pattern to search, model_class: TextToolParameter,
+  name: pattern_to_search, optional: false, size: '40', type: text, value: '^>([0-9A-Za-z])+'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22new_string%22%20size%3D%2240%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: The replacing string, model_class: TextToolParameter,
+  name: new_string, optional: false, size: '40', type: text, value: ''}
+- {argument: null, falsevalue: sub, help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22cmd%22%20name%3D%22cmd%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22cmd%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Change all occurrences and not only the first one in each
+    line, model_class: BooleanToolParameter, name: cmd, optional: false, truevalue: gsub,
+  type: boolean, value: false}
+- {argument: null, falsevalue: '0', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22case%22%20name%3D%22case%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22case%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Be case insensitive, model_class: BooleanToolParameter,
+  name: case, optional: false, truevalue: '1', type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fscreno%2Ftext_manipulation_utilities%2Freplace_regex%2F0.0.1
+min_width: -1
+model_class: Tool
+name: Replace strings
+outputs:
+- {format: input, hidden: false, label: '', model_class: ToolOutput, name: output}
+panel_section_id: textutil
+panel_section_name: Text Manipulation
+target: galaxy_main
+version: 0.0.1

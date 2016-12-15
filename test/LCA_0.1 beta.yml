@@ -1,0 +1,46 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/afelten/microbiome_analyses/cacc5a90438f/microbiome_analyses/LCA.xml
+description: Find the lowest common ancestor from a BLAST tabular file
+id: toolshed.pasteur.fr/repos/afelten/microbiome_analyses/LCA/0.1 beta
+inputs:
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22prog%22%3E%0A%3Coption%20value%3D%22LCA.py%22%3Esilva%20taxonomy%3C/option%3E%0A%3Coption%20value%3D%22LCA_GG.py%22%3Egreengenes%20taxonomy%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: queried database
+  model_class: SelectToolParameter
+  multiple: false
+  name: prog
+  optional: false
+  options:
+  - [silva taxonomy, LCA.py, false]
+  - [greengenes taxonomy, LCA_GG.py, false]
+  type: select
+  value: LCA.py
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: BLAST tabular file
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fafelten%2Fmicrobiome_analyses%2FLCA%2F0.1+beta
+min_width: -1
+model_class: Tool
+name: Lowest common ancestor finder
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+panel_section_id: microbiome_analysis
+panel_section_name: Microbiome Analysis
+target: galaxy_main
+version: 0.1 beta

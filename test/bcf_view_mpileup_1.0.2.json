@@ -1,0 +1,109 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "bcf_view_mpileup-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "1.0.2", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/bcf_view_mpileup/bcf_view_mpileup/1.0.2", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "vcf", 
+                    "dataDescription": "vcf_output", 
+                    "data": {
+                        "term": "Sequence variations", 
+                        "uri": "http://edamontology.org/data_3498"
+                    }, 
+                    "format": [
+                        {
+                            "term": "VCF", 
+                            "uri": "http://edamontology.org/format_3016"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "output to variants", 
+            "input": [
+                {
+                    "dataHandle": "bcf_file", 
+                    "dataDescription": "Select your BCF dataset", 
+                    "data": {
+                        "term": "Sequence variations", 
+                        "uri": "http://edamontology.org/data_3498"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BCF", 
+                            "uri": "http://edamontology.org/format_3020"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "file", 
+                    "dataDescription": "Dataset listing the sites to output", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Output to variants.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/bcf_view_mpileup/bcf_view_mpileup/1.0.2", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/bcf_view_mpileup/bcf_view_mpileup/1.0.2\"", 
+            "usesVersion": "1.0.2"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "bcf_view_mpileup-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "1.0.2", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

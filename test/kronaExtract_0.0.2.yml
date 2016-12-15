@@ -1,0 +1,41 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/taxonomy_analysis/98189979e262/taxonomy_analysis/krona_extract.xml
+description: kronaextract  extracts from krona xml file (obtained by rankoptimizer),
+  list of reads and blast offset for a given taxonomic name.
+id: toolshed.pasteur.fr/repos/odoppelt/taxonomy_analysis/kronaExtract/0.0.2
+inputs:
+- argument: null
+  edam_formats: [format_2332]
+  extensions: [xml]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: krona xml input file
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22taxID%22%20size%3D%2210%22%20value%3D%223702%22%3E',
+  is_dynamic: false, label: Taxonomic name to extract list of information., model_class: TextToolParameter,
+  name: taxID, optional: false, size: null, type: text, value: '3702'}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22split%22%20name%3D%22split%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22split%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Split output file in two files, model_class: BooleanToolParameter,
+  name: split, optional: false, truevalue: -s krona, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Ftaxonomy_analysis%2FkronaExtract%2F0.0.2
+min_width: -1
+model_class: Tool
+name: kronaExtract
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: 'kronaextract
+    on ${input.name}', model_class: ToolOutput, name: output}
+- {edam_format: format_3475, format: tabular, hidden: false, label: 'reads names on
+    ${input.name}', model_class: ToolOutput, name: seqOutput}
+- {edam_format: format_3475, format: tabular, hidden: false, label: 'corresponding
+    ptaxoptimizer''s line offset on ${input.name}', model_class: ToolOutput, name: offsetOutput}
+panel_section_id: tax_manipulation
+panel_section_name: Metagenomic analyses
+target: galaxy_main
+version: 0.0.2

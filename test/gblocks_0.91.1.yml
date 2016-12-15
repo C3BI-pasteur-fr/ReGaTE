@@ -1,0 +1,89 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/cf3e04ffae51/oneclick_phylogeny/gblock/gblocks.xml
+description: cleaning aligned sequences
+id: toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/gblocks/0.91.1
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: Fasta format
+  hidden: false
+  is_dynamic: false
+  label: Source file
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22datatype%22%3E%0A%3Coption%20value%3D%22-t%3Dd%22%3EDNA%3C/option%3E%0A%3Coption%20value%3D%22-t%3Dc%22%3ECodon%3C/option%3E%0A%3Coption%20value%3D%22-t%3Dp%22%3EProtein%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Data type
+  model_class: SelectToolParameter
+  multiple: false
+  name: datatype
+  optional: false
+  options:
+  - [DNA, -t=d, false]
+  - [Codon, -t=c, false]
+  - [Protein, -t=p, false]
+  type: select
+  value: -t=d
+- {area: false, argument: null, help: 'By default, = 50% of the number of sequences
+    +1.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22b1%22%20size%3D%2210%22%20value%3D%22default%22%3E',
+  is_dynamic: false, label: 'Minimum number of sequences for a conserved position,
+    must be BIGGER than half the number', model_class: TextToolParameter, name: b1,
+  optional: false, size: null, type: text, value: default}
+- {area: false, argument: null, help: 'By default, = 85% of the number of sequences',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22b2%22%20size%3D%2210%22%20value%3D%22default%22%3E',
+  is_dynamic: false, label: 'Minimum number of Sequences for a flank position, SMALLER
+    than Minimum Number Of Sequences For A Conserved Position', model_class: TextToolParameter,
+  name: b2, optional: false, size: null, type: text, value: default}
+- {area: false, argument: null, help: All segment with contiguous non-conserved positions
+    bigger than this value is rejected, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22b3%22%20size%3D%2210%22%20value%3D%228%22%3E',
+  is_dynamic: false, label: Maximum number of contiguous non-conserved positions,
+  max: null, min: null, model_class: IntegerToolParameter, name: b3, optional: false,
+  size: null, type: integer, value: '8'}
+- {area: false, argument: null, help: Any integer >1, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22b4%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+  is_dynamic: false, label: Minimum length of a block, max: null, min: null, model_class: IntegerToolParameter,
+  name: b4, optional: false, size: null, type: integer, value: '10'}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22b5%22%3E%0A%3Coption%20value%3D%22n%22%3ENone%3C/option%3E%0A%3Coption%20value%3D%22h%22%3EWith%20half%3C/option%3E%0A%3Coption%20value%3D%22a%22%3EAll%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Allowed gap positions
+  model_class: SelectToolParameter
+  multiple: false
+  name: b5
+  optional: false
+  options:
+  - [None, n, false]
+  - [With half, h, false]
+  - [All, a, false]
+  type: select
+  value: n
+- {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22display_gblocks_log%22%20name%3D%22display_gblocks_log%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22display_gblocks_log%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Display gblocks standard output, model_class: BooleanToolParameter,
+  name: display_gblocks_log, optional: false, truevalue: 'true', type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Foneclick_phylogeny%2Fgblocks%2F0.91.1
+min_width: -1
+model_class: Tool
+name: Gblocks
+outputs:
+- {edam_format: null, format: text, hidden: false, label: 'Gblocks log: ${input.name}',
+  model_class: ToolOutput, name: gblocks_log}
+- {edam_format: format_1929, format: fasta, hidden: false, label: 'Gblocks Cleaned
+    sequencies: ${input.name}', model_class: ToolOutput, name: output_aln}
+- {edam_format: format_2331, format: html, hidden: false, label: 'Gblocks Sequencies
+    information: ${input.name}', model_class: ToolOutput, name: output_htm}
+panel_section_id: oneclick_phylogeny
+panel_section_name: Oneclick Phylogeny
+target: galaxy_main
+version: 0.91.1

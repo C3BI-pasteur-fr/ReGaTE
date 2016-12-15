@@ -1,0 +1,223 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "cufflinks-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "2.2.1.0", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/cufflinks/cufflinks/2.2.1.0", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "tabular", 
+                    "dataDescription": "genes_expression", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "tabular", 
+                    "dataDescription": "transcripts_expression", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "gtf", 
+                    "dataDescription": "assembled_isoforms", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "GTF", 
+                            "uri": "http://edamontology.org/format_2306"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "txt", 
+                    "dataDescription": "total_map_mass", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "gtf", 
+                    "dataDescription": "skipped", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "GTF", 
+                            "uri": "http://edamontology.org/format_2306"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "transcript assembly and FPKM (RPKM) estimates for RNA-Seq data", 
+            "input": [
+                {
+                    "dataHandle": "input", 
+                    "dataDescription": "SAM or BAM file of aligned RNA-Seq reads", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "SAM", 
+                            "uri": "http://edamontology.org/format_2573"
+                        }, 
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "reference_annotation_file", 
+                    "dataDescription": "Reference Annotation", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "GFF3", 
+                            "uri": "http://edamontology.org/format_1975"
+                        }, 
+                        {
+                            "term": "GTF", 
+                            "uri": "http://edamontology.org/format_2306"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "reference_annotation_guide_file", 
+                    "dataDescription": "Reference Annotation", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "GFF3", 
+                            "uri": "http://edamontology.org/format_1975"
+                        }, 
+                        {
+                            "term": "GTF", 
+                            "uri": "http://edamontology.org/format_2306"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "ref_file", 
+                    "dataDescription": "Using reference file", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "mask_file", 
+                    "dataDescription": "Mask File", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "GFF3", 
+                            "uri": "http://edamontology.org/format_1975"
+                        }, 
+                        {
+                            "term": "GTF", 
+                            "uri": "http://edamontology.org/format_2306"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Transcript assembly and FPKM (RPKM) estimates for RNA-Seq data.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/cufflinks/cufflinks/2.2.1.0", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/cufflinks/cufflinks/2.2.1.0\"", 
+            "usesVersion": "2.2.1.0"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "cufflinks-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "2.2.1.0", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

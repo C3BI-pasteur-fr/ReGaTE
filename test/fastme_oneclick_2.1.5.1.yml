@@ -1,0 +1,288 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/cf3e04ffae51/oneclick_phylogeny/fastme_oneclick/fastme_oneclick.xml
+description: Distance-based inference of phylogenetic trees
+id: toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/fastme_oneclick/2.1.5.1
+inputs:
+- argument: null
+  edam_formats: [format_2330, null]
+  extensions: [phylip, ' phy']
+  help: Phylip Alignment or Matrix file
+  hidden: false
+  is_dynamic: false
+  label: Fastme input
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1915]
+      extensions: [data]
+      help: newick format
+      hidden: false
+      is_dynamic: false
+      label: Tree file
+      model_class: DataToolParameter
+      multiple: false
+      name: userInputTree
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: 'true'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'false'
+  model_class: Conditional
+  name: usetree
+  test_param: {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22inputTree%22%20name%3D%22inputTree%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22inputTree%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Use input tree guide, model_class: BooleanToolParameter,
+    name: inputTree, optional: false, truevalue: 'true', type: boolean, value: false}
+  type: conditional
+- {area: false, argument: null, help: Output name for files, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fileout_label%22%20size%3D%2210%22%20value%3D%22Newick%20tree%22%3E',
+  is_dynamic: false, label: Output name, model_class: TextToolParameter, name: fileout_label,
+  optional: false, size: null, type: text, value: Newick tree}
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22modeldna%22%20last_selected_value%3D%22T%22%3E%0A%3Coption%20value%3D%224%22%3EF84%3C/option%3E%0A%3Coption%20value%3D%22R%22%3ERY%3C/option%3E%0A%3Coption%20value%3D%221%22%3EF81%3C/option%3E%0A%3Coption%20value%3D%22J%22%3EJC69%3C/option%3E%0A%3Coption%20value%3D%22K%22%3EK2P%3C/option%3E%0A%3Coption%20value%3D%22T%22%20selected%3ETN93%3C/option%3E%0A%3Coption%20value%3D%22p%22%3Ep-distance%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Evolutionary model
+      model_class: SelectToolParameter
+      multiple: false
+      name: modeldna
+      optional: false
+      options:
+      - [F84, '4', false]
+      - [RY, R, false]
+      - [F81, '1', false]
+      - [JC69, J, false]
+      - [K2P, K, false]
+      - [TN93, T, true]
+      - [p-distance, p, false]
+      type: select
+      value: T
+    model_class: ConditionalWhen
+    value: d
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22modelprot%22%3E%0A%3Coption%20value%3D%22L%22%3ELG%3C/option%3E%0A%3Coption%20value%3D%22W%22%3EWAG%3C/option%3E%0A%3Coption%20value%3D%22J%22%3EJTT%3C/option%3E%0A%3Coption%20value%3D%22h%22%3EDay%20off%3C/option%3E%0A%3Coption%20value%3D%22C%22%3ECpRev%3C/option%3E%0A%3Coption%20value%3D%22D%22%3EDCMut%3C/option%3E%0A%3Coption%20value%3D%22b%22%3EHIVb%3C/option%3E%0A%3Coption%20value%3D%22I%22%3EHIVw%3C/option%3E%0A%3Coption%20value%3D%22M%22%3EMtREV%3C/option%3E%0A%3Coption%20value%3D%22R%22%3ERtREV%3C/option%3E%0A%3Coption%20value%3D%22p%22%3Ep-distance%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Evolutionary model
+      model_class: SelectToolParameter
+      multiple: false
+      name: modelprot
+      optional: false
+      options:
+      - [LG, L, false]
+      - [WAG, W, false]
+      - [JTT, J, false]
+      - [Day off, h, false]
+      - [CpRev, C, false]
+      - [DCMut, D, false]
+      - [HIVb, b, false]
+      - [HIVw, I, false]
+      - [MtREV, M, false]
+      - [RtREV, R, false]
+      - [p-distance, p, false]
+      type: select
+      value: L
+    model_class: ConditionalWhen
+    value: p
+  - inputs: []
+    model_class: ConditionalWhen
+    value: m
+  - inputs:
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [txt]
+      help: Precompute file containning sequence description (dna or protein)
+      hidden: false
+      is_dynamic: false
+      label: Config file
+      model_class: DataToolParameter
+      multiple: false
+      name: input_info
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: cfg
+  model_class: Conditional
+  name: typeChoice
+  test_param:
+    argument: null
+    display: radio
+    help: ''
+    hidden: false
+    html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22datatype%22%20refresh_on_change%3D%22true%22%20value%3D%22d%22%20id%3D%22datatype%7Cd%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22datatype%7Cd%22%3EDNA%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22datatype%22%20refresh_on_change%3D%22true%22%20value%3D%22p%22%20id%3D%22datatype%7Cp%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22datatype%7Cp%22%3EProtein%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22datatype%22%20refresh_on_change%3D%22true%22%20value%3D%22m%22%20id%3D%22datatype%7Cm%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22datatype%7Cm%22%3EMatrix%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22datatype%22%20refresh_on_change%3D%22true%22%20value%3D%22cfg%22%20id%3D%22datatype%7Ccfg%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22datatype%7Ccfg%22%3EInformation%20file%3C/label%3E%3C/div%3E'
+    is_dynamic: false
+    label: Data type
+    model_class: SelectToolParameter
+    multiple: false
+    name: datatype
+    optional: false
+    options:
+    - [DNA, d, false]
+    - [Protein, p, false]
+    - [Matrix, m, false]
+    - [Information file, cfg, false]
+    type: select
+    value: d
+  type: conditional
+- {argument: null, falsevalue: '', help: 'By default, frequencies are globally counted
+    from the nucleotides alignment or defined by the proteic substitution model. By
+    checking the box, frequencies are pairwise estimated by counting the nucleotides
+    or estimated by counting the amino-acids in the alignment.', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22equilibrium%22%20name%3D%22equilibrium%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22equilibrium%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Equilibrium frequencies, model_class: BooleanToolParameter,
+  name: equilibrium, optional: false, truevalue: --equilibrium, type: boolean, value: false}
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rate%22%20size%3D%2210%22%20value%3D%221%22%3E',
+      is_dynamic: false, label: Gamma distribution parameter, max: null, min: 0.0,
+      model_class: FloatToolParameter, name: rate, optional: false, size: null, type: float,
+      value: '1'}
+    model_class: ConditionalWhen
+    value: 'true'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'false'
+  model_class: Conditional
+  name: gammaChoice
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22gamma%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22true%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22false%22%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Gamma distributed rates across sites
+    model_class: SelectToolParameter
+    multiple: false
+    name: gamma
+    optional: false
+    options:
+    - ['Yes', 'true', false]
+    - ['No', 'false', false]
+    type: select
+    value: 'true'
+  type: conditional
+- argument: null
+  display: radio
+  help: ''
+  hidden: false
+  html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22removeGap%22%20value%3D%22%22%20id%3D%22removeGap%7C%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22removeGap%7C%22%3EPairwise%20deletion%20of%20gaps%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22removeGap%22%20value%3D%22--remove_gap%22%20id%3D%22removeGap%7C--remove_gap%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22removeGap%7C--remove_gap%22%3ERemove%20all%20sites%20with%20gap%3C/label%3E%3C/div%3E'
+  is_dynamic: false
+  label: Remove gap strategy
+  model_class: SelectToolParameter
+  multiple: false
+  name: removeGap
+  optional: false
+  options:
+  - [Pairwise deletion of gaps, '', false]
+  - [Remove all sites with gap, --remove_gap, false]
+  type: select
+  value: ''
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22distance%22%3E%0A%3Coption%20value%3D%22--method%3DI%22%3EBIONJ%3C/option%3E%0A%3Coption%20value%3D%22--method%3DB%20--branch_length%3DB%22%3ETaxAdd%20BalME%3C/option%3E%0A%3Coption%20value%3D%22--method%3DO%20--branch_length%3DO%22%3ETaxAdd%20OLSME%3C/option%3E%0A%3Coption%20value%3D%22--method%3DN%22%3ENJ%3C/option%3E%0A%3Coption%20value%3D%22--method%3DU%22%3EUNJ%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Distance algorithm
+  model_class: SelectToolParameter
+  multiple: false
+  name: distance
+  optional: false
+  options:
+  - [BIONJ, --method=I, false]
+  - [TaxAdd BalME, --method=B --branch_length=B, false]
+  - [TaxAdd OLSME, --method=O --branch_length=O, false]
+  - [NJ, --method=N, false]
+  - [UNJ, --method=U, false]
+  type: select
+  value: --method=I
+- argument: null
+  display: radio
+  help: '(NNI) Nearest Neighbor Interchanges,(SPR) Subtree Pruning and Regrafting '
+  hidden: false
+  html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22treeRefinement%22%20value%3D%22%22%20id%3D%22treeRefinement%7C%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22treeRefinement%7C%22%3ENone%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22treeRefinement%22%20value%3D%22--nni%3DO%22%20id%3D%22treeRefinement%7C--nni%3DO%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22treeRefinement%7C--nni%3DO%22%3EOLS%20NNI%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22treeRefinement%22%20value%3D%22--nni%3DB%22%20id%3D%22treeRefinement%7C--nni%3DB%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22treeRefinement%7C--nni%3DB%22%3EBalME%20NNI%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22treeRefinement%22%20value%3D%22--spr%22%20id%3D%22treeRefinement%7C--spr%22%20checked%3D%27checked%27%3E%3Clabel%20class%3D%22inline%22%20for%3D%22treeRefinement%7C--spr%22%3EBalME%20SPR%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22treeRefinement%22%20value%3D%22--nni%3DB%20--spr%22%20id%3D%22treeRefinement%7C--nni%3DB%20--spr%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22treeRefinement%7C--nni%3DB%20--spr%22%3EBalME%20NNI%20%2B%20SPR%3C/label%3E%3C/div%3E'
+  is_dynamic: false
+  label: Tree Refinement
+  model_class: SelectToolParameter
+  multiple: false
+  name: treeRefinement
+  optional: false
+  options:
+  - [None, '', false]
+  - [OLS NNI, --nni=O, false]
+  - [BalME NNI, --nni=B, false]
+  - [BalME SPR, --spr, true]
+  - [BalME NNI + SPR, --nni=B --spr, false]
+  type: select
+  value: --spr
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'false'
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22replicates%22%20size%3D%2210%22%20value%3D%221000%22%3E',
+      is_dynamic: false, label: Number of replicates, max: null, min: null, model_class: IntegerToolParameter,
+      name: replicates, optional: false, size: null, type: integer, value: '1000'}
+    model_class: ConditionalWhen
+    value: 'true'
+  model_class: Conditional
+  name: bootChoice
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22boot%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22false%22%3ENo%3C/option%3E%0A%3Coption%20value%3D%22true%22%3EYes%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Bootstrap
+    model_class: SelectToolParameter
+    multiple: false
+    name: boot
+    optional: false
+    options:
+    - ['No', 'false', false]
+    - ['Yes', 'true', false]
+    type: select
+    value: 'false'
+  type: conditional
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22supportPrecision%22%20size%3D%2210%22%20value%3D%2212%22%3E',
+  is_dynamic: false, label: Number of digits after the dot to display branch support,
+  max: null, min: 0, model_class: IntegerToolParameter, name: supportPrecision, optional: false,
+  size: null, type: integer, value: '12'}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Foneclick_phylogeny%2Ffastme_oneclick%2F2.1.5.1
+min_width: -1
+model_class: Tool
+name: FastME OneClick
+outputs:
+- {edam_format: null, format: nwk, hidden: false, label: '${fileout_label}', model_class: ToolOutput,
+  name: outputTree}
+- {edam_format: format_2330, format: txt, hidden: false, label: FastME Information,
+  model_class: ToolOutput, name: outputLog}
+- {edam_format: null, format: nwk, hidden: false, label: FastME Bootstrap trees, model_class: ToolOutput,
+  name: outputBoostrap}
+- {edam_format: format_2330, format: txt, hidden: false, label: FastME Distance matrix,
+  model_class: ToolOutput, name: outputMatrix}
+panel_section_id: oneclick_phylogeny
+panel_section_name: Oneclick Phylogeny
+target: galaxy_main
+version: 2.1.5.1

@@ -1,0 +1,45 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.g2.bx.psu.edu/repos/devteam/fastx_renamer/d7bce63e6e09/fastx_renamer/fastx_renamer.xml
+description: ''
+id: toolshed.g2.bx.psu.edu/repos/devteam/fastx_renamer/cshl_fastx_renamer/0.0.11
+inputs:
+- argument: null
+  edam_formats: [format_1933, format_1929, format_1932]
+  extensions: [fastqsolexa, fasta, fastqsanger]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: FASTQ/A Library to rename
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22TYPE%22%3E%0A%3Coption%20value%3D%22SEQ%22%3ENucleotides%20sequence%3C/option%3E%0A%3Coption%20value%3D%22COUNT%22%3ENumeric%20Counter%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Rename sequence identifiers to
+  model_class: SelectToolParameter
+  multiple: false
+  name: TYPE
+  optional: false
+  options:
+  - [Nucleotides sequence, SEQ, false]
+  - [Numeric Counter, COUNT, false]
+  type: select
+  value: SEQ
+link: /tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Fdevteam%2Ffastx_renamer%2Fcshl_fastx_renamer%2F0.0.11
+min_width: -1
+model_class: Tool
+name: Rename sequences
+outputs:
+- {format: input, hidden: false, label: '', model_class: ToolOutput, name: output}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: 0.0.11

@@ -1,0 +1,107 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/cf3e04ffae51/oneclick_phylogeny/muscle/muscle.xml
+description: MUltiple Sequence Comparison by Log- Expectation
+id: toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/muscle/3.8.31.1
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: Fasta sequence file
+  hidden: false
+  is_dynamic: false
+  label: Source file
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: '2'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: '1'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: '16'
+  - inputs:
+    - {area: false, argument: null, help: 'Increase the quality, increase the computing
+        time', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22iterations%22%20size%3D%2210%22%20value%3D%2216%22%3E',
+      is_dynamic: false, label: Maximum number of iterations, max: null, min: 1, model_class: IntegerToolParameter,
+      name: iterations, optional: false, size: null, type: integer, value: '16'}
+    model_class: ConditionalWhen
+    value: custom
+  model_class: Conditional
+  name: mode
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22run%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%2216%22%3E%0A%3Coption%20value%3D%222%22%3EProgressive%20mode%20%28faster%29%3C/option%3E%0A%3Coption%20value%3D%221%22%3EFastest%20mode%3C/option%3E%0A%3Coption%20value%3D%2216%22%20selected%3EFull%20mode%3C/option%3E%0A%3Coption%20value%3D%22custom%22%3ECustom%20mode%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Run mode
+    model_class: SelectToolParameter
+    multiple: false
+    name: run
+    optional: false
+    options:
+    - [Progressive mode (faster), '2', false]
+    - [Fastest mode, '1', false]
+    - [Full mode, '16', true]
+    - [Custom mode, custom, false]
+    type: select
+    value: '16'
+  type: conditional
+- {argument: null, falsevalue: '', help: Faster for similar sequences, hidden: false,
+  html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22diags%22%20name%3D%22diags%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22diags%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Find diagonals, model_class: BooleanToolParameter, name: diags,
+  optional: false, truevalue: -diags, type: boolean, value: false}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22cluster%22%20last_selected_value%3D%22upgmb%22%3E%0A%3Coption%20value%3D%22upgma%22%3EUPGMA%3C/option%3E%0A%3Coption%20value%3D%22upgmb%22%20selected%3EUPGMB%3C/option%3E%0A%3Coption%20value%3D%22neighborjoining%22%3ENeighbor%20Joining%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Clustering method
+  model_class: SelectToolParameter
+  multiple: false
+  name: cluster
+  optional: false
+  options:
+  - [UPGMA, upgma, false]
+  - [UPGMB, upgmb, true]
+  - [Neighbor Joining, neighborjoining, false]
+  type: select
+  value: upgmb
+- argument: null
+  display: null
+  help: Either Fasta, Phylip
+  hidden: false
+  html: '%3Cselect%20name%3D%22outputFormat%22%3E%0A%3Coption%20value%3D%22%22%20selected%3EFasta%3C/option%3E%0A%3Coption%20value%3D%22-phyi%22%3EPhylip%20Interleaved%20format%3C/option%3E%0A%3Coption%20value%3D%22-phys%22%3EPhylip%20Sequential%20format%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Output format
+  model_class: SelectToolParameter
+  multiple: false
+  name: outputFormat
+  optional: false
+  options:
+  - [Fasta, '', true]
+  - [Phylip Interleaved format, -phyi, false]
+  - [Phylip Sequential format, -phys, false]
+  type: select
+  value: ''
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Foneclick_phylogeny%2Fmuscle%2F3.8.31.1
+min_width: -1
+model_class: Tool
+name: MUSCLE
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: 'MUSCLE Aligned
+    sequencies ', model_class: ToolOutput, name: output}
+panel_section_id: oneclick_phylogeny
+panel_section_name: Oneclick Phylogeny
+target: galaxy_main
+version: 3.8.31.1

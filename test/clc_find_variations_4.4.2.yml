@@ -1,0 +1,174 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/clc_assembly_4/4ccb1f9f67f5/clc_assembly_4/clc_find_variations.xml
+description: Find positions where the reads indicate a consistent difference from
+  the reference sequences. Optionally, consensus sequences can be written to a fasta
+  file.
+id: toolshed.pasteur.fr/repos/fmareuil/clc_assembly_4/clc_find_variations/4.4.2
+inputs:
+- argument: null
+  edam_formats: [format_2333]
+  extensions: [cas]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: assembly file
+  model_class: DataToolParameter
+  multiple: false
+  name: assembly
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22coverage%22%20size%3D%2210%22%20value%3D%222%22%3E',
+  is_dynamic: false, label: Specify minimum coverage to report/apply difference, max: null,
+  min: null, model_class: IntegerToolParameter, name: coverage, optional: false, size: null,
+  type: integer, value: '2'}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22outputzerocoverage%22%20name%3D%22outputzerocoverage%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22outputzerocoverage%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Output regions where coverage is zero, model_class: BooleanToolParameter,
+  name: outputzerocoverage, optional: false, truevalue: -w, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22ignoreindels%22%20name%3D%22ignoreindels%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22ignoreindels%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: ' Ignore indels completely in the analysis', model_class: BooleanToolParameter,
+  name: ignoreindels, optional: false, truevalue: -i, type: boolean, value: false}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: noConsensus
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22resolution%22%20last_selected_value%3D%22vote%22%3E%0A%3Coption%20value%3D%22vote%22%20selected%3ESelect%20by%20vote%20%28A%2C%20C%2C%20G%2C%20T%29%3C/option%3E%0A%3Coption%20value%3D%22ambiguity%22%3EUse%20ambiguity%20nucleotides%20%28R%2C%20Y%2C%20etc.%29%3C/option%3E%0A%3Coption%20value%3D%22unknown%22%3EUnknown%20nucleotide%20%28N%29%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Set the consensus sequences base conflict resolution
+      model_class: SelectToolParameter
+      multiple: false
+      name: resolution
+      optional: false
+      options:
+      - ['Select by vote (A, C, G, T)', vote, true]
+      - ['Use ambiguity nucleotides (R, Y, etc.)', ambiguity, false]
+      - [Unknown nucleotide (N), unknown, false]
+      type: select
+      value: vote
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22mode%22%20last_selected_value%3D%22reference%22%3E%0A%3Coption%20value%3D%22reference%22%20selected%3EUse%20reference%20nucleotide%3C/option%3E%0A%3Coption%20value%3D%22unknown%22%3EUnknown%20nucleotide%20%28N%29%20%3C/option%3E%0A%3Coption%20value%3D%22none%22%3EDo%20not%20use%20any%20character%2C%20i.e.%20remove%20zero%20coverage%20regions%20in%20consensus%20sequences%20%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Set how regions with zero coverage is written in the consensus sequences
+      model_class: SelectToolParameter
+      multiple: false
+      name: mode
+      optional: false
+      options:
+      - [Use reference nucleotide, reference, true]
+      - ['Unknown nucleotide (N) ', unknown, false]
+      - ['Do not use any character, i.e. remove zero coverage regions in consensus
+          sequences ', none, false]
+      type: select
+      value: reference
+    model_class: ConditionalWhen
+    value: consensus
+  model_class: Conditional
+  name: consensus_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22consensus_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22noConsensus%22%3E%0A%3Coption%20value%3D%22consensus%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22noConsensus%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Output consensus sequences to a fasta file
+    model_class: SelectToolParameter
+    multiple: false
+    name: consensus_selector
+    optional: false
+    options:
+    - ['Yes', consensus, false]
+    - ['No', noConsensus, true]
+    type: select
+    value: noConsensus
+  type: conditional
+- cases:
+  - inputs:
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: noCount
+      - inputs:
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22countNb%22%20size%3D%2210%22%20value%3D%221%22%3E',
+          is_dynamic: false, label: Show information when more than a given number
+            of reads is different from the consensus. Can only be used with the verbose
+            option set to true, max: null, min: null, model_class: IntegerToolParameter,
+          name: countNb, optional: false, size: null, type: integer, value: '1'}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fraction%22%20size%3D%2210%22%20value%3D%221.0%22%3E',
+          is_dynamic: false, label: Show information when more than a given fraction
+            of reads is different from the consensus. Can only be used  with the verbose
+            and the count options set to true, max: null, min: null, model_class: FloatToolParameter,
+          name: fraction, optional: false, size: null, type: float, value: '1.0'}
+        model_class: ConditionalWhen
+        value: count
+      model_class: Conditional
+      name: count_selector
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22count_type%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22noCount%22%3E%20All%20verbose%20information%20%3C/option%3E%0A%3Coption%20value%3D%22count%22%3E%20Limit%20verbose%20information%20%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: limit the information output
+        model_class: SelectToolParameter
+        multiple: false
+        name: count_type
+        optional: false
+        options:
+        - [' All verbose information ', noCount, false]
+        - [' Limit verbose information ', count, false]
+        type: select
+        value: noCount
+      type: conditional
+    model_class: ConditionalWhen
+    value: verbose
+  - inputs:
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22quiet%22%20name%3D%22quiet%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22quiet%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: 'Quiet Mode: Outputs no information about the reported
+        sites', model_class: BooleanToolParameter, name: quiet, optional: false, truevalue: -q,
+      type: boolean, value: false}
+    model_class: ConditionalWhen
+    value: noVerbose
+  model_class: Conditional
+  name: verbose_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22verbose_choice%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22noVerbose%22%3E%0A%3Coption%20value%3D%22verbose%22%3E%20Verbose%20%3C/option%3E%0A%3Coption%20value%3D%22noVerbose%22%20selected%3ENo%20Verbose%20%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Show more information about the reported sites
+    model_class: SelectToolParameter
+    multiple: false
+    name: verbose_choice
+    optional: false
+    options:
+    - [' Verbose ', verbose, false]
+    - ['No Verbose ', noVerbose, true]
+    type: select
+    value: noVerbose
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fclc_assembly_4%2Fclc_find_variations%2F4.4.2
+min_width: -1
+model_class: Tool
+name: clc_find_variations
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: Consensus sequences
+    from clc_find_variations program, model_class: ToolOutput, name: consensusOutput}
+- {edam_format: format_2330, format: txt, hidden: false, label: 'clc_find_variation
+    for ${assembly.name}', model_class: ToolOutput, name: sdtoutputFile}
+panel_section_id: ngs:_assembly
+panel_section_name: 'NGS: Assembly package clc 4'
+target: galaxy_main
+version: 4.4.2

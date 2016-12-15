@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/DiffExpAnal/countNumber.xml
+description: Calculate the number of reads(annotations) overlapping for each transcript.
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/countNumber/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_1975]
+  extensions: [gff3]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Please choose your gff3 format file (which contains the number of overlaps).
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FcountNumber%2F1.0.0
+min_width: -1
+model_class: Tool
+name: countNumber
+outputs:
+- {edam_format: format_3475, format: csv, hidden: false, label: countNumber Output,
+  model_class: ToolOutput, name: outputCSV}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

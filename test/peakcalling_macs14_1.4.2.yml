@@ -1,0 +1,290 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/macs14/10c1d4b506be/macs14/macs14_wrapper.xml
+description: Model-based Analysis of ChIP-Seq (1.4.2)
+id: toolshed.pasteur.fr/repos/fmareuil/macs14/peakcalling_macs14/1.4.2
+inputs:
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22experiment_name%22%20size%3D%2250%22%20value%3D%22MACS14%20in%20Galaxy%22%3E',
+  is_dynamic: false, label: Experiment Name, model_class: TextToolParameter, name: experiment_name,
+  optional: false, size: '50', type: text, value: MACS14 in Galaxy}
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [elandmulti]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: ChIP-Seq Tag File 1
+      model_class: DataToolParameter
+      multiple: false
+      name: input_chipseq_file1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [elandmulti]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: ChIP-Seq Tag File 2
+      model_class: DataToolParameter
+      multiple: false
+      name: input_chipseq_file2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [elandmulti]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: ChIP-Seq Control File 1
+      model_class: DataToolParameter
+      multiple: false
+      name: input_control_file1
+      optional: true
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [elandmulti]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: ChIP-Seq Control File 2
+      model_class: DataToolParameter
+      multiple: false
+      name: input_control_file2
+      optional: true
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22petdist%22%20size%3D%2210%22%20value%3D%22200%22%3E',
+      is_dynamic: false, label: Best distance between Pair-End Tags, max: null, min: null,
+      model_class: IntegerToolParameter, name: petdist, optional: false, size: null,
+      type: integer, value: '200'}
+    model_class: ConditionalWhen
+    value: paired_end
+  - inputs:
+    - argument: null
+      edam_formats: [format_3003, format_2573, format_2572, format_3475, format_3475]
+      extensions: [bed, sam, bam, eland, elandmulti]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: ChIP-Seq Tag File
+      model_class: DataToolParameter
+      multiple: false
+      name: input_chipseq_file1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_3003, format_2573, format_2572, format_3475, format_3475]
+      extensions: [bed, sam, bam, eland, elandmulti]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: ChIP-Seq Control File
+      model_class: DataToolParameter
+      multiple: false
+      name: input_control_file1
+      optional: true
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: single_end
+  model_class: Conditional
+  name: input_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22input_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22single_end%22%3E%0A%3Coption%20value%3D%22paired_end%22%3EPaired%20End%20%28requires%20elandmulti%20format%29%3C/option%3E%0A%3Coption%20value%3D%22single_end%22%20selected%3ESingle%20End%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Paired End Sequencing
+    model_class: SelectToolParameter
+    multiple: false
+    name: input_type_selector
+    optional: false
+    options:
+    - [Paired End (requires elandmulti format), paired_end, false]
+    - [Single End, single_end, true]
+    type: select
+    value: single_end
+  type: conditional
+- {area: false, argument: null, help: 'default: 2.7e+9', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22gsize%22%20size%3D%2210%22%20value%3D%222.7e%2B9%22%3E',
+  is_dynamic: false, label: Effective genome size, max: null, min: null, model_class: FloatToolParameter,
+  name: gsize, optional: false, size: null, type: float, value: '2.7e+9'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22tsize%22%20size%3D%2210%22%20value%3D%2225%22%3E',
+  is_dynamic: false, label: Tag size, max: null, min: null, model_class: IntegerToolParameter,
+  name: tsize, optional: false, size: null, type: integer, value: '25'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22bw%22%20size%3D%2210%22%20value%3D%22300%22%3E',
+  is_dynamic: false, label: Band width, max: null, min: null, model_class: IntegerToolParameter,
+  name: bw, optional: false, size: null, type: integer, value: '300'}
+- {area: false, argument: null, help: 'default: 1e-5', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pvalue%22%20size%3D%2210%22%20value%3D%221e-5%22%3E',
+  is_dynamic: false, label: Pvalue cutoff for peak detection, max: null, min: null,
+  model_class: FloatToolParameter, name: pvalue, optional: false, size: null, type: float,
+  value: 1e-5}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22mfold%22%20size%3D%2210%22%20value%3D%2210%2C30%22%3E',
+  is_dynamic: false, label: 'Select the regions within MFOLD range of high-confidence
+    enrichment ratio against background to build model. The regions must be lower
+    than upper limit, and higher than the lower limit', model_class: TextToolParameter,
+  name: mfold, optional: false, size: null, type: text, value: '10,30'}
+- {argument: null, falsevalue: do_not_create, help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22xls_to_interval%22%20name%3D%22xls_to_interval%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22xls_to_interval%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Parse xls files into into distinct interval files, model_class: BooleanToolParameter,
+  name: xls_to_interval, optional: false, truevalue: create, type: boolean, value: false}
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22space%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+      is_dynamic: false, label: Resolution for saving wiggle files, max: null, min: null,
+      model_class: IntegerToolParameter, name: space, optional: false, size: null,
+      type: integer, value: '10'}
+    model_class: ConditionalWhen
+    value: wig
+  - inputs: []
+    model_class: ConditionalWhen
+    value: no_wig
+  model_class: Conditional
+  name: wig_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22wig_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no_wig%22%3E%0A%3Coption%20value%3D%22wig%22%3ESave%3C/option%3E%0A%3Coption%20value%3D%22no_wig%22%20selected%3EDo%20not%20create%20wig%20file%20%28faster%29%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Save shifted raw tag count at every bp into a wiggle file
+    model_class: SelectToolParameter
+    multiple: false
+    name: wig_type_selector
+    optional: false
+    options:
+    - [Save, wig, false]
+    - [Do not create wig file (faster), no_wig, true]
+    type: select
+    value: no_wig
+  type: conditional
+- {argument: null, falsevalue: '', help: up to 9X more time consuming, hidden: false,
+  html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22nolambda%22%20name%3D%22nolambda%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22nolambda%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Use fixed background lambda as local lambda for every
+    peak region, model_class: BooleanToolParameter, name: nolambda, optional: false,
+  truevalue: --nolambda, type: boolean, value: false}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22slocal%22%20size%3D%2210%22%20value%3D%221000%22%3E',
+  is_dynamic: false, label: The small nearby region in basepairs to calculate dynamic
+    lambda. This is used to capture the bias near the peak summit region. Invalid
+    if there is no control data, model_class: TextToolParameter, name: slocal, optional: false,
+  size: '10', type: text, value: '1000'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22llocal%22%20size%3D%2210%22%20value%3D%2210000%22%3E',
+  is_dynamic: false, label: The large nearby region in basepairs to calculate dynamic
+    lambda. This is used to capture the surround bias, model_class: TextToolParameter,
+  name: llocal, optional: false, size: '10', type: text, value: '10000'}
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22shiftsize%22%20size%3D%2210%22%20value%3D%22100%22%3E',
+      is_dynamic: false, label: Arbitrary shift size in bp, max: null, min: null,
+      model_class: IntegerToolParameter, name: shiftsize, optional: false, size: null,
+      type: integer, value: '100'}
+    model_class: ConditionalWhen
+    value: nomodel
+  - inputs: []
+    model_class: ConditionalWhen
+    value: create_model
+  model_class: Conditional
+  name: nomodel_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22nomodel_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22create_model%22%3E%0A%3Coption%20value%3D%22nomodel%22%3EDo%20not%20build%20the%20shifting%20model%3C/option%3E%0A%3Coption%20value%3D%22create_model%22%20selected%3EBuild%20the%20shifting%20model%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Build Model
+    model_class: SelectToolParameter
+    multiple: false
+    name: nomodel_type_selector
+    optional: false
+    options:
+    - [Do not build the shifting model, nomodel, false]
+    - [Build the shifting model, create_model, true]
+    type: select
+    value: create_model
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fe-min%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Min fold enrichment to consider, max: null, min: null,
+      model_class: IntegerToolParameter, name: fe-min, optional: false, size: null,
+      type: integer, value: '0'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fe-max%22%20size%3D%2210%22%20value%3D%2232%22%3E',
+      is_dynamic: false, label: Max fold enrichment to consider, max: null, min: null,
+      model_class: IntegerToolParameter, name: fe-max, optional: false, size: null,
+      type: integer, value: '32'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fe-step%22%20size%3D%2210%22%20value%3D%2220%22%3E',
+      is_dynamic: false, label: Fold enrichment step, max: null, min: null, model_class: IntegerToolParameter,
+      name: fe-step, optional: false, size: null, type: integer, value: '20'}
+    model_class: ConditionalWhen
+    value: diag
+  - inputs: []
+    model_class: ConditionalWhen
+    value: no_diag
+  model_class: Conditional
+  name: diag_type
+  test_param:
+    argument: null
+    display: null
+    help: up to 9X more time consuming
+    hidden: false
+    html: '%3Cselect%20name%3D%22diag_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no_diag%22%3E%0A%3Coption%20value%3D%22diag%22%3EProduce%20a%20diagnosis%20report%3C/option%3E%0A%3Coption%20value%3D%22no_diag%22%20selected%3EDo%20not%20produce%20report%20%28faster%29%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Diagnosis report
+    model_class: SelectToolParameter
+    multiple: false
+    name: diag_type_selector
+    optional: false
+    options:
+    - [Produce a diagnosis report, diag, false]
+    - [Do not produce report (faster), no_diag, true]
+    type: select
+    value: no_diag
+  type: conditional
+- {argument: null, falsevalue: '', help: 'The default method only consider the peak
+    location, 1k, 5k, and 10k regions in the control data; whereas the new future
+    method also consider the 5k, 10k regions in treatment data to calculate local
+    bias.', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22futurefdr%22%20name%3D%22futurefdr%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22futurefdr%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Perform the new peak detection method (futurefdr), model_class: BooleanToolParameter,
+  name: futurefdr, optional: false, truevalue: --futurefdr, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fmacs14%2Fpeakcalling_macs14%2F1.4.2
+min_width: -1
+model_class: Tool
+name: MACS14
+outputs:
+- {edam_format: format_3003, format: bed, hidden: false, label: '${tool.name} on ${on_string}
+    (peaks: bed)', model_class: ToolOutput, name: output_bed_file}
+- {edam_format: format_3475, format: interval, hidden: false, label: '${tool.name}
+    on ${on_string} (peaks: interval)', model_class: ToolOutput, name: output_xls_to_interval_peaks_file}
+- {edam_format: format_3475, format: interval, hidden: false, label: '${tool.name}
+    on ${on_string} (negative peaks: interval)', model_class: ToolOutput, name: output_xls_to_interval_negative_peaks_file}
+- {edam_format: format_3005, format: wig, hidden: false, label: '${tool.name} on ${on_string}
+    (treatment: wig)', model_class: ToolOutput, name: output_treatment_wig_file}
+- {edam_format: format_3005, format: wig, hidden: false, label: '${tool.name} on ${on_string}
+    (control: wig)', model_class: ToolOutput, name: output_control_wig_file}
+- {edam_format: format_2331, format: html, hidden: false, label: '${tool.name} on
+    ${on_string} (html report)', model_class: ToolOutput, name: output_extra_files}
+panel_section_id: peak_calling
+panel_section_name: 'NGS: Peak Calling/ChIP-seq'
+target: galaxy_main
+version: 1.4.2

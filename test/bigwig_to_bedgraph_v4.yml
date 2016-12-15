@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/biwigtobed/4b6598cf6195/biwigtobed/bigwig_to_bedgraph.xml
+description: Convert from bigWig to bedGraph format
+id: toolshed.pasteur.fr/repos/fmareuil/biwigtobed/bigwig_to_bedgraph/v4
+inputs:
+- argument: null
+  edam_formats: [format_3006]
+  extensions: [bigwig]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: bigwig file to convert
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fbiwigtobed%2Fbigwig_to_bedgraph%2Fv4
+min_width: -1
+model_class: Tool
+name: bigWigToBedGraph
+outputs:
+- {edam_format: format_3475, format: bedgraph, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+panel_section_id: convert
+panel_section_name: Convert Formats
+target: galaxy_main
+version: v4

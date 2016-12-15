@@ -1,0 +1,45 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/stampy_mapper/a95bc243181e/stampy_mapper/stampy_genome_indexer.xml
+description: Stampy genome indexer for divergent genomes
+id: toolshed.pasteur.fr/repos/fmareuil/stampy_mapper/stampy_indexer/1.0.20
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Select a reference genome dataset (fasta) from history
+  model_class: DataToolParameter
+  multiple: false
+  name: ref_genome
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22species_name%22%20size%3D%2232%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Species name, model_class: TextToolParameter, name: species_name,
+  optional: false, size: '32', type: text, value: null}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22assembly_version%22%20size%3D%2232%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Assembly version of the reference genome to help you keep
+    track of what you have done, model_class: TextToolParameter, name: assembly_version,
+  optional: false, size: '32', type: text, value: null}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxcount%22%20size%3D%2210%22%20value%3D%22200%22%3E',
+  is_dynamic: false, label: Maximum multiplicity of repeat words, max: null, min: 0,
+  model_class: IntegerToolParameter, name: maxcount, optional: false, size: null,
+  type: integer, value: '200'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22out_prefix_string%22%20size%3D%2232%22%20value%3D%22Stampy%20index%22%3E',
+  is_dynamic: false, label: Title for the output dataset - to remind you what the
+    job was for, model_class: TextToolParameter, name: out_prefix_string, optional: false,
+  size: '32', type: text, value: Stampy index}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fstampy_mapper%2Fstampy_indexer%2F1.0.20
+min_width: -1
+model_class: Tool
+name: Stampy genome indexer
+outputs:
+- {edam_format: format_2330, format: stampy_index, hidden: false, label: $out_prefix_string,
+  model_class: ToolOutput, name: log_file}
+panel_section_id: solexa_tools
+panel_section_name: 'NGS: Mapping'
+target: galaxy_main
+version: 1.0.20

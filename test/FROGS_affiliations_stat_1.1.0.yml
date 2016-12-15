@@ -1,0 +1,87 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/frogs/36109d143f38/frogs/affiliations_stat.xml
+description: Process some metrics on taxonomies.
+id: toolshed.pasteur.fr/repos/mvalade/frogs/FROGS_affiliations_stat/1.1.0
+inputs:
+- argument: null
+  edam_formats: [format_3464]
+  extensions: [biom1]
+  help: 'OTUs abundances and affiliations (format: BIOM).'
+  hidden: false
+  is_dynamic: false
+  label: Abundance file
+  model_class: DataToolParameter
+  multiple: false
+  name: biom
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: The ranks that will be evaluated in rarefaction.
+    Each rank is separated by one space., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rarefaction_ranks%22%20size%3D%2280%22%20value%3D%22Class%20Order%20Family%20Genus%20Species%22%3E',
+  is_dynamic: false, label: Rarefaction ranks, model_class: TextToolParameter, name: rarefaction_ranks,
+  optional: false, size: '80', type: text, value: Class Order Family Genus Species}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: FROGS_blast
+  - inputs: []
+    model_class: ConditionalWhen
+    value: FROGS_rdp
+  - inputs:
+    - {area: false, argument: null, help: The ordered taxonomic ranks levels stored
+        in BIOM. Each rank is separated by one space., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22taxonomic_ranks%22%20size%3D%2280%22%20value%3D%22Domain%20Phylum%20Class%20Order%20Family%20Genus%20Species%22%3E',
+      is_dynamic: false, label: Taxonomic ranks, model_class: TextToolParameter, name: taxonomic_ranks,
+      optional: false, size: '80', type: text, value: Domain Phylum Class Order Family
+        Genus Species}
+    - {area: false, argument: null, help: The metadata title in BIOM for the taxonomy.,
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22taxonomy_tag%22%20size%3D%2220%22%20value%3D%22taxonomy%22%3E',
+      is_dynamic: false, label: Taxonomy tag, model_class: TextToolParameter, name: taxonomy_tag,
+      optional: false, size: '20', type: text, value: taxonomy}
+    - {area: false, argument: null, help: The metadata title in BIOM for the taxonomy
+        bootstrap., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22bootstrap_tag%22%20size%3D%2220%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Bootstrap tag, model_class: TextToolParameter, name: bootstrap_tag,
+      optional: false, size: '20', type: text, value: ''}
+    - {area: false, argument: null, help: The metadata tag used in BIOM file to store
+        the alignment identity., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22identity_tag%22%20size%3D%2220%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Identity tag, model_class: TextToolParameter, name: identity_tag,
+      optional: false, size: '20', type: text, value: ''}
+    - {area: false, argument: null, help: The metadata tag used in BIOM file to store
+        the alignment OTUs coverage., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22coverage_tag%22%20size%3D%2220%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Coverage tag, model_class: TextToolParameter, name: coverage_tag,
+      optional: false, size: '20', type: text, value: ''}
+    model_class: ConditionalWhen
+    value: custom
+  model_class: Conditional
+  name: affiliation
+  test_param:
+    argument: null
+    display: null
+    help: 'Select the type of affiliation processed. If your affiliation has been
+      processed with an external tool: use ''Custom''.'
+    hidden: false
+    html: '%3Cselect%20name%3D%22affiliation_type%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22FROGS_blast%22%3E%0A%3Coption%20value%3D%22FROGS_blast%22%20selected%3EFROGS%20blast%3C/option%3E%0A%3Coption%20value%3D%22FROGS_rdp%22%3EFROGS%20rdp%3C/option%3E%0A%3Coption%20value%3D%22custom%22%3ECustom%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Affiliation processed
+    model_class: SelectToolParameter
+    multiple: false
+    name: affiliation_type
+    optional: false
+    options:
+    - [FROGS blast, FROGS_blast, true]
+    - [FROGS rdp, FROGS_rdp, false]
+    - [Custom, custom, false]
+    type: select
+    value: FROGS_blast
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Ffrogs%2FFROGS_affiliations_stat%2F1.1.0
+min_width: -1
+model_class: Tool
+name: FROGS Affiliations stat
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '${tool.name}: summary.html',
+  model_class: ToolOutput, name: summary_file}
+panel_section_id: frogs_metagenomic_pipeline
+panel_section_name: FROGS Metagenomic pipeline
+target: galaxy_main
+version: 1.1.0

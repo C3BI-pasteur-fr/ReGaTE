@@ -1,0 +1,195 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/sartools_1_1_0/209010f548ed/sartools_1_1_0/abims_sartools_edger.xml
+description: Compare two or more biological conditions in a RNA-Seq framework with
+  edgeR
+id: toolshed.pasteur.fr/repos/fmareuil/sartools_1_1_0/sartools_edger/0.99.2
+inputs:
+- {area: false, argument: null, help: '(-P, --projectName)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22projectName%22%20size%3D%2210%22%20value%3D%22Project%22%3E',
+  is_dynamic: false, label: Name of the project used for the report, model_class: TextToolParameter,
+  name: projectName, optional: false, size: null, type: text, value: Project}
+- {area: false, argument: null, help: '(-A, --author)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22author%22%20size%3D%2210%22%20value%3D%22Galaxy%22%3E',
+  is_dynamic: false, label: Name of the report author, model_class: TextToolParameter,
+  name: author, optional: false, size: null, type: text, value: Galaxy}
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: (-t, --targetFile) See the help section below for details on the required
+    format.
+  hidden: false
+  is_dynamic: false
+  label: Design / target file
+  model_class: DataToolParameter
+  multiple: false
+  name: targetFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_2333]
+  extensions: [no_unzip.zip]
+  help: (-r, --rawDir) See the help section below for details on the required format.
+  hidden: false
+  is_dynamic: false
+  label: Zip file containing raw counts files
+  model_class: DataToolParameter
+  multiple: false
+  name: rawDir
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '(-F, --featuresToRemove) Separate the features
+    with a comma, no space allowed. More than once can be specified. Specific HTSeq-count
+    information and rRNA for example. Default are ''alignment_not_unique,ambiguous,no_feature,not_aligned,too_low_aQual''.',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22featuresToRemove%22%20size%3D%22100%22%20value%3D%22alignment_not_unique%2Cambiguous%2Cno_feature%2Cnot_aligned%2Ctoo_low_aQual%22%3E',
+  is_dynamic: false, label: Names of the features to be removed, model_class: TextToolParameter,
+  name: featuresToRemove, optional: false, size: '100', type: text, value: 'alignment_not_unique,ambiguous,no_feature,not_aligned,too_low_aQual'}
+- {area: false, argument: null, help: '(-v, --varInt) Biological condition in the
+    target file. Default is ''group''.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22varInt%22%20size%3D%2210%22%20value%3D%22group%22%3E',
+  is_dynamic: false, label: Factor of interest, model_class: TextToolParameter, name: varInt,
+  optional: false, size: null, type: text, value: group}
+- {area: false, argument: null, help: '(-c, --condRef) Reference biological condition
+    used to compute fold-changes, must be one of the levels of ''Factor of interest''.',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22condRef%22%20size%3D%2210%22%20value%3D%22WT%22%3E',
+  is_dynamic: false, label: Reference biological condition, model_class: TextToolParameter,
+  name: condRef, optional: false, size: null, type: text, value: WT}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: hide
+  - inputs:
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'NULL'
+      - inputs:
+        - {area: false, argument: null, help: Must be a column of the target file,
+          hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22batch%22%20size%3D%2210%22%20value%3D%22batch%22%3E',
+          is_dynamic: false, label: Blocking factor value, model_class: TextToolParameter,
+          name: batch, optional: false, size: null, type: text, value: batch}
+        model_class: ConditionalWhen
+        value: batch
+      model_class: Conditional
+      name: batch_condition
+      test_param: {argument: null, falsevalue: 'NULL', help: '(-b, --batch) Adjustment
+          variable to use as a batch effect. Default: unchecked if no batch effect
+          needs to be taken into account.', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22condition%22%20name%3D%22condition%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22condition%22%20value%3D%22true%22%3E',
+        is_dynamic: false, label: Add a blocking factor, model_class: BooleanToolParameter,
+        name: condition, optional: false, truevalue: batch, type: boolean, value: false}
+      type: conditional
+    - {area: false, argument: null, help: '(-a, --alpha) Significance threshold applied
+        to the adjusted p-values to select the differentially expressed features.
+        Default is 0.05. The comma is not allowed as decimal separator, use a point
+        instead.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22alpha%22%20size%3D%2210%22%20value%3D%220.05%22%3E',
+      is_dynamic: false, label: Threshold of statistical significance, max: 1.0, min: 0.0,
+      model_class: FloatToolParameter, name: alpha, optional: false, size: null, type: float,
+      value: '0.05'}
+    - argument: null
+      display: null
+      help: (-p, --pAdjustMethod) p-value adjustment method for multiple testing.
+        'BH' by default, 'BY' or any value of p.adjust.methods.
+      hidden: false
+      html: '%3Cselect%20name%3D%22pAdjustMethod%22%20last_selected_value%3D%22BH%22%3E%0A%3Coption%20value%3D%22BH%22%20selected%3EBH%3C/option%3E%0A%3Coption%20value%3D%22BY%22%3EBY%3C/option%3E%0A%3Coption%20value%3D%22bonferroni%22%3Ebonferroni%3C/option%3E%0A%3Coption%20value%3D%22fdr%22%3Efdr%3C/option%3E%0A%3Coption%20value%3D%22hochberg%22%3Ehochberg%3C/option%3E%0A%3Coption%20value%3D%22holm%22%3Eholm%3C/option%3E%0A%3Coption%20value%3D%22hommel%22%3Ehommel%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: p-value adjustment method
+      model_class: SelectToolParameter
+      multiple: false
+      name: pAdjustMethod
+      optional: false
+      options:
+      - [BH, BH, true]
+      - [BY, BY, false]
+      - [bonferroni, bonferroni, false]
+      - [fdr, fdr, false]
+      - [hochberg, hochberg, false]
+      - [holm, holm, false]
+      - [hommel, hommel, false]
+      type: select
+      value: BH
+    - {area: false, argument: null, help: '(-m, --cpmCutoff) Set to 0 to disable filtering.
+        Default is 1.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22cpmCutoff%22%20size%3D%2210%22%20value%3D%221%22%3E',
+      is_dynamic: false, label: Counts-per-million cut-off to filter low counts, max: null,
+      min: 0, model_class: IntegerToolParameter, name: cpmCutoff, optional: false,
+      size: null, type: integer, value: '1'}
+    - argument: null
+      display: null
+      help: (-g, --gene.selection) Default is 'pairwise'.
+      hidden: false
+      html: '%3Cselect%20name%3D%22geneSelection%22%20last_selected_value%3D%22pairwise%22%3E%0A%3Coption%20value%3D%22pairwise%22%20selected%3Epairwise%3C/option%3E%0A%3Coption%20value%3D%22common%22%3Ecommon%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Selection of the features in MDSPlot
+      model_class: SelectToolParameter
+      multiple: false
+      name: geneSelection
+      optional: false
+      options:
+      - [pairwise, pairwise, true]
+      - [common, common, false]
+      type: select
+      value: pairwise
+    - argument: null
+      display: null
+      help: (-n, --normalizationMethod) 'TMM' (default), 'RLE' (DESeq method) or 'upperquartile'.
+      hidden: false
+      html: '%3Cselect%20name%3D%22normalizationMethod%22%20last_selected_value%3D%22TMM%22%3E%0A%3Coption%20value%3D%22TMM%22%20selected%3ETMM%3C/option%3E%0A%3Coption%20value%3D%22RLE%22%3ERLE%3C/option%3E%0A%3Coption%20value%3D%22upperquartile%22%3Eupperquartile%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Normalization method in calcNormFactors
+      model_class: SelectToolParameter
+      multiple: false
+      name: normalizationMethod
+      optional: false
+      options:
+      - [TMM, TMM, true]
+      - [RLE, RLE, false]
+      - [upperquartile, upperquartile, false]
+      type: select
+      value: TMM
+    - {area: false, argument: null, help: '(-C, --colors) Separate the colors with
+        a comma, no space allowed. Default are ''dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange''.',
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22colors%22%20size%3D%22100%22%20value%3D%22dodgerblue%2Cfirebrick1%2CMediumVioletRed%2CSpringGreen%2Cchartreuse%2Ccyan%2Cdarkorchid%2Cdarkorange%22%3E',
+      is_dynamic: false, label: 'Colors of each biological condition on the plots:
+        ''col1,col2,col3,col4''', model_class: TextToolParameter, name: colors, optional: false,
+      size: '100', type: text, value: 'dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange'}
+    model_class: ConditionalWhen
+    value: show
+  model_class: Conditional
+  name: advanced_parameters
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22adv_param%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22hide%22%3E%0A%3Coption%20value%3D%22hide%22%20selected%3EHide%3C/option%3E%0A%3Coption%20value%3D%22show%22%3EShow%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Advanced Parameters
+    model_class: SelectToolParameter
+    multiple: false
+    name: adv_param
+    optional: false
+    options:
+    - [Hide, hide, true]
+    - [Show, show, false]
+    type: select
+    value: hide
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fsartools_1_1_0%2Fsartools_edger%2F0.99.2
+min_width: -1
+model_class: Tool
+name: SARTools edgeR
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '${tool.name} report',
+  model_class: ToolOutput, name: report_html}
+- {edam_format: format_2331, format: html, hidden: false, label: '${tool.name} tables',
+  model_class: ToolOutput, name: tables_html}
+- {edam_format: format_2331, format: html, hidden: false, label: '${tool.name} figures',
+  model_class: ToolOutput, name: figures_html}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} R log',
+  model_class: ToolOutput, name: log}
+- {edam_format: format_1915, format: data, hidden: false, label: '${tool.name} R objects
+    (.RData)', model_class: ToolOutput, name: rdata}
+panel_section_id: ngs-rna-tools
+panel_section_name: 'NGS: RNA Analysis'
+target: galaxy_main
+version: 0.99.2

@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.g2.bx.psu.edu/repos/devteam/fastx_nucleotides_distribution/63d6e2daad48/fastx_nucleotides_distribution/fastx_nucleotides_distribution.xml
+description: ''
+id: toolshed.g2.bx.psu.edu/repos/devteam/fastx_nucleotides_distribution/cshl_fastx_nucleotides_distribution/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: output of 'FASTX Statistics' tool
+  hidden: false
+  is_dynamic: false
+  label: Statistics Text File
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Fdevteam%2Ffastx_nucleotides_distribution%2Fcshl_fastx_nucleotides_distribution%2F1.0.0
+min_width: -1
+model_class: Tool
+name: Draw nucleotides distribution chart
+outputs:
+- {edam_format: format_3547, format: png, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: 1.0.0

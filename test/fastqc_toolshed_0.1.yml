@@ -1,0 +1,69 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/screno/fastqc/deaf60d5838c/fastqc/fastqc.xml
+description: reports from FastQC with option for long reads
+id: toolshed.pasteur.fr/repos/screno/fastqc/fastqc_toolshed/0.1
+inputs:
+- argument: null
+  edam_formats: [format_1932, format_1930, format_2572, format_2573]
+  extensions: [fastqsanger, fastq, bam, sam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Short read data from your current history
+  model_class: DataToolParameter
+  multiple: false
+  name: input_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: 'Letters, numbers and _ only please - other
+    characters will be removed', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22out_prefix%22%20size%3D%2230%22%20value%3D%22FastQC%22%3E',
+  is_dynamic: false, label: Title for the output file - to remind you what the job
+    was for, model_class: TextToolParameter, name: out_prefix, optional: false, size: '30',
+  type: text, value: FastQC}
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: 'tab delimited file with 2 columns: name and sequence.  For example: Illumina
+    Small RNA RT Primer CAAGCAGAAGACGGCATACGA'
+  hidden: false
+  is_dynamic: false
+  label: Contaminant list
+  model_class: DataToolParameter
+  multiple: false
+  name: contaminants
+  optional: true
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: 'WARNING: Using this option will cause fastqc to crash and burn if you use
+    it on really long reads, and your plots may end up a ridiculous size. You have
+    been warned!'
+  hidden: false
+  html: '%3Cselect%20name%3D%22group%22%20last_selected_value%3D%22group%22%3E%0A%3Coption%20value%3D%22group%22%20selected%3EGroup%20bases%20for%20reads%20%26gt%3B50bp%3C/option%3E%0A%3Coption%20value%3D%22nogroup%22%3EShow%20data%20for%20every%20base%20in%20the%20read%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Plot option
+  model_class: SelectToolParameter
+  multiple: false
+  name: group
+  optional: false
+  options:
+  - [Group bases for reads >50bp, group, true]
+  - [Show data for every base in the read, nogroup, false]
+  type: select
+  value: group
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fscreno%2Ffastqc%2Ffastqc_toolshed%2F0.1
+min_width: -1
+model_class: Tool
+name: FastQC for long read
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '${out_prefix} on
+    ${input_file.name[0:30]}', model_class: ToolOutput, name: html_file}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: '0.1'

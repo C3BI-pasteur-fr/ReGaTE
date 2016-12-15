@@ -1,0 +1,95 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "bam_to_bigwig-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.1.0", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/bam_to_bigwig/bam_to_bigwig/0.1.0", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "bigwig", 
+                    "dataDescription": "out", 
+                    "data": {
+                        "term": "Annotation track", 
+                        "uri": "http://edamontology.org/data_3002"
+                    }, 
+                    "format": [
+                        {
+                            "term": "bigWig", 
+                            "uri": "http://edamontology.org/format_3006"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Calculates coverage from a BAM alignment file", 
+            "input": [
+                {
+                    "dataHandle": "align", 
+                    "dataDescription": "BAM alignment file", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Calculates coverage from a BAM alignment file.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/bam_to_bigwig/bam_to_bigwig/0.1.0", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/bam_to_bigwig/bam_to_bigwig/0.1.0\"", 
+            "usesVersion": "0.1.0"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "bam_to_bigwig-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.1.0", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

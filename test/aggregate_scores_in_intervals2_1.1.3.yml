@@ -1,0 +1,84 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/stats/aggregate_binned_scores_in_intervals.xml
+description: such as phastCons, GERP, binCons, and others for a set of genomic intervals
+id: aggregate_scores_in_intervals2
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [interval]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Interval file
+  model_class: DataToolParameter
+  multiple: false
+  name: input1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs:
+    - argument: null
+      display: radio
+      help: ''
+      hidden: false
+      is_dynamic: true
+      label: Available datasets
+      model_class: SelectToolParameter
+      multiple: false
+      name: datasets
+      optional: false
+      options: []
+      type: select
+    model_class: ConditionalWhen
+    value: cached
+  - inputs:
+    - argument: null
+      edam_formats: [format_3005]
+      extensions: [wig]
+      help: ''
+      hidden: false
+      is_dynamic: true
+      label: Score file
+      model_class: DataToolParameter
+      multiple: false
+      name: input2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: user
+  model_class: Conditional
+  name: score_source_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22score_source%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22cached%22%3E%0A%3Coption%20value%3D%22cached%22%20selected%3ELocally%20Cached%20Scores%3C/option%3E%0A%3Coption%20value%3D%22user%22%3EScores%20in%20Your%20History%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Score Source
+    model_class: SelectToolParameter
+    multiple: false
+    name: score_source
+    optional: false
+    options:
+    - [Locally Cached Scores, cached, true]
+    - [Scores in Your History, user, false]
+    type: select
+    value: cached
+  type: conditional
+link: /tool_runner?tool_id=aggregate_scores_in_intervals2
+min_width: -1
+model_class: Tool
+name: Aggregate datapoints
+outputs:
+- {edam_format: format_3475, format: interval, hidden: false, label: '', model_class: ToolOutput,
+  name: out_file1}
+panel_section_id: scores
+panel_section_name: Get Genomic Scores
+target: galaxy_main
+version: 1.1.3

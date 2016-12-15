@@ -1,0 +1,55 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/makestatschipseq/f5a2d6fe4637/makestatschipseq/makeStatsChIPSeq_wrapper.xml
+description: ''
+id: toolshed.pasteur.fr/repos/fmareuil/makestatschipseq/makeStatsChIPSeq/1.0
+inputs:
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: 'ChIP: File with peaks'
+  model_class: DataToolParameter
+  multiple: false
+  name: inputfile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: 'Control: File with peaks'
+  model_class: DataToolParameter
+  multiple: false
+  name: controlfile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minHeight%22%20size%3D%2210%22%20value%3D%223%22%3E',
+  is_dynamic: false, label: Minimal peak height to consider, max: null, min: null,
+  model_class: IntegerToolParameter, name: minHeight, optional: false, size: null,
+  type: integer, value: '3'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxHeight%22%20size%3D%2210%22%20value%3D%2250%22%3E',
+  is_dynamic: false, label: Maximal peak height to consider, max: null, min: null,
+  model_class: IntegerToolParameter, name: maxHeight, optional: false, size: null,
+  type: integer, value: '50'}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fmakestatschipseq%2FmakeStatsChIPSeq%2F1.0
+min_width: -1
+model_class: Tool
+name: Get peak height distribution
+outputs:
+- {edam_format: format_3547, format: png, hidden: false, label: Peak height distribution
+    (png), model_class: ToolOutput, name: outputPNG}
+- {edam_format: format_3475, format: tabular, hidden: false, label: Peak height distribution
+    (stats), model_class: ToolOutput, name: stats}
+panel_section_id: nebula_tools
+panel_section_name: ChIP-SEQ Analysis Nebula Tools, Institut Curie
+target: galaxy_main
+version: '1.0'

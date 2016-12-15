@@ -1,0 +1,368 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/mbwa_map/1402c49f84d5/mbwa_map/mbwa_wrapper.xml
+description: mpi version of bwa 0.7.4. to map illumina fastq files
+id: toolshed.pasteur.fr/repos/fmareuil/mbwa_map/mbwa_wrapper/0.7.4
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: If your genome of interest is not listed, contact the Galaxy team. For
+        more informations about genomes, see https://biomaj.it.pasteur.fr/BmajWatcher/
+      hidden: false
+      html: '%3Cselect%20name%3D%22indices%22%3E%0A%3Coption%20value%3D%22btaurus%22%3Ebtaurus%3C/option%3E%0A%3Coption%20value%3D%22calbicans5314%22%3Ecalbicans5314%3C/option%3E%0A%3Coption%20value%3D%22calbicansWO1%22%3EcalbicansWO1%3C/option%3E%0A%3Coption%20value%3D%22cfamiliaris%22%3Ecfamiliaris%3C/option%3E%0A%3Coption%20value%3D%22chiroptera%22%3Echiroptera%3C/option%3E%0A%3Coption%20value%3D%22cneoformansH99%22%3EcneoformansH99%3C/option%3E%0A%3Coption%20value%3D%22cneoformansJEC21%22%3EcneoformansJEC21%3C/option%3E%0A%3Coption%20value%3D%22csabaeus%22%3Ecsabaeus%3C/option%3E%0A%3Coption%20value%3D%22dmelanogaster%22%3Edmelanogaster%3C/option%3E%0A%3Coption%20value%3D%22ecaballus%22%3Eecaballus%3C/option%3E%0A%3Coption%20value%3D%22fcatus%22%3Efcatus%3C/option%3E%0A%3Coption%20value%3D%22hg18%22%3Ehg18%3C/option%3E%0A%3Coption%20value%3D%22hg19%22%3Ehg19%3C/option%3E%0A%3Coption%20value%3D%22mlucifugus%22%3Emlucifugus%3C/option%3E%0A%3Coption%20value%3D%22mm10%22%3Emm10%3C/option%3E%0A%3Coption%20value%3D%22mm8%22%3Emm8%3C/option%3E%0A%3Coption%20value%3D%22mm9%22%3Emm9%3C/option%3E%0A%3Coption%20value%3D%22pfalciparum%22%3Epfalciparum%3C/option%3E%0A%3Coption%20value%3D%22pvampyrus%22%3Epvampyrus%3C/option%3E%0A%3Coption%20value%3D%22pvivax%22%3Epvivax%3C/option%3E%0A%3Coption%20value%3D%22scerevisiae%22%3Escerevisiae%3C/option%3E%0A%3Coption%20value%3D%22spombe%22%3Espombe%3C/option%3E%0A%3Coption%20value%3D%22sscrofa%22%3Esscrofa%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: Select a reference genome
+      model_class: SelectToolParameter
+      multiple: false
+      name: indices
+      optional: false
+      options:
+      - [btaurus, btaurus, false]
+      - [calbicans5314, calbicans5314, false]
+      - [calbicansWO1, calbicansWO1, false]
+      - [cfamiliaris, cfamiliaris, false]
+      - [chiroptera, chiroptera, false]
+      - [cneoformansH99, cneoformansH99, false]
+      - [cneoformansJEC21, cneoformansJEC21, false]
+      - [csabaeus, csabaeus, false]
+      - [dmelanogaster, dmelanogaster, false]
+      - [ecaballus, ecaballus, false]
+      - [fcatus, fcatus, false]
+      - [hg18, hg18, false]
+      - [hg19, hg19, false]
+      - [mlucifugus, mlucifugus, false]
+      - [mm10, mm10, false]
+      - [mm8, mm8, false]
+      - [mm9, mm9, false]
+      - [pfalciparum, pfalciparum, false]
+      - [pvampyrus, pvampyrus, false]
+      - [pvivax, pvivax, false]
+      - [scerevisiae, scerevisiae, false]
+      - [spombe, spombe, false]
+      - [sscrofa, sscrofa, false]
+      type: select
+      value: btaurus
+    model_class: ConditionalWhen
+    value: indexed
+  - inputs:
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select a reference from history
+      model_class: DataToolParameter
+      multiple: false
+      name: ownFile
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: history
+  model_class: Conditional
+  name: genomeSource
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22refGenomeSource%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22indexed%22%3EUse%20a%20built-in%20index%3C/option%3E%0A%3Coption%20value%3D%22history%22%3EUse%20one%20from%20the%20history%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Will you select a reference genome from your history or use a built-in
+      index?
+    model_class: SelectToolParameter
+    multiple: false
+    name: refGenomeSource
+    optional: false
+    options:
+    - [Use a built-in index, indexed, false]
+    - [Use one from the history, history, false]
+    type: select
+    value: indexed
+  type: conditional
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1932, format_1931]
+      extensions: [fastqsanger, fastqillumina]
+      help: FASTQ with either Sanger-scaled quality values (fastqsanger) or Illumina-scaled
+        quality values (fastqillumina)
+      hidden: false
+      is_dynamic: false
+      label: FASTQ file
+      model_class: DataToolParameter
+      multiple: false
+      name: input1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: single
+  - inputs:
+    - argument: null
+      edam_formats: [format_1932, format_1931]
+      extensions: [fastqsanger, fastqillumina]
+      help: FASTQ with either Sanger-scaled quality values (fastqsanger) or Illumina-scaled
+        quality values (fastqillumina)
+      hidden: false
+      is_dynamic: false
+      label: Forward FASTQ file
+      model_class: DataToolParameter
+      multiple: false
+      name: input1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_1932, format_1931]
+      extensions: [fastqsanger, fastqillumina]
+      help: FASTQ with either Sanger-scaled quality values (fastqsanger) or Illumina-scaled
+        quality values (fastqillumina)
+      hidden: false
+      is_dynamic: false
+      label: Reverse FASTQ file
+      model_class: DataToolParameter
+      multiple: false
+      name: input2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: paired
+  model_class: Conditional
+  name: paired
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22sPaired%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22single%22%3ESingle-end%3C/option%3E%0A%3Coption%20value%3D%22paired%22%3EPaired-end%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Is this library mate-paired?
+    model_class: SelectToolParameter
+    multiple: false
+    name: sPaired
+    optional: false
+    options:
+    - [Single-end, single, false]
+    - [Paired-end, paired, false]
+    type: select
+    value: single
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: pre_set
+  - inputs:
+    - {area: false, argument: null, help: 'Enter this value OR a fraction of missing
+        alignments, not both', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxEditDist%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Maximum edit distance (aln -n), max: null, min: null,
+      model_class: IntegerToolParameter, name: maxEditDist, optional: false, size: null,
+      type: integer, value: '0'}
+    - {area: false, argument: null, help: 'Enter this value OR maximum edit distance,
+        not both', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fracMissingAligns%22%20size%3D%2210%22%20value%3D%220.04%22%3E',
+      is_dynamic: false, label: Fraction of missing alignments given 2% uniform base
+        error rate (aln -n), max: null, min: null, model_class: FloatToolParameter,
+      name: fracMissingAligns, optional: false, size: null, type: float, value: '0.04'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxGapOpens%22%20size%3D%2210%22%20value%3D%221%22%3E',
+      is_dynamic: false, label: Maximum number of gap opens (aln -o), max: null, min: null,
+      model_class: IntegerToolParameter, name: maxGapOpens, optional: false, size: null,
+      type: integer, value: '1'}
+    - {area: false, argument: null, help: -1 for k-difference mode (disallowing long
+        gaps), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxGapExtens%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+      is_dynamic: false, label: Maximum number of gap extensions (aln -e), max: null,
+      min: null, model_class: IntegerToolParameter, name: maxGapExtens, optional: false,
+      size: null, type: integer, value: '-1'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22disallowLongDel%22%20size%3D%2210%22%20value%3D%2216%22%3E',
+      is_dynamic: false, label: 'Disallow long deletion within [value] bp towards
+        the 3''-end (aln -d)', max: null, min: null, model_class: IntegerToolParameter,
+      name: disallowLongDel, optional: false, size: null, type: integer, value: '16'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22disallowIndel%22%20size%3D%2210%22%20value%3D%225%22%3E',
+      is_dynamic: false, label: 'Disallow insertion/deletion within [value] bp towards
+        the end (aln -i)', max: null, min: null, model_class: IntegerToolParameter,
+      name: disallowIndel, optional: false, size: null, type: integer, value: '5'}
+    - {area: false, argument: null, help: Enter -1 for infinity, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22seed%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+      is_dynamic: false, label: Number of first subsequences to take as seed (aln
+        -l), max: null, min: null, model_class: IntegerToolParameter, name: seed,
+      optional: false, size: null, type: integer, value: '-1'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxEditDistSeed%22%20size%3D%2210%22%20value%3D%222%22%3E',
+      is_dynamic: false, label: Maximum edit distance in the seed (aln -k), max: null,
+      min: null, model_class: IntegerToolParameter, name: maxEditDistSeed, optional: false,
+      size: null, type: integer, value: '2'}
+    - {area: false, argument: null, help: 'BWA will not search for suboptimal hits
+        with a score lower than [value]', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22mismatchPenalty%22%20size%3D%2210%22%20value%3D%223%22%3E',
+      is_dynamic: false, label: Mismatch penalty (aln -M), max: null, min: null, model_class: IntegerToolParameter,
+      name: mismatchPenalty, optional: false, size: null, type: integer, value: '3'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22gapOpenPenalty%22%20size%3D%2210%22%20value%3D%2211%22%3E',
+      is_dynamic: false, label: Gap open penalty (aln -O), max: null, min: null, model_class: IntegerToolParameter,
+      name: gapOpenPenalty, optional: false, size: null, type: integer, value: '11'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22gapExtensPenalty%22%20size%3D%2210%22%20value%3D%224%22%3E',
+      is_dynamic: false, label: Gap extension penalty (aln -E), max: null, min: null,
+      model_class: IntegerToolParameter, name: gapExtensPenalty, optional: false,
+      size: null, type: integer, value: '4'}
+    - {area: false, argument: null, help: 'For paired-end reads only. By default,
+        BWA only searches for suboptimal alignments if the top hit is unique. Using
+        this option has no effect on accuracy for single-end reads. It is mainly designed
+        for improving the alignment accuracy of paired-end reads. However, the pairing
+        procedure will be slowed down, especially for very short reads (~32bp)', hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22suboptAlign%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Proceed with suboptimal alignments if there are no
+        more than INT equally best hits. (aln -R), max: null, min: null, model_class: IntegerToolParameter,
+      name: suboptAlign, optional: true, size: null, type: integer, value: null}
+    - {argument: null, falsevalue: 'false', help: All hits with no more than maxDiff
+        differences will be found. This mode is much slower than the default, hidden: false,
+      html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22noIterSearch%22%20name%3D%22noIterSearch%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22noIterSearch%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Disable iterative search (aln -N), model_class: BooleanToolParameter,
+      name: noIterSearch, optional: false, truevalue: 'true', type: boolean, value: false}
+    - {area: false, argument: null, help: 'If a read has more than INT hits, the XA
+        tag will not be written', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22outputTopN%22%20size%3D%2210%22%20value%3D%223%22%3E',
+      is_dynamic: false, label: Maximum number of alignments to output in the XA tag
+        for reads paired properly (samse/sampe -n), max: null, min: null, model_class: IntegerToolParameter,
+      name: outputTopN, optional: false, size: null, type: integer, value: '3'}
+    - {area: false, argument: null, help: 'For paired-end reads only. If a read has
+        more than INT hits, the XA tag will not be written', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22outputTopNDisc%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+      is_dynamic: false, label: Maximum number of alignments to output in the XA tag
+        for disconcordant read pairs (excluding singletons) (sampe -N), max: null,
+      min: null, model_class: IntegerToolParameter, name: outputTopNDisc, optional: false,
+      size: null, type: integer, value: '10'}
+    - {area: false, argument: null, help: For paired-end reads only. Only used when
+        there are not enough good alignments to infer the distribution of insert sizes,
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxInsertSize%22%20size%3D%2210%22%20value%3D%22500%22%3E',
+      is_dynamic: false, label: Maximum insert size for a read pair to be considered
+        as being mapped properly (sampe -a), max: null, min: null, model_class: IntegerToolParameter,
+      name: maxInsertSize, optional: false, size: null, type: integer, value: '500'}
+    - {area: false, argument: null, help: For paired-end reads only. A read with more
+        occurrences will be treated as a single-end read. Reducing this parameter
+        helps faster pairing, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxOccurPairing%22%20size%3D%2210%22%20value%3D%22100000%22%3E',
+      is_dynamic: false, label: Maximum occurrences of a read for pairing (sampe -o),
+      max: null, min: null, model_class: IntegerToolParameter, name: maxOccurPairing,
+      optional: false, size: null, type: integer, value: '100000'}
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: "Required if RG specified. Read group\
+            \  IDs may be modi\uFB01ed when merging SAM \uFB01les in order to handle\
+            \ collisions.", hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgid%22%20size%3D%2225%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: "Read group identi\uFB01er (ID). Each @RG line\
+            \ must have a unique ID. The value of ID is used in the RG  tags of alignment\
+            \ records. Must be unique among all read groups in header section.", model_class: TextToolParameter,
+          name: rgid, optional: false, size: '25', type: text, value: null}
+        - {area: false, argument: null, help: Optional, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgcn%22%20size%3D%2225%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: Sequencing center that produced the read (CN),
+          model_class: TextToolParameter, name: rgcn, optional: false, size: '25',
+          type: text, value: null}
+        - {area: false, argument: null, help: Optional, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgds%22%20size%3D%2225%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: Description (DS), model_class: TextToolParameter,
+          name: rgds, optional: false, size: '25', type: text, value: null}
+        - {area: false, argument: null, help: 'Optional. ISO8601 format date or date/time,
+            like YYYY-MM-DD', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgdt%22%20size%3D%2225%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: Date that run was produced (DT), model_class: TextToolParameter,
+          name: rgdt, optional: false, size: '25', type: text, value: null}
+        - {area: false, argument: null, help: "Optional. Multi-base \uFB02ows are\
+            \ encoded in IUPAC format, and non-nucleotide \uFB02ows by  various other\
+            \ characters. Format : /\\*|[ACMGRSVTWYHKDBN]+/", hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgfo%22%20size%3D%2225%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: "Flow order (FO). The array of nucleotide bases\
+            \ that correspond to the nucleotides used for each  \uFB02ow of each read.",
+          model_class: TextToolParameter, name: rgfo, optional: false, size: '25',
+          type: text, value: null}
+        - {area: false, argument: null, help: Optional, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgks%22%20size%3D%2225%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: The array of nucleotide bases that correspond
+            to the key sequence of each read (KS), model_class: TextToolParameter,
+          name: rgks, optional: false, size: '25', type: text, value: null}
+        - {area: false, argument: null, help: Required if RG specified, hidden: false,
+          html: '%3Cinput%20type%3D%22text%22%20name%3D%22rglb%22%20size%3D%2225%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: Library name (LB), model_class: TextToolParameter,
+          name: rglb, optional: false, size: '25', type: text, value: null}
+        - {area: false, argument: null, help: Optional, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgpg%22%20size%3D%2225%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: Programs used for processing the read group (PG),
+          model_class: TextToolParameter, name: rgpg, optional: false, size: '25',
+          type: text, value: null}
+        - {area: false, argument: null, help: Optional, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgpi%22%20size%3D%2225%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: Predicted median insert size (PI), model_class: TextToolParameter,
+          name: rgpi, optional: false, size: '25', type: text, value: null}
+        - {area: false, argument: null, help: 'Required if RG specified. Valid values
+            : CAPILLARY, LS454, ILLUMINA,  SOLID, HELICOS, IONTORRENT and PACBIO',
+          hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgpl%22%20size%3D%2225%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: Platform/technology used to produce the reads
+            (PL), model_class: TextToolParameter, name: rgpl, optional: false, size: '25',
+          type: text, value: null}
+        - {area: false, argument: null, help: "Optional. Unique identi\uFB01er (e.g.\
+            \ \uFB02owcell-barcode.lane for Illumina or slide for SOLiD)", hidden: false,
+          html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgpu%22%20size%3D%2225%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: Platform unit (PU), model_class: TextToolParameter,
+          name: rgpu, optional: false, size: '25', type: text, value: null}
+        - {area: false, argument: null, help: Required if RG specified. Use pool name
+            where a pool is being sequenced, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgsm%22%20size%3D%2225%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: Sample (SM), model_class: TextToolParameter, name: rgsm,
+          optional: false, size: '25', type: text, value: null}
+        model_class: ConditionalWhen
+        value: 'yes'
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'no'
+      model_class: Conditional
+      name: readGroup
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22specReadGroup%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Specify the read group for this file? (samse/sampe -r)
+        model_class: SelectToolParameter
+        multiple: false
+        name: specReadGroup
+        optional: false
+        options:
+        - ['Yes', 'yes', false]
+        - ['No', 'no', true]
+        type: select
+        value: 'no'
+      type: conditional
+    model_class: ConditionalWhen
+    value: full
+  model_class: Conditional
+  name: params
+  test_param:
+    argument: null
+    display: null
+    help: For most mapping needs use Commonly Used settings. If you want full control
+      use Full Parameter List
+    hidden: false
+    html: '%3Cselect%20name%3D%22source_select%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22pre_set%22%3ECommonly%20Used%3C/option%3E%0A%3Coption%20value%3D%22full%22%3EFull%20Parameter%20List%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: BWA settings to use
+    model_class: SelectToolParameter
+    multiple: false
+    name: source_select
+    optional: false
+    options:
+    - [Commonly Used, pre_set, false]
+    - [Full Parameter List, full, false]
+    type: select
+    value: pre_set
+  type: conditional
+- {argument: null, falsevalue: 'false', help: BWA produces SAM with several lines
+    of header information, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22suppressHeader%22%20name%3D%22suppressHeader%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22suppressHeader%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Suppress the header in the output SAM file, model_class: BooleanToolParameter,
+  name: suppressHeader, optional: false, truevalue: 'true', type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fmbwa_map%2Fmbwa_wrapper%2F0.7.4
+min_width: -1
+model_class: Tool
+name: Parallel Map with BWA for Illumina
+outputs:
+- {edam_format: format_2573, format: sam, hidden: false, label: '${tool.name} on ${on_string}:
+    mapped reads', model_class: ToolOutput, name: output}
+panel_section_id: solexa_tools
+panel_section_name: 'NGS: Mapping'
+target: galaxy_main
+version: 0.7.4

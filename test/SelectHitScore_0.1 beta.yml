@@ -1,0 +1,63 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/afelten/microbiome_analyses/cacc5a90438f/microbiome_analyses/SelectHitScore.xml
+description: for each line in a Blast file
+id: toolshed.pasteur.fr/repos/afelten/microbiome_analyses/SelectHitScore/0.1 beta
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Blast file
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: Set a threshold for the maximum percentage by
+    which the score of a hit may fall below the best score achieved for a given read.,
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pourc%22%20size%3D%223%22%20value%3D%2215%22%3E',
+  is_dynamic: false, label: Top percent (1 - 100), max: null, min: null, model_class: IntegerToolParameter,
+  name: pourc, optional: false, size: '3', type: integer, value: '15'}
+- argument: null
+  data_ref: input
+  display: null
+  help: ''
+  hidden: false
+  is_dynamic: true
+  label: Column number of reads
+  model_class: ColumnListParameter
+  multiple: false
+  name: colname
+  numerical: false
+  optional: false
+  options: []
+  type: data_column
+- argument: null
+  data_ref: input
+  display: null
+  help: ''
+  hidden: false
+  is_dynamic: true
+  label: Column number of scores
+  model_class: ColumnListParameter
+  multiple: false
+  name: colscore
+  numerical: true
+  optional: false
+  options: []
+  type: data_column
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fafelten%2Fmicrobiome_analyses%2FSelectHitScore%2F0.1+beta
+min_width: -1
+model_class: Tool
+name: Blast-hits filter
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+panel_section_id: microbiome_analysis
+panel_section_name: Microbiome Analysis
+target: galaxy_main
+version: 0.1 beta

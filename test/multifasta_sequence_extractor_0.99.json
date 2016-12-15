@@ -1,0 +1,109 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "multifasta_sequence_extr", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.99", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/screno/pasteur_fasta_facilities/multifasta_sequence_extractor/0.99", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "fasta", 
+                    "dataDescription": "output", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Extract/Exclude one or more sequence(s) from a multifasta file using a dataset of identifiers.", 
+            "input": [
+                {
+                    "dataHandle": "fasta_file", 
+                    "dataDescription": "fasta or multifasta file", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "id_file", 
+                    "dataDescription": "ID file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Extract/Exclude one or more sequence(s) from a multifasta file using a dataset of identifiers.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/screno/pasteur_fasta_facilities/multifasta_sequence_extractor/0.99", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/screno/pasteur_fasta_facilities/multifasta_sequence_extractor/0.99\"", 
+            "usesVersion": "0.99"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "multifasta_sequence_extractor-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.99", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

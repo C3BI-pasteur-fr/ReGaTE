@@ -1,0 +1,114 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/presartools/02ff89e3416a/presartools/pre_sartools.xml
+description: generate design/target file and archive for SARTools inputs
+id: toolshed.pasteur.fr/repos/mvalade/presartools/presartools/0.1.0
+inputs:
+- cases:
+  - inputs:
+    - default: 2
+      help: null
+      inputs:
+      - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22level_name%22%20size%3D%2210%22%20value%3D%22group1%22%3E',
+        is_dynamic: false, label: Group name, model_class: TextToolParameter, name: level_name,
+        optional: false, size: null, type: text, value: group1}
+      - default: 2
+        help: null
+        inputs:
+        - argument: null
+          edam_formats: [format_2330]
+          extensions: [txt]
+          help: ''
+          hidden: false
+          is_dynamic: false
+          label: Replicate raw count
+          model_class: DataToolParameter
+          multiple: false
+          name: count_data
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        - {area: false, argument: null, help: You need to specify an unique label
+            name for your replicates., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22label%22%20size%3D%2210%22%20value%3D%22replicate1%22%3E',
+          is_dynamic: false, label: Replicate label name, model_class: TextToolParameter,
+          name: label, optional: false, size: null, type: text, value: replicate1}
+        max: __Infinity__
+        min: 2
+        model_class: Repeat
+        name: rep_counts
+        title: Raw counts
+        type: repeat
+      max: __Infinity__
+      min: 2
+      model_class: Repeat
+      name: levels
+      title: Group
+      type: repeat
+    model_class: ConditionalWhen
+    value: 'NULL'
+  - inputs:
+    - default: 2
+      help: null
+      inputs:
+      - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22level_name%22%20size%3D%2210%22%20value%3D%22group1%22%3E',
+        is_dynamic: false, label: Group name, model_class: TextToolParameter, name: level_name,
+        optional: false, size: null, type: text, value: group1}
+      - default: 2
+        help: null
+        inputs:
+        - argument: null
+          edam_formats: [format_2330]
+          extensions: [txt]
+          help: ''
+          hidden: false
+          is_dynamic: false
+          label: Replicate raw count
+          model_class: DataToolParameter
+          multiple: false
+          name: count_data
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        - {area: false, argument: null, help: You need to specify an unique label
+            name for your replicates., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22label%22%20size%3D%2210%22%20value%3D%22replicate1%22%3E',
+          is_dynamic: false, label: Replicate label name, model_class: TextToolParameter,
+          name: label, optional: false, size: null, type: text, value: replicate1}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22batch_value%22%20size%3D%2210%22%20value%3D%22day1%22%3E',
+          is_dynamic: false, label: Blocking factor, model_class: TextToolParameter,
+          name: batch_value, optional: false, size: null, type: text, value: day1}
+        max: __Infinity__
+        min: 2
+        model_class: Repeat
+        name: rep_counts
+        title: Raw counts
+        type: repeat
+      max: __Infinity__
+      min: 2
+      model_class: Repeat
+      name: levels
+      title: level
+      type: repeat
+    model_class: ConditionalWhen
+    value: batch
+  model_class: Conditional
+  name: batch_condition
+  test_param: {argument: null, falsevalue: 'NULL', help: Adjustment variable to use
+      as a batch effect (default no)., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22condition%22%20name%3D%22condition%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22condition%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Add a blocking factor, model_class: BooleanToolParameter,
+    name: condition, optional: false, truevalue: batch, type: boolean, value: false}
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Fpresartools%2Fpresartools%2F0.1.0
+min_width: -1
+model_class: Tool
+name: Preprocess files for SARTools
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: 'design file for
+    SARTools (on ${on_string})', model_class: ToolOutput, name: outfile}
+- {edam_format: format_2333, format: no_unzip.zip, hidden: false, label: 'counts files
+    for SARTools (on ${on_string})', model_class: ToolOutput, name: outarch}
+panel_section_id: ngs-rna-tools
+panel_section_name: 'NGS: RNA Analysis'
+target: galaxy_main
+version: 0.1.0

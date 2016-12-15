@@ -1,0 +1,135 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/galaxy/trimSequences.xml
+description: Remove the 5' and/or 3' adaptors of a list of reads.
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/trimSequences/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_1930]
+  extensions: [fastq]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Input fastq File
+  model_class: DataToolParameter
+  multiple: false
+  name: inputFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fivePAdaptor%22%20size%3D%2210%22%20value%3D%22None%22%3E',
+      is_dynamic: false, label: '', model_class: TextToolParameter, name: fivePAdaptor,
+      optional: false, size: null, type: text, value: None}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionFPADP
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22FPADP%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: 5'adaptor
+    model_class: SelectToolParameter
+    multiple: false
+    name: FPADP
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22threePAdaptor%22%20size%3D%2210%22%20value%3D%22None%22%3E',
+      is_dynamic: false, label: '', model_class: TextToolParameter, name: threePAdaptor,
+      optional: false, size: null, type: text, value: None}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionTPADP
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22TPADP%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: 3'adaptor
+    model_class: SelectToolParameter
+    multiple: false
+    name: TPADP
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22ErrorVal%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: ErrorVal, optional: false, size: null, type: integer, value: '0'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionError
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22Error%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: number of errors in percent
+    model_class: SelectToolParameter
+    multiple: false
+    name: Error
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- {argument: null, falsevalue: '', help: also accept indels, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22indels%22%20name%3D%22indels%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22indels%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: indels option, model_class: BooleanToolParameter, name: indels,
+  optional: false, truevalue: -d, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: 'file name where to print sequences with
+    no 5'' adaptor ', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22noAdaptor5p%22%20name%3D%22noAdaptor5p%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22noAdaptor5p%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: noAdaptor 5' option, model_class: BooleanToolParameter,
+  name: noAdaptor5p, optional: false, truevalue: -n, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: 'file name where to print sequences with
+    no 3'' adaptor ', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22noAdaptor3p%22%20name%3D%22noAdaptor3p%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22noAdaptor3p%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: noAdaptor 3' option, model_class: BooleanToolParameter,
+  name: noAdaptor3p, optional: false, truevalue: -m, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FtrimSequences%2F1.0.0
+min_width: -1
+model_class: Tool
+name: trim sequences
+outputs:
+- {edam_format: format_1930, format: fastq, hidden: false, label: '[trimSequences]
+    Output File', model_class: ToolOutput, name: outputFile}
+- {edam_format: format_1930, format: fastq, hidden: false, label: '[trimSequences]
+    noAdaptor5p File', model_class: ToolOutput, name: noAdaptorFile5p}
+- {edam_format: format_1930, format: fastq, hidden: false, label: '[trimSequences]
+    noAdaptor3p File', model_class: ToolOutput, name: noAdaptorFile3p}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

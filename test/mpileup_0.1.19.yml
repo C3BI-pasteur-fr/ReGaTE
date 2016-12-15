@@ -1,0 +1,229 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/mpileup_v2/a562454e5a44/mpileup_v2/mpileup.xml
+description: Filter bam file using mpileup on coverage and SNPs
+id: toolshed.pasteur.fr/repos/fmareuil/mpileup_v2/mpileup/0.1.19
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select your reference sequence dataset
+      model_class: DataToolParameter
+      multiple: false
+      name: file
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: ref
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22flag%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22yes%22%3Eyes%3C/option%3E%0A%3Coption%20value%3D%22no%22%20selected%3Eno%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Do you have a reference sequence?
+    model_class: SelectToolParameter
+    multiple: false
+    name: flag
+    optional: false
+    options:
+    - ['yes', 'yes', false]
+    - ['no', 'no', true]
+    type: select
+    value: 'no'
+  type: conditional
+- argument: null
+  edam_formats: [format_2572]
+  extensions: [bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Select your BAM dataset
+  model_class: DataToolParameter
+  multiple: false
+  name: bam_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: mpileup
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_depth%22%20size%3D%2210%22%20value%3D%22250%22%3E',
+      is_dynamic: false, label: maximum per-sample depth (require bcf format), max: null,
+      min: 1, model_class: IntegerToolParameter, name: max_depth, optional: false,
+      size: null, type: integer, value: '250'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22gap_opening_error%22%20size%3D%2210%22%20value%3D%2240%22%3E',
+      is_dynamic: false, label: Phred-scaled gap open sequencing error probability
+        (require bcf format), max: 90, min: 1, model_class: IntegerToolParameter,
+      name: gap_opening_error, optional: false, size: null, type: integer, value: '40'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22gap_extension_error%22%20size%3D%2210%22%20value%3D%2220%22%3E',
+      is_dynamic: false, label: Phred-scaled gap extension seq error probability (require
+        bcf format), max: 90, min: 1, model_class: IntegerToolParameter, name: gap_extension_error,
+      optional: false, size: null, type: integer, value: '20'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22coeff_homopolymer_error%22%20size%3D%2210%22%20value%3D%22100%22%3E',
+      is_dynamic: false, label: coefficient for homopolymer errors (require bcf format),
+      max: 100, min: 1, model_class: IntegerToolParameter, name: coeff_homopolymer_error,
+      optional: false, size: null, type: integer, value: '100'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_gapped_reads_for_indel%22%20size%3D%2210%22%20value%3D%221%22%3E',
+      is_dynamic: false, label: minimum gapped reads for indel candidates (require
+        bcf format), max: null, min: 1, model_class: IntegerToolParameter, name: min_gapped_reads_for_indel,
+      optional: false, size: null, type: integer, value: '1'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_frac_gapped_reads%22%20size%3D%2210%22%20value%3D%220.002%22%3E',
+      is_dynamic: false, label: minimum fraction of gapped reads for candidates (require
+        bcf format), max: 1.0, min: 0.001, model_class: FloatToolParameter, name: min_frac_gapped_reads,
+      optional: false, size: null, type: float, value: '0.002'}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_indel_calling%22%20name%3D%22no_indel_calling%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_indel_calling%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: do not perform indel calling (require bcf format),
+      model_class: BooleanToolParameter, name: no_indel_calling, optional: false,
+      truevalue: -I, type: boolean, value: false}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22per_sample_DP%22%20name%3D%22per_sample_DP%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22per_sample_DP%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: output per-sample DP (require bcf format), model_class: BooleanToolParameter,
+      name: per_sample_DP, optional: false, truevalue: -D, type: boolean, value: false}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22per_sample_SP%22%20name%3D%22per_sample_SP%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22per_sample_SP%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: 'output per-sample SP (strand bias P-value, slow)
+        (require bcf format)', model_class: BooleanToolParameter, name: per_sample_SP,
+      optional: false, truevalue: -S, type: boolean, value: false}
+    model_class: ConditionalWhen
+    value: bcf
+  model_class: Conditional
+  name: outputformat
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22flag%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22bcf%22%3E%0A%3Coption%20value%3D%22mpileup%22%3Empileup%20format%3C/option%3E%0A%3Coption%20value%3D%22bcf%22%20selected%3Ebcf%20format%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Output format
+    model_class: SelectToolParameter
+    multiple: false
+    name: flag
+    optional: false
+    options:
+    - [mpileup format, mpileup, false]
+    - [bcf format, bcf, true]
+    type: select
+    value: bcf
+  type: conditional
+- {argument: null, falsevalue: '', help: 'If your data are paired-end but with many
+    singlets, use that option', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22anomalous%22%20name%3D%22anomalous%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22anomalous%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Use anomalous read pairs in SNP/INDEL calling, model_class: BooleanToolParameter,
+  name: anomalous, optional: false, truevalue: -A, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22illumina3_encoding%22%20name%3D%22illumina3_encoding%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22illumina3_encoding%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Assume the quality is in the Illumina-1.3+ encoding, model_class: BooleanToolParameter,
+  name: illumina3_encoding, optional: false, truevalue: '-6', type: boolean, value: true}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  - inputs:
+    - argument: null
+      edam_formats: [null]
+      extensions: [text]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Exclude reads listed in the following dataset
+      model_class: DataToolParameter
+      multiple: false
+      name: reads_to_exclude
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: 'Yes'
+  model_class: Conditional
+  name: exclusion
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22bool%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Do you want to exclude some reads from the BAM file?
+    model_class: SelectToolParameter
+    multiple: false
+    name: bool
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: pre_set
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22cap_mapping_quality%22%20size%3D%2210%22%20value%3D%2260%22%3E',
+      is_dynamic: false, label: cap mapping quality at, max: 64, min: 0, model_class: IntegerToolParameter,
+      name: cap_mapping_quality, optional: false, size: null, type: integer, value: '60'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_base_quality%22%20size%3D%2210%22%20value%3D%2213%22%3E',
+      is_dynamic: false, label: minimum base quality, max: 64, min: 0, model_class: IntegerToolParameter,
+      name: min_base_quality, optional: false, size: null, type: integer, value: '13'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_mapping_quality%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: filter out alignment with mapping quality smaller
+        than, max: 64, min: 0, model_class: IntegerToolParameter, name: min_mapping_quality,
+      optional: false, size: null, type: integer, value: '0'}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22extended_BAQ%22%20name%3D%22extended_BAQ%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22extended_BAQ%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: extended BAQ for higher sensitivity but lower specificity,
+      model_class: BooleanToolParameter, name: extended_BAQ, optional: false, truevalue: -E,
+      type: boolean, value: false}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22disable_BAQ%22%20name%3D%22disable_BAQ%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22disable_BAQ%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: disable BAQ computation, model_class: BooleanToolParameter,
+      name: disable_BAQ, optional: false, truevalue: -B, type: boolean, value: false}
+    model_class: ConditionalWhen
+    value: full
+  model_class: Conditional
+  name: advanced_settings
+  test_param:
+    argument: null
+    display: null
+    help: If you want full control use Full Parameter List
+    hidden: false
+    html: '%3Cselect%20name%3D%22type_of_settings%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22pre_set%22%3ECommonly%20Used%3C/option%3E%0A%3Coption%20value%3D%22full%22%3EFull%20Parameter%20List%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Advanced Settings
+    model_class: SelectToolParameter
+    multiple: false
+    name: type_of_settings
+    optional: false
+    options:
+    - [Commonly Used, pre_set, false]
+    - [Full Parameter List, full, false]
+    type: select
+    value: pre_set
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fmpileup_v2%2Fmpileup%2F0.1.19
+min_width: -1
+model_class: Tool
+name: mpileup
+outputs:
+- {edam_format: format_3475, format: mpileup, hidden: false, label: '', model_class: ToolOutput,
+  name: output_mpileup}
+- {edam_format: format_3020, format: bcf, hidden: false, label: '', model_class: ToolOutput,
+  name: output_bcf}
+panel_section_id: samtools
+panel_section_name: 'NGS: SAM Tools'
+target: galaxy_main
+version: 0.1.19

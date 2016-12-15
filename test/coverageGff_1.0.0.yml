@@ -1,0 +1,35 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/galaxy/coverageGff.xml
+description: Computes reads coverage form a "nbElements" tag and writes the calculated
+  coverage in a gff3 out file.
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/coverageGff/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_2305]
+  extensions: [gff]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Input File
+  model_class: DataToolParameter
+  multiple: false
+  name: inputFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: 'The size of read, default: 38nt', hidden: false,
+  html: '%3Cinput%20type%3D%22text%22%20name%3D%22readSize%22%20size%3D%2210%22%20value%3D%2238%22%3E',
+  is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+  name: readSize, optional: false, size: null, type: integer, value: '38'}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FcoverageGff%2F1.0.0
+min_width: -1
+model_class: Tool
+name: coverage Gff
+outputs:
+- {edam_format: format_1975, format: gff3, hidden: false, label: '[coveragePl] Output
+    File', model_class: ToolOutput, name: outputFile}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

@@ -1,0 +1,91 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/convert2annovar/e662f14e894e/convert2annovar/convert2annovar.xml
+description: Convert other genotype calling format into ANNOVAR format
+id: toolshed.pasteur.fr/repos/fmareuil/convert2annovar/convert2annovar/1.0.0
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [tabular]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: ''
+      model_class: DataToolParameter
+      multiple: false
+      name: input
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: txt
+  - inputs:
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [interval]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: ''
+      model_class: DataToolParameter
+      multiple: false
+      name: input
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: pileup
+  - inputs:
+    - argument: null
+      edam_formats: [format_3016]
+      extensions: [vcf]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: ''
+      model_class: DataToolParameter
+      multiple: false
+      name: input
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: vcf4
+  model_class: Conditional
+  name: input_switch
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22inputFormat%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22vcf4%22%3E%0A%3Coption%20value%3D%22vcf4%22%20selected%3Evcf4%3C/option%3E%0A%3Coption%20value%3D%22txt%22%3ETabular%20or%20Simple%20Pileup%3C/option%3E%0A%3Coption%20value%3D%22pileup%22%3Epileup%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Input format
+    model_class: SelectToolParameter
+    multiple: false
+    name: inputFormat
+    optional: false
+    options:
+    - [vcf4, vcf4, true]
+    - [Tabular or Simple Pileup, txt, false]
+    - [pileup, pileup, false]
+    type: select
+    value: vcf4
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fconvert2annovar%2Fconvert2annovar%2F1.0.0
+min_width: -1
+model_class: Tool
+name: Convert2Annovar
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: annovar_input,
+  model_class: ToolOutput, name: output}
+panel_section_id: ngs:_snp/indel_annotation
+panel_section_name: 'NGS: SNP/Indel Annotation'
+target: galaxy_main
+version: 1.0.0

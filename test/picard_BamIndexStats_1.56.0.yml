@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/2f92cb75946c/picard_pasteur_wrapper/picard_BamIndexStats.xml
+description: ''
+id: toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/picard_BamIndexStats/1.56.0
+inputs:
+- argument: null
+  edam_formats: [format_2572]
+  extensions: [bam]
+  help: If empty, upload or import a BAM dataset
+  hidden: false
+  is_dynamic: false
+  label: BAM dataset to generate statistics for
+  model_class: DataToolParameter
+  multiple: false
+  name: input_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fpicard_pasteur_wrapper%2Fpicard_BamIndexStats%2F1.56.0
+min_width: -1
+model_class: Tool
+name: BAM Index Statistics
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '${tool.name}_on_${on_string}.html',
+  model_class: ToolOutput, name: htmlfile}
+panel_section_id: ngs:_picard_tools
+panel_section_name: 'NGS: Picard Tools'
+target: galaxy_main
+version: 1.56.0

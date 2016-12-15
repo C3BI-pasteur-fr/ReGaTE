@@ -1,0 +1,1215 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/bowtie2/3fff69527768/bowtie2/bowtie2_wrapper.xml
+description: '- map reads against reference genome'
+id: toolshed.pasteur.fr/repos/fmareuil/bowtie2/bowtie2/2.2.6.2
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1932]
+      extensions: [fastqsanger]
+      help: Must be of datatype "fastqsanger"
+      hidden: false
+      is_dynamic: false
+      label: FASTQ file
+      model_class: DataToolParameter
+      multiple: false
+      name: input_1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {argument: null, falsevalue: 'false', help: --un/--un-conc; This triggers --un
+        parameter for single reads and --un-conc for paired reads, hidden: false,
+      html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22unaligned_file%22%20name%3D%22unaligned_file%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22unaligned_file%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Write unaligned reads (in fastq format) to separate
+        file(s), model_class: BooleanToolParameter, name: unaligned_file, optional: false,
+      truevalue: 'true', type: boolean, value: false}
+    - {argument: null, falsevalue: 'false', help: --al/--al-conc; This triggers --al
+        parameter for single reads and --al-conc for paired reads, hidden: false,
+      html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22aligned_file%22%20name%3D%22aligned_file%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22aligned_file%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Write aligned reads (in fastq format) to separate
+        file(s), model_class: BooleanToolParameter, name: aligned_file, optional: false,
+      truevalue: 'true', type: boolean, value: false}
+    model_class: ConditionalWhen
+    value: single
+  - inputs:
+    - argument: null
+      edam_formats: [format_1932]
+      extensions: [fastqsanger]
+      help: Must be of datatype "fastqsanger"
+      hidden: false
+      is_dynamic: false
+      label: 'FASTQ file #1'
+      model_class: DataToolParameter
+      multiple: false
+      name: input_1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_1932]
+      extensions: [fastqsanger]
+      help: Must be of datatype "fastqsanger"
+      hidden: false
+      is_dynamic: false
+      label: 'FASTQ file #2'
+      model_class: DataToolParameter
+      multiple: false
+      name: input_2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {argument: null, falsevalue: 'false', help: --un/--un-conc; This triggers --un
+        parameter for single reads and --un-conc for paired reads, hidden: false,
+      html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22unaligned_file%22%20name%3D%22unaligned_file%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22unaligned_file%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Write unaligned reads (in fastq format) to separate
+        file(s), model_class: BooleanToolParameter, name: unaligned_file, optional: false,
+      truevalue: 'true', type: boolean, value: false}
+    - {argument: null, falsevalue: 'false', help: --al/--al-conc; This triggers --al
+        parameter for single reads and --al-conc for paired reads, hidden: false,
+      html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22aligned_file%22%20name%3D%22aligned_file%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22aligned_file%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Write aligned reads (in fastq format) to separate
+        file(s), model_class: BooleanToolParameter, name: aligned_file, optional: false,
+      truevalue: 'true', type: boolean, value: false}
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: '-I/--minins;  E.g. if `-I 60` is specified
+            and a paired-end alignment consists of two 20-bp alignments in the appropriate
+            orientation with a 20-bp gap between them, that alignment is considered
+            valid (as long as `-X` is also satisfied).  A 19-bp gap would not be valid
+            in that case.  If trimming options `-3` or `-5` are also used, the `-I`
+            constraint is applied with respect to the untrimmed mates. The larger
+            the difference between `-I` and `-X`, the slower Bowtie 2 will run.  This
+            is because larger differences bewteen `-I` and `-X` require that Bowtie
+            2 scan a larger window to determine if a concordant alignment exists.
+            For typical fragment length ranges (200 to 400 nucleotides), Bowtie 2
+            is very efficient. Default=0', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22I%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: Set the minimum fragment length for valid paired-end
+            alignments, max: null, min: 0, model_class: IntegerToolParameter, name: I,
+          optional: false, size: null, type: integer, value: '0'}
+        - {area: false, argument: null, help: '-X/--maxins; E.g. if `-X 100` is specified
+            and a paired-end alignment consists of two 20-bp alignments in the proper
+            orientation with a 60-bp gap between them, that alignment is considered
+            valid (as long as `-I` is also satisfied).  A 61-bp gap would not be valid
+            in that case.  If trimming options `-3` or `-5` are also used, the `-X`
+            constraint is applied with respect to the untrimmed mates, not the trimmed
+            mates; Default=500', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22X%22%20size%3D%2210%22%20value%3D%22500%22%3E',
+          is_dynamic: false, label: Set the maximum fragment length for valid paired-end
+            alignments, max: null, min: 0, model_class: IntegerToolParameter, name: X,
+          optional: false, size: null, type: integer, value: '500'}
+        - argument: null
+          display: radio
+          help: --fr, --rf, or --ff; E.g., if `--fr` is specified and there is a candidate
+            paired-end alignment where mate 1 appears upstream of the reverse complement
+            of mate 2 and the fragment length constraints (`-I` and `-X`) are met,
+            that alignment is valid.  Also, if mate 2 appears upstream of the reverse
+            complement of mate 1 and all other constraints are met, that too is valid.
+            `--rf` likewise requires that an upstream mate1 be reverse-complemented
+            and a downstream mate2 be forward-oriented. `--ff` requires both an upstream
+            mate 1 and a downstream mate 2 to be forward-oriented; Default=--fr (appropriate
+            for Illumina's Paired-end Sequencing Assay)
+          hidden: false
+          html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22fr_rf_ff%22%20value%3D%22--fr%22%20id%3D%22fr_rf_ff%7C--fr%22%20checked%3D%27checked%27%3E%3Clabel%20class%3D%22inline%22%20for%3D%22fr_rf_ff%7C--fr%22%3E--fr%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22fr_rf_ff%22%20value%3D%22--rf%22%20id%3D%22fr_rf_ff%7C--rf%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22fr_rf_ff%7C--rf%22%3E--rf%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22fr_rf_ff%22%20value%3D%22--ff%22%20id%3D%22fr_rf_ff%7C--ff%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22fr_rf_ff%7C--ff%22%3E--ff%3C/label%3E%3C/div%3E'
+          is_dynamic: false
+          label: Select the upstream/downstream mate orientations for a valid paired-end
+            alignment against the forward reference strand
+          model_class: SelectToolParameter
+          multiple: false
+          name: fr_rf_ff
+          optional: false
+          options:
+          - [--fr, --fr, true]
+          - [--rf, --rf, false]
+          - [--ff, --ff, false]
+          type: select
+          value: --fr
+        - {argument: null, falsevalue: '', help: '--no-mixed; By default, when `bowtie2`
+            cannot find a concordant or discordant alignment for a pair, it then tries
+            to find alignments for the individual mates; default=False', hidden: false,
+          html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_mixed%22%20name%3D%22no_mixed%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_mixed%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Disable no-mixed behavior, model_class: BooleanToolParameter,
+          name: no_mixed, optional: false, truevalue: --no-mixed, type: boolean, value: false}
+        - {argument: null, falsevalue: '', help: '--no-discordant; By default, `bowtie2`
+            looks for discordant alignments if it cannot find any concordant alignments.
+            A discordant alignment is an alignment where both mates align uniquely,
+            but that does not satisfy the paired-end constraints (`--fr`/`--rf`/`--ff`,
+            `-I`, `-X`); default=False', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_discordant%22%20name%3D%22no_discordant%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_discordant%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Disable no-discordant behavior, model_class: BooleanToolParameter,
+          name: no_discordant, optional: false, truevalue: --no-discordant, type: boolean,
+          value: false}
+        - {argument: null, falsevalue: '', help: '--dovetail; If the mates `dovetail`,
+            that is if one mate alignment extends past the beginning of the other
+            such that the wrong mate begins upstream, consider that to be concordant.
+            Default=False', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22dovetail%22%20name%3D%22dovetail%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22dovetail%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Allow mate dovetailing, model_class: BooleanToolParameter,
+          name: dovetail, optional: false, truevalue: --dovetail, type: boolean, value: false}
+        - {argument: null, falsevalue: '', help: '--no-contain; If one mate alignment
+            contains the other, consider that to be non-concordant. Default=False',
+          hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_contain%22%20name%3D%22no_contain%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_contain%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Disallow one mate alignment to contain another,
+          model_class: BooleanToolParameter, name: no_contain, optional: false, truevalue: --no-contain,
+          type: boolean, value: false}
+        - {argument: null, falsevalue: '', help: '--no-overlap; If one mate alignment
+            overlaps the other at all, consider that to be non-concordant. Default=False',
+          hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_overlap%22%20name%3D%22no_overlap%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_overlap%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Disallow mate alignments to overlap, model_class: BooleanToolParameter,
+          name: no_overlap, optional: false, truevalue: --no-overlap, type: boolean,
+          value: false}
+        model_class: ConditionalWhen
+        value: 'yes'
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'no'
+      model_class: Conditional
+      name: paired_options
+      test_param:
+        argument: null
+        display: null
+        help: See "Alignment Options" section of Help below for information
+        hidden: false
+        html: '%3Cselect%20name%3D%22paired_options_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Do you want to set paired-end options?
+        model_class: SelectToolParameter
+        multiple: false
+        name: paired_options_selector
+        optional: false
+        options:
+        - ['No', 'no', true]
+        - ['Yes', 'yes', false]
+        type: select
+        value: 'no'
+      type: conditional
+    model_class: ConditionalWhen
+    value: paired
+  - inputs:
+    - argument: null
+      extensions: [fastqsanger]
+      help: Must be of datatype "fastqsanger"
+      hidden: false
+      is_dynamic: false
+      label: FASTQ Paired Dataset
+      model_class: DataCollectionToolParameter
+      multiple: false
+      name: input_1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data_collection
+    - {argument: null, falsevalue: 'false', help: --un/--un-conc; This triggers --un
+        parameter for single reads and --un-conc for paired reads, hidden: false,
+      html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22unaligned_file%22%20name%3D%22unaligned_file%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22unaligned_file%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Write unaligned reads (in fastq format) to separate
+        file(s), model_class: BooleanToolParameter, name: unaligned_file, optional: false,
+      truevalue: 'true', type: boolean, value: false}
+    - {argument: null, falsevalue: 'false', help: --al/--al-conc; This triggers --al
+        parameter for single reads and --al-conc for paired reads, hidden: false,
+      html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22aligned_file%22%20name%3D%22aligned_file%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22aligned_file%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Write aligned reads (in fastq format) to separate
+        file(s), model_class: BooleanToolParameter, name: aligned_file, optional: false,
+      truevalue: 'true', type: boolean, value: false}
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: '-I/--minins;  E.g. if `-I 60` is specified
+            and a paired-end alignment consists of two 20-bp alignments in the appropriate
+            orientation with a 20-bp gap between them, that alignment is considered
+            valid (as long as `-X` is also satisfied).  A 19-bp gap would not be valid
+            in that case.  If trimming options `-3` or `-5` are also used, the `-I`
+            constraint is applied with respect to the untrimmed mates. The larger
+            the difference between `-I` and `-X`, the slower Bowtie 2 will run.  This
+            is because larger differences bewteen `-I` and `-X` require that Bowtie
+            2 scan a larger window to determine if a concordant alignment exists.
+            For typical fragment length ranges (200 to 400 nucleotides), Bowtie 2
+            is very efficient. Default=0', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22I%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: Set the minimum fragment length for valid paired-end
+            alignments, max: null, min: 0, model_class: IntegerToolParameter, name: I,
+          optional: false, size: null, type: integer, value: '0'}
+        - {area: false, argument: null, help: '-X/--maxins; E.g. if `-X 100` is specified
+            and a paired-end alignment consists of two 20-bp alignments in the proper
+            orientation with a 60-bp gap between them, that alignment is considered
+            valid (as long as `-I` is also satisfied).  A 61-bp gap would not be valid
+            in that case.  If trimming options `-3` or `-5` are also used, the `-X`
+            constraint is applied with respect to the untrimmed mates, not the trimmed
+            mates; Default=500', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22X%22%20size%3D%2210%22%20value%3D%22500%22%3E',
+          is_dynamic: false, label: Set the maximum fragment length for valid paired-end
+            alignments, max: null, min: 0, model_class: IntegerToolParameter, name: X,
+          optional: false, size: null, type: integer, value: '500'}
+        - argument: null
+          display: radio
+          help: --fr, --rf, or --ff; E.g., if `--fr` is specified and there is a candidate
+            paired-end alignment where mate 1 appears upstream of the reverse complement
+            of mate 2 and the fragment length constraints (`-I` and `-X`) are met,
+            that alignment is valid.  Also, if mate 2 appears upstream of the reverse
+            complement of mate 1 and all other constraints are met, that too is valid.
+            `--rf` likewise requires that an upstream mate1 be reverse-complemented
+            and a downstream mate2 be forward-oriented. `--ff` requires both an upstream
+            mate 1 and a downstream mate 2 to be forward-oriented; Default=--fr (appropriate
+            for Illumina's Paired-end Sequencing Assay)
+          hidden: false
+          html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22fr_rf_ff%22%20value%3D%22--fr%22%20id%3D%22fr_rf_ff%7C--fr%22%20checked%3D%27checked%27%3E%3Clabel%20class%3D%22inline%22%20for%3D%22fr_rf_ff%7C--fr%22%3E--fr%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22fr_rf_ff%22%20value%3D%22--rf%22%20id%3D%22fr_rf_ff%7C--rf%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22fr_rf_ff%7C--rf%22%3E--rf%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22fr_rf_ff%22%20value%3D%22--ff%22%20id%3D%22fr_rf_ff%7C--ff%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22fr_rf_ff%7C--ff%22%3E--ff%3C/label%3E%3C/div%3E'
+          is_dynamic: false
+          label: Select the upstream/downstream mate orientations for a valid paired-end
+            alignment against the forward reference strand
+          model_class: SelectToolParameter
+          multiple: false
+          name: fr_rf_ff
+          optional: false
+          options:
+          - [--fr, --fr, true]
+          - [--rf, --rf, false]
+          - [--ff, --ff, false]
+          type: select
+          value: --fr
+        - {argument: null, falsevalue: '', help: '--no-mixed; By default, when `bowtie2`
+            cannot find a concordant or discordant alignment for a pair, it then tries
+            to find alignments for the individual mates; default=False', hidden: false,
+          html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_mixed%22%20name%3D%22no_mixed%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_mixed%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Disable no-mixed behavior, model_class: BooleanToolParameter,
+          name: no_mixed, optional: false, truevalue: --no-mixed, type: boolean, value: false}
+        - {argument: null, falsevalue: '', help: '--no-discordant; By default, `bowtie2`
+            looks for discordant alignments if it cannot find any concordant alignments.
+            A discordant alignment is an alignment where both mates align uniquely,
+            but that does not satisfy the paired-end constraints (`--fr`/`--rf`/`--ff`,
+            `-I`, `-X`); default=False', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_discordant%22%20name%3D%22no_discordant%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_discordant%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Disable no-discordant behavior, model_class: BooleanToolParameter,
+          name: no_discordant, optional: false, truevalue: --no-discordant, type: boolean,
+          value: false}
+        - {argument: null, falsevalue: '', help: '--dovetail; If the mates `dovetail`,
+            that is if one mate alignment extends past the beginning of the other
+            such that the wrong mate begins upstream, consider that to be concordant.
+            Default=False', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22dovetail%22%20name%3D%22dovetail%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22dovetail%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Allow mate dovetailing, model_class: BooleanToolParameter,
+          name: dovetail, optional: false, truevalue: --dovetail, type: boolean, value: false}
+        - {argument: null, falsevalue: '', help: '--no-contain; If one mate alignment
+            contains the other, consider that to be non-concordant. Default=False',
+          hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_contain%22%20name%3D%22no_contain%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_contain%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Disallow one mate alignment to contain another,
+          model_class: BooleanToolParameter, name: no_contain, optional: false, truevalue: --no-contain,
+          type: boolean, value: false}
+        - {argument: null, falsevalue: '', help: '--no-overlap; If one mate alignment
+            overlaps the other at all, consider that to be non-concordant. Default=False',
+          hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_overlap%22%20name%3D%22no_overlap%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_overlap%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Disallow mate alignments to overlap, model_class: BooleanToolParameter,
+          name: no_overlap, optional: false, truevalue: --no-overlap, type: boolean,
+          value: false}
+        model_class: ConditionalWhen
+        value: 'yes'
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'no'
+      model_class: Conditional
+      name: paired_options
+      test_param:
+        argument: null
+        display: null
+        help: See "Alignment Options" section of Help below for information
+        hidden: false
+        html: '%3Cselect%20name%3D%22paired_options_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Do you want to set paired-end options?
+        model_class: SelectToolParameter
+        multiple: false
+        name: paired_options_selector
+        optional: false
+        options:
+        - ['No', 'no', true]
+        - ['Yes', 'yes', false]
+        type: select
+        value: 'no'
+      type: conditional
+    model_class: ConditionalWhen
+    value: paired_collection
+  model_class: Conditional
+  name: library
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22type%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22single%22%3ESingle-end%3C/option%3E%0A%3Coption%20value%3D%22paired%22%3EPaired-end%3C/option%3E%0A%3Coption%20value%3D%22paired_collection%22%3EPaired-end%20Dataset%20Collection%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Is this single or paired library
+    model_class: SelectToolParameter
+    multiple: false
+    name: type
+    optional: false
+    options:
+    - [Single-end, single, false]
+    - [Paired-end, paired, false]
+    - [Paired-end Dataset Collection, paired_collection, false]
+    type: select
+    value: single
+  type: conditional
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: If your genome of interest is not listed, contact the Galaxy team
+      hidden: false
+      html: '%3Cselect%20name%3D%22index%22%3E%0A%3Coption%20value%3D%22btaurus%22%3Ebtaurus%3C/option%3E%0A%3Coption%20value%3D%22calbicans5314%22%3Ecalbicans5314%3C/option%3E%0A%3Coption%20value%3D%22calbicansWO1%22%3EcalbicansWO1%3C/option%3E%0A%3Coption%20value%3D%22cfamiliaris%22%3Ecfamiliaris%3C/option%3E%0A%3Coption%20value%3D%22chiroptera%22%3Echiroptera%3C/option%3E%0A%3Coption%20value%3D%22cneoformansH99%22%3EcneoformansH99%3C/option%3E%0A%3Coption%20value%3D%22cneoformansJEC21%22%3EcneoformansJEC21%3C/option%3E%0A%3Coption%20value%3D%22csabaeus%22%3Ecsabaeus%3C/option%3E%0A%3Coption%20value%3D%22dmelanogaster%22%3Edmelanogaster%3C/option%3E%0A%3Coption%20value%3D%22ecaballus%22%3Eecaballus%3C/option%3E%0A%3Coption%20value%3D%22fcatus%22%3Efcatus%3C/option%3E%0A%3Coption%20value%3D%22hg18%22%3Ehg18%3C/option%3E%0A%3Coption%20value%3D%22hg19%22%3Ehg19%3C/option%3E%0A%3Coption%20value%3D%22mlucifugus%22%3Emlucifugus%3C/option%3E%0A%3Coption%20value%3D%22mm10%22%3Emm10%3C/option%3E%0A%3Coption%20value%3D%22mm8%22%3Emm8%3C/option%3E%0A%3Coption%20value%3D%22mm9%22%3Emm9%3C/option%3E%0A%3Coption%20value%3D%22pfalciparum%22%3Epfalciparum%3C/option%3E%0A%3Coption%20value%3D%22pvampyrus%22%3Epvampyrus%3C/option%3E%0A%3Coption%20value%3D%22pvivax%22%3Epvivax%3C/option%3E%0A%3Coption%20value%3D%22scerevisiae%22%3Escerevisiae%3C/option%3E%0A%3Coption%20value%3D%22spombe%22%3Espombe%3C/option%3E%0A%3Coption%20value%3D%22sscrofa%22%3Esscrofa%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: Select reference genome
+      model_class: SelectToolParameter
+      multiple: false
+      name: index
+      optional: false
+      options:
+      - [btaurus, btaurus, false]
+      - [calbicans5314, calbicans5314, false]
+      - [calbicansWO1, calbicansWO1, false]
+      - [cfamiliaris, cfamiliaris, false]
+      - [chiroptera, chiroptera, false]
+      - [cneoformansH99, cneoformansH99, false]
+      - [cneoformansJEC21, cneoformansJEC21, false]
+      - [csabaeus, csabaeus, false]
+      - [dmelanogaster, dmelanogaster, false]
+      - [ecaballus, ecaballus, false]
+      - [fcatus, fcatus, false]
+      - [hg18, hg18, false]
+      - [hg19, hg19, false]
+      - [mlucifugus, mlucifugus, false]
+      - [mm10, mm10, false]
+      - [mm8, mm8, false]
+      - [mm9, mm9, false]
+      - [pfalciparum, pfalciparum, false]
+      - [pvampyrus, pvampyrus, false]
+      - [pvivax, pvivax, false]
+      - [scerevisiae, scerevisiae, false]
+      - [spombe, spombe, false]
+      - [sscrofa, sscrofa, false]
+      type: select
+      value: btaurus
+    model_class: ConditionalWhen
+    value: indexed
+  - inputs:
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select reference genome
+      model_class: DataToolParameter
+      multiple: false
+      name: own_file
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: history
+  model_class: Conditional
+  name: reference_genome
+  test_param:
+    argument: null
+    display: null
+    help: Built-ins were indexed using default options. See `Indexes` section of help
+      below
+    hidden: false
+    html: '%3Cselect%20name%3D%22source%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22indexed%22%3EUse%20a%20built-in%20genome%20index%3C/option%3E%0A%3Coption%20value%3D%22history%22%3EUse%20a%20genome%20from%20the%20history%20and%20build%20index%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Will you select a reference genome from your history or use a built-in
+      index?
+    model_class: SelectToolParameter
+    multiple: false
+    name: source
+    optional: false
+    options:
+    - [Use a built-in genome index, indexed, false]
+    - [Use a genome from the history and build index, history, false]
+    type: select
+    value: indexed
+  type: conditional
+- cases:
+  - inputs:
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'true'
+      - inputs:
+        - {area: false, argument: null, help: This value must be unique among multiple
+            samples in your experiment, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22ID%22%20size%3D%2210%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: Read group identifier (ID), model_class: TextToolParameter,
+          name: ID, optional: false, size: null, type: text, value: ''}
+        model_class: ConditionalWhen
+        value: 'false'
+      model_class: Conditional
+      name: read_group_id_conditional
+      test_param: {argument: null, falsevalue: 'false', help: Use dataset name or
+          collection information to automatically assign this value, hidden: false,
+        html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22do_auto_name%22%20name%3D%22do_auto_name%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22do_auto_name%22%20value%3D%22true%22%3E',
+        is_dynamic: false, label: Auto-assign, model_class: BooleanToolParameter,
+        name: do_auto_name, optional: false, truevalue: 'true', type: boolean, value: false}
+      type: conditional
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'true'
+      - inputs:
+        - {area: false, argument: null, help: This value should be descriptive. Use
+            pool name where a pool is being sequenced, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22SM%22%20size%3D%2210%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: Read group sample name (SM), model_class: TextToolParameter,
+          name: SM, optional: false, size: null, type: text, value: ''}
+        model_class: ConditionalWhen
+        value: 'false'
+      model_class: Conditional
+      name: read_group_sm_conditional
+      test_param: {argument: null, falsevalue: 'false', help: Use dataset name or
+          collection information to automatically assign this value, hidden: false,
+        html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22do_auto_name%22%20name%3D%22do_auto_name%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22do_auto_name%22%20value%3D%22true%22%3E',
+        is_dynamic: false, label: Auto-assign, model_class: BooleanToolParameter,
+        name: do_auto_name, optional: false, truevalue: 'true', type: boolean, value: false}
+      type: conditional
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'true'
+      - inputs:
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22LB%22%20size%3D%2210%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: Library name (LB), model_class: TextToolParameter,
+          name: LB, optional: false, size: null, type: text, value: null}
+        model_class: ConditionalWhen
+        value: 'false'
+      model_class: Conditional
+      name: read_group_lb_conditional
+      test_param: {argument: null, falsevalue: 'false', help: Use dataset name or
+          collection information to automatically assign this value, hidden: false,
+        html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22do_auto_name%22%20name%3D%22do_auto_name%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22do_auto_name%22%20value%3D%22true%22%3E',
+        is_dynamic: false, label: Auto-assign, model_class: BooleanToolParameter,
+        name: do_auto_name, optional: false, truevalue: 'true', type: boolean, value: false}
+      type: conditional
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22PL%22%20last_selected_value%3D%22ILLUMINA%22%3E%0A%3Coption%20value%3D%22CAPILLARY%22%3ECAPILLARY%3C/option%3E%0A%3Coption%20value%3D%22LS454%22%3ELS454%3C/option%3E%0A%3Coption%20value%3D%22ILLUMINA%22%20selected%3EILLUMINA%3C/option%3E%0A%3Coption%20value%3D%22SOLID%22%3ESOLID%3C/option%3E%0A%3Coption%20value%3D%22HELICOS%22%3EHELICOS%3C/option%3E%0A%3Coption%20value%3D%22IONTORRENT%22%3EIONTORRENT%3C/option%3E%0A%3Coption%20value%3D%22PACBIO%22%3EPACBIO%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Platform/technology used to produce the reads (PL)
+      model_class: SelectToolParameter
+      multiple: false
+      name: PL
+      optional: false
+      options:
+      - [CAPILLARY, CAPILLARY, false]
+      - [LS454, LS454, false]
+      - [ILLUMINA, ILLUMINA, true]
+      - [SOLID, SOLID, false]
+      - [HELICOS, HELICOS, false]
+      - [IONTORRENT, IONTORRENT, false]
+      - [PACBIO, PACBIO, false]
+      type: select
+      value: ILLUMINA
+    - {area: false, argument: null, help: Unique identifier (e.g. flowcell-barcode.lane
+        for Illumina or slide for SOLiD), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22PU%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Platform unit (PU), model_class: TextToolParameter,
+      name: PU, optional: false, size: null, type: text, value: null}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22CN%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Sequencing center that produced the read (CN), model_class: TextToolParameter,
+      name: CN, optional: false, size: null, type: text, value: null}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22DS%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Description (DS), model_class: TextToolParameter,
+      name: DS, optional: false, size: null, type: text, value: null}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22PI%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Predicted median insert size (PI), max: null, min: null,
+      model_class: IntegerToolParameter, name: PI, optional: true, size: null, type: integer,
+      value: null}
+    - {area: false, argument: null, help: 'ISO8601 format date or date/time, like
+        YYYY-MM-DD', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22DT%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Date that run was produced (DT), model_class: TextToolParameter,
+      name: DT, optional: false, size: null, type: text, value: null}
+    model_class: ConditionalWhen
+    value: set_picard
+  - inputs:
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'true'
+      - inputs:
+        - {area: false, argument: null, help: This value must be unique among multiple
+            samples in your experiment, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22ID%22%20size%3D%2210%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: Read group identifier (ID), model_class: TextToolParameter,
+          name: ID, optional: false, size: null, type: text, value: ''}
+        model_class: ConditionalWhen
+        value: 'false'
+      model_class: Conditional
+      name: read_group_id_conditional
+      test_param: {argument: null, falsevalue: 'false', help: Use dataset name or
+          collection information to automatically assign this value, hidden: false,
+        html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22do_auto_name%22%20name%3D%22do_auto_name%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22do_auto_name%22%20value%3D%22true%22%3E',
+        is_dynamic: false, label: Auto-assign, model_class: BooleanToolParameter,
+        name: do_auto_name, optional: false, truevalue: 'true', type: boolean, value: false}
+      type: conditional
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'true'
+      - inputs:
+        - {area: false, argument: null, help: This value should be descriptive. Use
+            pool name where a pool is being sequenced, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22SM%22%20size%3D%2210%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: Read group sample name (SM), model_class: TextToolParameter,
+          name: SM, optional: false, size: null, type: text, value: ''}
+        model_class: ConditionalWhen
+        value: 'false'
+      model_class: Conditional
+      name: read_group_sm_conditional
+      test_param: {argument: null, falsevalue: 'false', help: Use dataset name or
+          collection information to automatically assign this value, hidden: false,
+        html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22do_auto_name%22%20name%3D%22do_auto_name%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22do_auto_name%22%20value%3D%22true%22%3E',
+        is_dynamic: false, label: Auto-assign, model_class: BooleanToolParameter,
+        name: do_auto_name, optional: false, truevalue: 'true', type: boolean, value: false}
+      type: conditional
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22PL%22%20last_selected_value%3D%22ILLUMINA%22%3E%0A%3Coption%20value%3D%22CAPILLARY%22%3ECAPILLARY%3C/option%3E%0A%3Coption%20value%3D%22LS454%22%3ELS454%3C/option%3E%0A%3Coption%20value%3D%22ILLUMINA%22%20selected%3EILLUMINA%3C/option%3E%0A%3Coption%20value%3D%22SOLID%22%3ESOLID%3C/option%3E%0A%3Coption%20value%3D%22HELICOS%22%3EHELICOS%3C/option%3E%0A%3Coption%20value%3D%22IONTORRENT%22%3EIONTORRENT%3C/option%3E%0A%3Coption%20value%3D%22PACBIO%22%3EPACBIO%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Platform/technology used to produce the reads (PL)
+      model_class: SelectToolParameter
+      multiple: false
+      name: PL
+      optional: false
+      options:
+      - [CAPILLARY, CAPILLARY, false]
+      - [LS454, LS454, false]
+      - [ILLUMINA, ILLUMINA, true]
+      - [SOLID, SOLID, false]
+      - [HELICOS, HELICOS, false]
+      - [IONTORRENT, IONTORRENT, false]
+      - [PACBIO, PACBIO, false]
+      type: select
+      value: ILLUMINA
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'true'
+      - inputs:
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22LB%22%20size%3D%2210%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: Library name (LB), model_class: TextToolParameter,
+          name: LB, optional: true, size: null, type: text, value: null}
+        model_class: ConditionalWhen
+        value: 'false'
+      model_class: Conditional
+      name: read_group_lb_conditional
+      test_param: {argument: null, falsevalue: 'false', help: Use dataset name or
+          collection information to automatically assign this value, hidden: false,
+        html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22do_auto_name%22%20name%3D%22do_auto_name%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22do_auto_name%22%20value%3D%22true%22%3E',
+        is_dynamic: false, label: Auto-assign, model_class: BooleanToolParameter,
+        name: do_auto_name, optional: false, truevalue: 'true', type: boolean, value: false}
+      type: conditional
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22CN%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Sequencing center that produced the read (CN), model_class: TextToolParameter,
+      name: CN, optional: false, size: null, type: text, value: null}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22DS%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Description (DS), model_class: TextToolParameter,
+      name: DS, optional: false, size: null, type: text, value: null}
+    - {area: false, argument: null, help: 'ISO8601 format date or date/time, like
+        YYYY-MM-DD', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22DT%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Date that run was produced (DT), model_class: TextToolParameter,
+      name: DT, optional: false, size: null, type: text, value: null}
+    - {area: false, argument: null, help: 'The array of nucleotide bases that correspond
+        to the nucleotides used for each flow of each read. Multi-base flows are encoded
+        in IUPAC format, and non-nucleotide flows by various other characters. Format:
+        /\*|[ACMGRSVTWYHKDBN]+/', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22FO%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Flow order (FO), model_class: TextToolParameter, name: FO,
+      optional: true, size: null, type: text, value: null}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22KS%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: The array of nucleotide bases that correspond to the
+        key sequence of each read (KS), model_class: TextToolParameter, name: KS,
+      optional: false, size: null, type: text, value: null}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22PG%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Programs used for processing the read group (PG),
+      model_class: TextToolParameter, name: PG, optional: false, size: null, type: text,
+      value: null}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22PI%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Predicted median insert size (PI), max: null, min: null,
+      model_class: IntegerToolParameter, name: PI, optional: true, size: null, type: integer,
+      value: null}
+    - {area: false, argument: null, help: Unique identifier (e.g. flowcell-barcode.lane
+        for Illumina or slide for SOLiD), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22PU%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Platform unit (PU), model_class: TextToolParameter,
+      name: PU, optional: true, size: null, type: text, value: null}
+    model_class: ConditionalWhen
+    value: set
+  - inputs: []
+    model_class: ConditionalWhen
+    value: set_id_auto
+  - inputs: []
+    model_class: ConditionalWhen
+    value: do_not_set
+  model_class: Conditional
+  name: rg
+  test_param:
+    argument: null
+    display: null
+    help: Specifying read group information can greatly simplify your downstream analyses
+      by allowing combining multiple datasets.
+    hidden: false
+    html: '%3Cselect%20name%3D%22rg_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22do_not_set%22%3E%0A%3Coption%20value%3D%22set%22%3ESet%20read%20groups%20%28SAM/BAM%20specification%29%3C/option%3E%0A%3Coption%20value%3D%22set_picard%22%3ESet%20read%20groups%20%28Picard%20style%29%3C/option%3E%0A%3Coption%20value%3D%22set_id_auto%22%3EAutomatically%20assign%20ID%3C/option%3E%0A%3Coption%20value%3D%22do_not_set%22%20selected%3EDo%20not%20set%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Set read groups information?
+    model_class: SelectToolParameter
+    multiple: false
+    name: rg_selector
+    optional: false
+    options:
+    - [Set read groups (SAM/BAM specification), set, false]
+    - [Set read groups (Picard style), set_picard, false]
+    - [Automatically assign ID, set_id_auto, false]
+    - [Do not set, do_not_set, true]
+    type: select
+    value: do_not_set
+  type: conditional
+- cases:
+  - inputs:
+    - argument: null
+      display: radio
+      help: Allow selecting among several preset parameter settings. Choosing between
+        these will result in dramatic changes in runtime. See help below to understand
+        effects of these presets.
+      hidden: false
+      html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22presets%22%20value%3D%22no_presets%22%20id%3D%22presets%7Cno_presets%22%20checked%3D%27checked%27%3E%3Clabel%20class%3D%22inline%22%20for%3D%22presets%7Cno_presets%22%3ENo%2C%20just%20use%20defaults%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22presets%22%20value%3D%22--very-fast%22%20id%3D%22presets%7C--very-fast%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22presets%7C--very-fast%22%3EVery%20fast%20end-to-end%20%28--very-fast%29%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22presets%22%20value%3D%22--fast%22%20id%3D%22presets%7C--fast%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22presets%7C--fast%22%3EFast%20end-to-end%20%28--fast%29%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22presets%22%20value%3D%22--sensitive%22%20id%3D%22presets%7C--sensitive%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22presets%7C--sensitive%22%3ESensitive%20end-to-end%20%28--sensitive%29%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22presets%22%20value%3D%22--very-sensitive%22%20id%3D%22presets%7C--very-sensitive%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22presets%7C--very-sensitive%22%3EVery%20sensitive%20end-to-end%20%28--very-sensitive%29%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22presets%22%20value%3D%22--very-fast-local%22%20id%3D%22presets%7C--very-fast-local%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22presets%7C--very-fast-local%22%3EVery%20fast%20local%20%28--very-fast-local%29%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22presets%22%20value%3D%22--fast-local%22%20id%3D%22presets%7C--fast-local%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22presets%7C--fast-local%22%3EFast%20local%20%28--fast-local%29%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22presets%22%20value%3D%22--sensitive-local%22%20id%3D%22presets%7C--sensitive-local%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22presets%7C--sensitive-local%22%3ESensitive%20local%20%28--sensitive-local%29%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22presets%22%20value%3D%22--very-sensitive-local%22%20id%3D%22presets%7C--very-sensitive-local%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22presets%7C--very-sensitive-local%22%3EVery%20sensitive%20local%20%28--very-sensitive-local%29%3C/label%3E%3C/div%3E'
+      is_dynamic: false
+      label: Do you want to use presets?
+      model_class: SelectToolParameter
+      multiple: false
+      name: presets
+      optional: false
+      options:
+      - ['No, just use defaults', no_presets, true]
+      - [Very fast end-to-end (--very-fast), --very-fast, false]
+      - [Fast end-to-end (--fast), --fast, false]
+      - [Sensitive end-to-end (--sensitive), --sensitive, false]
+      - [Very sensitive end-to-end (--very-sensitive), --very-sensitive, false]
+      - [Very fast local (--very-fast-local), --very-fast-local, false]
+      - [Fast local (--fast-local), --fast-local, false]
+      - [Sensitive local (--sensitive-local), --sensitive-local, false]
+      - [Very sensitive local (--very-sensitive-local), --very-sensitive-local, false]
+      type: select
+      value: no_presets
+    model_class: ConditionalWhen
+    value: simple
+  - inputs:
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: -s/--skip; default=0, hidden: false,
+          html: '%3Cinput%20type%3D%22text%22%20name%3D%22skip%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: Skip (i.e. do not align) the first that many reads
+            or pairs in the input, max: null, min: 0, model_class: IntegerToolParameter,
+          name: skip, optional: false, size: null, type: integer, value: '0'}
+        - {area: false, argument: null, help: -u/--qupto; for default behavior (no
+            limit) leave this value very large, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22qupto%22%20size%3D%2210%22%20value%3D%22100000000%22%3E',
+          is_dynamic: false, label: 'Align the first that many reads or read pairs
+            from the input (after the -s/--skip reads or pairs have been skipped),
+            then stop', max: null, min: 1, model_class: IntegerToolParameter, name: qupto,
+          optional: false, size: null, type: integer, value: '100000000'}
+        - {area: false, argument: null, help: -5/--trim5; default=0, hidden: false,
+          html: '%3Cinput%20type%3D%22text%22%20name%3D%22trim5%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: Trim that many bases from 5' (left) end of each
+            read before alignment, max: null, min: 0, model_class: IntegerToolParameter,
+          name: trim5, optional: false, size: null, type: integer, value: '0'}
+        - {area: false, argument: null, help: -3/--trim3; default=0, hidden: false,
+          html: '%3Cinput%20type%3D%22text%22%20name%3D%22trim3%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: Trim that many bases from 3' (right) end of each
+            read before alignment, max: null, min: 0, model_class: IntegerToolParameter,
+          name: trim3, optional: false, size: null, type: integer, value: '0'}
+        - argument: null
+          display: radio
+          help: See help below for more details
+          hidden: false
+          html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22qv_encoding%22%20value%3D%22--phred33%22%20id%3D%22qv_encoding%7C--phred33%22%20checked%3D%27checked%27%3E%3Clabel%20class%3D%22inline%22%20for%3D%22qv_encoding%7C--phred33%22%3EInput%20qualities%20are%20ASCII%20chars%20equal%20to%20the%20Phred%20quality%20plus%2033.%20This%20is%20also%20called%20the%20%22Phred%2B33%22%20encoding%2C%20which%20is%20used%20by%20the%20very%20latest%20Illumina%20pipelines%20%28--phred33%29%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22qv_encoding%22%20value%3D%22--phred64%22%20id%3D%22qv_encoding%7C--phred64%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22qv_encoding%7C--phred64%22%3EInput%20qualities%20are%20ASCII%20chars%20equal%20to%20the%20Phred%20quality%20plus%2064.%20This%20is%20also%20called%20the%20%22Phred%2B64%22%20encoding%20%28--phred64%29%3C/label%3E%3C/div%3E'
+          is_dynamic: false
+          label: Select quality score encoding
+          model_class: SelectToolParameter
+          multiple: false
+          name: qv_encoding
+          optional: false
+          options:
+          - ['Input qualities are ASCII chars equal to the Phred quality plus 33.
+              This is also called the "Phred+33" encoding, which is used by the very
+              latest Illumina pipelines (--phred33)', --phred33, true]
+          - [Input qualities are ASCII chars equal to the Phred quality plus 64. This
+              is also called the "Phred+64" encoding (--phred64), --phred64, false]
+          type: select
+          value: --phred33
+        - {argument: null, falsevalue: '', help: --solexa-quals; default=False, hidden: false,
+          html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22solexa_quals%22%20name%3D%22solexa_quals%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22solexa_quals%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Convert input qualities from Solexa (which can
+            be negative) to Phred (which can't). This scheme was used in older Illumina
+            GA Pipeline versions (prior to 1.3), model_class: BooleanToolParameter,
+          name: solexa_quals, optional: false, truevalue: --solexa-quals, type: boolean,
+          value: false}
+        - {argument: null, falsevalue: '', help: --int-quals; default=False, hidden: false,
+          html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22int_quals%22%20name%3D%22int_quals%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22int_quals%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: 'Quality values are represented in the read input
+            file as space-separated ASCII integers, e.g., 40 40 30 40..., rather than
+            ASCII characters, e.g., II?I.... Integers are treated as being on the
+            Phred quality scale unless --solexa-quals is also specified', model_class: BooleanToolParameter,
+          name: int_quals, optional: false, truevalue: --int-quals, type: boolean,
+          value: false}
+        model_class: ConditionalWhen
+        value: 'yes'
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'no'
+      model_class: Conditional
+      name: input_options
+      test_param:
+        argument: null
+        display: null
+        help: See "Input Options" section of Help below for information
+        hidden: false
+        html: '%3Cselect%20name%3D%22input_options_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Do you want to tweak input options?
+        model_class: SelectToolParameter
+        multiple: false
+        name: input_options_selector
+        optional: false
+        options:
+        - ['Yes', 'yes', false]
+        - ['No', 'no', true]
+        type: select
+        value: 'no'
+      type: conditional
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: -N; Can be set to 0 or 1. Setting this
+            higher makes alignment slower (often much slower) but increases sensitivity;
+            default=0, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22N%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: Set the number of mismatches to be allowed in
+            a seed alignment during multiseed alignment (see `Multiseed alignment`
+            section of help below), max: 1, min: 0, model_class: IntegerToolParameter,
+          name: N, optional: false, size: null, type: integer, value: '0'}
+        - {area: false, argument: null, help: -L; Smaller values make alignment slower
+            but more sensitive. Default=22, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22L%22%20size%3D%2210%22%20value%3D%2222%22%3E',
+          is_dynamic: false, label: Sets the length of the seed substrings to align
+            during multiseed alignment (see `Multiseed alignment` section of help
+            below), max: 32, min: 0, model_class: IntegerToolParameter, name: L, optional: false,
+          size: null, type: integer, value: '22'}
+        - {area: false, argument: null, help: '-i; Since it''s best to use longer
+            intervals for longer reads, this parameter sets the interval as a function
+            of the read length, rather than a single one-size-fits-all number. For
+            instance, specifying `-i S,1,2.5` sets the interval function `f` to `f(x)
+            = 1 + 2.5 * sqrt(x)`, where x is the read length. If the function returns
+            a result less than 1, it is rounded up to 1. Default=`S,1,1.15`', hidden: false,
+          html: '%3Cinput%20type%3D%22text%22%20name%3D%22i%22%20size%3D%2210%22%20value%3D%22S%2C1%2C1.15%22%3E',
+          is_dynamic: false, label: Set a function governing the interval between
+            seed substrings to use during multiseed alignment (see `Multiseed alignment`
+            section of help below). Also see description of this option below in the
+            help section, model_class: TextToolParameter, name: i, optional: false,
+          size: null, type: text, value: 'S,1,1.15'}
+        - {area: false, argument: null, help: '--n-ceil; For instance, specifying
+            `L,0,0.15` sets the N-ceiling function `f` to `f(x) = 0 + 0.15 * x`, where
+            x is the read length. Reads exceeding this ceiling are filtered out. Default=`L,0,0.15`',
+          hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22n_ceil%22%20size%3D%2210%22%20value%3D%22L%2C0%2C0.15%22%3E',
+          is_dynamic: false, label: Set a function governing the maximum number of
+            ambiguous characters (usually `N`s and/or `.`s) allowed in a read as a
+            function of read length, model_class: TextToolParameter, name: n_ceil,
+          optional: false, size: null, type: text, value: 'L,0,0.15'}
+        - {area: false, argument: null, help: --dpad; default=15, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22dpad%22%20size%3D%2210%22%20value%3D%2215%22%3E',
+          is_dynamic: false, label: Pad dynamic programming problems by that many
+            columns on either side to allow gaps, max: null, min: 0, model_class: IntegerToolParameter,
+          name: dpad, optional: false, size: null, type: integer, value: '15'}
+        - {area: false, argument: null, help: --gbar; default=4, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22gbar%22%20size%3D%2210%22%20value%3D%224%22%3E',
+          is_dynamic: false, label: Disallow gaps within that many positions of the
+            beginning or end of the read, max: null, min: 0, model_class: IntegerToolParameter,
+          name: gbar, optional: false, size: null, type: integer, value: '4'}
+        - {argument: null, falsevalue: '', help: --ignore-quals; input is treated
+            as though all quality values are high; default=False, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22ignore_quals%22%20name%3D%22ignore_quals%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22ignore_quals%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: 'When calculating a mismatch penalty, always consider
+            the quality value at the mismatched position to be the highest possible,
+            regardless of the actual value', model_class: BooleanToolParameter, name: ignore_quals,
+          optional: false, truevalue: --ignore-quals, type: boolean, value: false}
+        - {argument: null, falsevalue: '', help: 'In paired-end mode, `--nofw` and
+            `--norc` pertain to the fragments; i.e. specifying `--nofw` causes `bowtie2`
+            to explore only those paired-end configurations corresponding to fragments
+            from the reverse-complement (Crick) strand. Default=False', hidden: false,
+          html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22nofw%22%20name%3D%22nofw%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22nofw%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Do not attempt to align unpaired reads to the
+            forward (Watson) reference strand, model_class: BooleanToolParameter,
+          name: nofw, optional: false, truevalue: --nofw, type: boolean, value: false}
+        - {argument: null, falsevalue: '', help: 'In paired-end mode, `--nofw` and
+            `--norc` pertain to the fragments; i.e. specifying `--nofw` causes `bowtie2`
+            to explore only those paired-end configurations corresponding to fragments
+            from the reverse-complement (Crick) strand. Default=False', hidden: false,
+          html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22norc%22%20name%3D%22norc%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22norc%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Do not attempt to align unpaired reads to the
+            reverse (Crick) reference strand, model_class: BooleanToolParameter, name: norc,
+          optional: false, truevalue: --norc, type: boolean, value: false}
+        - {argument: null, falsevalue: '', help: '--no-1mm-upfront; By default, Bowtie
+            2 will attempt to find either an exact or a 1-mismatch end-to-end alignment
+            for the read *before* trying the multiseed heuristic.  Such alignments
+            can be found very quickly, and many short read alignments have exact or
+            near-exact end-to-end alignments.  However, this can lead to unexpected
+            alignments when the user also sets options governing the multiseed heuristic,
+            like `-L` and `-N`.  For instance, if the user specifies `-N 0` and `-L`
+            equal to the length of the read, the user will be surprised to find 1-mismatch
+            alignments reported.  This option prevents Bowtie 2 from searching for
+            1-mismatch end-to-end alignments before using the multiseed heuristic,
+            which leads to the expected behavior when combined with options such as
+            `-L` and `-N`. This comes at the expense of speed; Default=False', hidden: false,
+          html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_1mm_upfront%22%20name%3D%22no_1mm_upfront%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_1mm_upfront%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Prevent searching for 1-mismatch end-to-end alignments
+            before using the multiseed heuristic (see `Multiseed alignment` section
+            of help below), model_class: BooleanToolParameter, name: no_1mm_upfront,
+          optional: false, truevalue: --no-1mm-upfront, type: boolean, value: false}
+        - cases:
+          - inputs:
+            - {area: false, argument: null, help: '--score-min; This is a function
+                of read length. For instance, specifying `L,0,-0.6` sets the minimum-score
+                function `f` to `f(x) = 0 + -0.6 * x`, where `x` is the read length.
+                The default in `--end-to-end` mode is `L,-0.6,-0.6` and the default
+                in `--local` mode is `G,20,8`', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22score_min_ete%22%20size%3D%2210%22%20value%3D%22L%2C-0.6%2C-0.6%22%3E',
+              is_dynamic: false, label: Set a function governing the minimum alignment
+                score needed for an alignment to be considered `valid` (i.e. good
+                enough to report), model_class: TextToolParameter, name: score_min_ete,
+              optional: false, size: null, type: text, value: 'L,-0.6,-0.6'}
+            model_class: ConditionalWhen
+            value: end-to-end
+          - inputs:
+            - {area: false, argument: null, help: '--score-min; This is a function
+                of read length. For instance, specifying `L,0,-0.6` sets the minimum-score
+                function `f` to `f(x) = 0 + -0.6 * x`, where `x` is the read length.
+                The default in `--end-to-end` mode is `L,-0.6,-0.6` and the default
+                in `--local` mode is `G,20,8`', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22score_min_loc%22%20size%3D%2210%22%20value%3D%22G%2C20%2C8%22%3E',
+              is_dynamic: false, label: Set a function governing the minimum alignment
+                score needed for an alignment to be considered `valid` (i.e. good
+                enough to report), model_class: TextToolParameter, name: score_min_loc,
+              optional: false, size: null, type: text, value: 'G,20,8'}
+            model_class: ConditionalWhen
+            value: local
+          model_class: Conditional
+          name: align_mode
+          test_param:
+            argument: null
+            display: radio
+            help: --local and --end-to-end; see help below for detailed explanation;
+              default=--end-to-end
+            hidden: false
+            html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22align_mode_selector%22%20refresh_on_change%3D%22true%22%20value%3D%22end-to-end%22%20id%3D%22align_mode_selector%7Cend-to-end%22%20checked%3D%27checked%27%3E%3Clabel%20class%3D%22inline%22%20for%3D%22align_mode_selector%7Cend-to-end%22%3EEnd%20to%20End%20%28--end-to-end%29%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22align_mode_selector%22%20refresh_on_change%3D%22true%22%20value%3D%22local%22%20id%3D%22align_mode_selector%7Clocal%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22align_mode_selector%7Clocal%22%3ELocal%20%28--local%29%3C/label%3E%3C/div%3E'
+            is_dynamic: false
+            label: Select between `--local` and `--end-to-end` alignment modes
+            model_class: SelectToolParameter
+            multiple: false
+            name: align_mode_selector
+            optional: false
+            options:
+            - [End to End (--end-to-end), end-to-end, true]
+            - [Local (--local), local, false]
+            type: select
+            value: end-to-end
+          type: conditional
+        model_class: ConditionalWhen
+        value: 'yes'
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'no'
+      model_class: Conditional
+      name: alignment_options
+      test_param:
+        argument: null
+        display: null
+        help: See "Alignment Options" section of Help below for information
+        hidden: false
+        html: '%3Cselect%20name%3D%22alignment_options_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Do you want to tweak alignment options?
+        model_class: SelectToolParameter
+        multiple: false
+        name: alignment_options_selector
+        optional: false
+        options:
+        - ['Yes', 'yes', false]
+        - ['No', 'no', true]
+        type: select
+        value: 'no'
+      type: conditional
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: --ma;  In `--local` mode match bonus
+            is added to the alignment score for each position where a read character
+            aligns to a reference character and the characters match. Not used in
+            `--end-to-end` mode; Default=2, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22ma%22%20size%3D%2210%22%20value%3D%222%22%3E',
+          is_dynamic: false, label: Set the match bonus, max: null, min: null, model_class: IntegerToolParameter,
+          name: ma, optional: false, size: null, type: integer, value: '2'}
+        - {area: false, argument: null, help: '--mp; A number less than or equal to
+            `MX` and greater than or equal to `MN` is subtracted from the alignment
+            score for each position where a read character aligns to a reference character,
+            the characters do not match, and neither is an `N`.  If `--ignore-quals`
+            is specified, the number subtracted quals `MX`. Otherwise, the number
+            subtracted is `MN + floor( (MX-MN)(MIN(Q, 40.0)/40.0) )` where Q is the
+            Phred quality value; Default=6,2', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22mp%22%20size%3D%2210%22%20value%3D%226%2C2%22%3E',
+          is_dynamic: false, label: 'Set the maximum (`MX`) and minimum (`MN`) mismatch
+            penalties, both integers', model_class: TextToolParameter, name: mp, optional: false,
+          size: null, type: text, value: '6,2'}
+        - {area: false, argument: null, help: --np; Default=1, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22np%22%20size%3D%2210%22%20value%3D%221%22%3E',
+          is_dynamic: false, label: 'Sets penalty for positions where the read, reference,
+            or both, contain an ambiguous character such as `N`', max: null, min: null,
+          model_class: IntegerToolParameter, name: np, optional: false, size: null,
+          type: integer, value: '1'}
+        - {area: false, argument: null, help: --rdg; this is the first component of
+            --rdg flag - opening penalty; Default=5, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rdg_read_open%22%20size%3D%2210%22%20value%3D%225%22%3E',
+          is_dynamic: false, label: Set the read gap opening penalty, max: null, min: null,
+          model_class: IntegerToolParameter, name: rdg_read_open, optional: false,
+          size: null, type: integer, value: '5'}
+        - {area: false, argument: null, help: --rdg; this is the second component
+            of --rdg flag - extension penalty; Default=3, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rdg_read_extend%22%20size%3D%2210%22%20value%3D%223%22%3E',
+          is_dynamic: false, label: Set the read gap extension penalty, max: null,
+          min: null, model_class: IntegerToolParameter, name: rdg_read_extend, optional: false,
+          size: null, type: integer, value: '3'}
+        - {area: false, argument: null, help: --rfg; this is the first component of
+            --rfg flag - opening penalty; Default=5, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rfg_ref_open%22%20size%3D%2210%22%20value%3D%225%22%3E',
+          is_dynamic: false, label: Set the reference gap opening penalty, max: null,
+          min: null, model_class: IntegerToolParameter, name: rfg_ref_open, optional: false,
+          size: null, type: integer, value: '5'}
+        - {area: false, argument: null, help: --rfg; this is the second component
+            of --rfg flag - extension penalty; Default=3, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rfg_ref_extend%22%20size%3D%2210%22%20value%3D%223%22%3E',
+          is_dynamic: false, label: Set the reference gap extension penalty, max: null,
+          min: null, model_class: IntegerToolParameter, name: rfg_ref_extend, optional: false,
+          size: null, type: integer, value: '3'}
+        model_class: ConditionalWhen
+        value: 'yes'
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'no'
+      model_class: Conditional
+      name: scoring_options
+      test_param:
+        argument: null
+        display: null
+        help: See "Scoring Options" section of Help below for information
+        hidden: false
+        html: '%3Cselect%20name%3D%22scoring_options_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Do you want to tweak scoring options?
+        model_class: SelectToolParameter
+        multiple: false
+        name: scoring_options_selector
+        optional: false
+        options:
+        - ['Yes', 'yes', false]
+        - ['No', 'no', true]
+        type: select
+        value: 'no'
+      type: conditional
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'no'
+      - inputs:
+        - {area: false, argument: null, help: '-k; see detailed description of this
+            option in the help section below. Note: Bowtie 2 is not designed with
+            large values for `-k` in mind, and when aligning reads to long, repetitive
+            genomes large `-k` can be very, very slow', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22k%22%20size%3D%2210%22%20value%3D%221%22%3E',
+          is_dynamic: false, label: 'Searches for at most that many distinct, valid
+            alignments for each read', max: null, min: 1, model_class: IntegerToolParameter,
+          name: k, optional: false, size: null, type: integer, value: '1'}
+        model_class: ConditionalWhen
+        value: k
+      - inputs: []
+        model_class: ConditionalWhen
+        value: a
+      model_class: Conditional
+      name: reporting_options
+      test_param:
+        argument: null
+        display: null
+        help: Make sure you understand implications of setting -k and -a. See "Reporting
+          Options" section of Help below for information on -k and -a options
+        hidden: false
+        html: '%3Cselect%20name%3D%22reporting_options_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%2C%20do%20not%20set%3C/option%3E%0A%3Coption%20value%3D%22k%22%3ESet%20-k%20option%20and%20enter%20-k%20value%3C/option%3E%0A%3Coption%20value%3D%22a%22%3ESet%20-a%20option%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Do you want to use -a or -k options
+        model_class: SelectToolParameter
+        multiple: false
+        name: reporting_options_selector
+        optional: false
+        options:
+        - ['No, do not set', 'no', true]
+        - [Set -k option and enter -k value, k, false]
+        - [Set -a option, a, false]
+        type: select
+        value: 'no'
+      type: conditional
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: -D; A seed extension `fails` if it does
+            not yield a new best or a new second-best alignment.  This limit is automatically
+            adjusted up when -k or -a are specified. Default=15, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22D%22%20size%3D%2210%22%20value%3D%2215%22%3E',
+          is_dynamic: false, label: 'Attempt that many consecutive seed extension
+            attempts to `fail` before Bowtie 2 moves on, using the alignments found
+            so far', max: null, min: 0, model_class: IntegerToolParameter, name: D,
+          optional: false, size: null, type: integer, value: '15'}
+        - {area: false, argument: null, help: 'When `re-seeding`, Bowtie 2 simply
+            chooses a new set of reads (same length, same number of mismatches allowed)
+            at different offsets and searches for more alignments.  A read is considered
+            to have repetitive seeds if the total number of seed hits divided by the
+            number of seeds that aligned at least once is greater than 300.  Default=2',
+          hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22R%22%20size%3D%2210%22%20value%3D%222%22%3E',
+          is_dynamic: false, label: Set the maximum number of times Bowtie 2 will
+            `re-seed` reads with repetitive seeds, max: null, min: 0, model_class: IntegerToolParameter,
+          name: R, optional: false, size: null, type: integer, value: '2'}
+        model_class: ConditionalWhen
+        value: 'yes'
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'no'
+      model_class: Conditional
+      name: effort_options
+      test_param:
+        argument: null
+        display: null
+        help: See "Effort Options" section of Help below for information
+        hidden: false
+        html: '%3Cselect%20name%3D%22effort_options_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Do you want to tweak effort options?
+        model_class: SelectToolParameter
+        multiple: false
+        name: effort_options_selector
+        optional: false
+        options:
+        - ['Yes', 'yes', false]
+        - ['No', 'no', true]
+        type: select
+        value: 'no'
+      type: conditional
+    - cases:
+      - inputs:
+        - {argument: null, falsevalue: '', help: --no-unal; Default=False, hidden: false,
+          html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_unal%22%20name%3D%22no_unal%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_unal%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Suppress SAM records for reads that failed to
+            align, model_class: BooleanToolParameter, name: no_unal, optional: false,
+          truevalue: --no-unal, type: boolean, value: false}
+        - {argument: null, falsevalue: '', help: --omit-sec-seq; Default=False, hidden: false,
+          html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22omit_sec_seq%22%20name%3D%22omit_sec_seq%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22omit_sec_seq%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Suppress SEQ and QUAL strings for secondary alignments,
+          model_class: BooleanToolParameter, name: omit_sec_seq, optional: false,
+          truevalue: --omit-sec-seq, type: boolean, value: false}
+        model_class: ConditionalWhen
+        value: 'yes'
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'no'
+      model_class: Conditional
+      name: sam_options
+      test_param:
+        argument: null
+        display: null
+        help: See "Output Options" section of Help below for information
+        hidden: false
+        html: '%3Cselect%20name%3D%22sam_options_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Do you want to tweak SAM/BAM Options?
+        model_class: SelectToolParameter
+        multiple: false
+        name: sam_options_selector
+        optional: false
+        options:
+        - ['Yes', 'yes', false]
+        - ['No', 'no', true]
+        type: select
+        value: 'no'
+      type: conditional
+    - cases:
+      - inputs:
+        - {argument: null, falsevalue: '', help: --reorder; Default=False, hidden: false,
+          html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22reorder%22%20name%3D%22reorder%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22reorder%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Guarantee that output SAM records are printed
+            in an order corresponding to the order of the reads in the original input
+            file, model_class: BooleanToolParameter, name: reorder, optional: false,
+          truevalue: --reorder, type: boolean, value: false}
+        - {area: false, argument: null, help: --seed; Default=0, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22seed%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: Use this number as the seed for pseudo-random
+            number generator, max: null, min: 0, model_class: IntegerToolParameter,
+          name: seed, optional: false, size: null, type: integer, value: '0'}
+        - {argument: null, falsevalue: '', help: --non-deterministic; see Help below
+            for explanation of this option; default=False, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22non_deterministic%22%20name%3D%22non_deterministic%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22non_deterministic%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Re-initialize the pseudo-random generator for
+            each read using the current time, model_class: BooleanToolParameter, name: non_deterministic,
+          optional: false, truevalue: --non-deterministic, type: boolean, value: false}
+        model_class: ConditionalWhen
+        value: 'yes'
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'no'
+      model_class: Conditional
+      name: other_options
+      test_param:
+        argument: null
+        display: null
+        help: See "Other Options" section of Help below for information
+        hidden: false
+        html: '%3Cselect%20name%3D%22other_options_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Do you want to tweak Other Options?
+        model_class: SelectToolParameter
+        multiple: false
+        name: other_options_selector
+        optional: false
+        options:
+        - ['Yes', 'yes', false]
+        - ['No', 'no', true]
+        type: select
+        value: 'no'
+      type: conditional
+    - {argument: null, falsevalue: 'false', help: 'By default, the output from this
+        Bowtie2 wrapper is a sorted BAM file.', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22sam_opt%22%20name%3D%22sam_opt%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22sam_opt%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Would you like the output to be a SAM file, model_class: BooleanToolParameter,
+      name: sam_opt, optional: false, truevalue: 'true', type: boolean, value: false}
+    model_class: ConditionalWhen
+    value: full
+  model_class: Conditional
+  name: analysis_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22analysis_type_selector%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22simple%22%3E1%3A%20Default%20setting%20only%3C/option%3E%0A%3Coption%20value%3D%22full%22%3E2%3A%20Full%20parameter%20list%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Select analysis mode
+    model_class: SelectToolParameter
+    multiple: false
+    name: analysis_type_selector
+    optional: false
+    options:
+    - ['1: Default setting only', simple, false]
+    - ['2: Full parameter list', full, false]
+    type: select
+    value: simple
+  type: conditional
+- {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22save_mapping_stats%22%20name%3D%22save_mapping_stats%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22save_mapping_stats%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Save the bowtie2 mapping statistics to the history, model_class: BooleanToolParameter,
+  name: save_mapping_stats, optional: false, truevalue: 'true', type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fbowtie2%2Fbowtie2%2F2.2.6.2
+min_width: -1
+model_class: Tool
+name: Bowtie2
+outputs:
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: '${tool.name}
+    on ${on_string}: unaligned reads (L)', model_class: ToolOutput, name: output_unaligned_reads_l}
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: '${tool.name}
+    on ${on_string}: aligned reads (L)', model_class: ToolOutput, name: output_aligned_reads_l}
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: '${tool.name}
+    on ${on_string}: aligned reads (R)', model_class: ToolOutput, name: output_aligned_reads_r}
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: '${tool.name}
+    on ${on_string}: unaligned reads (R)', model_class: ToolOutput, name: output_unaligned_reads_r}
+- {edam_format: format_2572, format: bam, hidden: false, label: '${tool.name} on ${on_string}:
+    aligned reads (sorted BAM)', model_class: ToolOutput, name: output}
+- {edam_format: format_2573, format: sam, hidden: false, label: '${tool.name} on ${on_string}:
+    aligned reads (SAM)', model_class: ToolOutput, name: output_sam}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}:
+    mapping stats', model_class: ToolOutput, name: mapping_stats}
+panel_section_id: solexa_tools
+panel_section_name: 'NGS: Mapping'
+target: galaxy_main
+version: 2.2.6.2

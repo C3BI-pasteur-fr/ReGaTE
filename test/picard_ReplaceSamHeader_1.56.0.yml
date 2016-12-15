@@ -1,0 +1,48 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/2f92cb75946c/picard_pasteur_wrapper/picard_ReplaceSamHeader.xml
+description: ''
+id: toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/picard_ReplaceSamHeader/1.56.0
+inputs:
+- argument: null
+  edam_formats: [format_2572, format_2573]
+  extensions: [bam, sam]
+  help: If empty, upload or import a SAM/BAM dataset.
+  hidden: false
+  is_dynamic: false
+  label: SAM/BAM dataset to replace header in (TARGET)
+  model_class: DataToolParameter
+  multiple: false
+  name: inputFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_2572, format_2573]
+  extensions: [bam, sam]
+  help: If empty, upload or import a SAM/BAM dataset.
+  hidden: false
+  is_dynamic: false
+  label: SAM/BAM to reader header from (SOURCE)
+  model_class: DataToolParameter
+  multiple: false
+  name: headerFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: sam, help: Uncheck for SAM output, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22outputFormat%22%20name%3D%22outputFormat%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22outputFormat%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Output BAM instead of SAM, model_class: BooleanToolParameter,
+  name: outputFormat, optional: false, truevalue: bam, type: boolean, value: true}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fpicard_pasteur_wrapper%2Fpicard_ReplaceSamHeader%2F1.56.0
+min_width: -1
+model_class: Tool
+name: Replace SAM/BAM Header
+outputs:
+- {edam_format: format_2572, format: bam, hidden: false, label: '${tool.name} on ${on_string}:
+    ${outputFormat} with replaced header', model_class: ToolOutput, name: outFile}
+panel_section_id: ngs:_picard_tools
+panel_section_name: 'NGS: Picard Tools'
+target: galaxy_main
+version: 1.56.0

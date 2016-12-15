@@ -1,0 +1,60 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/gdtools/fe6986ae4399/gdtools/gdtools_validate.xml
+description: ''
+id: toolshed.pasteur.fr/repos/mvalade/gdtools/gdtools_validate/0.26
+inputs:
+- default: 1
+  help: null
+  inputs:
+  - argument: null
+    edam_formats: [format_3475]
+    extensions: [gd]
+    help: ''
+    hidden: false
+    is_dynamic: false
+    label: GD input file
+    model_class: DataToolParameter
+    multiple: false
+    name: input
+    optional: false
+    options:
+      hda: []
+      hdca: []
+    type: data
+  max: __Infinity__
+  min: 1
+  model_class: Repeat
+  name: read_series
+  title: Read File
+  type: repeat
+- argument: null
+  edam_formats: [format_1915]
+  extensions: [data]
+  help: File containing reference sequences in GenBank, GFF3, or FASTA format. If
+    provided, will validate seq_ids and positions in the GD file using these.  Option
+    may be provided multiple times for multiple files. (OPTIONAL)
+  hidden: false
+  is_dynamic: false
+  label: Reference sequences file
+  model_class: DataToolParameter
+  multiple: false
+  name: reference
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: '', help: Verbose mode. Outputs additional information
+    about progress. (OPTIONAL), hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22verbose%22%20name%3D%22verbose%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22verbose%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Verbose mode, model_class: BooleanToolParameter, name: verbose,
+  optional: false, truevalue: --verbose, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Fgdtools%2Fgdtools_validate%2F0.26
+min_width: -1
+model_class: Tool
+name: gdtools VALIDATE 0.26
+outputs:
+- {edam_format: format_3475, format: gd, hidden: false, label: gdtools VALIDATE TXT
+    output, model_class: ToolOutput, name: output}
+panel_section_id: ngs:_snp/indel_annotation
+panel_section_name: 'NGS: SNP/Indel Annotation'
+target: galaxy_main
+version: '0.26'

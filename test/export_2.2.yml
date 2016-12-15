@@ -1,0 +1,44 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/export_data/92755c152fdd/export_data/export.xml
+description: To export history datas, WARNING this tool duplicate the data, remember
+  to delete redundant data
+id: toolshed.pasteur.fr/repos/fmareuil/export_data/export/2.2
+inputs:
+- default: 1
+  help: null
+  inputs:
+  - argument: null
+    edam_formats: [format_1915]
+    extensions: [data]
+    help: ''
+    hidden: false
+    is_dynamic: false
+    label: Source file
+    model_class: DataToolParameter
+    multiple: false
+    name: input
+    optional: false
+    options:
+      hda: []
+      hdca: []
+    type: data
+  - {area: false, argument: null, help: No space or accent in the name, hidden: false,
+    html: '%3Cinput%20type%3D%22text%22%20name%3D%22name%22%20size%3D%2250%22%20value%3D%22%22%3E',
+    is_dynamic: false, label: Name of the data, model_class: TextToolParameter, name: name,
+    optional: false, size: '50', type: text, value: null}
+  max: __Infinity__
+  min: 1
+  model_class: Repeat
+  name: inputs
+  title: Input for export
+  type: repeat
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fexport_data%2Fexport%2F2.2
+min_width: -1
+model_class: Tool
+name: export data
+outputs:
+- {edam_format: null, format: text, hidden: false, label: log of export of datas in
+    /outputs/yourlogin, model_class: ToolOutput, name: output}
+panel_section_id: send
+panel_section_name: Send Data
+target: galaxy_main
+version: '2.2'

@@ -1,0 +1,135 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/visualization/LAJ.xml
+description: Pairwise Alignment Viewer
+id: laj_1
+inputs:
+- argument: null
+  edam_formats: [format_3014]
+  extensions: [lav]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Alignment File
+  model_class: DataToolParameter
+  multiple: false
+  name: maf_input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: First Sequence File
+  model_class: DataToolParameter
+  multiple: false
+  name: seq_file1
+  optional: true
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Second Sequence File
+  model_class: DataToolParameter
+  multiple: false
+  name: seq_file2
+  optional: true
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Exon File
+  model_class: DataToolParameter
+  multiple: false
+  name: exonfile
+  optional: true
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Repeat File
+  model_class: DataToolParameter
+  multiple: false
+  name: repeatfile
+  optional: true
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Annotation File
+  model_class: DataToolParameter
+  multiple: false
+  name: annotationfile
+  optional: true
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Underlay File
+  model_class: DataToolParameter
+  multiple: false
+  name: underlayfile
+  optional: true
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Highlight File
+  model_class: DataToolParameter
+  multiple: false
+  name: highlightfile
+  optional: true
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=laj_1
+min_width: -1
+model_class: Tool
+name: LAJ
+outputs:
+- {edam_format: format_2330, format: laj, hidden: false, label: '', model_class: ToolOutput,
+  name: out_file1}
+panel_section_id: plots
+panel_section_name: Graph/Display Data
+target: galaxy_main
+version: 1.0.0

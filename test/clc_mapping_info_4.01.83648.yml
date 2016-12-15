@@ -1,0 +1,244 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/clc_assembly_4/1bcc27a85c4c/clc_assembly_4/clc_mapping_info.xml
+description: Print some information about a read mapping.
+id: toolshed.pasteur.fr/repos/fmareuil/clc_assembly_4/clc_mapping_info/4.01.83648
+inputs:
+- argument: null
+  edam_formats: [format_2333]
+  extensions: [cas]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: cas file to analyse
+  model_class: DataToolParameter
+  multiple: false
+  name: casFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: fast
+  - inputs:
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxCov%22%20size%3D%224%22%20value%3D%2210%22%3E',
+          is_dynamic: false, label: Set the maximum coverage value, max: null, min: null,
+          model_class: IntegerToolParameter, name: maxCov, optional: false, size: '4',
+          type: integer, value: '10'}
+        model_class: ConditionalWhen
+        value: filter
+      - inputs: []
+        model_class: ConditionalWhen
+        value: noFilter
+      model_class: Conditional
+      name: maxCovFilter
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22covFilter_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22noFilter%22%3E%0A%3Coption%20value%3D%22noFilter%22%20selected%3E%20No%20Filter%20%3C/option%3E%0A%3Coption%20value%3D%22filter%22%3E%20Set%20the%20filter%20value%20%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Set the maximum coverage for the detailed coverage information
+        model_class: SelectToolParameter
+        multiple: false
+        name: covFilter_selector
+        optional: false
+        options:
+        - [' No Filter ', noFilter, true]
+        - [' Set the filter value ', filter, false]
+        type: select
+        value: noFilter
+      type: conditional
+    model_class: ConditionalWhen
+    value: coverageOutput
+  - inputs:
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxCov%22%20size%3D%224%22%20value%3D%2210%22%3E',
+          is_dynamic: false, label: Set the maximum coverage value, max: null, min: null,
+          model_class: IntegerToolParameter, name: maxCov, optional: false, size: '4',
+          type: integer, value: '10'}
+        model_class: ConditionalWhen
+        value: filter
+      - inputs: []
+        model_class: ConditionalWhen
+        value: noFilter
+      model_class: Conditional
+      name: maxCovFilter
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22covFilter_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22noFilter%22%3E%0A%3Coption%20value%3D%22noFilter%22%20selected%3E%20No%20Filter%20%3C/option%3E%0A%3Coption%20value%3D%22filter%22%3E%20Set%20the%20filter%20value%20%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Set the maximum coverage for the detailed coverage information
+        model_class: SelectToolParameter
+        multiple: false
+        name: covFilter_selector
+        optional: false
+        options:
+        - [' No Filter ', noFilter, true]
+        - [' Set the filter value ', filter, false]
+        type: select
+        value: noFilter
+      type: conditional
+    model_class: ConditionalWhen
+    value: coverage
+  model_class: Conditional
+  name: coverage_selector
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22coverage_type%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22coverage%22%3E%0A%3Coption%20value%3D%22coverage%22%20selected%3ECoverage%20details%20WITHOUT%20output%20file%3C/option%3E%0A%3Coption%20value%3D%22coverageOutput%22%3ECoverage%20details%20WITH%20output%20file%3C/option%3E%0A%3Coption%20value%3D%22fast%22%3ENo%20coverage%20details%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Show more detailed coverage information
+    model_class: SelectToolParameter
+    multiple: false
+    name: coverage_type
+    optional: false
+    options:
+    - [Coverage details WITHOUT output file, coverage, true]
+    - [Coverage details WITH output file, coverageOutput, false]
+    - [No coverage details, fast, false]
+    type: select
+    value: coverage
+  type: conditional
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22skipcontigs%22%20name%3D%22skipcontigs%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22skipcontigs%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Skip contig specific information, model_class: BooleanToolParameter,
+  name: skipcontigs, optional: false, truevalue: -s, type: boolean, value: false}
+- {argument: null, falsevalue: ' ', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22correct%22%20name%3D%22correct%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22correct%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Also show coverage corrected for ambiguous residues in
+    reference sequences, model_class: BooleanToolParameter, name: correct, optional: false,
+  truevalue: -n, type: boolean, value: false}
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22orientMode%22%20last_selected_value%3D%22fb%22%3E%0A%3Coption%20value%3D%22fb%22%20selected%3Eforward%20reverse%20%28fb%29%3C/option%3E%0A%3Coption%20value%3D%22bf%22%3Ereverse%20forward%20%28bf%29%3C/option%3E%0A%3Coption%20value%3D%22ff%22%3Eforward%20forward%20%28ff%29%3C/option%3E%0A%3Coption%20value%3D%22bb%22%3Ereverse%20reverse%20%28bb%29%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Select your read orientation mode
+      model_class: SelectToolParameter
+      multiple: false
+      name: orientMode
+      optional: false
+      options:
+      - [forward reverse (fb), fb, true]
+      - [reverse forward (bf), bf, false]
+      - [forward forward (ff), ff, false]
+      - [reverse reverse (bb), bb, false]
+      type: select
+      value: fb
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22distMode%22%3E%0A%3Coption%20value%3D%22ss%22%3Estart%20and%20start%20mode%3C/option%3E%0A%3Coption%20value%3D%22se%22%3Estart%20and%20end%20mode%3C/option%3E%0A%3Coption%20value%3D%22es%22%3Eend%20and%20start%20mode%3C/option%3E%0A%3Coption%20value%3D%22ee%22%3Eend%20and%20end%20mode%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: select your distance mode
+      model_class: SelectToolParameter
+      multiple: false
+      name: distMode
+      optional: false
+      options:
+      - [start and start mode, ss, false]
+      - [start and end mode, se, false]
+      - [end and start mode, es, false]
+      - [end and end mode, ee, false]
+      type: select
+      value: ss
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minDist%22%20size%3D%224%22%20value%3D%22400%22%3E',
+      is_dynamic: false, label: minimal nucleotides quantity between each pair, max: null,
+      min: 100, model_class: IntegerToolParameter, name: minDist, optional: false,
+      size: '4', type: integer, value: '400'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxDist%22%20size%3D%224%22%20value%3D%221500%22%3E',
+      is_dynamic: false, label: maximal nucleotides quantity between each pair, max: null,
+      min: 100, model_class: IntegerToolParameter, name: maxDist, optional: false,
+      size: '4', type: integer, value: '1500'}
+    - {argument: null, falsevalue: ' ', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22histo%22%20name%3D%22histo%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22histo%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Creates an optional output file for distance histogram
+        for paired end data, model_class: BooleanToolParameter, name: histo, optional: false,
+      truevalue: -q, type: boolean, value: false}
+    model_class: ConditionalWhen
+    value: paired_end
+  - inputs: []
+    model_class: ConditionalWhen
+    value: single
+  model_class: Conditional
+  name: read_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22read_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22single%22%3E%0A%3Coption%20value%3D%22single%22%20selected%3ESingle%20Read%3C/option%3E%0A%3Coption%20value%3D%22paired_end%22%3EPaired%20End%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Type of input data
+    model_class: SelectToolParameter
+    multiple: false
+    name: read_type_selector
+    optional: false
+    options:
+    - [Single Read, single, true]
+    - [Paired End, paired_end, false]
+    type: select
+    value: single
+  type: conditional
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22mismatch%22%20name%3D%22mismatch%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22mismatch%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'Show counts of mismatches, insertions and deletions',
+  model_class: BooleanToolParameter, name: mismatch, optional: false, truevalue: -m,
+  type: boolean, value: false}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: noInfo
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22endInfo%22%20size%3D%224%22%20value%3D%2210%22%3E',
+      is_dynamic: false, label: distance to get the info, max: null, min: null, model_class: IntegerToolParameter,
+      name: endInfo, optional: false, size: '4', type: integer, value: '10'}
+    model_class: ConditionalWhen
+    value: info
+  model_class: Conditional
+  name: contigEndInfo
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22endInfo_selector%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22info%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22noInfo%22%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Show information about the contig nucleotides around the ends of the reads
+      up to the given distance
+    model_class: SelectToolParameter
+    multiple: false
+    name: endInfo_selector
+    optional: false
+    options:
+    - ['Yes', info, false]
+    - ['No', noInfo, false]
+    type: select
+    value: info
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fclc_assembly_4%2Fclc_mapping_info%2F4.01.83648
+min_width: -1
+model_class: Tool
+name: clc_mapping_info
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: Mapping Info, model_class: ToolOutput,
+  name: mappingInfoOutput}
+- {edam_format: null, format: tgz, hidden: false, label: Output coverage information,
+  model_class: ToolOutput, name: coverageFiles}
+- {edam_format: format_2330, format: txt, hidden: false, label: Output distance histogram
+    for paired end data, model_class: ToolOutput, name: histoFile}
+panel_section_id: ngs:_assembly
+panel_section_name: 'NGS: Assembly package clc 4'
+target: galaxy_main
+version: 4.01.83648

@@ -1,0 +1,95 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/taxonomy_analysis/98189979e262/taxonomy_analysis/rankoptimizer.xml
+description: rankoptimizer report taxonomic abundance, based on BLAST hits. rankoptimizer
+  analyze only (p)taxoptimizer output file.
+id: toolshed.pasteur.fr/repos/odoppelt/taxonomy_analysis/rankoptimizer/0.0.5
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: 'taxoptimizer output file (format: blast m8 OC taxonomy DE )'
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22v%22%20name%3D%22v%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22v%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: html krona format, model_class: BooleanToolParameter,
+  name: v, optional: false, truevalue: -v, type: boolean, value: true}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22k%22%20name%3D%22k%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22k%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: xml krona format, model_class: BooleanToolParameter, name: k,
+  optional: false, truevalue: -k, type: boolean, value: true}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22t%22%20name%3D%22t%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22t%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: text representation, model_class: BooleanToolParameter,
+  name: t, optional: false, truevalue: -t, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22report%22%20name%3D%22report%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22report%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Report rank information in xml krona (-k) and html krona
+    (-v) formats, model_class: BooleanToolParameter, name: report, optional: false,
+  truevalue: -R, type: boolean, value: false}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: basic
+  - inputs:
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22lca_report%22%20name%3D%22lca_report%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22lca_report%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Report lowest common ancestor (LCA) of taxonomic abundance,
+      model_class: BooleanToolParameter, name: lca_report, optional: false, truevalue: -a,
+      type: boolean, value: false}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22cel_org%22%20name%3D%22cel_org%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22cel_org%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Remove 'cellular organism' from taxonomy. Very very
+        slow., model_class: BooleanToolParameter, name: cel_org, optional: false,
+      truevalue: -l, type: boolean, value: false}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22first_col%22%20size%3D%224%22%20value%3D%2214%22%3E',
+      is_dynamic: false, label: First column of taxonomy information (default column=
+        14), max: null, min: null, model_class: IntegerToolParameter, name: first_col,
+      optional: false, size: '4', type: integer, value: '14'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22col_num%22%20size%3D%224%22%20value%3D%2212%22%3E',
+      is_dynamic: false, label: Column number of hsp score (default column= 12), max: null,
+      min: null, model_class: IntegerToolParameter, name: col_num, optional: false,
+      size: '4', type: integer, value: '12'}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22id_reads_analysis%22%20name%3D%22id_reads_analysis%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22id_reads_analysis%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Reintroduce abundance of identical reads in analyze,
+      model_class: BooleanToolParameter, name: id_reads_analysis, optional: false,
+      truevalue: -U, type: boolean, value: false}
+    model_class: ConditionalWhen
+    value: advanced
+  model_class: Conditional
+  name: adv_opts
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22adv_opts_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22basic%22%3E%0A%3Coption%20value%3D%22basic%22%20selected%3E%20Hide%20Advanced%20Options%3C/option%3E%0A%3Coption%20value%3D%22advanced%22%3EShow%20Advanced%20Options%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Advanced Options
+    model_class: SelectToolParameter
+    multiple: false
+    name: adv_opts_selector
+    optional: false
+    options:
+    - [' Hide Advanced Options', basic, true]
+    - [Show Advanced Options, advanced, false]
+    type: select
+    value: basic
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Ftaxonomy_analysis%2Frankoptimizer%2F0.0.5
+min_width: -1
+model_class: Tool
+name: rankoptimizer
+outputs:
+- {edam_format: format_2332, format: xml, hidden: false, label: XML rankoptimzer output,
+  model_class: ToolOutput, name: outputXML}
+- {edam_format: format_2331, format: html, hidden: false, label: HTML rankoptimzer
+    output, model_class: ToolOutput, name: outputHTML}
+- {edam_format: format_2330, format: txt, hidden: false, label: TEXT rankoptimzer
+    output, model_class: ToolOutput, name: outputTXT}
+panel_section_id: tax_manipulation
+panel_section_name: Metagenomic analyses
+target: galaxy_main
+version: 0.0.5

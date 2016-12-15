@@ -1,0 +1,58 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/afelten/microbiome_analyses/cacc5a90438f/microbiome_analyses/GemErr.xml
+description: generate an error models from real data for GemReads
+id: toolshed.pasteur.fr/repos/afelten/microbiome_analyses/GemErr/1.6
+inputs:
+- {area: false, argument: null, help: "Set to the LONGEST read in a dataset (it doesn\u2019\
+    t matter if you set it a few bases longer than the longest read, if unsure).",
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read_length%22%20size%3D%223%22%20value%3D%22200%22%3E',
+  is_dynamic: false, label: Read length, max: null, min: null, model_class: IntegerToolParameter,
+  name: read_length, optional: false, size: '3', type: integer, value: '200'}
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Reference genome or gene in fasta format
+  model_class: DataToolParameter
+  multiple: false
+  name: ref
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: This file will be parsed to create the error model.
+  hidden: false
+  is_dynamic: false
+  label: Alignment of reads in SAM format
+  model_class: DataToolParameter
+  multiple: false
+  name: SAM
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22circular%22%20name%3D%22circular%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22circular%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Calculate error models based on circular genomes, model_class: BooleanToolParameter,
+  name: circular, optional: false, truevalue: -c, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22paired_end%22%20name%3D%22paired_end%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22paired_end%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Paired end data, model_class: BooleanToolParameter, name: paired_end,
+  optional: false, truevalue: -p, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fafelten%2Fmicrobiome_analyses%2FGemErr%2F1.6
+min_width: -1
+model_class: Tool
+name: GemErr
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}:
+    model', model_class: ToolOutput, name: modelp}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}:
+    model', model_class: ToolOutput, name: models}
+panel_section_id: microbiome_analysis
+panel_section_name: Microbiome Analysis
+target: galaxy_main
+version: '1.6'

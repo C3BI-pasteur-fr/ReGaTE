@@ -1,0 +1,179 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "meme_fimo-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.0.1", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=meme_fimo", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "html", 
+                    "dataDescription": "html_outfile", 
+                    "data": {
+                        "term": "Report", 
+                        "uri": "http://edamontology.org/data_2048"
+                    }, 
+                    "format": [
+                        {
+                            "term": "HTML", 
+                            "uri": "http://edamontology.org/format_2331"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "tabular", 
+                    "dataDescription": "txt_outfile", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "tabular", 
+                    "dataDescription": "gff_outfile", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "cisml", 
+                    "dataDescription": "xml_outfile", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "XML", 
+                            "uri": "http://edamontology.org/format_2332"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "interval", 
+                    "dataDescription": "interval_outfile", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "- Find Individual Motif Occurrences", 
+            "input": [
+                {
+                    "dataHandle": "input_motifs", 
+                    "dataDescription": "'MEME output' formatted file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "XML", 
+                            "uri": "http://edamontology.org/format_2332"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "input_database", 
+                    "dataDescription": "Sequences", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "bgfile", 
+                    "dataDescription": "Background Model", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "- Find Individual Motif Occurrences.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://meme_fimo", 
+            "usesName": "Toolshed entry for \"meme_fimo\"", 
+            "usesVersion": "0.0.1"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "meme_fimo-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.0.1", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

@@ -1,0 +1,209 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/phenotype_association/sift.xml
+description: predictions of functional sites
+id: hgv_sift
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Dataset
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  data_ref: input
+  display: null
+  help: ''
+  hidden: false
+  is_dynamic: true
+  label: Column with chromosome
+  model_class: ColumnListParameter
+  multiple: false
+  name: chrom_col
+  numerical: false
+  optional: false
+  options: []
+  type: data_column
+- argument: null
+  data_ref: input
+  display: null
+  help: ''
+  hidden: false
+  is_dynamic: true
+  label: Column with position
+  model_class: ColumnListParameter
+  multiple: false
+  name: pos_col
+  numerical: true
+  optional: false
+  options: []
+  type: data_column
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22base%22%20last_selected_value%3D%221%22%3E%0A%3Coption%20value%3D%221%22%20selected%3Eone-based%3C/option%3E%0A%3Coption%20value%3D%220%22%3Ezero-based%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Position coordinates are
+  model_class: SelectToolParameter
+  multiple: false
+  name: base
+  optional: false
+  options:
+  - [one-based, '1', true]
+  - [zero-based, '0', false]
+  type: select
+  value: '1'
+- argument: null
+  data_ref: input
+  display: null
+  help: ''
+  hidden: false
+  is_dynamic: true
+  label: Column with allele
+  model_class: ColumnListParameter
+  multiple: false
+  name: allele_col
+  numerical: false
+  optional: false
+  options: []
+  type: data_column
+- cases:
+  - inputs:
+    - argument: null
+      data_ref: input
+      display: null
+      help: ''
+      hidden: false
+      is_dynamic: true
+      label: Column with strand
+      model_class: ColumnListParameter
+      multiple: false
+      name: strand_col
+      numerical: false
+      optional: false
+      options: []
+      type: data_column
+    model_class: ConditionalWhen
+    value: data_column
+  - inputs:
+    - {argument: null, help: '', hidden: true, html: '%3Cinput%20type%3D%22hidden%22%20name%3D%22strand_col%22%20value%3D%22%2B%22%3E',
+      is_dynamic: false, label: '', model_class: HiddenToolParameter, name: strand_col,
+      optional: false, type: hidden, value: +}
+    model_class: ConditionalWhen
+    value: all_pos
+  - inputs:
+    - {argument: null, help: '', hidden: true, html: '%3Cinput%20type%3D%22hidden%22%20name%3D%22strand_col%22%20value%3D%22-%22%3E',
+      is_dynamic: false, label: '', model_class: HiddenToolParameter, name: strand_col,
+      optional: false, type: hidden, value: '-'}
+    model_class: ConditionalWhen
+    value: all_neg
+  model_class: Conditional
+  name: strand_source
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22strand_choice%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22data_column%22%3E%0A%3Coption%20value%3D%22data_column%22%20selected%3Ea%20column%20in%20the%20dataset%3C/option%3E%0A%3Coption%20value%3D%22all_pos%22%3Eall%20on%20sense/forward/%2B%20strand%3C/option%3E%0A%3Coption%20value%3D%22all_neg%22%3Eall%20on%20antisense/reverse/-%20strand%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Strand info
+    model_class: SelectToolParameter
+    multiple: false
+    name: strand_choice
+    optional: false
+    options:
+    - [a column in the dataset, data_column, true]
+    - [all on sense/forward/+ strand, all_pos, false]
+    - [all on antisense/reverse/- strand, all_neg, false]
+    type: select
+    value: data_column
+  type: conditional
+- cases:
+  - inputs:
+    - {argument: null, help: '', hidden: true, html: '%3Cinput%20type%3D%22hidden%22%20name%3D%22comment_col%22%20value%3D%22-%22%3E',
+      is_dynamic: false, label: '', model_class: HiddenToolParameter, name: comment_col,
+      optional: false, type: hidden, value: '-'}
+    model_class: ConditionalWhen
+    value: 'no'
+  - inputs:
+    - argument: null
+      data_ref: input
+      display: null
+      help: ''
+      hidden: false
+      is_dynamic: true
+      label: Column with comment
+      model_class: ColumnListParameter
+      multiple: false
+      name: comment_col
+      numerical: false
+      optional: false
+      options: []
+      type: data_column
+    model_class: ConditionalWhen
+    value: 'yes'
+  model_class: Conditional
+  name: comment_source
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22comment_choice%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22no%22%20selected%3Eno%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3Eyes%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Include comment column
+    model_class: SelectToolParameter
+    multiple: false
+    name: comment_choice
+    optional: false
+    options:
+    - ['no', 'no', true]
+    - ['yes', 'yes', false]
+    type: select
+    value: 'no'
+  type: conditional
+- argument: null
+  display: checkboxes
+  help: ''
+  hidden: false
+  html: '%3Cdiv%20class%3D%22checkUncheckAllPlaceholder%22%20checkbox_name%3D%22output_opts%22%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22output_opts%22%20value%3D%22A%22%20id%3D%22output_opts%7CA%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22output_opts%7CA%22%3EEnsembl%20Gene%20ID%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22output_opts%22%20value%3D%22B%22%20id%3D%22output_opts%7CB%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22output_opts%7CB%22%3EGene%20Name%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22output_opts%22%20value%3D%22C%22%20id%3D%22output_opts%7CC%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22output_opts%7CC%22%3EGene%20Description%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22output_opts%22%20value%3D%22D%22%20id%3D%22output_opts%7CD%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22output_opts%7CD%22%3EEnsembl%20Protein%20Family%20ID%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22output_opts%22%20value%3D%22E%22%20id%3D%22output_opts%7CE%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22output_opts%7CE%22%3EEnsembl%20Protein%20Family%20Description%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22output_opts%22%20value%3D%22F%22%20id%3D%22output_opts%7CF%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22output_opts%7CF%22%3EEnsembl%20Transcript%20Status%20%28Known%20/%20Novel%29%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22output_opts%22%20value%3D%22G%22%20id%3D%22output_opts%7CG%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22output_opts%7CG%22%3EProtein%20Family%20Size%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22output_opts%22%20value%3D%22H%22%20id%3D%22output_opts%7CH%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22output_opts%7CH%22%3EKa/Ks%20%28Human-mouse%29%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22output_opts%22%20value%3D%22I%22%20id%3D%22output_opts%7CI%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22output_opts%7CI%22%3EKa/Ks%20%28Human-macaque%29%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22output_opts%22%20value%3D%22J%22%20id%3D%22output_opts%7CJ%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22output_opts%7CJ%22%3EOMIM%20Disease%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22output_opts%22%20value%3D%22K%22%20id%3D%22output_opts%7CK%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22output_opts%7CK%22%3EAllele%20Frequencies%20%28All%20Hapmap%20Populations%20-%20weighted%20average%29%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22output_opts%22%20value%3D%22L%22%20id%3D%22output_opts%7CL%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22output_opts%7CL%22%3EAllele%20Frequencies%20%28CEU%20Hapmap%20population%29%3C/label%3E%3C/div%3E'
+  is_dynamic: false
+  label: Include the following additional fields in the output
+  model_class: SelectToolParameter
+  multiple: true
+  name: output_opts
+  optional: true
+  options:
+  - [Ensembl Gene ID, A, false]
+  - [Gene Name, B, false]
+  - [Gene Description, C, false]
+  - [Ensembl Protein Family ID, D, false]
+  - [Ensembl Protein Family Description, E, false]
+  - [Ensembl Transcript Status (Known / Novel), F, false]
+  - [Protein Family Size, G, false]
+  - [Ka/Ks (Human-mouse), H, false]
+  - [Ka/Ks (Human-macaque), I, false]
+  - [OMIM Disease, J, false]
+  - [Allele Frequencies (All Hapmap Populations - weighted average), K, false]
+  - [Allele Frequencies (CEU Hapmap population), L, false]
+  type: select
+  value: A
+link: /tool_runner?tool_id=hgv_sift
+min_width: -1
+model_class: Tool
+name: SIFT
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+panel_section_id: hgv
+panel_section_name: Phenotype Association
+target: galaxy_main
+version: 1.0.0

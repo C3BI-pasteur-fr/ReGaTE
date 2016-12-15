@@ -1,0 +1,476 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/galaxy/getDistribution.xml
+description: 'Get Distribution: Get the distribution of the genomic coordinates on
+  a genome.'
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/getDistribution/1.0.0
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3003]
+      extensions: [bed]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: bed
+  - inputs:
+    - argument: null
+      edam_formats: [format_2305]
+      extensions: [gff]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff
+  - inputs:
+    - argument: null
+      edam_formats: [null]
+      extensions: [gff2]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff2
+  - inputs:
+    - argument: null
+      edam_formats: [format_1975]
+      extensions: [gff3]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff3
+  - inputs:
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [csv]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: csv
+  - inputs:
+    - argument: null
+      edam_formats: [format_2573]
+      extensions: [sam]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: sam
+  - inputs:
+    - argument: null
+      edam_formats: [format_2306]
+      extensions: [gtf]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gtf
+  model_class: Conditional
+  name: formatType
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22FormatInputFileName%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22bed%22%3Ebed%3C/option%3E%0A%3Coption%20value%3D%22gff%22%3Egff%3C/option%3E%0A%3Coption%20value%3D%22gff2%22%3Egff2%3C/option%3E%0A%3Coption%20value%3D%22gff3%22%3Egff3%3C/option%3E%0A%3Coption%20value%3D%22csv%22%3Ecsv%3C/option%3E%0A%3Coption%20value%3D%22sam%22%3Esam%3C/option%3E%0A%3Coption%20value%3D%22gtf%22%3Egtf%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Input File Format
+    model_class: SelectToolParameter
+    multiple: false
+    name: FormatInputFileName
+    optional: false
+    options:
+    - [bed, bed, false]
+    - [gff, gff, false]
+    - [gff2, gff2, false]
+    - [gff3, gff3, false]
+    - [csv, csv, false]
+    - [sam, sam, false]
+    - [gtf, gtf, false]
+    type: select
+    value: bed
+  type: conditional
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: reference genome file
+  model_class: DataToolParameter
+  multiple: false
+  name: refFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22nbBins%22%20size%3D%2210%22%20value%3D%221000%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: nbBins, optional: false, size: null, type: integer, value: '1000'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: optionNbBin
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22Nb%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: number of bins
+    model_class: SelectToolParameter
+    multiple: false
+    name: Nb
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22startValue%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: startValue, optional: false, size: null, type: integer, value: '0'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: optionStart
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22start%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: start from a given region
+    model_class: SelectToolParameter
+    multiple: false
+    name: start
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22endValue%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: endValue, optional: false, size: null, type: integer, value: '0'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: optionEnd
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22end%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: end from a given region
+    model_class: SelectToolParameter
+    multiple: false
+    name: end
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22heightValue%22%20size%3D%2210%22%20value%3D%22300%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: heightValue, optional: false, size: null, type: integer, value: '300'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: optionHeight
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22height%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: height of the graphics
+    model_class: SelectToolParameter
+    multiple: false
+    name: height
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22widthValue%22%20size%3D%2210%22%20value%3D%221000%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: widthValue, optional: false, size: null, type: integer, value: '1000'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: optionWidth
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22width%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: width of the graphics
+    model_class: SelectToolParameter
+    multiple: false
+    name: width
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22YMinValue%22%20size%3D%2210%22%20value%3D%221000%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: YMinValue, optional: false, size: null, type: integer, value: '1000'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: optionYMin
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22YMin%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: minimum value on the y-axis to plot
+    model_class: SelectToolParameter
+    multiple: false
+    name: YMin
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22YMaxValue%22%20size%3D%2210%22%20value%3D%221000%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: YMaxValue, optional: false, size: null, type: integer, value: '1000'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: optionYMax
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22YMax%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: maximum value on the y-axis to plot
+    model_class: SelectToolParameter
+    multiple: false
+    name: YMax
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22chromValue%22%20size%3D%2210%22%20value%3D%22chromName%22%3E',
+      is_dynamic: false, label: '', model_class: TextToolParameter, name: chromValue,
+      optional: false, size: null, type: text, value: chromName}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: optionChrom
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22chrom%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: plot only one given chromosome
+    model_class: SelectToolParameter
+    multiple: false
+    name: chrom
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22colorValue%22%20size%3D%2210%22%20value%3D%22red%2Cblue%22%3E',
+      is_dynamic: false, label: '', model_class: TextToolParameter, name: colorValue,
+      optional: false, size: null, type: text, value: 'red,blue'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: optionColor
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22color%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: color of the lines (separated by commas and no space)
+    model_class: SelectToolParameter
+    multiple: false
+    name: color
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22bothStrands%22%20name%3D%22bothStrands%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22bothStrands%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: plot one curve per strand, model_class: BooleanToolParameter,
+  name: bothStrands, optional: false, truevalue: '-2', type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22average%22%20name%3D%22average%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22average%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: plot plot average (instead of sum), model_class: BooleanToolParameter,
+  name: average, optional: false, truevalue: -a, type: boolean, value: false}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22names%22%20size%3D%2210%22%20value%3D%22nbElements%22%3E',
+  is_dynamic: false, label: name for the tags (separated by commas and no space),
+  model_class: TextToolParameter, name: names, optional: false, size: null, type: text,
+  value: nbElements}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22normalize%22%20name%3D%22normalize%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22normalize%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: normalize data (when panels are different), model_class: BooleanToolParameter,
+  name: normalize, optional: false, truevalue: -z, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22csv%22%20name%3D%22csv%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22csv%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: write a .csv file., model_class: BooleanToolParameter,
+  name: csv, optional: false, truevalue: -x, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22gff%22%20name%3D%22gff%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22gff%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: write a .gff file., model_class: BooleanToolParameter,
+  name: gff, optional: false, truevalue: -g, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FgetDistribution%2F1.0.0
+min_width: -1
+model_class: Tool
+name: get distribution
+outputs:
+- {edam_format: format_3547, format: png, hidden: false, label: '[getDistribution]
+    out png file', model_class: ToolOutput, name: outputFile}
+- {edam_format: format_3475, format: csv, hidden: false, label: '[getDistribution]
+    output csv file', model_class: ToolOutput, name: outputCSV}
+- {edam_format: format_2305, format: gff, hidden: false, label: '[getDistribution]
+    output gff file', model_class: ToolOutput, name: outputGFF}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

@@ -1,0 +1,262 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "createControlSubset-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "1.0", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/createcontrolsubset/createControlSubset/1.0", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "eland", 
+                    "dataDescription": "ELANDcontrolOut", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "sam", 
+                    "dataDescription": "SAMcontrolOut", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "SAM", 
+                            "uri": "http://edamontology.org/format_2573"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "sam", 
+                    "dataDescription": "BAMcontrolOutSAM", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "SAM", 
+                            "uri": "http://edamontology.org/format_2573"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "bam", 
+                    "dataDescription": "BAMcontrolOutBAM", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "eland", 
+                    "dataDescription": "ELANDsampleOut", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "sam", 
+                    "dataDescription": "SAMsampleOut", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "SAM", 
+                            "uri": "http://edamontology.org/format_2573"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "sam", 
+                    "dataDescription": "BAMsampleOutSAM", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "SAM", 
+                            "uri": "http://edamontology.org/format_2573"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "bam", 
+                    "dataDescription": "BAMsampleOutBAM", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "input": [
+                {
+                    "dataHandle": "inputfile", 
+                    "dataDescription": "ChIP-Seq Tag File", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "controlfile", 
+                    "dataDescription": "Control Tag File", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "inputfile", 
+                    "dataDescription": "ChIP-Seq Tag File", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "SAM", 
+                            "uri": "http://edamontology.org/format_2573"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "controlfile", 
+                    "dataDescription": "Control Tag File", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "SAM", 
+                            "uri": "http://edamontology.org/format_2573"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "inputfile", 
+                    "dataDescription": "ChIP-Seq Tag File", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "controlfile", 
+                    "dataDescription": "Control Tag File", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Galaxy tool .", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/createcontrolsubset/createControlSubset/1.0", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/createcontrolsubset/createControlSubset/1.0\"", 
+            "usesVersion": "1.0"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "createControlSubset-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "1.0", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

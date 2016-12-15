@@ -1,0 +1,352 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/bowtie2/8d509172c729/bowtie2/bowtie2_wrapper.xml
+description: Bowtie2 is a short-read aligner
+id: toolshed.pasteur.fr/repos/fmareuil/bowtie2/bowtie2/2.2.6
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1932]
+      extensions: [fastqsanger]
+      help: 'Nucleotide-space: Must have Sanger-scaled quality values with ASCII offset
+        33'
+      hidden: false
+      is_dynamic: false
+      label: FASTQ file
+      model_class: DataToolParameter
+      multiple: false
+      name: input_1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: single
+  - inputs:
+    - argument: null
+      edam_formats: [format_1932]
+      extensions: [fastqsanger]
+      help: 'Nucleotide-space: Must have Sanger-scaled quality values with ASCII offset
+        33'
+      hidden: false
+      is_dynamic: false
+      label: FASTQ file
+      model_class: DataToolParameter
+      multiple: false
+      name: input_1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_1932]
+      extensions: [fastqsanger]
+      help: 'Nucleotide-space: Must have Sanger-scaled quality values with ASCII offset
+        33'
+      hidden: false
+      is_dynamic: false
+      label: FASTQ file
+      model_class: DataToolParameter
+      multiple: false
+      name: input_2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_insert%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Minimum insert size for valid paired-end alignments,
+      max: null, min: null, model_class: IntegerToolParameter, name: min_insert, optional: false,
+      size: null, type: integer, value: '0'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_insert%22%20size%3D%2210%22%20value%3D%22250%22%3E',
+      is_dynamic: false, label: Maximum insert size for valid paired-end alignments,
+      max: null, min: null, model_class: IntegerToolParameter, name: max_insert, optional: false,
+      size: null, type: integer, value: '250'}
+    model_class: ConditionalWhen
+    value: paired
+  model_class: Conditional
+  name: library
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22type%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22single%22%3ESingle-end%3C/option%3E%0A%3Coption%20value%3D%22paired%22%3EPaired-end%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Is this library mate-paired?
+    model_class: SelectToolParameter
+    multiple: false
+    name: type
+    optional: false
+    options:
+    - [Single-end, single, false]
+    - [Paired-end, paired, false]
+    type: select
+    value: single
+  type: conditional
+- {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22unaligned_file%22%20name%3D%22unaligned_file%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22unaligned_file%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Write unaligned reads to separate file(s), model_class: BooleanToolParameter,
+  name: unaligned_file, optional: false, truevalue: 'true', type: boolean, value: false}
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: If your genome of interest is not listed, contact the Galaxy team. For
+        more informations about genomes, see https://biomaj.it.pasteur.fr/BmajWatcher/
+      hidden: false
+      html: '%3Cselect%20name%3D%22index%22%3E%0A%3Coption%20value%3D%22btaurus%22%3Ebtaurus%3C/option%3E%0A%3Coption%20value%3D%22calbicans5314%22%3Ecalbicans5314%3C/option%3E%0A%3Coption%20value%3D%22calbicansWO1%22%3EcalbicansWO1%3C/option%3E%0A%3Coption%20value%3D%22cfamiliaris%22%3Ecfamiliaris%3C/option%3E%0A%3Coption%20value%3D%22chiroptera%22%3Echiroptera%3C/option%3E%0A%3Coption%20value%3D%22cneoformansH99%22%3EcneoformansH99%3C/option%3E%0A%3Coption%20value%3D%22cneoformansJEC21%22%3EcneoformansJEC21%3C/option%3E%0A%3Coption%20value%3D%22csabaeus%22%3Ecsabaeus%3C/option%3E%0A%3Coption%20value%3D%22dmelanogaster%22%3Edmelanogaster%3C/option%3E%0A%3Coption%20value%3D%22ecaballus%22%3Eecaballus%3C/option%3E%0A%3Coption%20value%3D%22fcatus%22%3Efcatus%3C/option%3E%0A%3Coption%20value%3D%22hg18%22%3Ehg18%3C/option%3E%0A%3Coption%20value%3D%22hg19%22%3Ehg19%3C/option%3E%0A%3Coption%20value%3D%22mlucifugus%22%3Emlucifugus%3C/option%3E%0A%3Coption%20value%3D%22mm10%22%3Emm10%3C/option%3E%0A%3Coption%20value%3D%22mm8%22%3Emm8%3C/option%3E%0A%3Coption%20value%3D%22mm9%22%3Emm9%3C/option%3E%0A%3Coption%20value%3D%22pfalciparum%22%3Epfalciparum%3C/option%3E%0A%3Coption%20value%3D%22pvampyrus%22%3Epvampyrus%3C/option%3E%0A%3Coption%20value%3D%22pvivax%22%3Epvivax%3C/option%3E%0A%3Coption%20value%3D%22scerevisiae%22%3Escerevisiae%3C/option%3E%0A%3Coption%20value%3D%22spombe%22%3Espombe%3C/option%3E%0A%3Coption%20value%3D%22sscrofa%22%3Esscrofa%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: Select a reference genome
+      model_class: SelectToolParameter
+      multiple: false
+      name: index
+      optional: false
+      options:
+      - [btaurus, btaurus, false]
+      - [calbicans5314, calbicans5314, false]
+      - [calbicansWO1, calbicansWO1, false]
+      - [cfamiliaris, cfamiliaris, false]
+      - [chiroptera, chiroptera, false]
+      - [cneoformansH99, cneoformansH99, false]
+      - [cneoformansJEC21, cneoformansJEC21, false]
+      - [csabaeus, csabaeus, false]
+      - [dmelanogaster, dmelanogaster, false]
+      - [ecaballus, ecaballus, false]
+      - [fcatus, fcatus, false]
+      - [hg18, hg18, false]
+      - [hg19, hg19, false]
+      - [mlucifugus, mlucifugus, false]
+      - [mm10, mm10, false]
+      - [mm8, mm8, false]
+      - [mm9, mm9, false]
+      - [pfalciparum, pfalciparum, false]
+      - [pvampyrus, pvampyrus, false]
+      - [pvivax, pvivax, false]
+      - [scerevisiae, scerevisiae, false]
+      - [spombe, spombe, false]
+      - [sscrofa, sscrofa, false]
+      type: select
+      value: btaurus
+    model_class: ConditionalWhen
+    value: indexed
+  - inputs:
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select the reference genome
+      model_class: DataToolParameter
+      multiple: false
+      name: own_file
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: history
+  model_class: Conditional
+  name: reference_genome
+  test_param:
+    argument: null
+    display: null
+    help: Built-ins were indexed using default options
+    hidden: false
+    html: '%3Cselect%20name%3D%22source%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22indexed%22%3EUse%20a%20built-in%20index%3C/option%3E%0A%3Coption%20value%3D%22history%22%3EUse%20one%20from%20the%20history%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Will you select a reference genome from your history or use a built-in
+      index?
+    model_class: SelectToolParameter
+    multiple: false
+    name: source
+    optional: false
+    options:
+    - [Use a built-in index, indexed, false]
+    - [Use one from the history, history, false]
+    type: select
+    value: indexed
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: "Required if RG specified. Read group IDs\
+        \ may be modi\uFB01ed when merging SAM \uFB01les in order to handle collisions.",
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgid%22%20size%3D%2225%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: "Read group identi\uFB01er (ID). Each @RG line must\
+        \ have a unique ID. The value of ID is used in the RG tags of alignment records.\
+        \ Must be unique among all read groups in header section.", model_class: TextToolParameter,
+      name: rgid, optional: false, size: '25', type: text, value: null}
+    - {area: false, argument: null, help: Required if RG specified, hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22rglb%22%20size%3D%2225%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Library name (LB), model_class: TextToolParameter,
+      name: rglb, optional: false, size: '25', type: text, value: null}
+    - {area: false, argument: null, help: 'Required if RG specified. Valid values
+        : CAPILLARY, LS454, ILLUMINA, SOLID, HELICOS, IONTORRENT and PACBIO', hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgpl%22%20size%3D%2225%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Platform/technology used to produce the reads (PL),
+      model_class: TextToolParameter, name: rgpl, optional: false, size: '25', type: text,
+      value: null}
+    - {area: false, argument: null, help: Required if RG specified. Use pool name
+        where a pool is being sequenced, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rgsm%22%20size%3D%2225%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Sample (SM), model_class: TextToolParameter, name: rgsm,
+      optional: false, size: '25', type: text, value: null}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: read_group
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22selection%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Specify the read group for this file?
+    model_class: SelectToolParameter
+    multiple: false
+    name: selection
+    optional: false
+    options:
+    - ['Yes', 'yes', false]
+    - ['No', 'no', true]
+    type: select
+    value: 'no'
+  type: conditional
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22align_type%22%3E%0A%3Coption%20value%3D%22%22%20selected%3EEnd%20to%20end%3C/option%3E%0A%3Coption%20value%3D%22--local%22%3ELocal%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Type of alignment
+      model_class: SelectToolParameter
+      multiple: false
+      name: align_type
+      optional: false
+      options:
+      - [End to end, '', true]
+      - [Local, --local, false]
+      type: select
+      value: ''
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22performance%22%20last_selected_value%3D%22--sensitive%22%3E%0A%3Coption%20value%3D%22%22%3EDefault%3C/option%3E%0A%3Coption%20value%3D%22--very-fast%22%3EVery%20fast%3C/option%3E%0A%3Coption%20value%3D%22--fast%22%3EFast%3C/option%3E%0A%3Coption%20value%3D%22--sensitive%22%20selected%3ESensitive%3C/option%3E%0A%3Coption%20value%3D%22--very-sensitive%22%3EVery%20sensitive%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Preset option
+      model_class: SelectToolParameter
+      multiple: false
+      name: performance
+      optional: false
+      options:
+      - [Default, '', false]
+      - [Very fast, --very-fast, false]
+      - [Fast, --fast, false]
+      - [Sensitive, --sensitive, true]
+      - [Very sensitive, --very-sensitive, false]
+      type: select
+      value: --sensitive
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22gbar%22%20size%3D%2210%22%20value%3D%224%22%3E',
+      is_dynamic: false, label: Disallow gaps within n-positions of read, max: null,
+      min: null, model_class: IntegerToolParameter, name: gbar, optional: false, size: null,
+      type: integer, value: '4'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22trim5%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Trim n-bases from 5' of each read, max: null, min: null,
+      model_class: IntegerToolParameter, name: trim5, optional: false, size: null,
+      type: integer, value: '0'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22trim3%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Trim n-bases from 3' of each read, max: null, min: null,
+      model_class: IntegerToolParameter, name: trim3, optional: false, size: null,
+      type: integer, value: '0'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22skip%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Skip the first n-reads, max: null, min: null, model_class: IntegerToolParameter,
+      name: skip, optional: false, size: null, type: integer, value: '0'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22upto%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Number of reads to be aligned (0 = unlimited), max: null,
+      min: null, model_class: IntegerToolParameter, name: upto, optional: false, size: null,
+      type: integer, value: '0'}
+    - {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22nounal%22%20name%3D%22nounal%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22nounal%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: suppress SAM records for unaligned reads, model_class: BooleanToolParameter,
+      name: nounal, optional: false, truevalue: 'true', type: boolean, value: false}
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22nofw_norc%22%3E%0A%3Coption%20value%3D%22%22%3EBoth%3C/option%3E%0A%3Coption%20value%3D%22--nofw%22%3EDisable%20forward%3C/option%3E%0A%3Coption%20value%3D%22--norc%22%3EDisable%20reverse%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Strand directions
+      model_class: SelectToolParameter
+      multiple: false
+      name: nofw_norc
+      optional: false
+      options:
+      - [Both, '', false]
+      - [Disable forward, --nofw, false]
+      - [Disable reverse, --norc, false]
+      type: select
+      value: ''
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22time%22%3E%0A%3Coption%20value%3D%22%22%3ENo%3C/option%3E%0A%3Coption%20value%3D%22--time%22%3EYes%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Log mapping time
+      model_class: SelectToolParameter
+      multiple: false
+      name: time
+      optional: false
+      options:
+      - ['No', '', false]
+      - ['Yes', --time, false]
+      type: select
+      value: ''
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: params
+  test_param:
+    argument: null
+    display: null
+    help: You can use the default settings or set custom values for any of Bowtie's
+      parameters.
+    hidden: false
+    html: '%3Cselect%20name%3D%22full%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22no%22%3EUse%20defaults%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3EFull%20parameter%20list%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Parameter Settings
+    model_class: SelectToolParameter
+    multiple: false
+    name: full
+    optional: false
+    options:
+    - [Use defaults, 'no', false]
+    - [Full parameter list, 'yes', false]
+    type: select
+    value: 'no'
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fbowtie2%2Fbowtie2%2F2.2.6
+min_width: -1
+model_class: Tool
+name: Bowtie2
+outputs:
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: '${tool.name}
+    on ${on_string}: unaligned reads (L)', model_class: ToolOutput, name: output_unaligned_reads_l}
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: '${tool.name}
+    on ${on_string}: unaligned reads (R)', model_class: ToolOutput, name: output_unaligned_reads_r}
+- {edam_format: format_2572, format: bam, hidden: false, label: '${tool.name} on ${on_string}:
+    aligned reads', model_class: ToolOutput, name: output}
+panel_section_id: solexa_tools
+panel_section_name: 'NGS: Mapping'
+target: galaxy_main
+version: 2.2.6

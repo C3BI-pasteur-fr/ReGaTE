@@ -1,0 +1,234 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "bowtie_wrapper-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.12.7", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/odoppelt/bowtie/bowtie_wrapper/0.12.7", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "sam", 
+                    "dataDescription": "output", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "SAM", 
+                            "uri": "http://edamontology.org/format_2573"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "txt", 
+                    "dataDescription": "output_log", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "fastq", 
+                    "dataDescription": "output_suppressed_reads_l", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "fastq", 
+                    "dataDescription": "output_suppressed_reads_r", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "fastq", 
+                    "dataDescription": "output_unmapped_reads_l", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "fastq", 
+                    "dataDescription": "output_unmapped_reads_r", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "input": [
+                {
+                    "dataHandle": "ownFile", 
+                    "dataDescription": "Select the reference genome", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "HTML", 
+                            "uri": "http://edamontology.org/format_2331"
+                        }, 
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "sInput1", 
+                    "dataDescription": "FASTQ file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }, 
+                        {
+                            "term": "FASTQ-illumina", 
+                            "uri": "http://edamontology.org/format_1931"
+                        }, 
+                        {
+                            "term": "FASTQ-solexa", 
+                            "uri": "http://edamontology.org/format_1933"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "pInput1", 
+                    "dataDescription": "Forward FASTQ file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }, 
+                        {
+                            "term": "FASTQ-illumina", 
+                            "uri": "http://edamontology.org/format_1931"
+                        }, 
+                        {
+                            "term": "FASTQ-solexa", 
+                            "uri": "http://edamontology.org/format_1933"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "pInput2", 
+                    "dataDescription": "Reverse FASTQ file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ-sanger", 
+                            "uri": "http://edamontology.org/format_1932"
+                        }, 
+                        {
+                            "term": "FASTQ-illumina", 
+                            "uri": "http://edamontology.org/format_1931"
+                        }, 
+                        {
+                            "term": "FASTQ-solexa", 
+                            "uri": "http://edamontology.org/format_1933"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Galaxy tool .", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/odoppelt/bowtie/bowtie_wrapper/0.12.7", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/odoppelt/bowtie/bowtie_wrapper/0.12.7\"", 
+            "usesVersion": "0.12.7"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "bowtie_wrapper-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.12.7", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

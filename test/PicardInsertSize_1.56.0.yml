@@ -1,0 +1,66 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/2f92cb75946c/picard_pasteur_wrapper/rgPicardInsertSize.xml
+description: for PAIRED data
+id: toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/PicardInsertSize/1.56.0
+inputs:
+- argument: null
+  edam_formats: [format_2572, format_2573]
+  extensions: [bam, sam]
+  help: If empty, upload or import a SAM/BAM dataset.
+  hidden: false
+  is_dynamic: false
+  label: SAM/BAM dataset to generate statistics for
+  model_class: DataToolParameter
+  multiple: false
+  name: input_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: Use this remind you what the job was for, hidden: false,
+  html: '%3Cinput%20type%3D%22text%22%20name%3D%22out_prefix%22%20size%3D%22120%22%20value%3D%22Insertion%20size%20metrics%22%3E',
+  is_dynamic: false, label: Title for the output file, model_class: TextToolParameter,
+  name: out_prefix, optional: false, size: '120', type: text, value: Insertion size
+    metrics}
+- {area: false, argument: null, help: 'See Picard documentation: Generate mean, sd
+    and plots by trimming the data down to MEDIAN + DEVIATIONS*MEDIAN_ABSOLUTE_DEVIATION',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22deviations%22%20size%3D%225%22%20value%3D%2210.0%22%3E',
+  is_dynamic: false, label: Deviations, max: null, min: null, model_class: FloatToolParameter,
+  name: deviations, optional: false, size: '5', type: float, value: '10.0'}
+- {area: false, argument: null, help: Explicitly sets the histogram width option -
+    leave 0 to ignore, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22histWidth%22%20size%3D%225%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: Histogram width, max: null, min: null, model_class: IntegerToolParameter,
+  name: histWidth, optional: false, size: '5', type: integer, value: '0'}
+- {area: false, argument: null, help: 'Discard any data categories (out of FR, TANDEM,
+    RF) that have fewer than this percentage of overall reads', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minPct%22%20size%3D%225%22%20value%3D%220.05%22%3E',
+  is_dynamic: false, label: Minimum percentage, max: null, min: null, model_class: FloatToolParameter,
+  name: minPct, optional: false, size: '5', type: float, value: '0.05'}
+- argument: null
+  display: null
+  help: Level(s) at which metrics will be accumulated
+  hidden: false
+  html: '%3Cselect%20name%3D%22malevel%22%20multiple%20last_selected_value%3D%22ALL_READS%22%3E%0A%3Coption%20value%3D%22ALL_READS%22%20selected%3EAll%20reads%20%28default%29%3C/option%3E%0A%3Coption%20value%3D%22SAMPLE%22%3ESample%3C/option%3E%0A%3Coption%20value%3D%22LIBRARY%22%3ELibrary%3C/option%3E%0A%3Coption%20value%3D%22READ_GROUP%22%3ERead%20group%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Metric Accumulation Level
+  model_class: SelectToolParameter
+  multiple: true
+  name: malevel
+  optional: true
+  options:
+  - [All reads (default), ALL_READS, true]
+  - [Sample, SAMPLE, false]
+  - [Library, LIBRARY, false]
+  - [Read group, READ_GROUP, false]
+  type: select
+  value: ALL_READS
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fpicard_pasteur_wrapper%2FPicardInsertSize%2F1.56.0
+min_width: -1
+model_class: Tool
+name: Insertion size metrics
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: 'InsertSize_${out_prefix}.html',
+  model_class: ToolOutput, name: html_file}
+panel_section_id: ngs:_picard_tools
+panel_section_name: 'NGS: Picard Tools'
+target: galaxy_main
+version: 1.56.0

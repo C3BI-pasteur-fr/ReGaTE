@@ -1,0 +1,276 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/trimmomatic/352d9fc5910a/trimmomatic/trimmomatic.xml
+description: Trim adapters and otherwise cleanup fastq files in a pair aware manner
+  using trimmomatic 0.32
+id: toolshed.pasteur.fr/repos/odoppelt/trimmomatic/trimmomatic/0.36
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1930, format_1932, format_1933, format_1931, format_2333]
+      extensions: [fastq, fastqsanger, fastqsolexa, fastqillumina, no_unzip.zip]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Direction 1 fastq reads to trim
+      model_class: DataToolParameter
+      multiple: false
+      name: forwards_file
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_1930, format_1932, format_1933, format_1931, format_2333]
+      extensions: [fastq, fastqsanger, fastqsolexa, fastqillumina, no_unzip.zip]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Direction 2 fastq reads to trim
+      model_class: DataToolParameter
+      multiple: false
+      name: reverse_file
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: paired
+  - inputs:
+    - argument: null
+      edam_formats: [format_1930, format_1932, format_1933, format_1931, format_2333]
+      extensions: [fastq, fastqsanger, fastqsolexa, fastqillumina, no_unzip.zip]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Fastq reads to trim
+      model_class: DataToolParameter
+      multiple: false
+      name: forwards_file
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: single
+  model_class: Conditional
+  name: paired
+  test_param:
+    argument: null
+    display: null
+    help: Do you have 2 separate paired end read files?
+    hidden: false
+    html: '%3Cselect%20name%3D%22is_paired%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22paired%22%3Epaired%3C/option%3E%0A%3Coption%20value%3D%22single%22%3Esingle%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Paired end reads?
+    model_class: SelectToolParameter
+    multiple: false
+    name: is_paired
+    optional: false
+    options:
+    - [paired, paired, false]
+    - [single, single, false]
+    type: select
+    value: paired
+  type: conditional
+- argument: null
+  display: null
+  help: Phred33 or Phred 64, probably Phred64
+  hidden: false
+  html: '%3Cselect%20name%3D%22phred%22%20last_selected_value%3D%22phred33%22%3E%0A%3Coption%20value%3D%22phred64%22%3Ephred64%3C/option%3E%0A%3Coption%20value%3D%22phred33%22%20selected%3Ephred33%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Quality encoding.
+  model_class: SelectToolParameter
+  multiple: false
+  name: phred
+  optional: false
+  options:
+  - [phred64, phred64, false]
+  - [phred33, phred33, true]
+  type: select
+  value: phred33
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [fasta]
+      help: Please supply a list of adapters to clip
+      hidden: false
+      is_dynamic: false
+      label: Fasta of adapters to clip
+      model_class: DataToolParameter
+      multiple: false
+      name: adapt_file
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {area: false, argument: null, help: Specifies the maximum mismatch count which
+        will still allow a full match to be performed., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22adapt_seed%22%20size%3D%2210%22%20value%3D%222%22%3E',
+      is_dynamic: false, label: Seed mismatches, max: null, min: null, model_class: IntegerToolParameter,
+      name: adapt_seed, optional: false, size: null, type: integer, value: '2'}
+    - {area: false, argument: null, help: Specifies how accurate the match between
+        the two 'adapter ligated' reads must be for PE palindrome read alignment.,
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22adapt_palindrome%22%20size%3D%2210%22%20value%3D%2240%22%3E',
+      is_dynamic: false, label: Palindrome clip threshold, max: null, min: null, model_class: IntegerToolParameter,
+      name: adapt_palindrome, optional: false, size: null, type: integer, value: '40'}
+    - {area: false, argument: null, help: Specifies how accurate the match between
+        any adapter etc. sequence must be against a read., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22adapt_simple%22%20size%3D%2210%22%20value%3D%2215%22%3E',
+      is_dynamic: false, label: Simple clip threshold, max: null, min: null, model_class: IntegerToolParameter,
+      name: adapt_simple, optional: false, size: null, type: integer, value: '15'}
+    model_class: ConditionalWhen
+    value: 'True'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'False'
+  model_class: Conditional
+  name: adapt
+  test_param: {argument: null, falsevalue: 'False', help: Cut adapter and other illumina-specific
+      sequences from the read., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22adapters%22%20name%3D%22adapters%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22adapters%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: 'Clip Illumina adapters?', model_class: BooleanToolParameter,
+    name: adapters, optional: false, truevalue: 'True', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Specifies the number of bases to average
+        across, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22slid_window%22%20size%3D%2210%22%20value%3D%224%22%3E',
+      is_dynamic: false, label: Sliding window size, max: null, min: null, model_class: IntegerToolParameter,
+      name: slid_window, optional: false, size: null, type: integer, value: '4'}
+    - {area: false, argument: null, help: Specifies the average quality required.,
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22slid_qual%22%20size%3D%2210%22%20value%3D%2215%22%3E',
+      is_dynamic: false, label: Average quality required, max: null, min: null, model_class: IntegerToolParameter,
+      name: slid_qual, optional: false, size: null, type: integer, value: '15'}
+    model_class: ConditionalWhen
+    value: 'True'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'false'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'False'
+  model_class: Conditional
+  name: sliding
+  test_param: {argument: null, falsevalue: 'False', help: 'Perform a sliding window
+      trimming, cutting once the average quality within the window falls below a threshold.',
+    hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22slidingwindow%22%20name%3D%22slidingwindow%22%20value%3D%22true%22%20checked%3D%22checked%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22slidingwindow%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: 'Perform Sliding Window trimming?', model_class: BooleanToolParameter,
+    name: slidingwindow, optional: false, truevalue: 'True', type: boolean, value: true}
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Specifies the minimum quality required to
+        keep a base., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22lead_qual%22%20size%3D%2210%22%20value%3D%223%22%3E',
+      is_dynamic: false, label: Minimum quality, max: null, min: null, model_class: IntegerToolParameter,
+      name: lead_qual, optional: false, size: null, type: integer, value: '3'}
+    model_class: ConditionalWhen
+    value: 'True'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'false'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'False'
+  model_class: Conditional
+  name: leading
+  test_param: {argument: null, falsevalue: 'False', help: 'Cut bases off the start
+      of a read, if below a threshold quality.', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22trimleading%22%20name%3D%22trimleading%22%20value%3D%22true%22%20checked%3D%22checked%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22trimleading%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: 'Trim leading bases?', model_class: BooleanToolParameter,
+    name: trimleading, optional: false, truevalue: 'True', type: boolean, value: true}
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Specifies the minimum quality required to
+        keep a base., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22trail_qual%22%20size%3D%2210%22%20value%3D%223%22%3E',
+      is_dynamic: false, label: Minimum quality, max: null, min: null, model_class: IntegerToolParameter,
+      name: trail_qual, optional: false, size: null, type: integer, value: '3'}
+    model_class: ConditionalWhen
+    value: 'True'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'false'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'False'
+  model_class: Conditional
+  name: trailing
+  test_param: {argument: null, falsevalue: 'False', help: 'Cut bases off the end of
+      a read, if below a threshold quality.', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22trimtrailing%22%20name%3D%22trimtrailing%22%20value%3D%22true%22%20checked%3D%22checked%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22trimtrailing%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: 'Trim trailing bases?', model_class: BooleanToolParameter,
+    name: trimtrailing, optional: false, truevalue: 'True', type: boolean, value: true}
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: 'The number of bases to keep, from the start
+        of the read.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22crop_len%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Number of bases, max: null, min: null, model_class: IntegerToolParameter,
+      name: crop_len, optional: false, size: null, type: integer, value: '0'}
+    model_class: ConditionalWhen
+    value: 'True'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'false'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'False'
+  model_class: Conditional
+  name: crop
+  test_param: {argument: null, falsevalue: 'False', help: Cut the read to a specified
+      length., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22cropend%22%20name%3D%22cropend%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22cropend%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: 'Crop reads?', model_class: BooleanToolParameter, name: cropend,
+    optional: false, truevalue: 'True', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: The number of bases to remove from the start
+        of the read., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22headcrop_len%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Number of bases, max: null, min: null, model_class: IntegerToolParameter,
+      name: headcrop_len, optional: false, size: null, type: integer, value: '0'}
+    model_class: ConditionalWhen
+    value: 'True'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'false'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'False'
+  model_class: Conditional
+  name: headcrop
+  test_param: {argument: null, falsevalue: 'False', help: Cut the specified number
+      of bases from the start of the read., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22headcrop_s%22%20name%3D%22headcrop_s%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22headcrop_s%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: 'Crop starts?', model_class: BooleanToolParameter, name: headcrop_s,
+    optional: false, truevalue: 'True', type: boolean, value: false}
+  type: conditional
+- {area: false, argument: null, help: Drop the read if it is below specified length,
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minlen%22%20size%3D%2210%22%20value%3D%2224%22%3E',
+  is_dynamic: false, label: Minimum length read, max: null, min: null, model_class: IntegerToolParameter,
+  name: minlen, optional: false, size: null, type: integer, value: '24'}
+- {argument: null, falsevalue: 'False', help: Detailed log of trims on each read.
+    (Very large file!), hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22logfile%22%20name%3D%22logfile%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22logfile%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'Turn on log?', model_class: BooleanToolParameter, name: logfile,
+  optional: false, truevalue: 'True', type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Ftrimmomatic%2Ftrimmomatic%2F0.36
+min_width: -1
+model_class: Tool
+name: Trimmomatic
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: Trimmomatic Log', model_class: ToolOutput, name: log}
+- {edam_format: format_1930, format: fastq, hidden: false, label: '${tool.name} on
+    ${on_string}: Trimmed fwd pairs', model_class: ToolOutput, name: fwdpairs}
+- {edam_format: format_1930, format: fastq, hidden: false, label: '${tool.name} on
+    ${on_string}: Trimmed fwd unpairs', model_class: ToolOutput, name: fwd_unpairs}
+- {edam_format: format_1930, format: fastq, hidden: false, label: '${tool.name} on
+    ${on_string}: Trimmed rev pairs', model_class: ToolOutput, name: rev_unpairs}
+- {edam_format: format_1930, format: fastq, hidden: false, label: '${tool.name} on
+    ${on_string}: Trimmed rev unpairs', model_class: ToolOutput, name: revpairs}
+- {edam_format: format_1930, format: fastq, hidden: false, label: '${tool.name} on
+    ${on_string}: trimmed reads', model_class: ToolOutput, name: singles}
+- {edam_format: format_3475, format: tabular, hidden: true, label: '${tool.name} on
+    ${on_string}: DEBUG OUTPUT', model_class: ToolOutput, name: dummy_out}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: '0.36'

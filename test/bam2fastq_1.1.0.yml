@@ -1,0 +1,101 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/screno/bam2fastq/a916c59226dd/bam2fastq/bam2fastq.xml
+description: extract reads from a bam file and write them in fastq format
+id: toolshed.pasteur.fr/repos/screno/bam2fastq/bam2fastq/1.1.0
+inputs:
+- argument: null
+  edam_formats: [format_2572]
+  extensions: [bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Bam dataset from your history
+  model_class: DataToolParameter
+  multiple: false
+  name: input_bam
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22extraction_to_do%22%20last_selected_value%3D%22%20--no-aligned%20--unaligned%22%3E%0A%3Coption%20value%3D%22%20--aligned%20--unaligned%22%3Eall%20reads%3C/option%3E%0A%3Coption%20value%3D%22%20--aligned%20--no-unaligned%22%3Ealigned%20reads%3C/option%3E%0A%3Coption%20value%3D%22%20--no-aligned%20--unaligned%22%20selected%3Eunaligned%20reads%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Do you want to extract
+  model_class: SelectToolParameter
+  multiple: false
+  name: extraction_to_do
+  optional: false
+  options:
+  - [all reads, ' --aligned --unaligned', false]
+  - [aligned reads, ' --aligned --no-unaligned', false]
+  - [unaligned reads, ' --no-aligned --unaligned', true]
+  type: select
+  value: ' --no-aligned --unaligned'
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22filtering_to_do%22%20last_selected_value%3D%22%20--filtered%22%3E%0A%3Coption%20value%3D%22%20--no-filtered%22%3Eonly%20reads%20passing%20Quality%20Control%20checks%3C/option%3E%0A%3Coption%20value%3D%22%20--filtered%22%20selected%3Eall%20reads%20including%20those%20failing%20Quality%20Control%20checks%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Do you want to extract
+  model_class: SelectToolParameter
+  multiple: false
+  name: filtering_to_do
+  optional: false
+  options:
+  - [only reads passing Quality Control checks, ' --no-filtered', false]
+  - [all reads including those failing Quality Control checks, ' --filtered', true]
+  type: select
+  value: ' --filtered'
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22read_type_selector%22%20last_selected_value%3D%22single%22%3E%0A%3Coption%20value%3D%22single%22%20selected%3ESingle%20Read%3C/option%3E%0A%3Coption%20value%3D%22paired_end%22%3EPaired%20End%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Type of input data
+  model_class: SelectToolParameter
+  multiple: false
+  name: read_type_selector
+  optional: false
+  options:
+  - [Single Read, single, true]
+  - [Paired End, paired_end, false]
+  type: select
+  value: single
+- argument: null
+  display: null
+  help: Please give the output format of the fastq datasets. This information is used
+    to set the fastq output format. No conversion between Illumina 1.7 and Sanger
+    is performed. Note that bwa's output is with Sanger quality scores.
+  hidden: false
+  html: '%3Cselect%20name%3D%22output_format%22%20last_selected_value%3D%22sanger%22%3E%0A%3Coption%20value%3D%22illumina15%22%3EIllumina%201.5/1.7%3C/option%3E%0A%3Coption%20value%3D%22sanger%22%20selected%3EIllumina%201.8/Sanger%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Fastq format
+  model_class: SelectToolParameter
+  multiple: false
+  name: output_format
+  optional: false
+  options:
+  - [Illumina 1.5/1.7, illumina15, false]
+  - [Illumina 1.8/Sanger, sanger, true]
+  type: select
+  value: sanger
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fscreno%2Fbam2fastq%2Fbam2fastq%2F1.1.0
+min_width: -1
+model_class: Tool
+name: Bam2Fastq
+outputs:
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: '''${extraction_to_do.value_label}''
+    from BAM [${input_bam.name}] (fastq)', model_class: ToolOutput, name: output_single}
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: '''${extraction_to_do.value_label}''
+    from BAM [${input_bam.name}] (fastq)', model_class: ToolOutput, name: output1}
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: '''${extraction_to_do.value_label}''
+    from BAM [${input_bam.name}] (fastq)', model_class: ToolOutput, name: output2}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: 1.1.0

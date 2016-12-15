@@ -1,0 +1,98 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/screno/ngs_roi2/76a612f15b38/ngs_roi2/roi_plot_thumbnails.xml
+description: Create ROI thumbnail plot grids.
+id: toolshed.pasteur.fr/repos/screno/ngs_roi2/roi_plot_thumbnails/0.2.2
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [roi]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: ROI file to generate statistics for.
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_rois%22%20size%3D%2210%22%20value%3D%225000%22%3E',
+  is_dynamic: false, label: Maximal total number of records to process. 0 for all.,
+  max: null, min: null, model_class: IntegerToolParameter, name: max_rois, optional: false,
+  size: null, type: integer, value: '5000'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_value%22%20size%3D%2210%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: Maximal value to plot. 0 for no limit., max: null, min: null,
+  model_class: IntegerToolParameter, name: max_value, optional: false, size: null,
+  type: integer, value: '0'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22num_rows%22%20size%3D%2210%22%20value%3D%2250%22%3E',
+  is_dynamic: false, label: Number of rows per grid., max: null, min: null, model_class: IntegerToolParameter,
+  name: num_rows, optional: false, size: null, type: integer, value: '50'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22num_cols%22%20size%3D%2210%22%20value%3D%2240%22%3E',
+  is_dynamic: false, label: Number of columns per grid., max: null, min: null, model_class: IntegerToolParameter,
+  name: num_cols, optional: false, size: null, type: integer, value: '40'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22plot_height%22%20size%3D%2210%22%20value%3D%2230%22%3E',
+  is_dynamic: false, label: Height of one plot in px., max: null, min: null, model_class: IntegerToolParameter,
+  name: plot_height, optional: false, size: null, type: integer, value: '30'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22plot_width%22%20size%3D%2210%22%20value%3D%2230%22%3E',
+  is_dynamic: false, label: Width of one plot in px., max: null, min: null, model_class: IntegerToolParameter,
+  name: plot_width, optional: false, size: null, type: integer, value: '30'}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22link_type%22%3E%0A%3Coption%20value%3D%22local_igv%22%3Elocal_igv%3C/option%3E%0A%3Coption%20value%3D%22ucsc%22%3Eucsc%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Link target.
+  model_class: SelectToolParameter
+  multiple: false
+  name: link_type
+  optional: false
+  options:
+  - [local_igv, local_igv, false]
+  - [ucsc, ucsc, false]
+  type: select
+  value: local_igv
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22link_target%22%20last_selected_value%3D%22_blank%22%3E%0A%3Coption%20value%3D%22_blank%22%20selected%3Enew%20window%3C/option%3E%0A%3Coption%20value%3D%22_top%22%3Ethis%20window%3C/option%3E%0A%3Coption%20value%3D%22%22%3Ethis%20frame%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Open links in.
+  model_class: SelectToolParameter
+  multiple: false
+  name: link_target
+  optional: false
+  options:
+  - [new window, _blank, true]
+  - [this window, _top, false]
+  - [this frame, '', false]
+  type: select
+  value: _blank
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22igv_host%22%20size%3D%2210%22%20value%3D%22localhost%22%3E',
+  is_dynamic: false, label: Host for the IGV link., model_class: TextToolParameter,
+  name: igv_host, optional: false, size: null, type: text, value: localhost}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22igv_port%22%20size%3D%2210%22%20value%3D%2260151%22%3E',
+  is_dynamic: false, label: Port for the IGV link., max: null, min: null, model_class: IntegerToolParameter,
+  name: igv_port, optional: false, size: null, type: integer, value: '60151'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22ucsc_org%22%20size%3D%2210%22%20value%3D%22human%22%3E',
+  is_dynamic: false, label: UCSC Genome Browser org value., model_class: TextToolParameter,
+  name: ucsc_org, optional: false, size: null, type: text, value: human}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22ucsc_db%22%20size%3D%2210%22%20value%3D%22hg18%22%3E',
+  is_dynamic: false, label: UCSC Genome Browser db value., model_class: TextToolParameter,
+  name: ucsc_db, optional: false, size: null, type: text, value: hg18}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22ucsc_chr_prefix%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Prefix to add to contig names., model_class: TextToolParameter,
+  name: ucsc_chr_prefix, optional: false, size: null, type: text, value: ''}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fscreno%2Fngs_roi2%2Froi_plot_thumbnails%2F0.2.2
+min_width: -1
+model_class: Tool
+name: ROI Thumbnail Plots
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '${input.name} Plot
+    Grid', model_class: ToolOutput, name: out_file}
+panel_section_id: ngs:_roi_tools
+panel_section_name: 'NGS: Roi Tools'
+target: galaxy_main
+version: 0.2.2

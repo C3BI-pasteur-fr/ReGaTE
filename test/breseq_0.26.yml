@@ -1,0 +1,587 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/breseq/12d6e3745b2e/breseq/breseq.xml
+description: Runs Breseq software on a set of fastq files
+id: toolshed.pasteur.fr/repos/mvalade/breseq/breseq/0.26
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: If your genome of interest is not listed, contact the Galaxy team
+      hidden: false
+      html: '%3Cselect%20name%3D%22fixed_genome%22%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: Select a reference genome
+      model_class: SelectToolParameter
+      multiple: false
+      name: fixed_genome
+      optional: false
+      options: []
+      type: select
+    model_class: ConditionalWhen
+    value: indexed
+  - inputs:
+    - default: 1
+      help: null
+      inputs:
+      - argument: null
+        edam_formats: [format_1915]
+        extensions: [data]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: Select the reference genome (fasta or genbank)
+        model_class: DataToolParameter
+        multiple: false
+        name: own_genome
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      max: __Infinity__
+      min: 1
+      model_class: Repeat
+      name: ref_series
+      title: Reference Genome
+      type: repeat
+    model_class: ConditionalWhen
+    value: history
+  model_class: Conditional
+  name: reference
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22source%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22indexed%22%3EUse%20a%20built-in%20genome%3C/option%3E%0A%3Coption%20value%3D%22history%22%3EUse%20one%20from%20the%20history%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Will you select a reference genome from your history or use a built-in
+      genome?
+    model_class: SelectToolParameter
+    multiple: false
+    name: source
+    optional: false
+    options:
+    - [Use a built-in genome, indexed, false]
+    - [Use one from the history, history, false]
+    type: select
+    value: indexed
+  type: conditional
+- cases:
+  - inputs:
+    - default: 1
+      help: null
+      inputs:
+      - argument: null
+        edam_formats: [format_1930]
+        extensions: [fastq]
+        help: Input files are fastq files
+        hidden: false
+        is_dynamic: false
+        label: Dataset
+        model_class: DataToolParameter
+        multiple: false
+        name: input_fastq
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      max: __Infinity__
+      min: 1
+      model_class: Repeat
+      name: read_series_fastq
+      title: Read File
+      type: repeat
+    model_class: ConditionalWhen
+    value: fastq
+  - inputs:
+    - default: 1
+      help: null
+      inputs:
+      - argument: null
+        edam_formats: [format_2573]
+        extensions: [sam]
+        help: Input files are aligned SAM files, rather than FASTQ files. Junction
+          prediction steps will be skipped.
+        hidden: false
+        is_dynamic: false
+        label: Dataset
+        model_class: DataToolParameter
+        multiple: false
+        name: input_sam
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      max: __Infinity__
+      min: 1
+      model_class: Repeat
+      name: read_series_sam
+      title: Read File
+      type: repeat
+    model_class: ConditionalWhen
+    value: sam
+  model_class: Conditional
+  name: input
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22input_mode%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22fastq%22%3E%0A%3Coption%20value%3D%22fastq%22%20selected%3EFastq%20file%28s%29%3C/option%3E%0A%3Coption%20value%3D%22sam%22%3ESAM%20file%28s%29%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: ''
+    model_class: SelectToolParameter
+    multiple: false
+    name: input_mode
+    optional: false
+    options:
+    - [Fastq file(s), fastq, true]
+    - [SAM file(s), sam, false]
+    type: select
+    value: fastq
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Analyze a subset of the input FASTQ sequencing
+        reads with enough bases to provide this theoretical coverage of the reference
+        sequences. A value between 60 and 120 will usually speed up the analysis with
+        no loss in sensitivity for clonal samples. The actual coverage achieved will
+        be somewhat less because not all reads will map (DEFAULT=OFF), hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22limit_fold_coverage%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: limit_fold_coverage, optional: false, size: null, type: integer, value: '0'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: coverage
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22coverage_mode%22%20name%3D%22coverage_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22coverage_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Limit fold coverage mode, model_class: BooleanToolParameter,
+    name: coverage_mode, optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: "File containing reference sequences in\
+        \ GenBank, GFF3, or FASTA format. The same coverage distribution will be fit\
+        \ to all of the reference sequences in this file simultaneously. This is appropriate\
+        \ when they are all contigs from a genome that should be present with the\
+        \ same copy number. Use of this option will improve performance when there\
+        \ are many contigs and especially when some are very short (\u22641,000 bases).\
+        \ (DEFAULT=0)", hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22contig_reference%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: contig_reference, optional: false, size: null, type: integer, value: '0'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: contig
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22contig_mode%22%20name%3D%22contig_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22contig_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Contig reference mode, model_class: BooleanToolParameter,
+    name: contig_mode, optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs:
+    - default: 1
+      help: null
+      inputs:
+      - argument: null
+        edam_formats: [format_1915]
+        extensions: [data]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: Select an external sequence (fasta or genbank)
+        model_class: DataToolParameter
+        multiple: false
+        name: jc_genome
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      max: __Infinity__
+      min: 1
+      model_class: Repeat
+      name: j_series
+      title: Junction-only references
+      type: repeat
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: junction_reference
+  test_param: {argument: null, falsevalue: 'no', help: You can select external sequences
+      to detect insertions, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22selection%22%20name%3D%22selection%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22selection%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Detect external sequence insertion, model_class: BooleanToolParameter,
+    name: selection, optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- {argument: null, falsevalue: '', help: Reference sequences were targeted for ultra-deep
+    sequencing (using pull-downs or amplicons). Do not fit coverage distribution.,
+  hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22targeted_sequencing%22%20name%3D%22targeted_sequencing%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22targeted_sequencing%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Targeted sequencing mode, model_class: BooleanToolParameter,
+  name: targeted_sequencing, optional: false, truevalue: --targeted-sequencing, type: boolean,
+  value: false}
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Ignore bases with quality scores lower than
+        this value (DEFAULT=3), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22base_quality_cutoff%22%20size%3D%2210%22%20value%3D%223%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: base_quality_cutoff, optional: false, size: null, type: integer, value: '3'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: base
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22base_mode%22%20name%3D%22base_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22base_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Base quality cutoff mode, model_class: BooleanToolParameter,
+    name: base_mode, optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- {argument: null, falsevalue: '', help: Trim the ends of reads past any base with
+    a quality score below --base-quality-score-cutoff., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22quality_score_trim%22%20name%3D%22quality_score_trim%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22quality_score_trim%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Quality score trim mode, model_class: BooleanToolParameter,
+  name: quality_score_trim, optional: false, truevalue: --quality-score-trim, type: boolean,
+  value: false}
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Only consider alignments that cover this
+        many bases of a read (DEFAULT=0), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22require_match_length%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: require_match_length, optional: false, size: null, type: integer, value: '0'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: match
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22match_mode%22%20name%3D%22match_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22match_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Require match length mode, model_class: BooleanToolParameter,
+    name: match_mode, optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Only consider alignments that cover this
+        fraction of a read (DEFAULT=0.9), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22require_match_fraction%22%20size%3D%2210%22%20value%3D%220.9%22%3E',
+      is_dynamic: false, label: '', max: 1.0, min: 0.0, model_class: FloatToolParameter,
+      name: require_match_fraction, optional: false, size: null, type: float, value: '0.9'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: match_fraction
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22match_fraction_mode%22%20name%3D%22match_fraction_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22match_fraction_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Match fraction mode, model_class: BooleanToolParameter,
+    name: match_fraction_mode, optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Value for coverage above which deletions
+        are cutoff. 0 = calculated from coverage distribution (DEFAULT=0), hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22deletion_coverage_propagation_cutoff%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: deletion_coverage_propagation_cutoff, optional: false, size: null, type: integer,
+      value: '0'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: propagation
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22propagation_mode%22%20name%3D%22propagation_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22propagation_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Deletion coverage propagation cutoff, model_class: BooleanToolParameter,
+    name: propagation_mode, optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Value for coverage below which deletions
+        are seeded (DEFAULT=0), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22deletion_coverage_seed_cutoff%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: deletion_coverage_seed_cutoff, optional: false, size: null, type: integer,
+      value: '0'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: seed
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22seed_mode%22%20name%3D%22seed_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22seed_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Deletion coverage seed cutoff, model_class: BooleanToolParameter,
+    name: seed_mode, optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs:
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22polymorphism_score_cutoff%22%20size%3D%2210%22%20value%3D%222%22%3E',
+          is_dynamic: false, label: 'Log10 E-value cutoff for test of polymorphism
+            vs no polymorphism (DEFAULT = consensus mode, 10; polymorphism mode, 2)',
+          max: null, min: null, model_class: IntegerToolParameter, name: polymorphism_score_cutoff,
+          optional: false, size: null, type: integer, value: '2'}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22polymorphism_frequency_cutoff%22%20size%3D%2210%22%20value%3D%220.05%22%3E',
+          is_dynamic: false, label: 'Only predict polymorphisms when both allele frequencies
+            are greater than this value. (DEFAULT = consensus mode, 0.2; polymorphism
+            mode, 0.05)', max: null, min: null, model_class: FloatToolParameter, name: polymorphism_frequency_cutoff,
+          optional: false, size: null, type: float, value: '0.05'}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22indel_homopolymer_length%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: 'Reject insertion/deletion polymorphisms due to
+            homopolymer repeats with this length or greater in the reference genome
+            (0 = OFF) (DEFAULT = consensus mode, OFF; polymorphism mode, 3)', max: null,
+          min: null, model_class: IntegerToolParameter, name: indel_homopolymer_length,
+          optional: false, size: null, type: integer, value: '0'}
+        - {area: false, argument: null, help: 'Do not predict polymorphic base substitutions
+            that create a homopolymer when they have this many adjacent bases of that
+            homopolymer on each side. For example, a mutation TTATT -> TTTTT would
+            be rejected with a setting of 2. (0 = OFF) (DEFAULT = consensus mode,
+            OFF; polymorphism mode, 2)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22surrounding_homopolymer_length%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: Do not predict polymorphic base substitutions
+            that create a homopolymer with this length on each side (with 2 TTATT->TTTTT
+            is rejected), max: null, min: null, model_class: IntegerToolParameter,
+          name: surrounding_homopolymer_length, optional: false, size: null, type: integer,
+          value: '0'}
+        - {area: false, argument: null, help: 'Only predict polymorphisms for which
+            at least this many reads on each strand support each alternative allele.
+            (DEFAULT = consensus mode, 0; polymorphism mode, 2)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22strand_coverage%22%20size%3D%2210%22%20value%3D%223%22%3E',
+          is_dynamic: false, label: Only accept polymorphisms if coverage in each
+            strand is at least this, max: null, min: null, model_class: IntegerToolParameter,
+          name: strand_coverage, optional: false, size: null, type: integer, value: '3'}
+        - {area: false, argument: null, help: 'P-value criterion for Fisher''s exact
+            test for strand bias AND K-S test for quality score bias (0 = OFF) (DEFAULT
+            = consensus mode, OFF; polymorphism mode, 0.001)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22bias_pvalue%22%20size%3D%2210%22%20value%3D%220.01%22%3E',
+          is_dynamic: false, label: Only accept polymorphisms if pvalue of strand
+            or read quality bias is greater than this, max: null, min: null, model_class: FloatToolParameter,
+          name: bias_pvalue, optional: false, size: null, type: float, value: '0.01'}
+        - {argument: null, falsevalue: '', help: Do not predict insertion/deletion
+            polymorphisms from read alignment evidence, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22polymorphism_no_indels%22%20name%3D%22polymorphism_no_indels%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22polymorphism_no_indels%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Do not predict insertion/deletion polymorphisms
+            from read alignment evidence, model_class: BooleanToolParameter, name: polymorphism_no_indels,
+          optional: false, truevalue: --polymorphism-no-indels, type: boolean, value: false}
+        model_class: ConditionalWhen
+        value: 'yes'
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'no'
+      model_class: Conditional
+      name: polymorphism_parameters
+      test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22polymorphism_parameters_mode%22%20name%3D%22polymorphism_parameters_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22polymorphism_parameters_mode%22%20value%3D%22true%22%3E',
+        is_dynamic: false, label: Change POLYMORPHISM MODE parameters, model_class: BooleanToolParameter,
+        name: polymorphism_parameters_mode, optional: false, truevalue: 'yes', type: boolean,
+        value: false}
+      type: conditional
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs:
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: Log10 E-value cutoff for consensus base
+            substitutions and small indels, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22consensus_score_cutoff%22%20size%3D%2210%22%20value%3D%221%22%3E',
+          is_dynamic: false, label: '', max: null, min: 0, model_class: IntegerToolParameter,
+          name: consensus_score_cutoff, optional: false, size: null, type: integer,
+          value: '1'}
+        - {area: false, argument: null, help: 'Only predict polymorphisms when both
+            allele frequencies are greater than this value. (DEFAULT = consensus mode,
+            0.2; polymorphism mode, 0.05)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22consensus_frequency_cutoff%22%20size%3D%2210%22%20value%3D%220.2%22%3E',
+          is_dynamic: false, label: '', max: 1.0, min: 0.0, model_class: FloatToolParameter,
+          name: consensus_frequency_cutoff, optional: false, size: null, type: float,
+          value: '0.2'}
+        - {area: false, argument: null, help: 'Only predict consensus mutations when
+            at least this many reads on each strand support the mutation. (DEFAULT
+            = consensus mode, 0; polymorphism mode, 0)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22consensus_minimum_coverage_each_strand%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: '', max: null, min: 0, model_class: IntegerToolParameter,
+          name: consensus_minimum_coverage_each_strand, optional: false, size: null,
+          type: integer, value: '0'}
+        model_class: ConditionalWhen
+        value: 'yes'
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'no'
+      model_class: Conditional
+      name: consensus_parameters
+      test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22consensus_parameters_mode%22%20name%3D%22consensus_parameters_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22consensus_parameters_mode%22%20value%3D%22true%22%3E',
+        is_dynamic: false, label: Change POLYMORPHISM MODE parameters, model_class: BooleanToolParameter,
+        name: consensus_parameters_mode, optional: false, truevalue: 'yes', type: boolean,
+        value: false}
+      type: conditional
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: polymorphism
+  test_param: {argument: null, falsevalue: 'no', help: The sample is not clonal. Predict
+      polymorphic (mixed) mutations. Setting this flag changes from CONSENSUS MODE
+      (the default) to POLYMORPHISM MODE, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22selection%22%20name%3D%22selection%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22selection%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: 'Do you want to perform polimorphism detection in a
+      population ?', model_class: BooleanToolParameter, name: selection, optional: false,
+    truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Only consider this many passed alignment
+        pairs when creating candidate junction sequences (0 = DO NOT LIMIT) (DEFAULT=100000),
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22junction_alignment_pair_limit%22%20size%3D%2210%22%20value%3D%22100000%22%3E',
+      is_dynamic: false, label: '', max: null, min: 0, model_class: IntegerToolParameter,
+      name: junction_alignment_pair_limit, optional: false, size: null, type: integer,
+      value: '100000'}
+    - {area: false, argument: null, help: 'Test at least this many of the top-scoring
+        junction candidates, regardless of their length (DEFAULT=100)', hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22junction_minimum_candidates%22%20size%3D%2210%22%20value%3D%22100%22%3E',
+      is_dynamic: false, label: '', max: null, min: 0, model_class: IntegerToolParameter,
+      name: junction_minimum_candidates, optional: false, size: null, type: integer,
+      value: '100'}
+    - {area: false, argument: null, help: Test no more than this many of the top-scoring
+        junction candidates (0 = DO NOT LIMIT) (DEFAULT=5000), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22junction_maximum_candidates%22%20size%3D%2210%22%20value%3D%225000%22%3E',
+      is_dynamic: false, label: '', max: null, min: 0, model_class: IntegerToolParameter,
+      name: junction_maximum_candidates, optional: false, size: null, type: integer,
+      value: '5000'}
+    - {area: false, argument: null, help: Accept top-scoring junction candidates to
+        test until their cumulative length is this factor times the total reference
+        sequence length (0 = DO NOT LIMIT) (DEFAULT=0.1), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22junction_candidate_length_factor%22%20size%3D%2210%22%20value%3D%220.1%22%3E',
+      is_dynamic: false, label: '', max: 1.0, min: 0.0, model_class: FloatToolParameter,
+      name: junction_candidate_length_factor, optional: false, size: null, type: float,
+      value: '0.1'}
+    - {area: false, argument: null, help: Maximum negative log10 probability of uneven
+        coverage across a junction breakpoint to accept (0 = OFF) (DEFAULT=3.0), hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22junction_score_cutoff%22%20size%3D%2210%22%20value%3D%223.0%22%3E',
+      is_dynamic: false, label: '', max: null, min: 0.0, model_class: FloatToolParameter,
+      name: junction_score_cutoff, optional: false, size: null, type: float, value: '3.0'}
+    - {area: false, argument: null, help: 'Minimum number of distinct spanning read
+        start positions required to accept a junction (DEFAULT = consensus mode, 3;
+        polymorphism mode, 3)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22junction_minimum_pos_hash_score%22%20size%3D%2210%22%20value%3D%223%22%3E',
+      is_dynamic: false, label: '', max: null, min: 0, model_class: IntegerToolParameter,
+      name: junction_minimum_pos_hash_score, optional: false, size: null, type: integer,
+      value: '3'}
+    - {area: false, argument: null, help: 'Minimum number of bases a read must extend
+        past any overlap or read-only sequence at the breakpoint of a junction on
+        each side to count as support for the junction (DEFAULT = consensus mode,
+        1; polymorphism mode, 6)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22junction_minimum_side_match%22%20size%3D%2210%22%20value%3D%223%22%3E',
+      is_dynamic: false, label: '', max: null, min: 0, model_class: IntegerToolParameter,
+      name: junction_minimum_side_match, optional: false, size: null, type: integer,
+      value: '3'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs:
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_junction_prediction%22%20name%3D%22no_junction_prediction%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_junction_prediction%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Do not predict new sequence junctions, model_class: BooleanToolParameter,
+      name: no_junction_prediction, optional: false, truevalue: --no-junction-prediction,
+      type: boolean, value: false}
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: junction
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22junction_mode%22%20name%3D%22junction_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22junction_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Junction prediction mode, model_class: BooleanToolParameter,
+    name: junction_mode, optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Maximum number of reads to display in the
+        HTML output for an evidence item (DEFAULT=100), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_displayed_reads%22%20size%3D%2210%22%20value%3D%22100%22%3E',
+      is_dynamic: false, label: '', max: null, min: 0, model_class: IntegerToolParameter,
+      name: max_displayed_reads, optional: false, size: null, type: integer, value: '100'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: max_reads
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22max_reads_mode%22%20name%3D%22max_reads_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22max_reads_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Maximum number of reads, model_class: BooleanToolParameter,
+    name: max_reads_mode, optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22brief_html_output%22%20name%3D%22brief_html_output%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22brief_html_output%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Don't create detailed output files for evidence (no read
+    alignments or coverage plots), model_class: BooleanToolParameter, name: brief_html_output,
+  optional: false, truevalue: --brief-html-output, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22keep_intermediates%22%20name%3D%22keep_intermediates%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22keep_intermediates%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Do not delete intermediate files, model_class: BooleanToolParameter,
+  name: keep_intermediates, optional: false, truevalue: --keep-intermediates, type: boolean,
+  value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22per_position_file%22%20name%3D%22per_position_file%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22per_position_file%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Create additional file of per-position aligned bases,
+  model_class: BooleanToolParameter, name: per_position_file, optional: false, truevalue: --per-position-file,
+  type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22junction_debug%22%20name%3D%22junction_debug%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22junction_debug%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Output additional junction debugging files, model_class: BooleanToolParameter,
+  name: junction_debug, optional: false, truevalue: --junction-debug, type: boolean,
+  value: false}
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [gd]
+      help: User supplied genome diff file of JC or RA evidence to report support
+        for, regardless of whether they would have been predicted as mutations.
+      hidden: false
+      is_dynamic: false
+      label: ''
+      model_class: DataToolParameter
+      multiple: false
+      name: user_evidence_gd
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: user_evidence
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22user_evidence_mode%22%20name%3D%22user_evidence_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22user_evidence_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: User supplied genome diff file, model_class: BooleanToolParameter,
+    name: user_evidence_mode, optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- {argument: null, falsevalue: '', help: 'Do you want to perform copy number variation
+    prediction ?', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22cnv_evidence%22%20name%3D%22cnv_evidence%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22cnv_evidence%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Copy number variation prediction (experimental option),
+  model_class: BooleanToolParameter, name: cnv_evidence, optional: false, truevalue: --cnv,
+  type: boolean, value: false}
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Tile size for copy number variation prediction
+        (DEFAULT=500), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22cnv_tile_size%22%20size%3D%2210%22%20value%3D%22500%22%3E',
+      is_dynamic: false, label: Choose the size of CNV for prediction, max: null,
+      min: 0, model_class: IntegerToolParameter, name: cnv_tile_size, optional: false,
+      size: null, type: integer, value: '500'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: cnv_size
+  test_param: {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22cnv_size_mode%22%20name%3D%22cnv_size_mode%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22cnv_size_mode%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Tile size parameter, model_class: BooleanToolParameter,
+    name: cnv_size_mode, optional: false, truevalue: 'yes', type: boolean, value: false}
+  type: conditional
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22cnv_ignore_redundant%22%20name%3D%22cnv_ignore_redundant%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22cnv_ignore_redundant%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Only consider non-redundant coverage when using cnv, model_class: BooleanToolParameter,
+  name: cnv_ignore_redundant, optional: false, truevalue: --cnv-ignore-redundant,
+  type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Fbreseq%2Fbreseq%2F0.26
+min_width: -1
+model_class: Tool
+name: Breseq Variant Report - v0.26
+outputs:
+- {edam_format: null, format: output.gzip, hidden: false, label: Breseq archive folder
+    output, model_class: ToolOutput, name: output_folder}
+panel_section_id: ngs:_snp/indel_annotation
+panel_section_name: 'NGS: SNP/Indel Annotation'
+target: galaxy_main
+version: '0.26'

@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/soap/7b363f1bf7ec/soap/bwt_index.xml
+description: Soap aligner index maker
+id: toolshed.pasteur.fr/repos/odoppelt/soap/2bwt-builder/1.1
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Fasta file of the genome to index
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Fsoap%2F2bwt-builder%2F1.1
+min_width: -1
+model_class: Tool
+name: Soap index maker
+outputs:
+- {edam_format: format_2330, format: tar, hidden: false, label: '2bwt-builder ${input.name}
+    INDEX ', model_class: ToolOutput, name: tarFile}
+panel_section_id: solexa_tools
+panel_section_name: 'NGS: Mapping'
+target: galaxy_main
+version: '1.1'

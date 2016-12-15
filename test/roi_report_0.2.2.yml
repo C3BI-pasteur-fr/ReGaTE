@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/screno/ngs_roi2/76a612f15b38/ngs_roi2/roi_report.xml
+description: ROI Overview Report
+id: toolshed.pasteur.fr/repos/screno/ngs_roi2/roi_report/0.2.2
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [roi]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: ROI file to generate report for.
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fscreno%2Fngs_roi2%2Froi_report%2F0.2.2
+min_width: -1
+model_class: Tool
+name: ROI Overview Report
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '${input.name} Report',
+  model_class: ToolOutput, name: out_file}
+panel_section_id: ngs:_roi_tools
+panel_section_name: 'NGS: Roi Tools'
+target: galaxy_main
+version: 0.2.2

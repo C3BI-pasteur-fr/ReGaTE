@@ -1,0 +1,45 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/galaxy/CountReadGCPercent.xml
+description: Count GC percent for each read against a genome.
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/CountReadGCPercent/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Input reference fasta File
+  model_class: DataToolParameter
+  multiple: false
+  name: inputFastaFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1975]
+  extensions: [gff3]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Input File
+  model_class: DataToolParameter
+  multiple: false
+  name: inputGffFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FCountReadGCPercent%2F1.0.0
+min_width: -1
+model_class: Tool
+name: count read GCpercent
+outputs:
+- {edam_format: format_1975, format: gff3, hidden: false, label: '[CountReadGCPercent]
+    Output File', model_class: ToolOutput, name: outputFile}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

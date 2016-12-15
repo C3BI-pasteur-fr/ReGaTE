@@ -1,0 +1,43 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/fqtools/4801a84ea16e/fqtools/fqseqname.xml
+description: '"List names of sequences from FASTQ formatted files"'
+id: toolshed.pasteur.fr/repos/odoppelt/fqtools/fqseqname/1.0
+inputs:
+- default: 1
+  help: null
+  inputs:
+  - argument: null
+    edam_formats: [format_1933, format_1931, format_1930]
+    extensions: [fastqsolexa, fastqillumina, fastq]
+    help: ''
+    hidden: false
+    is_dynamic: false
+    label: FASTQ file
+    model_class: DataToolParameter
+    multiple: false
+    name: input
+    optional: false
+    options:
+      hda: []
+      hdca: []
+    type: data
+  max: __Infinity__
+  min: 1
+  model_class: Repeat
+  name: inputs
+  title: Input file
+  type: repeat
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22notextract%22%20name%3D%22notextract%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22notextract%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'Do not extract the pair member information, if available.',
+  model_class: BooleanToolParameter, name: notextract, optional: false, truevalue: -p,
+  type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Ffqtools%2Ffqseqname%2F1.0
+min_width: -1
+model_class: Tool
+name: fqseqname
+outputs:
+- {edam_format: format_3475, format: lst, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: '1.0'

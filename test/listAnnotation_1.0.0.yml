@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/galaxy/listAnnot.xml
+description: Shows the information of Annotation file -> Number of genes, rRNA, tRNA.
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/listAnnotation/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_2305]
+  extensions: [gff]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Input File
+  model_class: DataToolParameter
+  multiple: false
+  name: inputFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FlistAnnotation%2F1.0.0
+min_width: -1
+model_class: Tool
+name: list annotation
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '[listAnnotation]
+    Output File', model_class: ToolOutput, name: outputFile}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

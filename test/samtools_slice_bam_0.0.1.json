@@ -1,0 +1,109 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "samtools_slice_bam-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.0.1", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.g2.bx.psu.edu/repos/devteam/samtools_slice_bam/samtools_slice_bam/0.0.1", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "bam", 
+                    "dataDescription": "output_bam", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "by provided regions", 
+            "input": [
+                {
+                    "dataHandle": "input_bam", 
+                    "dataDescription": "BAM file", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "input_interval", 
+                    "dataDescription": "BED file", 
+                    "data": {
+                        "term": "Annotation track", 
+                        "uri": "http://edamontology.org/data_3002"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BED", 
+                            "uri": "http://edamontology.org/format_3003"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "By provided regions.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.g2.bx.psu.edu/repos/devteam/samtools_slice_bam/samtools_slice_bam/0.0.1", 
+            "usesName": "Toolshed entry for \"toolshed.g2.bx.psu.edu/repos/devteam/samtools_slice_bam/samtools_slice_bam/0.0.1\"", 
+            "usesVersion": "0.0.1"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "samtools_slice_bam-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.0.1", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

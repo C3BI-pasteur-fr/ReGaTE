@@ -1,0 +1,291 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/macs2/fad5ef12b14e/macs2/macs2_wrapper.xml
+description: Model-based Analysis of ChIP-Seq
+id: toolshed.pasteur.fr/repos/fmareuil/macs2/modencode_peakcalling_macs2/2.0.10.2
+inputs:
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22experiment_name%22%20size%3D%2250%22%20value%3D%22MACS2%20in%20Galaxy%22%3E',
+  is_dynamic: false, label: Experiment Name, model_class: TextToolParameter, name: experiment_name,
+  optional: false, size: '50', type: text, value: MACS2 in Galaxy}
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_2572]
+      extensions: [bam]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: ChIP-Seq Tag File
+      model_class: DataToolParameter
+      multiple: false
+      name: input_chipseq_file1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_2572]
+      extensions: [bam]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: ChIP-Seq Control File
+      model_class: DataToolParameter
+      multiple: false
+      name: input_control_file1
+      optional: true
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {area: false, argument: null, help: 'Human: 3.3e+9, Mouse: 3.0e+9, Fly: 1.9e+8,
+        Worm: 1.3e+8 (--gsize)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22gsize%22%20size%3D%2210%22%20value%3D%222.7e%2B9%22%3E',
+      is_dynamic: false, label: Effective genome size, max: null, min: null, model_class: FloatToolParameter,
+      name: gsize, optional: false, size: null, type: float, value: '2.7e+9'}
+    - {area: false, argument: null, help: (--bw), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22bw%22%20size%3D%2210%22%20value%3D%22300%22%3E',
+      is_dynamic: false, label: Band width, max: null, min: null, model_class: IntegerToolParameter,
+      name: bw, optional: false, size: null, type: integer, value: '300'}
+    - {argument: null, falsevalue: 'False', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22xls_to_interval%22%20name%3D%22xls_to_interval%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22xls_to_interval%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Parse xls files into into distinct interval files,
+      model_class: BooleanToolParameter, name: xls_to_interval, optional: false, truevalue: 'True',
+      type: boolean, value: false}
+    - {argument: null, falsevalue: '', help: files located in html report, hidden: false,
+      html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22bdg%22%20name%3D%22bdg%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22bdg%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: 'Save fragment pileup, control lambda, -log10pvalue/qvalue
+        in bedGraph', model_class: BooleanToolParameter, name: bdg, optional: false,
+      truevalue: -B, type: boolean, value: false}
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: 'default: 1e-2 (--pvalue)', hidden: false,
+          html: '%3Cinput%20type%3D%22text%22%20name%3D%22pvalue%22%20size%3D%2210%22%20value%3D%221e-2%22%3E',
+          is_dynamic: false, label: p-value cutoff for peak detection, max: null,
+          min: null, model_class: FloatToolParameter, name: pvalue, optional: false,
+          size: null, type: float, value: 1e-2}
+        model_class: ConditionalWhen
+        value: pvalue
+      - inputs:
+        - {area: false, argument: null, help: 'default: 5e-2 (--qvalue)', hidden: false,
+          html: '%3Cinput%20type%3D%22text%22%20name%3D%22qvalue%22%20size%3D%2210%22%20value%3D%225e-2%22%3E',
+          is_dynamic: false, label: q-value cutoff for peak detection, max: null,
+          min: null, model_class: FloatToolParameter, name: qvalue, optional: false,
+          size: null, type: float, value: 5e-2}
+        model_class: ConditionalWhen
+        value: qvalue
+      model_class: Conditional
+      name: pq_options
+      test_param:
+        argument: null
+        display: null
+        help: default uses q-value
+        hidden: false
+        html: '%3Cselect%20name%3D%22pq_options_selector%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22qvalue%22%3Eq-value%3C/option%3E%0A%3Coption%20value%3D%22pvalue%22%3Ep-value%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Select p-value or q-value
+        model_class: SelectToolParameter
+        multiple: false
+        name: pq_options_selector
+        optional: false
+        options:
+        - [q-value, qvalue, false]
+        - [p-value, pvalue, false]
+        type: select
+        value: qvalue
+      type: conditional
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: (--mfold), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22mfoldlo%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+          is_dynamic: false, label: Select the regions with MFOLD high-confidence
+            enrichment ratio against background to build model (lower-limit), max: null,
+          min: null, model_class: IntegerToolParameter, name: mfoldlo, optional: false,
+          size: null, type: integer, value: '10'}
+        - {area: false, argument: null, help: (--mfold), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22mfoldhi%22%20size%3D%2210%22%20value%3D%2230%22%3E',
+          is_dynamic: false, label: Select the regions with MFOLD high-confidence
+            enrichment ratio against background to build model (upper-limit), max: null,
+          min: null, model_class: IntegerToolParameter, name: mfoldhi, optional: false,
+          size: null, type: integer, value: '30'}
+        - {argument: null, falsevalue: '', help: up to 9X more time consuming (--nolambda),
+          hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22nolambda%22%20name%3D%22nolambda%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22nolambda%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Use fixed background lambda as local lambda for
+            every peak region, model_class: BooleanToolParameter, name: nolambda,
+          optional: false, truevalue: --nolambda, type: boolean, value: false}
+        model_class: ConditionalWhen
+        value: 'on'
+      - inputs: []
+        model_class: ConditionalWhen
+        value: 'off'
+      model_class: Conditional
+      name: advanced_options
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22advanced_options_selector%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22off%22%3EHide%3C/option%3E%0A%3Coption%20value%3D%22on%22%3EDisplay%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Display advanced options
+        model_class: SelectToolParameter
+        multiple: false
+        name: advanced_options_selector
+        optional: false
+        options:
+        - [Hide, 'off', false]
+        - [Display, 'on', false]
+        type: select
+        value: 'off'
+      type: conditional
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: (--shiftsize), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22shiftsize%22%20size%3D%2210%22%20value%3D%22100%22%3E',
+          is_dynamic: false, label: Arbitrary shift size in bp, max: null, min: null,
+          model_class: IntegerToolParameter, name: shiftsize, optional: false, size: null,
+          type: integer, value: '100'}
+        model_class: ConditionalWhen
+        value: nomodel
+      - inputs: []
+        model_class: ConditionalWhen
+        value: create_model
+      model_class: Conditional
+      name: nomodel_type
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22nomodel_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22create_model%22%3E%0A%3Coption%20value%3D%22nomodel%22%3EDo%20not%20build%20the%20shifting%20model%20%28--nomodel%20enabled%29%3C/option%3E%0A%3Coption%20value%3D%22create_model%22%20selected%3EBuild%20the%20shifting%20model%20%28--nomodel%20disabled%29%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Build Model
+        model_class: SelectToolParameter
+        multiple: false
+        name: nomodel_type_selector
+        optional: false
+        options:
+        - [Do not build the shifting model (--nomodel enabled), nomodel, false]
+        - [Build the shifting model (--nomodel disabled), create_model, true]
+        type: select
+        value: create_model
+      type: conditional
+    model_class: ConditionalWhen
+    value: callpeak
+  - inputs:
+    - argument: null
+      edam_formats: [format_2572]
+      extensions: [bam]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: ChIP-Seq Tag File
+      model_class: DataToolParameter
+      multiple: false
+      name: input_chipseq_file1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_2572]
+      extensions: [bam]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: ChIP-Seq Control File
+      model_class: DataToolParameter
+      multiple: false
+      name: input_control_file1
+      optional: true
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {area: false, argument: null, help: 'default: 0.00001 (-p)', hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22pseudocount%22%20size%3D%2210%22%20value%3D%220.00001%22%3E',
+      is_dynamic: false, label: Set pseudocount, max: null, min: null, model_class: FloatToolParameter,
+      name: pseudocount, optional: false, size: null, type: float, value: '0.00001'}
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: qpois
+      - inputs: []
+        model_class: ConditionalWhen
+        value: subtract
+      - inputs: []
+        model_class: ConditionalWhen
+        value: logLR
+      - inputs: []
+        model_class: ConditionalWhen
+        value: FE
+      - inputs: []
+        model_class: ConditionalWhen
+        value: ppois
+      - inputs: []
+        model_class: ConditionalWhen
+        value: logFE
+      model_class: Conditional
+      name: bdgcmp_options
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22bdgcmp_options_selector%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22ppois%22%3Eppois%3C/option%3E%0A%3Coption%20value%3D%22qpois%22%3Eqpois%3C/option%3E%0A%3Coption%20value%3D%22subtract%22%3Esubtract%3C/option%3E%0A%3Coption%20value%3D%22logFE%22%3ElogFE%3C/option%3E%0A%3Coption%20value%3D%22FE%22%3EFE%3C/option%3E%0A%3Coption%20value%3D%22logLR%22%3ElogLR%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Select action to be performed
+        model_class: SelectToolParameter
+        multiple: false
+        name: bdgcmp_options_selector
+        optional: false
+        options:
+        - [ppois, ppois, false]
+        - [qpois, qpois, false]
+        - [subtract, subtract, false]
+        - [logFE, logFE, false]
+        - [FE, FE, false]
+        - [logLR, logLR, false]
+        type: select
+        value: ppois
+      type: conditional
+    model_class: ConditionalWhen
+    value: bdgcmp
+  model_class: Conditional
+  name: major_command
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22major_command_selector%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22callpeak%22%3EPeak%20Calling%3C/option%3E%0A%3Coption%20value%3D%22bdgcmp%22%3ECompare%20.bdg%20Files%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Select action to be performed
+    model_class: SelectToolParameter
+    multiple: false
+    name: major_command_selector
+    optional: false
+    options:
+    - [Peak Calling, callpeak, false]
+    - [Compare .bdg Files, bdgcmp, false]
+    type: select
+    value: callpeak
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fmacs2%2Fmodencode_peakcalling_macs2%2F2.0.10.2
+min_width: -1
+model_class: Tool
+name: MACS2
+outputs:
+- {edam_format: format_3003, format: bed, hidden: false, label: '${tool.name}: callpeak
+    on ${on_string} (peaks: bed)', model_class: ToolOutput, name: output_bed_file}
+- {edam_format: format_2331, format: html, hidden: false, label: '${tool.name}: callpeak
+    on ${on_string} (html report)', model_class: ToolOutput, name: output_extra_files}
+- {edam_format: format_3475, format: xls, hidden: false, label: '${tool.name}: callpeak
+    on ${on_string} (peaks: xls)', model_class: ToolOutput, name: output_peaks_file}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name}: callpeak
+    on ${on_string} (peaks: encodePeak)', model_class: ToolOutput, name: output_narrowpeaks_file}
+- {edam_format: format_3475, format: interval, hidden: false, label: '${tool.name}:
+    callpeak on ${on_string} (peaks: interval)', model_class: ToolOutput, name: output_xls_to_interval_peaks_file}
+- {edam_format: format_3475, format: interval, hidden: false, label: '${tool.name}:
+    callpeak on ${on_string} (negative peaks: interval)', model_class: ToolOutput,
+  name: output_xls_to_interval_negative_peaks_file}
+- {edam_format: null, format: bdg, hidden: false, label: '${tool.name}: bdgcmp on
+    ${on_string} (bdg)', model_class: ToolOutput, name: output_bdgcmp_file}
+panel_section_id: peak_calling
+panel_section_name: 'NGS: Peak Calling/ChIP-seq'
+target: galaxy_main
+version: 2.0.10.2

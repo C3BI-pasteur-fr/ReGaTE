@@ -1,0 +1,109 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/grep_count/b4b04378f7d0/grep_count/grep_count.xml
+description: Count or select lines containing a motif of a dataset
+id: toolshed.pasteur.fr/repos/fmareuil/grep_count/grep_count/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Text file
+  model_class: DataToolParameter
+  multiple: false
+  name: input1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22include_exclude%22%20last_selected_value%3D%22%20%22%3E%0A%3Coption%20value%3D%22%20%22%20selected%3Econtaining%3C/option%3E%0A%3Coption%20value%3D%22-v%22%3Enot%20containing%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Search lines
+  model_class: SelectToolParameter
+  multiple: false
+  name: include_exclude
+  optional: false
+  options:
+  - [containing, ' ', true]
+  - [not containing, -v, false]
+  type: select
+  value: ' '
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22extract_or_count%22%20last_selected_value%3D%22-c%22%3E%0A%3Coption%20value%3D%22%20%22%3Eextract%3C/option%3E%0A%3Coption%20value%3D%22-c%22%20selected%3Ecount%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Do you want to count or extract lines
+  model_class: SelectToolParameter
+  multiple: false
+  name: extract_or_count
+  optional: false
+  options:
+  - [extract, ' ', false]
+  - [count, -c, true]
+  type: select
+  value: -c
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: 'Only letters, numbers, ''_@,+-'' and blanks
+        are allowed. If your motif is more complex, please use a dataset', hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22motif%22%20size%3D%2230%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Type your motif., model_class: TextToolParameter,
+      name: motif, optional: false, size: '30', type: text, value: null}
+    model_class: ConditionalWhen
+    value: single
+  - inputs:
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [txt]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Dataset of motifs, one per line
+      model_class: DataToolParameter
+      multiple: false
+      name: motif_set
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: set
+  model_class: Conditional
+  name: motif_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22motif_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22single%22%3E%0A%3Coption%20value%3D%22single%22%20selected%3Ea%20single%20simple%20motif%3C/option%3E%0A%3Coption%20value%3D%22set%22%3Ea%20dataset%20of%20%5Bcomplex%5D%20motif%28s%29%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Which kind of motif do you have?
+    model_class: SelectToolParameter
+    multiple: false
+    name: motif_selector
+    optional: false
+    options:
+    - [a single simple motif, single, true]
+    - ['a dataset of [complex] motif(s)', set, false]
+    type: select
+    value: single
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fgrep_count%2Fgrep_count%2F1.0.0
+min_width: -1
+model_class: Tool
+name: File motif counter
+outputs:
+- {edam_format: format_3475, format: lst, hidden: false, label: '', model_class: ToolOutput,
+  name: output1}
+panel_section_id: textutil
+panel_section_name: Text Manipulation
+target: galaxy_main
+version: 1.0.0

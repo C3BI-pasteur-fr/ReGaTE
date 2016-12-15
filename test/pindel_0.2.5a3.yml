@@ -1,0 +1,69 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/pindel/67a8b358eba5/pindel/pindelwrapper.xml
+description: ': a pattern growth approach to detect break points of large deletions
+  and medium sized insertions from paired-end short reads'
+id: toolshed.pasteur.fr/repos/fmareuil/pindel/pindel/0.2.5a3
+inputs:
+- argument: null
+  edam_formats: [format_2572]
+  extensions: [bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: One or more BAM alignment files produced by BWA
+  model_class: DataToolParameter
+  multiple: false
+  name: input_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22insert_size%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Expected Insert size, max: null, min: null, model_class: IntegerToolParameter,
+  name: insert_size, optional: false, size: null, type: integer, value: ''}
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Reference genome in fasta format
+  model_class: DataToolParameter
+  multiple: false
+  name: reference
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: Select a chromsome. ALL will use all chromosomes,
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22chromosome%22%20size%3D%2210%22%20value%3D%22ALL%22%3E',
+  is_dynamic: false, label: Which chromosome to operate on, model_class: TextToolParameter,
+  name: chromosome, optional: false, size: null, type: text, value: ALL}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fpindel%2Fpindel%2F0.2.5a3
+min_width: -1
+model_class: Tool
+name: Pindel
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '${input_file.element_identifier}
+    Deletions', model_class: ToolOutput, name: Deletions}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${input_file.element_identifier}
+    Short Insertions', model_class: ToolOutput, name: Short_Insertions}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${input_file.element_identifier}
+    Long Insertions', model_class: ToolOutput, name: Long_Insertions}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${input_file.element_identifier}
+    Inversions', model_class: ToolOutput, name: Inversions}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${input_file.element_identifier}
+    Tandom Duplications', model_class: ToolOutput, name: Tandem_Duplications}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${input_file.element_identifier}
+    Breakpoints', model_class: ToolOutput, name: Breakpoints}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${input_file.element_identifier}
+    Read Pair Evidence', model_class: ToolOutput, name: Read_Pair}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${input_file.element_identifier}
+    INT_final', model_class: ToolOutput, name: INT_final}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${input_file.element_identifier}
+    Close End Mapped', model_class: ToolOutput, name: Close_End_Mapped}
+panel_section_id: ngs:_snp/indel_annotation
+panel_section_name: 'NGS: SNP/Indel Annotation'
+target: galaxy_main
+version: 0.2.5a3

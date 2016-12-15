@@ -1,0 +1,94 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/frogs/36109d143f38/frogs/remove_chimera.xml
+description: 'Step 3 in metagenomics analysis : Remove PCR chimera in each sample.'
+id: toolshed.pasteur.fr/repos/mvalade/frogs/FROGS_remove_chimera/1.3.0
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: 'The sequences file (format: fasta).'
+  hidden: false
+  is_dynamic: false
+  label: Sequences file
+  model_class: DataToolParameter
+  multiple: false
+  name: sequence_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3464]
+      extensions: [biom1]
+      help: It contains the count by sample for each sequence.
+      hidden: false
+      is_dynamic: false
+      label: Abundance file
+      model_class: DataToolParameter
+      multiple: false
+      name: abundance_biom
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: biom
+  - inputs:
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [tabular]
+      help: It contains the count by sample for each sequence (see below).
+      hidden: false
+      is_dynamic: false
+      label: Count file
+      model_class: DataToolParameter
+      multiple: false
+      name: abundance_count
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: count
+  model_class: Conditional
+  name: abundance_type
+  test_param:
+    argument: null
+    display: null
+    help: Select the type of file where the abundance of each sequence by sample is
+      stored.
+    hidden: false
+    html: '%3Cselect%20name%3D%22abundance_type_selected%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22biom%22%3E%0A%3Coption%20value%3D%22biom%22%20selected%3EBIOM%20file%3C/option%3E%0A%3Coption%20value%3D%22count%22%3ETSV%20file%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Abundance type
+    model_class: SelectToolParameter
+    multiple: false
+    name: abundance_type_selected
+    optional: false
+    options:
+    - [BIOM file, biom, true]
+    - [TSV file, count, false]
+    type: select
+    value: biom
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Ffrogs%2FFROGS_remove_chimera%2F1.3.0
+min_width: -1
+model_class: Tool
+name: FROGS Remove chimera
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: '${tool.name}: non_chimera.fasta',
+  model_class: ToolOutput, name: non_chimera_fasta}
+- {edam_format: format_3464, format: biom1, hidden: false, label: '${tool.name}: non_chimera_abundance.biom',
+  model_class: ToolOutput, name: out_abundance_biom}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}:
+    non_chimera_abundance.tsv', model_class: ToolOutput, name: out_abundance_count}
+- {edam_format: format_2331, format: html, hidden: false, label: '${tool.name}: report.html',
+  model_class: ToolOutput, name: summary_file}
+panel_section_id: frogs_metagenomic_pipeline
+panel_section_name: FROGS Metagenomic pipeline
+target: galaxy_main
+version: 1.3.0

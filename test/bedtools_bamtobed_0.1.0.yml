@@ -1,0 +1,58 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/bedtools_pasteur/02951b8c385e/bedtools_pasteur/bamToBed.xml
+description: ''
+id: toolshed.pasteur.fr/repos/fmareuil/bedtools_pasteur/bedtools_bamtobed/0.1.0
+inputs:
+- argument: null
+  edam_formats: [format_2572]
+  extensions: [bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Convert the following BAM file to BED
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22option%22%3E%0A%3Coption%20value%3D%22%22%3ECreate%20a%206-column%20BED%20file.%3C/option%3E%0A%3Coption%20value%3D%22-bed12%22%3ECreate%20a%20full%2C%2012-column%20%26quot%3Bblocked%26quot%3B%20BED%20file.%3C/option%3E%0A%3Coption%20value%3D%22-bedpe%22%3ECreate%20a%20paired-end%2C%20BEDPE%20format.%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: What type of BED output would you like
+  model_class: SelectToolParameter
+  multiple: false
+  name: option
+  optional: false
+  options:
+  - [Create a 6-column BED file., '', false]
+  - ['Create a full, 12-column "blocked" BED file.', -bed12, false]
+  - ['Create a paired-end, BEDPE format.', -bedpe, false]
+  type: select
+  value: ''
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22split%22%20name%3D%22split%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22split%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Report spliced BAM alignments as separate BED entries,
+  model_class: BooleanToolParameter, name: split, optional: false, truevalue: -split,
+  type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22ed_score%22%20name%3D%22ed_score%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22ed_score%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Use alignment's edit-distance for BED score, model_class: BooleanToolParameter,
+  name: ed_score, optional: false, truevalue: -ed, type: boolean, value: false}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22tag%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Use other NUMERIC BAM alignment tag as the BED score,
+  model_class: TextToolParameter, name: tag, optional: true, size: null, type: text,
+  value: null}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fbedtools_pasteur%2Fbedtools_bamtobed%2F0.1.0
+min_width: -1
+model_class: Tool
+name: Convert from BAM to BED
+outputs:
+- {edam_format: format_3003, format: bed, hidden: false, label: '${input.name} (as
+    BED)', model_class: ToolOutput, name: output}
+panel_section_id: ngs:_bedtools
+panel_section_name: 'NGS: BedTools'
+target: galaxy_main
+version: 0.1.0

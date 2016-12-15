@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.g2.bx.psu.edu/repos/devteam/samtools_flagstat/13c4ad597626/samtools_flagstat/samtools_flagstat.xml
+description: provides simple stats on BAM files
+id: toolshed.g2.bx.psu.edu/repos/devteam/samtools_flagstat/samtools_flagstat/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_2572]
+  extensions: [bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: BAM File to Convert
+  model_class: DataToolParameter
+  multiple: false
+  name: input1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Fdevteam%2Fsamtools_flagstat%2Fsamtools_flagstat%2F1.0.0
+min_width: -1
+model_class: Tool
+name: flagstat
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '', model_class: ToolOutput,
+  name: output1}
+panel_section_id: samtools
+panel_section_name: 'NGS: SAM Tools'
+target: galaxy_main
+version: 1.0.0

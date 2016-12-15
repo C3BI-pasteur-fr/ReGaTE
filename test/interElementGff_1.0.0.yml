@@ -1,0 +1,512 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/galaxy/interElementGff.xml
+description: Creates a new Gff output, which corresponds to the region of two successive
+  Elements.
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/interElementGff/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_2305]
+  extensions: [gff]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Input File
+  model_class: DataToolParameter
+  multiple: false
+  name: inputFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22f5ffValue%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: f5ffValue, optional: false, size: null, type: integer, value: '10'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionf5ff
+  test_param:
+    argument: null
+    display: null
+    help: number of nt to exclude from 5' seed when gene before is Forward, seed is
+      Forward and next gene is Forward [default 0]
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[f5ff]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22ff3fValue%22%20size%3D%2210%22%20value%3D%2230%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: ff3fValue, optional: false, size: null, type: integer, value: '30'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionff3f
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[ff3f]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22f5frValue%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: f5frValue, optional: false, size: null, type: integer, value: '10'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionf5fr
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[f5fr]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22ff3rValue%22%20size%3D%2210%22%20value%3D%22-10%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: ff3rValue, optional: false, size: null, type: integer, value: '-10'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionff3r
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[ff3r]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22f3rfValue%22%20size%3D%2210%22%20value%3D%22-10%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: f3rfValue, optional: false, size: null, type: integer, value: '-10'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionf3rf
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[f3rf]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fr5fValue%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: fr5fValue, optional: false, size: null, type: integer, value: '10'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionfr5f
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[fr5f]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22f3rrValue%22%20size%3D%2210%22%20value%3D%22-10%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: f3rrValue, optional: false, size: null, type: integer, value: '-10'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionf3rr
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[f3rr]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fr5rValue%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: fr5rValue, optional: false, size: null, type: integer, value: '10'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionfr5r
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[fr5r]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22r5ffValue%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: r5ffValue, optional: false, size: null, type: integer, value: '10'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionr5ff
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[r5ff]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rf3fValue%22%20size%3D%2210%22%20value%3D%2230%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: rf3fValue, optional: false, size: null, type: integer, value: '30'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionrf3f
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[rf3f]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22r5frValue%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: r5frValue, optional: false, size: null, type: integer, value: '10'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionr5fr
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[r5fr]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rf3rValue%22%20size%3D%2210%22%20value%3D%22-10%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: rf3rValue, optional: false, size: null, type: integer, value: '-10'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionrf3r
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[rf3r]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22r3rfValue%22%20size%3D%2210%22%20value%3D%2230%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: r3rfValue, optional: false, size: null, type: integer, value: '30'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionr3rf
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[r3rf]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rr5fValue%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: rr5fValue, optional: false, size: null, type: integer, value: '10'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionrr5f
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[rr5f]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22r3rrValue%22%20size%3D%2210%22%20value%3D%2230%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: r3rrValue, optional: false, size: null, type: integer, value: '30'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionr3rr
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[r3rr]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rr5rValue%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: rr5rValue, optional: false, size: null, type: integer, value: '10'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: Optionrr5r
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22option%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Option[rr5r]
+    model_class: SelectToolParameter
+    multiple: false
+    name: option
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FinterElementGff%2F1.0.0
+min_width: -1
+model_class: Tool
+name: interElementGff
+outputs:
+- {edam_format: format_2305, format: gff, hidden: false, label: '[interElementGff]
+    Output File', model_class: ToolOutput, name: outputFile}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

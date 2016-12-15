@@ -1,0 +1,198 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/bacteriaRegulatoryRegion_Detection/writeResToHTML.xml
+description: Write all ncRNAs analysis results into an HTML file (Only for ncRNAs
+  analysis pipeline).
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/writeResToHTML/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_1975]
+  extensions: [gff3]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: 'First gff3 result in intergenic sRNAs analysis. (TRANS detection) '
+  model_class: DataToolParameter
+  multiple: false
+  name: input1GffFile1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1975]
+  extensions: [gff3]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: 'Second gff3 result in intergenic sRNAs analyse. (TRANS detection) '
+  model_class: DataToolParameter
+  multiple: false
+  name: input1GffFile2
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3547]
+  extensions: [png]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: PNG (getSize) result intergenic sRNAs analyse.(TRANS detection)
+  model_class: DataToolParameter
+  multiple: false
+  name: input1PNGFile1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3547]
+  extensions: [png]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: 'PNG (plot) result in intergenic sRNAs analyse. (TRANS detection) '
+  model_class: DataToolParameter
+  multiple: false
+  name: input1PNGFile2
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1975]
+  extensions: [gff3]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: 'First gff3 result in asRNAs analysis. (ANTISENSE detection) '
+  model_class: DataToolParameter
+  multiple: false
+  name: input2GffFile1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1975]
+  extensions: [gff3]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: 'Second gff3 result in asRNAs analyse. (ANTISENSE detection) '
+  model_class: DataToolParameter
+  multiple: false
+  name: input2GffFile2
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3547]
+  extensions: [png]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: PNG (getSize) result asRNAs analyse.(ANTISENSE detection)
+  model_class: DataToolParameter
+  multiple: false
+  name: input2PNGFile1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3547]
+  extensions: [png]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: 'PNG (plot) result in  asRNAs analyse. (ANTISENSE detection) '
+  model_class: DataToolParameter
+  multiple: false
+  name: input2PNGFile2
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1975]
+  extensions: [gff3]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: 'First gff3 result in long 5''UTRs analysis. (CIS detection) '
+  model_class: DataToolParameter
+  multiple: false
+  name: input3GffFile1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1975]
+  extensions: [gff3]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: 'Second gff3 result in long 5''UTRs analysis. (CIS detection) '
+  model_class: DataToolParameter
+  multiple: false
+  name: input3GffFile2
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3547]
+  extensions: [png]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: 'PNG (getSize) result in long 5''UTRs analysis. (CIS detection) '
+  model_class: DataToolParameter
+  multiple: false
+  name: input3PNGFile1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3547]
+  extensions: [png]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: 'PNG (plot) result in long 5''UTRs analysis. (CIS detection) '
+  model_class: DataToolParameter
+  multiple: false
+  name: input3PNGFile2
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FwriteResToHTML%2F1.0.0
+min_width: -1
+model_class: Tool
+name: writeResToHTML
+outputs:
+- {edam_format: null, format: HTML, hidden: false, label: '[writeRes2HTML] Output
+    HTML File', model_class: ToolOutput, name: outHTML}
+- {edam_format: format_2330, format: txt, hidden: false, label: '[writeRes2HTML] Output
+    log File', model_class: ToolOutput, name: log}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

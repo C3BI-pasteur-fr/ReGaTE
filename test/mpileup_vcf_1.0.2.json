@@ -1,0 +1,137 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "mpileup_vcf-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "1.0.2", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/mpileup_vcf/mpileup_vcf/1.0.2", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "vcf", 
+                    "dataDescription": "vcf_output", 
+                    "data": {
+                        "term": "Sequence variations", 
+                        "uri": "http://edamontology.org/data_3498"
+                    }, 
+                    "format": [
+                        {
+                            "term": "VCF", 
+                            "uri": "http://edamontology.org/format_3016"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "on coverage and SNPs and output a vcf file", 
+            "input": [
+                {
+                    "dataHandle": "ref", 
+                    "dataDescription": "Select your reference sequence dataset", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "bam_file", 
+                    "dataDescription": "Select your BAM dataset", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "reads_to_exclude", 
+                    "dataDescription": "Exclude reads listed in the following dataset", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "file", 
+                    "dataDescription": "Dataset listing the sites to output", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "On coverage and SNPs and output a vcf file.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/mpileup_vcf/mpileup_vcf/1.0.2", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/mpileup_vcf/mpileup_vcf/1.0.2\"", 
+            "usesVersion": "1.0.2"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "mpileup_vcf-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "1.0.2", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

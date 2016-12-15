@@ -1,0 +1,156 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/samtools_filter/f7d08fbf7a15/samtools_filter/samtools_filter.xml
+description: uses the samtools view command in SAMTools toolkit to filter a SAM or
+  BAM file on the MAPQ (mapping quality), FLAG bits, Read Group, Library, or region
+id: toolshed.pasteur.fr/repos/odoppelt/samtools_filter/samtools_filter/0.1.19
+inputs:
+- argument: null
+  edam_formats: [format_2573, format_2572]
+  extensions: [sam, bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: SAM or BAM File to Filter
+  model_class: DataToolParameter
+  multiple: false
+  name: input1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22header%22%3E%0A%3Coption%20value%3D%22-h%22%3EInclude%20Header%3C/option%3E%0A%3Coption%20value%3D%22%22%3EExclude%20Header%3C/option%3E%0A%3Coption%20value%3D%22-H%22%3EOnly%20the%20Header%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Header in output
+  model_class: SelectToolParameter
+  multiple: false
+  name: header
+  optional: false
+  options:
+  - [Include Header, -h, false]
+  - [Exclude Header, '', false]
+  - [Only the Header, -H, false]
+  type: select
+  value: -h
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22mapq%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Minimum MAPQ quality score, max: null, min: null, model_class: IntegerToolParameter,
+  name: mapq, optional: true, size: null, type: integer, value: ''}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  - inputs:
+    - argument: null
+      display: checkboxes
+      help: ''
+      hidden: false
+      html: '%3Cdiv%20class%3D%22checkUncheckAllPlaceholder%22%20checkbox_name%3D%22reqBits%22%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22reqBits%22%20value%3D%220x0001%22%20id%3D%22reqBits%7C0x0001%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22reqBits%7C0x0001%22%3ERead%20is%20paired%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22reqBits%22%20value%3D%220x0002%22%20id%3D%22reqBits%7C0x0002%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22reqBits%7C0x0002%22%3ERead%20is%20mapped%20in%20a%20proper%20pair%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22reqBits%22%20value%3D%220x0004%22%20id%3D%22reqBits%7C0x0004%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22reqBits%7C0x0004%22%3EThe%20read%20is%20unmapped%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22reqBits%22%20value%3D%220x0008%22%20id%3D%22reqBits%7C0x0008%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22reqBits%7C0x0008%22%3EThe%20mate%20is%20unmapped%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22reqBits%22%20value%3D%220x0010%22%20id%3D%22reqBits%7C0x0010%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22reqBits%7C0x0010%22%3ERead%20strand%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22reqBits%22%20value%3D%220x0020%22%20id%3D%22reqBits%7C0x0020%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22reqBits%7C0x0020%22%3EMate%20strand%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22reqBits%22%20value%3D%220x0040%22%20id%3D%22reqBits%7C0x0040%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22reqBits%7C0x0040%22%3ERead%20is%20the%20first%20in%20a%20pair%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22reqBits%22%20value%3D%220x0080%22%20id%3D%22reqBits%7C0x0080%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22reqBits%7C0x0080%22%3ERead%20is%20the%20second%20in%20a%20pair%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22reqBits%22%20value%3D%220x0100%22%20id%3D%22reqBits%7C0x0100%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22reqBits%7C0x0100%22%3EThe%20alignment%20or%20this%20read%20is%20not%20primary%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22reqBits%22%20value%3D%220x0200%22%20id%3D%22reqBits%7C0x0200%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22reqBits%7C0x0200%22%3EThe%20read%20fails%20platform/vendor%20quality%20checks%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22reqBits%22%20value%3D%220x0400%22%20id%3D%22reqBits%7C0x0400%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22reqBits%7C0x0400%22%3EThe%20read%20is%20a%20PCR%20or%20optical%20duplicate%3C/label%3E%3C/div%3E'
+      is_dynamic: false
+      label: Only output alignments with all of these flag bits set
+      model_class: SelectToolParameter
+      multiple: true
+      name: reqBits
+      optional: true
+      options:
+      - [Read is paired, '0x0001', false]
+      - [Read is mapped in a proper pair, '0x0002', false]
+      - [The read is unmapped, '0x0004', false]
+      - [The mate is unmapped, '0x0008', false]
+      - [Read strand, '0x0010', false]
+      - [Mate strand, '0x0020', false]
+      - [Read is the first in a pair, '0x0040', false]
+      - [Read is the second in a pair, '0x0080', false]
+      - [The alignment or this read is not primary, '0x0100', false]
+      - [The read fails platform/vendor quality checks, '0x0200', false]
+      - [The read is a PCR or optical duplicate, '0x0400', false]
+      type: select
+      value: '0x0001'
+    - argument: null
+      display: checkboxes
+      help: ''
+      hidden: false
+      html: '%3Cdiv%20class%3D%22checkUncheckAllPlaceholder%22%20checkbox_name%3D%22skipBits%22%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22skipBits%22%20value%3D%220x0001%22%20id%3D%22skipBits%7C0x0001%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22skipBits%7C0x0001%22%3ERead%20is%20paired%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22skipBits%22%20value%3D%220x0002%22%20id%3D%22skipBits%7C0x0002%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22skipBits%7C0x0002%22%3ERead%20is%20mapped%20in%20a%20proper%20pair%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22skipBits%22%20value%3D%220x0004%22%20id%3D%22skipBits%7C0x0004%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22skipBits%7C0x0004%22%3EThe%20read%20is%20unmapped%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22skipBits%22%20value%3D%220x0008%22%20id%3D%22skipBits%7C0x0008%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22skipBits%7C0x0008%22%3EThe%20mate%20is%20unmapped%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22skipBits%22%20value%3D%220x0010%22%20id%3D%22skipBits%7C0x0010%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22skipBits%7C0x0010%22%3ERead%20strand%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22skipBits%22%20value%3D%220x0020%22%20id%3D%22skipBits%7C0x0020%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22skipBits%7C0x0020%22%3EMate%20strand%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22skipBits%22%20value%3D%220x0040%22%20id%3D%22skipBits%7C0x0040%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22skipBits%7C0x0040%22%3ERead%20is%20the%20first%20in%20a%20pair%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22skipBits%22%20value%3D%220x0080%22%20id%3D%22skipBits%7C0x0080%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22skipBits%7C0x0080%22%3ERead%20is%20the%20second%20in%20a%20pair%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22skipBits%22%20value%3D%220x0100%22%20id%3D%22skipBits%7C0x0100%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22skipBits%7C0x0100%22%3EThe%20alignment%20or%20this%20read%20is%20not%20primary%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22skipBits%22%20value%3D%220x0200%22%20id%3D%22skipBits%7C0x0200%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22skipBits%7C0x0200%22%3EThe%20read%20fails%20platform/vendor%20quality%20checks%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22checkbox%22%20name%3D%22skipBits%22%20value%3D%220x0400%22%20id%3D%22skipBits%7C0x0400%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22skipBits%7C0x0400%22%3EThe%20read%20is%20a%20PCR%20or%20optical%20duplicate%3C/label%3E%3C/div%3E'
+      is_dynamic: false
+      label: Skip alignments with any of these flag bits set
+      model_class: SelectToolParameter
+      multiple: true
+      name: skipBits
+      optional: true
+      options:
+      - [Read is paired, '0x0001', false]
+      - [Read is mapped in a proper pair, '0x0002', false]
+      - [The read is unmapped, '0x0004', false]
+      - [The mate is unmapped, '0x0008', false]
+      - [Read strand, '0x0010', false]
+      - [Mate strand, '0x0020', false]
+      - [Read is the first in a pair, '0x0040', false]
+      - [Read is the second in a pair, '0x0080', false]
+      - [The alignment or this read is not primary, '0x0100', false]
+      - [The read fails platform/vendor quality checks, '0x0200', false]
+      - [The read is a PCR or optical duplicate, '0x0400', false]
+      type: select
+      value: '0x0001'
+    model_class: ConditionalWhen
+    value: 'yes'
+  model_class: Conditional
+  name: flag
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22filter%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22no%22%3Eno%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3Eyes%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Filter on bitwise flag
+    model_class: SelectToolParameter
+    multiple: false
+    name: filter
+    optional: false
+    options:
+    - ['no', 'no', false]
+    - ['yes', 'yes', false]
+    type: select
+    value: 'no'
+  type: conditional
+- {area: false, argument: null, help: 'Requires headers in the input SAM or BAM, otherwise
+    no alignments will be output.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22library%22%20size%3D%2220%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Select alignments from Library, model_class: TextToolParameter,
+  name: library, optional: false, size: '20', type: text, value: ''}
+- {area: false, argument: null, help: 'Requires headers in the input SAM or BAM, otherwise
+    no alignments will be output.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read_group%22%20size%3D%2220%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Select alignments from Read Group, model_class: TextToolParameter,
+  name: read_group, optional: false, size: '20', type: text, value: ''}
+- argument: null
+  edam_formats: [format_3003]
+  extensions: [bed]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Output alignments overlapping the regions in the BED FILE
+  model_class: DataToolParameter
+  multiple: false
+  name: bed_file
+  optional: true
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: 'region should be presented in one of the following
+    formats: `chr1'', `chr2:1,000'' and `chr3:1000-2,000''', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22regions%22%20size%3D%22180%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Select regions (only used when the input is in BAM format),
+  model_class: TextToolParameter, name: regions, optional: false, size: '180', type: text,
+  value: ''}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Fsamtools_filter%2Fsamtools_filter%2F0.1.19
+min_width: -1
+model_class: Tool
+name: Filter SAM or BAM
+outputs:
+- {edam_format: format_1915, format: data, hidden: false, label: '${tool.name} on
+    ${on_string}: ${input1.datatype.file_ext}', model_class: ToolOutput, name: output1}
+panel_section_id: samtools
+panel_section_name: 'NGS: SAM Tools'
+target: galaxy_main
+version: 0.1.19

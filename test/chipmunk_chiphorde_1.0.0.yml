@@ -1,0 +1,78 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/chipmunk_chiphorde/48be70ee33d1/chipmunk_chiphorde/chipmunk.xml
+description: '- de novo motif finding'
+id: toolshed.pasteur.fr/repos/fmareuil/chipmunk_chiphorde/chipmunk_chiphorde/1.0.0
+inputs:
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22name%22%20size%3D%2210%22%20value%3D%22ChIPseq%22%3E',
+  is_dynamic: false, label: Name, model_class: TextToolParameter, name: name, optional: false,
+  size: null, type: text, value: ChIPseq}
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Sequences
+  model_class: DataToolParameter
+  multiple: false
+  name: inputfile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22motif_number_selector%22%20last_selected_value%3D%223%22%3E%0A%3Coption%20value%3D%221%22%3E1%3C/option%3E%0A%3Coption%20value%3D%222%22%3E2%3C/option%3E%0A%3Coption%20value%3D%223%22%20selected%3E3%3C/option%3E%0A%3Coption%20value%3D%224%22%3E4%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Number of different motifs to search
+  model_class: SelectToolParameter
+  multiple: false
+  name: motif_number_selector
+  optional: false
+  options:
+  - ['1', '1', false]
+  - ['2', '2', false]
+  - ['3', '3', true]
+  - ['4', '4', false]
+  type: select
+  value: '3'
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minw%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+  is_dynamic: false, label: Min width of motif to search, max: null, min: null, model_class: IntegerToolParameter,
+  name: minw, optional: false, size: null, type: integer, value: '10'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxw%22%20size%3D%2210%22%20value%3D%2215%22%3E',
+  is_dynamic: false, label: Max width of motif to search, max: null, min: null, model_class: IntegerToolParameter,
+  name: maxw, optional: false, size: null, type: integer, value: '15'}
+- argument: null
+  display: null
+  help: use 'mask' to mask already identified motifs in your sequences and 'filter'
+    to filter out the whole sequences with already identified motifs
+  hidden: false
+  html: '%3Cselect%20name%3D%22mode%22%20last_selected_value%3D%22mask%22%3E%0A%3Coption%20value%3D%22filter%22%3Efilter%3C/option%3E%0A%3Coption%20value%3D%22mask%22%20selected%3Emask%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Mode for additional motif finding
+  model_class: SelectToolParameter
+  multiple: false
+  name: mode
+  optional: false
+  options:
+  - [filter, filter, false]
+  - [mask, mask, true]
+  type: select
+  value: mask
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fchipmunk_chiphorde%2Fchipmunk_chiphorde%2F1.0.0
+min_width: -1
+model_class: Tool
+name: ChIPmunk
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: 'row ChIPmunk output
+    for ${name} (log)', model_class: ToolOutput, name: log_outfile}
+- {edam_format: format_2330, format: txt, hidden: false, label: 'motifs for ${name}(txt)',
+  model_class: ToolOutput, name: processed_output}
+- {edam_format: format_3547, format: png, hidden: false, label: 'motifs for ${name}(png)',
+  model_class: ToolOutput, name: image_output}
+panel_section_id: nebula_tools
+panel_section_name: ChIP-SEQ Analysis Nebula Tools, Institut Curie
+target: galaxy_main
+version: 1.0.0

@@ -1,0 +1,166 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/fqtools/4801a84ea16e/fqtools/fqquality.xml
+description: Output reads with low quality bases trimmed (at the extremities) or masked
+  and/or with quality descreased to the minimum. Output an extra singlet dataset if
+  paired-end data provided.
+id: toolshed.pasteur.fr/repos/odoppelt/fqtools/fqquality/1.0
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1931, format_1932, format_1930]
+      extensions: [fastqillumina, fastqsanger, fastq]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Illumina fastq dataset from your history
+      model_class: DataToolParameter
+      multiple: false
+      name: input
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: single
+  - inputs:
+    - argument: null
+      edam_formats: [format_1931, format_1932, format_1930]
+      extensions: [fastqillumina, fastqsanger, fastq]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Illumina read 1 fastq dataset from your history
+      model_class: DataToolParameter
+      multiple: false
+      name: input1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_1931, format_1932, format_1930]
+      extensions: [fastqillumina, fastqsanger, fastq]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Illumina read 2 fastq dataset from your history
+      model_class: DataToolParameter
+      multiple: false
+      name: input2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: paired_end
+  model_class: Conditional
+  name: read_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22read_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22single%22%3E%0A%3Coption%20value%3D%22single%22%20selected%3ESingle%20Read%3C/option%3E%0A%3Coption%20value%3D%22paired_end%22%3EPaired%20End%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Type of input data
+    model_class: SelectToolParameter
+    multiple: false
+    name: read_type_selector
+    optional: false
+    options:
+    - [Single Read, single, true]
+    - [Paired End, paired_end, false]
+    type: select
+    value: single
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_seq_length%22%20size%3D%223%22%20value%3D%2230%22%3E',
+      is_dynamic: false, label: Minimum sequence length required after trimming (-l),
+      max: null, min: 1, model_class: IntegerToolParameter, name: min_seq_length,
+      optional: false, size: '3', type: integer, value: '30'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: trim_condition
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22trim%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22yes%22%3E%0A%3Coption%20value%3D%22no%22%3ENo%3C/option%3E%0A%3Coption%20value%3D%22yes%22%20selected%3EYes%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Trim low quality bases (on both ends) (-t)
+    model_class: SelectToolParameter
+    multiple: false
+    name: trim
+    optional: false
+    options:
+    - ['No', 'no', false]
+    - ['Yes', 'yes', true]
+    type: select
+    value: 'yes'
+  type: conditional
+- {area: false, argument: null, help: the maximum is 41, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22qual_cutoff%22%20size%3D%222%22%20value%3D%2220%22%3E',
+  is_dynamic: false, label: Quality value cutoff (-q), max: 41, min: 2, model_class: IntegerToolParameter,
+  name: qual_cutoff, optional: false, size: '2', type: integer, value: '20'}
+- {area: false, argument: null, help: 100 means that it won't be taken into account,
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22bad_qual_percent%22%20size%3D%223%22%20value%3D%22100%22%3E',
+  is_dynamic: false, label: Overall bad quality maximum percent allowed for a read
+    (-b), max: 100, min: 0, model_class: IntegerToolParameter, name: bad_qual_percent,
+  optional: false, size: '3', type: integer, value: '100'}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22mask%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Mask low quality bases (-m)
+  model_class: SelectToolParameter
+  multiple: false
+  name: mask
+  optional: false
+  options:
+  - ['No', 'no', true]
+  - ['Yes', 'yes', false]
+  type: select
+  value: 'no'
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22decrease%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Decrease low quality bases to minimum value (-d)
+  model_class: SelectToolParameter
+  multiple: false
+  name: decrease
+  optional: false
+  options:
+  - ['No', 'no', true]
+  - ['Yes', 'yes', false]
+  type: select
+  value: 'no'
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Ffqtools%2Ffqquality%2F1.0
+min_width: -1
+model_class: Tool
+name: fqquality
+outputs:
+- {format: input, hidden: false, label: 'fqquality on ${read_type.input.name}', model_class: ToolOutput,
+  name: output}
+- {format: input, hidden: false, label: 'fqquality on ${read_type.input1.name}', model_class: ToolOutput,
+  name: output1}
+- {format: input, hidden: false, label: 'fqquality on ${read_type.input2.name}', model_class: ToolOutput,
+  name: output2}
+- {format: input, hidden: false, label: 'fqquality singlets from ${read_type.input1.name}
+    and ${read_type.input2.name}', model_class: ToolOutput, name: output_singlet}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: '1.0'

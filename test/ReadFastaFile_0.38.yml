@@ -1,0 +1,31 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/fastafilter/f79141e99f1d/fastafilter/ReadFastaFile.xml
+description: This tool is the fastest and most efficient fasta-formatted sequence
+  file (alphanumerical) sorting tool I have up front
+id: toolshed.pasteur.fr/repos/fmareuil/fastafilter/ReadFastaFile/0.38
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: 'Input fasta file '
+  model_class: DataToolParameter
+  multiple: false
+  name: inputfasta
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Ffastafilter%2FReadFastaFile%2F0.38
+min_width: -1
+model_class: Tool
+name: Read Fasta File
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: ReadFastaFile on
+    $inputfasta.name, model_class: ToolOutput, name: outputfasta}
+panel_section_id: fasta_manipulation
+panel_section_name: FASTA manipulation
+target: galaxy_main
+version: '0.38'

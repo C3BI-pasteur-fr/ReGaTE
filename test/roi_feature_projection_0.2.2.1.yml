@@ -1,0 +1,105 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/screno/ngs_roi2/76a612f15b38/ngs_roi2/roi_feature_projection.xml
+description: Region Of Interest Projection.
+id: toolshed.pasteur.fr/repos/screno/ngs_roi2/roi_feature_projection/0.2.2.1
+inputs:
+- argument: null
+  edam_formats: [format_3003, format_2305, format_2306]
+  extensions: [bed, gff, gtf]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: BED, GFF, or GTF file to read.
+  model_class: DataToolParameter
+  multiple: false
+  name: roi_feature_projection_in_features
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22roi_feature_projection_gff_type%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: The GFF/GTF record type (value of third column) to keep.  Keep
+    all if not set or input file type is not GFF/GTF., model_class: TextToolParameter,
+  name: roi_feature_projection_gff_type, optional: true, size: null, type: text, value: ''}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22roi_feature_projection_verbose%22%20name%3D%22roi_feature_projection_verbose%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22roi_feature_projection_verbose%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Enable verbose output., model_class: BooleanToolParameter,
+  name: roi_feature_projection_verbose, optional: false, truevalue: --verbose, type: boolean,
+  value: false}
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [roi]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: ROI file to read.
+  model_class: DataToolParameter
+  multiple: false
+  name: roi_feature_projection_in_roi
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22roi_feature_projection_strand_specific%22%20name%3D%22roi_feature_projection_strand_specific%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22roi_feature_projection_strand_specific%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Enable strand-specific mode if set., model_class: BooleanToolParameter,
+  name: roi_feature_projection_strand_specific, optional: false, truevalue: --strand-specific,
+  type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22roi_feature_projection_very_verbose%22%20name%3D%22roi_feature_projection_very_verbose%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22roi_feature_projection_very_verbose%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Enable very verbose output., model_class: BooleanToolParameter,
+  name: roi_feature_projection_very_verbose, optional: false, truevalue: --very-verbose,
+  type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22roi_feature_projection_quiet%22%20name%3D%22roi_feature_projection_quiet%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22roi_feature_projection_quiet%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Set verbosity to a minimum., model_class: BooleanToolParameter,
+  name: roi_feature_projection_quiet, optional: false, truevalue: --quiet, type: boolean,
+  value: false}
+- argument: null
+  edam_formats: [format_1929, null]
+  extensions: [fasta, fa]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Path to FASTA file with genome; optional.  When given, this is used for computing
+    the overall region's C+G content.
+  model_class: DataToolParameter
+  multiple: false
+  name: roi_feature_projection_genome
+  optional: true
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22roi_feature_projection_gff_group_by%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: 'The GFF/GTF tag to use for grouping, e.g. "Parent", "transcript_id".
+    No grouping if empty.  When using the grouping feature, the --mode is automatically
+    set to projection.', model_class: TextToolParameter, name: roi_feature_projection_gff_group_by,
+  optional: true, size: null, type: text, value: ''}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22roi_feature_projection_mode%22%3E%0A%3Coption%20value%3D%22intersection%22%3Eintersection%3C/option%3E%0A%3Coption%20value%3D%22projection%22%3Eprojection%3C/option%3E%0A%3Coption%20value%3D%22union%22%3Eunion%3C/option%3E%0A%3Coption%20value%3D%22difference%22%3Edifference%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: The mode in which to combine the ROI and BED/GFF file.  See section Combination
+    Modes below for details.
+  model_class: SelectToolParameter
+  multiple: false
+  name: roi_feature_projection_mode
+  optional: false
+  options:
+  - [intersection, intersection, false]
+  - [projection, projection, false]
+  - [union, union, false]
+  - [difference, difference, false]
+  type: select
+  value: intersection
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fscreno%2Fngs_roi2%2Froi_feature_projection%2F0.2.2.1
+min_width: -1
+model_class: Tool
+name: RoiFeatureProjection
+outputs:
+- {edam_format: format_3475, format: roi, hidden: false, label: ROI feature projection,
+  model_class: ToolOutput, name: roi_feature_projection_out_roi}
+panel_section_id: ngs:_roi_tools
+panel_section_name: 'NGS: Roi Tools'
+target: galaxy_main
+version: 0.2.2.1

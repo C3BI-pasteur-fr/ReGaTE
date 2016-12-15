@@ -1,0 +1,46 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/DiffExpAnal/listInputs.xml
+description: Give a list of input files from different conditions/groups for DESeq
+  analysis, DESeq can then charge these input files from the given list.
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/listInputs/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Please choose your file from group1.
+  model_class: DataToolParameter
+  multiple: false
+  name: inputFromGroup1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Please choose your file from group2.
+  model_class: DataToolParameter
+  multiple: false
+  name: inputFromGroup2
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FlistInputs%2F1.0.0
+min_width: -1
+model_class: Tool
+name: listInputs
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: listInputs Output,
+  model_class: ToolOutput, name: output}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

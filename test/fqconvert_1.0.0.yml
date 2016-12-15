@@ -1,0 +1,101 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/fqconvert2/e30605ce16aa/fqconvert2/fqconvert.xml
+description: Convert quality scoring to Sanger in FASTQ files
+id: toolshed.pasteur.fr/repos/fmareuil/fqconvert2/fqconvert/1.0.0
+inputs:
+- default: 1
+  help: null
+  inputs:
+  - argument: null
+    edam_formats: [format_1933, format_1931, format_1930]
+    extensions: [fastqsolexa, fastqillumina, fastq]
+    help: ''
+    hidden: false
+    is_dynamic: false
+    label: Original Illumina/Solexa fastq dataset from your history. Following formats,
+      Sanger, Solexa, Illumina1.3+, Illumina1.5+, Illumina1.7+ or Illumina1.8+ are
+      supported
+    model_class: DataToolParameter
+    multiple: false
+    name: input
+    optional: false
+    options:
+      hda: []
+      hdca: []
+    type: data
+  max: __Infinity__
+  min: 1
+  model_class: Repeat
+  name: inputs
+  title: Input file
+  type: repeat
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: convert
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22flag%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22yes%22%3E%0A%3Coption%20value%3D%22yes%22%20selected%3E%20yes%20%3C/option%3E%0A%3Coption%20value%3D%22no%22%3E%20no%20%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: 'Convert, if no : only detect scoring scheme'
+    model_class: SelectToolParameter
+    multiple: false
+    name: flag
+    optional: false
+    options:
+    - [' yes ', 'yes', true]
+    - [' no ', 'no', false]
+    type: select
+    value: 'yes'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22num%22%20size%3D%225%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: sequences, max: null, min: null, model_class: IntegerToolParameter,
+      name: num, optional: false, size: '5', type: integer, value: '0'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: numflag
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22flag%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22yes%22%3E%20yes%20%3C/option%3E%0A%3Coption%20value%3D%22no%22%20selected%3E%20no%20%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Restrict detection to maximum num sequence objects. By default, value =
+      0, all sequences in a file are checked
+    model_class: SelectToolParameter
+    multiple: false
+    name: flag
+    optional: false
+    options:
+    - [' yes ', 'yes', false]
+    - [' no ', 'no', true]
+    type: select
+    value: 'no'
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Ffqconvert2%2Ffqconvert%2F1.0.0
+min_width: -1
+model_class: Tool
+name: fqconvert
+outputs:
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+- {edam_format: format_2330, format: txt, hidden: false, label: '', model_class: ToolOutput,
+  name: output_log}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: 1.0.0

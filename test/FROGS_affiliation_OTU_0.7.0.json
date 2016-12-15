@@ -1,0 +1,123 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "FROGS_affiliation_OTU-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.7.0", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/mvalade/frogs/FROGS_affiliation_OTU/0.7.0", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "biom1", 
+                    "dataDescription": "biom_affiliation", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "JSON", 
+                            "uri": "http://edamontology.org/format_3464"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "html", 
+                    "dataDescription": "summary", 
+                    "data": {
+                        "term": "Report", 
+                        "uri": "http://edamontology.org/data_2048"
+                    }, 
+                    "format": [
+                        {
+                            "term": "HTML", 
+                            "uri": "http://edamontology.org/format_2331"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Step 4 in metagenomics analysis : Taxonomic affiliation of each OTU's seed by RDPtools and BLAST", 
+            "input": [
+                {
+                    "dataHandle": "fasta_sequences", 
+                    "dataDescription": "OTU seed sequence", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "biom_abundance", 
+                    "dataDescription": "Abundance file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "JSON", 
+                            "uri": "http://edamontology.org/format_3464"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Step 4 in metagenomics analysis : Taxonomic affiliation of each OTU's seed by RDPtools and BLAST.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/mvalade/frogs/FROGS_affiliation_OTU/0.7.0", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/mvalade/frogs/FROGS_affiliation_OTU/0.7.0\"", 
+            "usesVersion": "0.7.0"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "FROGS_affiliation_OTU-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.7.0", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

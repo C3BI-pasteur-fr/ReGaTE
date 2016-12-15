@@ -1,0 +1,48 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/DiffExpAnal/loadMultiFastqFiles.xml
+description: To load several FASTQ files from different conditions.
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/load_multiFASTQ/1.0.0
+inputs:
+- default: 2
+  help: null
+  inputs:
+  - default: 0
+    help: null
+    inputs:
+    - argument: null
+      edam_formats: [format_1930]
+      extensions: [fastq]
+      help: FASTQ file. Can show the sequences quality.
+      hidden: false
+      is_dynamic: false
+      label: Fastq file
+      model_class: DataToolParameter
+      multiple: false
+      name: fastq_file
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    max: __Infinity__
+    min: 0
+    model_class: Repeat
+    name: replicates
+    title: Replicate
+    type: repeat
+  max: __Infinity__
+  min: 2
+  model_class: Repeat
+  name: condition_groups
+  title: Condition group
+  type: repeat
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2Fload_multiFASTQ%2F1.0.0
+min_width: -1
+model_class: Tool
+name: load_multiFASTQfiles
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: loadMultiFASTQFiles
+    result, model_class: ToolOutput, name: multiFASTQfiles_out}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

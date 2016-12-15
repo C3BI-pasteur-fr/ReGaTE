@@ -1,0 +1,299 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/6aa4e3518c3b/oneclick_phylogeny/phyml_oneclick/phyml_oneclick.xml
+description: Phylogeny software based on the maximum-likelihood
+id: toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/phyml_oneclick/3.1
+inputs:
+- argument: null
+  edam_formats: [format_2330, null]
+  extensions: [phylip, ' phy']
+  help: phylip format
+  hidden: false
+  is_dynamic: false
+  label: Alignment file
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: radio
+  help: ''
+  hidden: false
+  html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22phylip_format%22%20value%3D%22%22%20id%3D%22phylip_format%7C%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22phylip_format%7C%22%3EInterleaved%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22phylip_format%22%20value%3D%22--sequential%22%20id%3D%22phylip_format%7C--sequential%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22phylip_format%7C--sequential%22%3ESequential%3C/label%3E%3C/div%3E'
+  is_dynamic: false
+  label: Changes interleaved format
+  model_class: SelectToolParameter
+  multiple: false
+  name: phylip_format
+  optional: false
+  options:
+  - [Interleaved, '', false]
+  - [Sequential, --sequential, false]
+  type: select
+  value: ''
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22nb_data_set%22%20size%3D%2210%22%20value%3D%221%22%3E',
+  is_dynamic: false, label: Number of data sets, max: null, min: 1, model_class: IntegerToolParameter,
+  name: nb_data_set, optional: false, size: null, type: integer, value: '1'}
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: 'Must be a positive integer, ''e'' if you
+        want PhyML to estimate it', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22tstv%22%20size%3D%2210%22%20value%3D%22e%22%3E',
+      is_dynamic: false, label: Transition/transversion ratio, model_class: TextToolParameter,
+      name: tstv, optional: false, size: null, type: text, value: e}
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22model%22%3E%0A%3Coption%20value%3D%22HKY85%22%3EHKY85%3C/option%3E%0A%3Coption%20value%3D%22JC69%22%3EJC69%3C/option%3E%0A%3Coption%20value%3D%22K80%22%3EK80%3C/option%3E%0A%3Coption%20value%3D%22F81%22%3EF81%3C/option%3E%0A%3Coption%20value%3D%22F84%22%3EF84%3C/option%3E%0A%3Coption%20value%3D%22TN93%22%3ETN93%3C/option%3E%0A%3Coption%20value%3D%22GTR%22%3EGTR%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Substitution model
+      model_class: SelectToolParameter
+      multiple: false
+      name: model
+      optional: false
+      options:
+      - [HKY85, HKY85, false]
+      - [JC69, JC69, false]
+      - [K80, K80, false]
+      - [F81, F81, false]
+      - [F84, F84, false]
+      - [TN93, TN93, false]
+      - [GTR, GTR, false]
+      type: select
+      value: HKY85
+    model_class: ConditionalWhen
+    value: nt
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22model%22%3E%0A%3Coption%20value%3D%22LG%22%3ELG%3C/option%3E%0A%3Coption%20value%3D%22WAG%22%3EWAG%3C/option%3E%0A%3Coption%20value%3D%22JTT%22%3EJTT%3C/option%3E%0A%3Coption%20value%3D%22MtREV%22%3EMtREV%3C/option%3E%0A%3Coption%20value%3D%22Dayhoff%22%3EDayhoff%3C/option%3E%0A%3Coption%20value%3D%22DCMut%22%3EDCMut%3C/option%3E%0A%3Coption%20value%3D%22RtREV%22%3ERtREV%3C/option%3E%0A%3Coption%20value%3D%22CpREV%22%3ECpREV%3C/option%3E%0A%3Coption%20value%3D%22VT%22%3EVT%3C/option%3E%0A%3Coption%20value%3D%22Blosum62%22%3EBlosum62%3C/option%3E%0A%3Coption%20value%3D%22MtMam%22%3EMtMam%3C/option%3E%0A%3Coption%20value%3D%22MtArt%22%3EMtArt%3C/option%3E%0A%3Coption%20value%3D%22HIVw%22%3EHIVw%3C/option%3E%0A%3Coption%20value%3D%22HIVb%22%3EHIVb%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Evolution model
+      model_class: SelectToolParameter
+      multiple: false
+      name: model
+      optional: false
+      options:
+      - [LG, LG, false]
+      - [WAG, WAG, false]
+      - [JTT, JTT, false]
+      - [MtREV, MtREV, false]
+      - [Dayhoff, Dayhoff, false]
+      - [DCMut, DCMut, false]
+      - [RtREV, RtREV, false]
+      - [CpREV, CpREV, false]
+      - [VT, VT, false]
+      - [Blosum62, Blosum62, false]
+      - [MtMam, MtMam, false]
+      - [MtArt, MtArt, false]
+      - [HIVw, HIVw, false]
+      - [HIVb, HIVb, false]
+      type: select
+      value: LG
+    model_class: ConditionalWhen
+    value: aa
+  - inputs:
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [txt]
+      help: Precompute file containning sequence description (dna or protein)
+      hidden: false
+      is_dynamic: false
+      label: Config file
+      model_class: DataToolParameter
+      multiple: false
+      name: input_info
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: cfg
+  model_class: Conditional
+  name: seq
+  test_param:
+    argument: null
+    display: radio
+    help: ''
+    hidden: false
+    html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22type_of_seq%22%20refresh_on_change%3D%22true%22%20value%3D%22nt%22%20id%3D%22type_of_seq%7Cnt%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22type_of_seq%7Cnt%22%3ENucleic%20acids%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22type_of_seq%22%20refresh_on_change%3D%22true%22%20value%3D%22aa%22%20id%3D%22type_of_seq%7Caa%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22type_of_seq%7Caa%22%3EAmino%20acids%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22type_of_seq%22%20refresh_on_change%3D%22true%22%20value%3D%22cfg%22%20id%3D%22type_of_seq%7Ccfg%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22type_of_seq%7Ccfg%22%3EInformation%20file%3C/label%3E%3C/div%3E'
+    is_dynamic: false
+    label: Data type
+    model_class: SelectToolParameter
+    multiple: false
+    name: type_of_seq
+    optional: false
+    options:
+    - [Nucleic acids, nt, false]
+    - [Amino acids, aa, false]
+    - [Information file, cfg, false]
+    type: select
+    value: nt
+  type: conditional
+- {area: false, argument: null, help: 'Can be a fixed value in the [0,1] range or
+    ''e'' to get the maximum likelihood estimate, 0 to ignore this parameter', hidden: false,
+  html: '%3Cinput%20type%3D%22text%22%20name%3D%22prop_invar%22%20size%3D%2210%22%20value%3D%22e%22%3E',
+  is_dynamic: false, label: Proportion of invariant sites, model_class: TextToolParameter,
+  name: prop_invar, optional: false, size: null, type: text, value: e}
+- argument: null
+  display: null
+  help: 'Empirical: frequencies are estimated by counting the occurences in the alignment.
+    ML/Model: frequencies are estimated using ML for nucleotides or defined by the
+    proteic substitution model.'
+  hidden: false
+  html: '%3Cselect%20name%3D%22equi_freq%22%3E%0A%3Coption%20value%3D%22m%22%3EML/Model%3C/option%3E%0A%3Coption%20value%3D%22e%22%3EEmpirical%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Equilibrium frequencies
+  model_class: SelectToolParameter
+  multiple: false
+  name: equi_freq
+  optional: false
+  options:
+  - [ML/Model, m, false]
+  - [Empirical, e, false]
+  type: select
+  value: m
+- {area: false, argument: null, help: 1 means no gamma model, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22nbSubstCat%22%20size%3D%2210%22%20value%3D%224%22%3E',
+  is_dynamic: false, label: Number of categories for the discrete gamma model, max: null,
+  min: 1, model_class: IntegerToolParameter, name: nbSubstCat, optional: false, size: null,
+  type: integer, value: '4'}
+- {area: false, argument: null, help: '''e'' if you want PhyML to estimate it', hidden: false,
+  html: '%3Cinput%20type%3D%22text%22%20name%3D%22gamma%22%20size%3D%2210%22%20value%3D%22e%22%3E',
+  is_dynamic: false, label: Parameter of the gamma model, model_class: TextToolParameter,
+  name: gamma, optional: false, size: null, type: text, value: e}
+- argument: null
+  display: radio
+  help: ''
+  hidden: false
+  html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22move%22%20value%3D%22NNI%22%20id%3D%22move%7CNNI%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22move%7CNNI%22%3ENNI%20%28Nearest%20Neighbor%20Interchange%29%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22move%22%20value%3D%22SPR%22%20id%3D%22move%7CSPR%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22move%7CSPR%22%3ESPR%20%28Subtree%20Pruning%20and%20Regraphing%29%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22move%22%20value%3D%22BEST%22%20id%3D%22move%7CBEST%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22move%7CBEST%22%3EBest%20of%20NNI%20and%20SPR%3C/label%3E%3C/div%3E'
+  is_dynamic: false
+  label: Tree topology search
+  model_class: SelectToolParameter
+  multiple: false
+  name: move
+  optional: false
+  options:
+  - [NNI (Nearest Neighbor Interchange), NNI, false]
+  - [SPR (Subtree Pruning and Regraphing), SPR, false]
+  - [Best of NNI and SPR, BEST, false]
+  type: select
+  value: NNI
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22optimisationTopology%22%3E%0A%3Coption%20value%3D%22tlr%22%3ETree%20topology%2C%20Branch%20length%2C%20Rate%20parameter%3C/option%3E%0A%3Coption%20value%3D%22tl%22%3ETree%20topology%2C%20Branch%20length%3C/option%3E%0A%3Coption%20value%3D%22l%22%3EBranch%20length%3C/option%3E%0A%3Coption%20value%3D%22r%22%3ERate%20parameter%3C/option%3E%0A%3Coption%20value%3D%22n%22%3ENo%20parameter%20is%20optimized%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Optimise topology
+  model_class: SelectToolParameter
+  multiple: false
+  name: optimisationTopology
+  optional: false
+  options:
+  - ['Tree topology, Branch length, Rate parameter', tlr, false]
+  - ['Tree topology, Branch length', tl, false]
+  - [Branch length, l, false]
+  - [Rate parameter, r, false]
+  - [No parameter is optimized, n, false]
+  type: select
+  value: tlr
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: '0'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: '-1'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: '-2'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: '-4'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: '-5'
+  - inputs:
+    - {area: false, argument: null, help: Must be a positive integer, hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22replicate%22%20size%3D%2210%22%20value%3D%22100%22%3E',
+      is_dynamic: false, label: Number of bootstrap replicates, max: null, min: 1,
+      model_class: IntegerToolParameter, name: replicate, optional: false, size: null,
+      type: integer, value: '100'}
+    model_class: ConditionalWhen
+    value: '1'
+  model_class: Conditional
+  name: support_condition
+  test_param:
+    argument: null
+    display: null
+    help: Use aLRT or aBayes to save computing time
+    hidden: false
+    html: '%3Cselect%20name%3D%22branchSupport%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22-4%22%3E%0A%3Coption%20value%3D%220%22%3ENo%20bootstrap%3C/option%3E%0A%3Coption%20value%3D%221%22%3EBootstrap%3C/option%3E%0A%3Coption%20value%3D%22-1%22%3Elikelihood%20aLRT%20statistics%3C/option%3E%0A%3Coption%20value%3D%22-2%22%3Elikelihood%20Chi2-based%3C/option%3E%0A%3Coption%20value%3D%22-4%22%20selected%3ESH-like%3C/option%3E%0A%3Coption%20value%3D%22-5%22%3EApproximate%20Bayes%20branch%20supports%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Statistical tests for branch support
+    model_class: SelectToolParameter
+    multiple: false
+    name: branchSupport
+    optional: false
+    options:
+    - [No bootstrap, '0', false]
+    - [Bootstrap, '1', false]
+    - [likelihood aLRT statistics, '-1', false]
+    - [likelihood Chi2-based, '-2', false]
+    - [SH-like, '-4', true]
+    - [Approximate Bayes branch supports, '-5', false]
+    type: select
+    value: '-4'
+  type: conditional
+- {area: false, argument: null, help: 0 to random seed, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22numStartSeed%22%20size%3D%2210%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: Number of seed used to initiate the random number generator,
+  max: null, min: null, model_class: IntegerToolParameter, name: numStartSeed, optional: false,
+  size: null, type: integer, value: '0'}
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1915]
+      extensions: [data]
+      help: newick format
+      hidden: false
+      is_dynamic: false
+      label: Tree file
+      model_class: DataToolParameter
+      multiple: false
+      name: userInputTree
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: 'true'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'false'
+  model_class: Conditional
+  name: usetree
+  test_param: {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22inputTree%22%20name%3D%22inputTree%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22inputTree%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Use input tree guide, model_class: BooleanToolParameter,
+    name: inputTree, optional: false, truevalue: 'true', type: boolean, value: false}
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Foneclick_phylogeny%2Fphyml_oneclick%2F3.1
+min_width: -1
+model_class: Tool
+name: PhyML Oneclick
+outputs:
+- {edam_format: format_1910, format: nhx, hidden: false, label: 'PhyML Newick tree:
+    ${input.name}.nwk', model_class: ToolOutput, name: output_tree}
+- {edam_format: format_2330, format: txt, hidden: false, label: 'PhyML Statistic:
+    ${input.name}.stats.txt', model_class: ToolOutput, name: output_stats}
+- {edam_format: format_2330, format: txt, hidden: false, label: 'PhyML Stdout: ${input.name}',
+  model_class: ToolOutput, name: output_stdout}
+panel_section_id: oneclick_phylogeny
+panel_section_name: Oneclick Phylogeny
+target: galaxy_main
+version: '3.1'

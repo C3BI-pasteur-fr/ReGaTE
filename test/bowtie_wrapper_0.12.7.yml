@@ -1,0 +1,799 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/bowtie/64c2cea8c899/bowtie/bowtie_wrapper.xml
+description: ''
+id: toolshed.pasteur.fr/repos/odoppelt/bowtie/bowtie_wrapper/0.12.7
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: if your genome of interest is not listed - contact Galaxy team
+      hidden: false
+      html: '%3Cselect%20name%3D%22index%22%3E%0A%3Coption%20value%3D%22btaurus%22%3Ebtaurus%3C/option%3E%0A%3Coption%20value%3D%22calbicans5314%22%3Ecalbicans5314%3C/option%3E%0A%3Coption%20value%3D%22calbicansWO1%22%3EcalbicansWO1%3C/option%3E%0A%3Coption%20value%3D%22cfamiliaris%22%3Ecfamiliaris%3C/option%3E%0A%3Coption%20value%3D%22chiroptera%22%3Echiroptera%3C/option%3E%0A%3Coption%20value%3D%22cneoformansH99%22%3EcneoformansH99%3C/option%3E%0A%3Coption%20value%3D%22cneoformansJEC21%22%3EcneoformansJEC21%3C/option%3E%0A%3Coption%20value%3D%22csabaeus%22%3Ecsabaeus%3C/option%3E%0A%3Coption%20value%3D%22dmelanogaster%22%3Edmelanogaster%3C/option%3E%0A%3Coption%20value%3D%22ecaballus%22%3Eecaballus%3C/option%3E%0A%3Coption%20value%3D%22fcatus%22%3Efcatus%3C/option%3E%0A%3Coption%20value%3D%22hg18%22%3Ehg18%3C/option%3E%0A%3Coption%20value%3D%22hg19%22%3Ehg19%3C/option%3E%0A%3Coption%20value%3D%22mlucifugus%22%3Emlucifugus%3C/option%3E%0A%3Coption%20value%3D%22mm10%22%3Emm10%3C/option%3E%0A%3Coption%20value%3D%22mm8%22%3Emm8%3C/option%3E%0A%3Coption%20value%3D%22mm9%22%3Emm9%3C/option%3E%0A%3Coption%20value%3D%22pfalciparum%22%3Epfalciparum%3C/option%3E%0A%3Coption%20value%3D%22pvampyrus%22%3Epvampyrus%3C/option%3E%0A%3Coption%20value%3D%22pvivax%22%3Epvivax%3C/option%3E%0A%3Coption%20value%3D%22scerevisiae%22%3Escerevisiae%3C/option%3E%0A%3Coption%20value%3D%22spombe%22%3Espombe%3C/option%3E%0A%3Coption%20value%3D%22sscrofa%22%3Esscrofa%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: Select a reference genome
+      model_class: SelectToolParameter
+      multiple: false
+      name: index
+      optional: false
+      options:
+      - [btaurus, btaurus, false]
+      - [calbicans5314, calbicans5314, false]
+      - [calbicansWO1, calbicansWO1, false]
+      - [cfamiliaris, cfamiliaris, false]
+      - [chiroptera, chiroptera, false]
+      - [cneoformansH99, cneoformansH99, false]
+      - [cneoformansJEC21, cneoformansJEC21, false]
+      - [csabaeus, csabaeus, false]
+      - [dmelanogaster, dmelanogaster, false]
+      - [ecaballus, ecaballus, false]
+      - [fcatus, fcatus, false]
+      - [hg18, hg18, false]
+      - [hg19, hg19, false]
+      - [mlucifugus, mlucifugus, false]
+      - [mm10, mm10, false]
+      - [mm8, mm8, false]
+      - [mm9, mm9, false]
+      - [pfalciparum, pfalciparum, false]
+      - [pvampyrus, pvampyrus, false]
+      - [pvivax, pvivax, false]
+      - [scerevisiae, scerevisiae, false]
+      - [spombe, spombe, false]
+      - [sscrofa, sscrofa, false]
+      type: select
+      value: btaurus
+    model_class: ConditionalWhen
+    value: indexed
+  - inputs:
+    - argument: null
+      edam_formats: [format_2331, format_1929]
+      extensions: [bowtie_base_index, fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select the reference genome
+      model_class: DataToolParameter
+      multiple: false
+      name: ownFile
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: indexPreSet
+      - inputs:
+        - cases:
+          - inputs: []
+            model_class: ConditionalWhen
+            value: auto
+          - inputs:
+            - argument: null
+              display: null
+              help: ''
+              hidden: false
+              html: '%3Cselect%20name%3D%22packed%22%3E%0A%3Coption%20value%3D%22unpacked%22%3EUse%20regular%20representation%3C/option%3E%0A%3Coption%20value%3D%22packed%22%3EUse%20packed%20representation%3C/option%3E%0A%3C/select%3E'
+              is_dynamic: false
+              label: Whether or not to use a packed representation for DNA strings
+                (--packed)
+              model_class: SelectToolParameter
+              multiple: false
+              name: packed
+              optional: false
+              options:
+              - [Use regular representation, unpacked, false]
+              - [Use packed representation, packed, false]
+              type: select
+              value: unpacked
+            - {area: false, argument: null, help: -1 for not specified. Must be at
+                least 1, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22bmax%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+              is_dynamic: false, label: Maximum number of suffixes allowed in a block
+                (--bmax), max: null, min: null, model_class: IntegerToolParameter,
+              name: bmax, optional: false, size: null, type: integer, value: '-1'}
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22bmaxdivn%22%20size%3D%2210%22%20value%3D%224%22%3E',
+              is_dynamic: false, label: Maximum number of suffixes allowed in a block
+                as a fraction of the length of the reference (--bmaxdivn), max: null,
+              min: null, model_class: IntegerToolParameter, name: bmaxdivn, optional: false,
+              size: null, type: integer, value: '4'}
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22dcv%22%20size%3D%2210%22%20value%3D%221024%22%3E',
+              is_dynamic: false, label: The period for the difference-cover sample
+                (--dcv), max: null, min: null, model_class: IntegerToolParameter,
+              name: dcv, optional: false, size: null, type: integer, value: '1024'}
+            model_class: ConditionalWhen
+            value: set
+          model_class: Conditional
+          name: autoBehavior
+          test_param:
+            argument: null
+            display: null
+            help: Allows you to set --packed, --bmax, --bmaxdivn, and --dcv
+            hidden: false
+            html: '%3Cselect%20name%3D%22autoB%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22auto%22%3EAutomatic%20behavior%3C/option%3E%0A%3Coption%20value%3D%22set%22%3ESet%20values%20%28sets%20--noauto%20and%20allows%20others%20to%20be%20set%29%3C/option%3E%0A%3C/select%3E'
+            is_dynamic: false
+            label: Choose to use automatic or specified behavior for some parameters
+              (-a)
+            model_class: SelectToolParameter
+            multiple: false
+            name: autoB
+            optional: false
+            options:
+            - [Automatic behavior, auto, false]
+            - [Set values (sets --noauto and allows others to be set), set, false]
+            type: select
+            value: auto
+          type: conditional
+        - argument: null
+          display: null
+          help: Suffix sorting becomes quadratic-time in the worst case (with a very
+            repetitive reference)
+          hidden: false
+          html: '%3Cselect%20name%3D%22nodc%22%3E%0A%3Coption%20value%3D%22dc%22%3EUse%20difference-cover%20sample%3C/option%3E%0A%3Coption%20value%3D%22nodc%22%3EDisable%20difference-cover%20sample%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Whether or not to disable the use of the difference-cover sample
+            (--nodc)
+          model_class: SelectToolParameter
+          multiple: false
+          name: nodc
+          optional: false
+          options:
+          - [Use difference-cover sample, dc, false]
+          - [Disable difference-cover sample, nodc, false]
+          type: select
+          value: dc
+        - argument: null
+          display: null
+          help: ''
+          hidden: false
+          html: '%3Cselect%20name%3D%22noref%22%3E%0A%3Coption%20value%3D%22ref%22%3EBuild%20all%20index%20files%3C/option%3E%0A%3Coption%20value%3D%22noref%22%3EDo%20not%20build%20paired-end%20alignment%20index%20files%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Whether or not to build the part of the reference index used only
+            in paired-end alignment (-r)
+          model_class: SelectToolParameter
+          multiple: false
+          name: noref
+          optional: false
+          options:
+          - [Build all index files, ref, false]
+          - [Do not build paired-end alignment index files, noref, false]
+          type: select
+          value: ref
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22offrate%22%20size%3D%2210%22%20value%3D%225%22%3E',
+          is_dynamic: false, label: How many rows get marked during annotation of
+            some or all of the Burrows-Wheeler rows (-o), max: null, min: null, model_class: IntegerToolParameter,
+          name: offrate, optional: false, size: null, type: integer, value: '5'}
+        - {area: false, argument: null, help: ftab is 4^(n+1) bytes, hidden: false,
+          html: '%3Cinput%20type%3D%22text%22%20name%3D%22ftab%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+          is_dynamic: false, label: The size of the lookup table used to calculate
+            an initial Burrows-Wheeler range with respect to the first n characters
+            of the query (-t), max: null, min: null, model_class: IntegerToolParameter,
+          name: ftab, optional: false, size: null, type: integer, value: '10'}
+        - argument: null
+          display: null
+          help: ''
+          hidden: false
+          html: '%3Cselect%20name%3D%22ntoa%22%3E%0A%3Coption%20value%3D%22no%22%3EDo%20not%20convert%20Ns%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3EConvert%20Ns%20to%20As%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Whether or not to convert Ns in the reference sequence to As (--ntoa)
+          model_class: SelectToolParameter
+          multiple: false
+          name: ntoa
+          optional: false
+          options:
+          - [Do not convert Ns, 'no', false]
+          - [Convert Ns to As, 'yes', false]
+          type: select
+          value: 'no'
+        - argument: null
+          display: null
+          help: Little is most appropriate for Intel- and AMD-based architecture
+          hidden: false
+          html: '%3Cselect%20name%3D%22endian%22%3E%0A%3Coption%20value%3D%22little%22%3ELittle%3C/option%3E%0A%3Coption%20value%3D%22big%22%3EBig%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Endianness to use when serializing integers to the index file (--big/--little)
+          model_class: SelectToolParameter
+          multiple: false
+          name: endian
+          optional: false
+          options:
+          - [Little, little, false]
+          - [Big, big, false]
+          type: select
+          value: little
+        - {area: false, argument: null, help: Use -1 to use default, hidden: false,
+          html: '%3Cinput%20type%3D%22text%22%20name%3D%22seed%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+          is_dynamic: false, label: Seed for the pseudorandom number generator (--seed),
+          max: null, min: null, model_class: IntegerToolParameter, name: seed, optional: false,
+          size: null, type: integer, value: '-1'}
+        - {area: false, argument: null, help: Use -1 to use default, hidden: false,
+          html: '%3Cinput%20type%3D%22text%22%20name%3D%22cutoff%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+          is_dynamic: false, label: Number of first bases of the reference sequence
+            to index (--cutoff), max: null, min: null, model_class: IntegerToolParameter,
+          name: cutoff, optional: false, size: null, type: integer, value: '-1'}
+        model_class: ConditionalWhen
+        value: indexFull
+      model_class: Conditional
+      name: indexParams
+      test_param:
+        argument: null
+        display: null
+        help: These settings are ignored when using a prebuilt index
+        hidden: false
+        html: '%3Cselect%20name%3D%22indexSettings%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22indexPreSet%22%3EDefault%3C/option%3E%0A%3Coption%20value%3D%22indexFull%22%3ESet%20your%20own%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Choose whether to use Default options for building indices or to Set
+          your own
+        model_class: SelectToolParameter
+        multiple: false
+        name: indexSettings
+        optional: false
+        options:
+        - [Default, indexPreSet, false]
+        - [Set your own, indexFull, false]
+        type: select
+        value: indexPreSet
+      type: conditional
+    model_class: ConditionalWhen
+    value: history
+  model_class: Conditional
+  name: refGenomeSource
+  test_param:
+    argument: null
+    display: null
+    help: Built-ins were indexed using default options
+    hidden: false
+    html: '%3Cselect%20name%3D%22genomeSource%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22indexed%22%3EUse%20a%20built-in%20index%3C/option%3E%0A%3Coption%20value%3D%22history%22%3EUse%20one%20from%20the%20history%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Will you select a reference genome from your history or use a built-in
+      index?
+    model_class: SelectToolParameter
+    multiple: false
+    name: genomeSource
+    optional: false
+    options:
+    - [Use a built-in index, indexed, false]
+    - [Use one from the history, history, false]
+    type: select
+    value: indexed
+  type: conditional
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1932, format_1931, format_1933]
+      extensions: [fastqsanger, fastqillumina, fastqsolexa]
+      help: Must have ASCII encoded quality scores
+      hidden: false
+      is_dynamic: false
+      label: FASTQ file
+      model_class: DataToolParameter
+      multiple: false
+      name: sInput1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: preSet
+      - inputs:
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sSkip%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: Skip the first n reads (-s), max: null, min: null,
+          model_class: IntegerToolParameter, name: sSkip, optional: false, size: null,
+          type: integer, value: '0'}
+        - {area: false, argument: null, help: -1 for off, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sAlignLimit%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+          is_dynamic: false, label: Only align the first n reads (-u), max: null,
+          min: null, model_class: IntegerToolParameter, name: sAlignLimit, optional: false,
+          size: null, type: integer, value: '-1'}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sTrimH%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: Trim n bases from high-quality (left) end of each
+            read before alignment (-5), max: null, min: null, model_class: IntegerToolParameter,
+          name: sTrimH, optional: false, size: null, type: integer, value: '0'}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sTrimL%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: Trim n bases from low-quality (right) end of each
+            read before alignment (-3), max: null, min: null, model_class: IntegerToolParameter,
+          name: sTrimL, optional: false, size: null, type: integer, value: '0'}
+        - {area: false, argument: null, help: 'May be 0, 1, 2, or 3', hidden: false,
+          html: '%3Cinput%20type%3D%22text%22%20name%3D%22sMismatchSeed%22%20size%3D%2210%22%20value%3D%222%22%3E',
+          is_dynamic: false, label: Maximum number of mismatches permitted in the
+            seed (-n), max: null, min: null, model_class: IntegerToolParameter, name: sMismatchSeed,
+          optional: false, size: null, type: integer, value: '2'}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sMismatchQual%22%20size%3D%2210%22%20value%3D%2270%22%3E',
+          is_dynamic: false, label: Maximum permitted total of quality values at mismatched
+            read positions (-e), max: null, min: null, model_class: IntegerToolParameter,
+          name: sMismatchQual, optional: false, size: null, type: integer, value: '70'}
+        - {area: false, argument: null, help: Minimum value is 5, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sSeedLen%22%20size%3D%2210%22%20value%3D%2228%22%3E',
+          is_dynamic: false, label: Seed length (-l), max: null, min: null, model_class: IntegerToolParameter,
+          name: sSeedLen, optional: false, size: null, type: integer, value: '28'}
+        - argument: null
+          display: null
+          help: ''
+          hidden: false
+          html: '%3Cselect%20name%3D%22sRounding%22%3E%0A%3Coption%20value%3D%22round%22%3ERound%20to%20nearest%2010%3C/option%3E%0A%3Coption%20value%3D%22noRound%22%3EDo%20not%20round%20to%20nearest%2010%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Whether or not to round to the nearest 10 and saturating at 30 (--nomaqround)
+          model_class: SelectToolParameter
+          multiple: false
+          name: sRounding
+          optional: false
+          options:
+          - [Round to nearest 10, round, false]
+          - [Do not round to nearest 10, noRound, false]
+          type: select
+          value: round
+        - {area: false, argument: null, help: -1 for default MAQ-like alignment policy,
+          hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sMaqSoapAlign%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+          is_dynamic: false, label: Number of mismatches for SOAP-like alignment policy
+            (-v), max: null, min: null, model_class: IntegerToolParameter, name: sMaqSoapAlign,
+          optional: false, size: null, type: integer, value: '-1'}
+        - argument: null
+          display: null
+          help: Tryhard mode is much slower than regular mode
+          hidden: false
+          html: '%3Cselect%20name%3D%22sTryHard%22%3E%0A%3Coption%20value%3D%22noTryHard%22%3EDo%20not%20try%20hard%3C/option%3E%0A%3Coption%20value%3D%22doTryHard%22%3ETry%20hard%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Whether or not to try as hard as possible to find valid alignments
+            when they exist (-y)
+          model_class: SelectToolParameter
+          multiple: false
+          name: sTryHard
+          optional: false
+          options:
+          - [Do not try hard, noTryHard, false]
+          - [Try hard, doTryHard, false]
+          type: select
+          value: noTryHard
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sValAlign%22%20size%3D%2210%22%20value%3D%221%22%3E',
+          is_dynamic: false, label: Report up to n valid alignments per read (-k),
+          max: null, min: null, model_class: IntegerToolParameter, name: sValAlign,
+          optional: false, size: null, type: integer, value: '1'}
+        - argument: null
+          display: null
+          help: ''
+          hidden: false
+          html: '%3Cselect%20name%3D%22sAllValAligns%22%3E%0A%3Coption%20value%3D%22noAllValAligns%22%3EDo%20not%20report%20all%20valid%20alignments%3C/option%3E%0A%3Coption%20value%3D%22doAllValAligns%22%3EReport%20all%20valid%20alignments%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Whether or not to report all valid alignments per read (-a)
+          model_class: SelectToolParameter
+          multiple: false
+          name: sAllValAligns
+          optional: false
+          options:
+          - [Do not report all valid alignments, noAllValAligns, false]
+          - [Report all valid alignments, doAllValAligns, false]
+          type: select
+          value: noAllValAligns
+        - {area: false, argument: null, help: -1 for no limit, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sSuppressAlign%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+          is_dynamic: false, label: Suppress all alignments for a read if more than
+            n reportable alignments exist (-m), max: null, min: null, model_class: IntegerToolParameter,
+          name: sSuppressAlign, optional: false, size: null, type: integer, value: '-1'}
+        - {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22sMaxFile%22%20name%3D%22sMaxFile%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22sMaxFile%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Write all reads with a number of valid alignments
+            exceeding the limit set with the -m option to a file (--max), model_class: BooleanToolParameter,
+          name: sMaxFile, optional: false, truevalue: 'true', type: boolean, value: false}
+        - {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22sUnmappedFile%22%20name%3D%22sUnmappedFile%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22sUnmappedFile%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Write all reads that could not be aligned to a
+            file (--un), model_class: BooleanToolParameter, name: sUnmappedFile, optional: false,
+          truevalue: 'true', type: boolean, value: false}
+        - cases:
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22snMaxBacktracks%22%20size%3D%2210%22%20value%3D%22125%22%3E',
+              is_dynamic: false, label: Maximum number of backtracks permitted when
+                aligning a read (--maxbts), max: null, min: null, model_class: IntegerToolParameter,
+              name: snMaxBacktracks, optional: false, size: null, type: integer, value: '125'}
+            model_class: ConditionalWhen
+            value: noBest
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sdMaxBacktracks%22%20size%3D%2210%22%20value%3D%22800%22%3E',
+              is_dynamic: false, label: Maximum number of backtracks permitted when
+                aligning a read (--maxbts), max: null, min: null, model_class: IntegerToolParameter,
+              name: sdMaxBacktracks, optional: false, size: null, type: integer, value: '800'}
+            - argument: null
+              display: null
+              help: ''
+              hidden: false
+              html: '%3Cselect%20name%3D%22sdStrata%22%3E%0A%3Coption%20value%3D%22noStrata%22%3EDo%20not%20use%20strata%20option%3C/option%3E%0A%3Coption%20value%3D%22doStrata%22%3EUse%20strata%20option%3C/option%3E%0A%3C/select%3E'
+              is_dynamic: false
+              label: Whether or not to report only those alignments that fall in the
+                best stratum if many valid alignments exist and are reportable (--strata)
+              model_class: SelectToolParameter
+              multiple: false
+              name: sdStrata
+              optional: false
+              options:
+              - [Do not use strata option, noStrata, false]
+              - [Use strata option, doStrata, false]
+              type: select
+              value: noStrata
+            model_class: ConditionalWhen
+            value: doBest
+          model_class: Conditional
+          name: sBestOption
+          test_param:
+            argument: null
+            display: null
+            help: Removes all strand bias. Only affects which alignments are reported
+              by Bowtie. Runs slower with best option
+            hidden: false
+            html: '%3Cselect%20name%3D%22sBest%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22noBest%22%3EDo%20not%20use%20best%3C/option%3E%0A%3Coption%20value%3D%22doBest%22%3EUse%20best%3C/option%3E%0A%3C/select%3E'
+            is_dynamic: false
+            label: Whether or not to make Bowtie guarantee that reported singleton
+              alignments are 'best' in terms of stratum and in terms of the quality
+              values at the mismatched positions (--best)
+            model_class: SelectToolParameter
+            multiple: false
+            name: sBest
+            optional: false
+            options:
+            - [Do not use best, noBest, false]
+            - [Use best, doBest, false]
+            type: select
+            value: noBest
+          type: conditional
+        - {area: false, argument: null, help: -1 for default, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sOffrate%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+          is_dynamic: false, label: Override the offrate of the index to n (-o), max: null,
+          min: null, model_class: IntegerToolParameter, name: sOffrate, optional: false,
+          size: null, type: integer, value: '-1'}
+        - {area: false, argument: null, help: -1 for default, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sSeed%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+          is_dynamic: false, label: Seed for pseudo-random number generator (--seed),
+          max: null, min: null, model_class: IntegerToolParameter, name: sSeed, optional: false,
+          size: null, type: integer, value: '-1'}
+        model_class: ConditionalWhen
+        value: full
+      model_class: Conditional
+      name: sParams
+      test_param:
+        argument: null
+        display: null
+        help: For most mapping needs use Commonly used settings. If you want full
+          control use Full parameter list
+        hidden: false
+        html: '%3Cselect%20name%3D%22sSettingsType%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22preSet%22%3ECommonly%20used%3C/option%3E%0A%3Coption%20value%3D%22full%22%3EFull%20parameter%20list%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Bowtie settings to use
+        model_class: SelectToolParameter
+        multiple: false
+        name: sSettingsType
+        optional: false
+        options:
+        - [Commonly used, preSet, false]
+        - [Full parameter list, full, false]
+        type: select
+        value: preSet
+      type: conditional
+    model_class: ConditionalWhen
+    value: single
+  - inputs:
+    - argument: null
+      edam_formats: [format_1932, format_1931, format_1933]
+      extensions: [fastqsanger, fastqillumina, fastqsolexa]
+      help: Must have ASCII encoded quality scores
+      hidden: false
+      is_dynamic: false
+      label: Forward FASTQ file
+      model_class: DataToolParameter
+      multiple: false
+      name: pInput1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_1932, format_1931, format_1933]
+      extensions: [fastqsanger, fastqillumina, fastqsolexa]
+      help: File format must match the Forward FASTQ file
+      hidden: false
+      is_dynamic: true
+      label: Reverse FASTQ file
+      model_class: DataToolParameter
+      multiple: false
+      name: pInput2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pMaxInsert%22%20size%3D%2210%22%20value%3D%221000%22%3E',
+      is_dynamic: false, label: Maximum insert size for valid paired-end alignments
+        (-X), max: null, min: null, model_class: IntegerToolParameter, name: pMaxInsert,
+      optional: false, size: null, type: integer, value: '1000'}
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22pMateOrient%22%3E%0A%3Coption%20value%3D%22fr%22%3EFR%20%28for%20Illumina%29%3C/option%3E%0A%3Coption%20value%3D%22rf%22%3ERF%3C/option%3E%0A%3Coption%20value%3D%22ff%22%3EFF%20%28for%20SOLiD%29%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: The upstream/downstream mate orientation for valid paired-end alignment
+        against the forward reference strand (--fr/--rf/--ff)
+      model_class: SelectToolParameter
+      multiple: false
+      name: pMateOrient
+      optional: false
+      options:
+      - [FR (for Illumina), fr, false]
+      - [RF, rf, false]
+      - [FF (for SOLiD), ff, false]
+      type: select
+      value: fr
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: preSet
+      - inputs:
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pSkip%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: Skip the first n pairs (-s), max: null, min: null,
+          model_class: IntegerToolParameter, name: pSkip, optional: false, size: null,
+          type: integer, value: '0'}
+        - {area: false, argument: null, help: -1 for off, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pAlignLimit%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+          is_dynamic: false, label: Only align the first n pairs (-u), max: null,
+          min: null, model_class: IntegerToolParameter, name: pAlignLimit, optional: false,
+          size: null, type: integer, value: '-1'}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pTrimH%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: Trim n bases from high-quality (left) end of each
+            read before alignment (-5), max: null, min: null, model_class: IntegerToolParameter,
+          name: pTrimH, optional: false, size: null, type: integer, value: '0'}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pTrimL%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: Trim n bases from low-quality (right) end of each
+            read before alignment (-3), max: null, min: null, model_class: IntegerToolParameter,
+          name: pTrimL, optional: false, size: null, type: integer, value: '0'}
+        - {area: false, argument: null, help: 'May be 0, 1, 2, or 3', hidden: false,
+          html: '%3Cinput%20type%3D%22text%22%20name%3D%22pMismatchSeed%22%20size%3D%2210%22%20value%3D%222%22%3E',
+          is_dynamic: false, label: Maximum number of mismatches permitted in the
+            seed (-n), max: null, min: null, model_class: IntegerToolParameter, name: pMismatchSeed,
+          optional: false, size: null, type: integer, value: '2'}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pMismatchQual%22%20size%3D%2210%22%20value%3D%2270%22%3E',
+          is_dynamic: false, label: Maximum permitted total of quality values at mismatched
+            read positions (-e), max: null, min: null, model_class: IntegerToolParameter,
+          name: pMismatchQual, optional: false, size: null, type: integer, value: '70'}
+        - {area: false, argument: null, help: Minimum value is 5, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pSeedLen%22%20size%3D%2210%22%20value%3D%2228%22%3E',
+          is_dynamic: false, label: Seed length (-l), max: null, min: null, model_class: IntegerToolParameter,
+          name: pSeedLen, optional: false, size: null, type: integer, value: '28'}
+        - argument: null
+          display: null
+          help: ''
+          hidden: false
+          html: '%3Cselect%20name%3D%22pRounding%22%3E%0A%3Coption%20value%3D%22round%22%3ERound%20to%20nearest%2010%3C/option%3E%0A%3Coption%20value%3D%22noRound%22%3EDo%20not%20round%20to%20nearest%2010%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Whether or not to round to the nearest 10 and saturating at 30 (--nomaqround)
+          model_class: SelectToolParameter
+          multiple: false
+          name: pRounding
+          optional: false
+          options:
+          - [Round to nearest 10, round, false]
+          - [Do not round to nearest 10, noRound, false]
+          type: select
+          value: round
+        - {area: false, argument: null, help: -1 for default MAQ-like alignment policy,
+          hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pMaqSoapAlign%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+          is_dynamic: false, label: Number of mismatches for SOAP-like alignment policy
+            (-v), max: null, min: null, model_class: IntegerToolParameter, name: pMaqSoapAlign,
+          optional: false, size: null, type: integer, value: '-1'}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pMinInsert%22%20size%3D%2210%22%20value%3D%220%22%3E',
+          is_dynamic: false, label: Minimum insert size for valid paired-end alignments
+            (-I), max: null, min: null, model_class: IntegerToolParameter, name: pMinInsert,
+          optional: false, size: null, type: integer, value: '0'}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pMaxAlignAttempt%22%20size%3D%2210%22%20value%3D%22100%22%3E',
+          is_dynamic: false, label: Maximum number of attempts Bowtie will make to
+            match an alignment for one mate with an alignment for the opposite mate
+            (--pairtries), max: null, min: null, model_class: IntegerToolParameter,
+          name: pMaxAlignAttempt, optional: false, size: null, type: integer, value: '100'}
+        - argument: null
+          display: null
+          help: ''
+          hidden: false
+          html: '%3Cselect%20name%3D%22pForwardAlign%22%3E%0A%3Coption%20value%3D%22forward%22%3EAlign%20against%20the%20forward%20reference%20strand%3C/option%3E%0A%3Coption%20value%3D%22noForward%22%3EDo%20not%20align%20against%20the%20forward%20reference%20strand%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Choose whether or not to attempt to align the forward reference strand
+            (--nofw)
+          model_class: SelectToolParameter
+          multiple: false
+          name: pForwardAlign
+          optional: false
+          options:
+          - [Align against the forward reference strand, forward, false]
+          - [Do not align against the forward reference strand, noForward, false]
+          type: select
+          value: forward
+        - argument: null
+          display: null
+          help: ''
+          hidden: false
+          html: '%3Cselect%20name%3D%22pReverseAlign%22%3E%0A%3Coption%20value%3D%22reverse%22%3EAlign%20against%20the%20reverse-complement%20reference%20strand%3C/option%3E%0A%3Coption%20value%3D%22noReverse%22%3EDo%20not%20align%20against%20the%20reverse-complement%20reference%20strand%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Choose whether or not to align against the reverse-complement reference
+            strand (--norc)
+          model_class: SelectToolParameter
+          multiple: false
+          name: pReverseAlign
+          optional: false
+          options:
+          - [Align against the reverse-complement reference strand, reverse, false]
+          - [Do not align against the reverse-complement reference strand, noReverse,
+            false]
+          type: select
+          value: reverse
+        - argument: null
+          display: null
+          help: Tryhard mode is much slower than regular mode
+          hidden: false
+          html: '%3Cselect%20name%3D%22pTryHard%22%3E%0A%3Coption%20value%3D%22noTryHard%22%3EDo%20not%20try%20hard%3C/option%3E%0A%3Coption%20value%3D%22doTryHard%22%3ETry%20hard%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Whether or not to try as hard as possible to find valid alignments
+            when they exist (-y)
+          model_class: SelectToolParameter
+          multiple: false
+          name: pTryHard
+          optional: false
+          options:
+          - [Do not try hard, noTryHard, false]
+          - [Try hard, doTryHard, false]
+          type: select
+          value: noTryHard
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pValAlign%22%20size%3D%2210%22%20value%3D%221%22%3E',
+          is_dynamic: false, label: Report up to n valid arguments per pair (-k),
+          max: null, min: null, model_class: IntegerToolParameter, name: pValAlign,
+          optional: false, size: null, type: integer, value: '1'}
+        - argument: null
+          display: null
+          help: ''
+          hidden: false
+          html: '%3Cselect%20name%3D%22pAllValAligns%22%3E%0A%3Coption%20value%3D%22noAllValAligns%22%3EDo%20not%20report%20all%20valid%20alignments%3C/option%3E%0A%3Coption%20value%3D%22doAllValAligns%22%3EReport%20all%20valid%20alignments%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Whether or not to report all valid alignments per pair (-a)
+          model_class: SelectToolParameter
+          multiple: false
+          name: pAllValAligns
+          optional: false
+          options:
+          - [Do not report all valid alignments, noAllValAligns, false]
+          - [Report all valid alignments, doAllValAligns, false]
+          type: select
+          value: noAllValAligns
+        - {area: false, argument: null, help: -1 for no limit, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pSuppressAlign%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+          is_dynamic: false, label: Suppress all alignments for a pair if more than
+            n reportable alignments exist (-m), max: null, min: null, model_class: IntegerToolParameter,
+          name: pSuppressAlign, optional: false, size: null, type: integer, value: '-1'}
+        - {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22pMaxFile%22%20name%3D%22pMaxFile%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22pMaxFile%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Write all reads with a number of valid alignments
+            exceeding the limit set with the -m option to a file (--max), model_class: BooleanToolParameter,
+          name: pMaxFile, optional: false, truevalue: 'true', type: boolean, value: false}
+        - {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22pUnmappedFile%22%20name%3D%22pUnmappedFile%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22pUnmappedFile%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Write all reads that could not be aligned to a
+            file (--un), model_class: BooleanToolParameter, name: pUnmappedFile, optional: false,
+          truevalue: 'true', type: boolean, value: false}
+        - cases:
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pnMaxBacktracks%22%20size%3D%2210%22%20value%3D%22125%22%3E',
+              is_dynamic: false, label: Maximum number of backtracks permitted when
+                aligning a read (--maxbts), max: null, min: null, model_class: IntegerToolParameter,
+              name: pnMaxBacktracks, optional: false, size: null, type: integer, value: '125'}
+            model_class: ConditionalWhen
+            value: noBest
+          - inputs:
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pdMaxBacktracks%22%20size%3D%2210%22%20value%3D%22800%22%3E',
+              is_dynamic: false, label: Maximum number of backtracks permitted when
+                aligning a read (--maxbts), max: null, min: null, model_class: IntegerToolParameter,
+              name: pdMaxBacktracks, optional: false, size: null, type: integer, value: '800'}
+            - argument: null
+              display: null
+              help: ''
+              hidden: false
+              html: '%3Cselect%20name%3D%22pdStrata%22%3E%0A%3Coption%20value%3D%22noStrata%22%3EDo%20not%20use%20strata%20option%3C/option%3E%0A%3Coption%20value%3D%22doStrata%22%3EUse%20strata%20option%3C/option%3E%0A%3C/select%3E'
+              is_dynamic: false
+              label: Whether or not to report only those alignments that fall in the
+                best stratum if many valid alignments exist and are reportable (--strata)
+              model_class: SelectToolParameter
+              multiple: false
+              name: pdStrata
+              optional: false
+              options:
+              - [Do not use strata option, noStrata, false]
+              - [Use strata option, doStrata, false]
+              type: select
+              value: noStrata
+            model_class: ConditionalWhen
+            value: doBest
+          model_class: Conditional
+          name: pBestOption
+          test_param:
+            argument: null
+            display: null
+            help: Removes all strand bias. Only affects which alignments are reported
+              by Bowtie. Runs slower with best option
+            hidden: false
+            html: '%3Cselect%20name%3D%22pBest%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22noBest%22%3EDo%20not%20use%20best%3C/option%3E%0A%3Coption%20value%3D%22doBest%22%3EUse%20best%3C/option%3E%0A%3C/select%3E'
+            is_dynamic: false
+            label: Whether or not to make Bowtie guarantee that reported singleton
+              alignments are 'best' in terms of stratum and in terms of the quality
+              values at the mismatched positions (--best)
+            model_class: SelectToolParameter
+            multiple: false
+            name: pBest
+            optional: false
+            options:
+            - [Do not use best, noBest, false]
+            - [Use best, doBest, false]
+            type: select
+            value: noBest
+          type: conditional
+        - {area: false, argument: null, help: -1 for default, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pOffrate%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+          is_dynamic: false, label: Override the offrate of the index to n (-o), max: null,
+          min: null, model_class: IntegerToolParameter, name: pOffrate, optional: false,
+          size: null, type: integer, value: '-1'}
+        - {area: false, argument: null, help: -1 for default, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pSeed%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+          is_dynamic: false, label: Seed for pseudo-random number generator (--seed),
+          max: null, min: null, model_class: IntegerToolParameter, name: pSeed, optional: false,
+          size: null, type: integer, value: '-1'}
+        model_class: ConditionalWhen
+        value: full
+      model_class: Conditional
+      name: pParams
+      test_param:
+        argument: null
+        display: null
+        help: For most mapping needs use Commonly used settings. If you want full
+          control use Full parameter list
+        hidden: false
+        html: '%3Cselect%20name%3D%22pSettingsType%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22preSet%22%3ECommonly%20used%3C/option%3E%0A%3Coption%20value%3D%22full%22%3EFull%20parameter%20list%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Bowtie settings to use
+        model_class: SelectToolParameter
+        multiple: false
+        name: pSettingsType
+        optional: false
+        options:
+        - [Commonly used, preSet, false]
+        - [Full parameter list, full, false]
+        type: select
+        value: preSet
+      type: conditional
+    model_class: ConditionalWhen
+    value: paired
+  model_class: Conditional
+  name: singlePaired
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22sPaired%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22single%22%3ESingle-end%3C/option%3E%0A%3Coption%20value%3D%22paired%22%3EPaired-end%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Is this library mate-paired?
+    model_class: SelectToolParameter
+    multiple: false
+    name: sPaired
+    optional: false
+    options:
+    - [Single-end, single, false]
+    - [Paired-end, paired, false]
+    type: select
+    value: single
+  type: conditional
+- {argument: null, falsevalue: 'false', help: Bowtie produces SAM with several lines
+    of header information by default, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22suppressHeader%22%20name%3D%22suppressHeader%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22suppressHeader%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Suppress the header in the output SAM file, model_class: BooleanToolParameter,
+  name: suppressHeader, optional: false, truevalue: 'true', type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Fbowtie%2Fbowtie_wrapper%2F0.12.7
+min_width: -1
+model_class: Tool
+name: Map with Bowtie for Illumina
+outputs:
+- {edam_format: format_2573, format: sam, hidden: false, label: '${tool.name} on ${on_string}:
+    mapped reads', model_class: ToolOutput, name: output}
+- {edam_format: format_2330, format: txt, hidden: false, label: 'log of ${tool.name}
+    on ${on_string}', model_class: ToolOutput, name: output_log}
+- {edam_format: format_1930, format: fastq, hidden: false, label: '${tool.name} on
+    ${on_string}: suppressed reads (L)', model_class: ToolOutput, name: output_suppressed_reads_l}
+- {edam_format: format_1930, format: fastq, hidden: false, label: '${tool.name} on
+    ${on_string}: suppressed reads (R)', model_class: ToolOutput, name: output_suppressed_reads_r}
+- {edam_format: format_1930, format: fastq, hidden: false, label: '${tool.name} on
+    ${on_string}: unmapped reads (L)', model_class: ToolOutput, name: output_unmapped_reads_l}
+- {edam_format: format_1930, format: fastq, hidden: false, label: '${tool.name} on
+    ${on_string}: unmapped reads (R)', model_class: ToolOutput, name: output_unmapped_reads_r}
+panel_section_id: solexa_tools
+panel_section_name: 'NGS: Mapping'
+target: galaxy_main
+version: 0.12.7

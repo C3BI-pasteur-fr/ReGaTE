@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/bcftools/cd400dc0ab5c/bcftools/bcftools-3182c7fac413/bcftools_index.xml
+description: This tool allows the user to index sorted BCF for random access.
+id: toolshed.pasteur.fr/repos/fmareuil/bcftools/BCF Tools Index/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_3020]
+  extensions: [bcf]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: BCF File
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fbcftools%2FBCF+Tools+Index%2F1.0.0
+min_width: -1
+model_class: Tool
+name: BCF Tools Index
+outputs:
+- {edam_format: format_3020, format: bcf, hidden: false, label: BCF index output,
+  model_class: ToolOutput, name: output}
+panel_section_id: bcftools
+panel_section_name: 'NGS: BCF Tools'
+target: galaxy_main
+version: 1.0.0

@@ -1,0 +1,137 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "mpileup-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.1.19", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/mpileup_v2/mpileup/0.1.19", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "mpileup", 
+                    "dataDescription": "output_mpileup", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "bcf", 
+                    "dataDescription": "output_bcf", 
+                    "data": {
+                        "term": "Sequence variations", 
+                        "uri": "http://edamontology.org/data_3498"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BCF", 
+                            "uri": "http://edamontology.org/format_3020"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Filter bam file using mpileup on coverage and SNPs", 
+            "input": [
+                {
+                    "dataHandle": "file", 
+                    "dataDescription": "Select your reference sequence dataset", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "bam_file", 
+                    "dataDescription": "Select your BAM dataset", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "reads_to_exclude", 
+                    "dataDescription": "Exclude reads listed in the following dataset", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Filter bam file using mpileup on coverage and SNPs.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/mpileup_v2/mpileup/0.1.19", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/mpileup_v2/mpileup/0.1.19\"", 
+            "usesVersion": "0.1.19"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "mpileup-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.1.19", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

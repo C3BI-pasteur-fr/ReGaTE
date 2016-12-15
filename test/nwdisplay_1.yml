@@ -1,0 +1,120 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/newick_utilities/922ef8733e47/newick_utilities/nwdisplay.xml
+description: Display a phylogenetic tree as SVG
+id: toolshed.pasteur.fr/repos/fmareuil/newick_utilities/nwdisplay/1
+inputs:
+- argument: null
+  edam_formats: [format_2330, null, null, format_1910]
+  extensions: [txt, nw, nwk, nhx]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Newick file
+  model_class: DataToolParameter
+  multiple: false
+  name: fileNewick
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: -S, help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22scalebar%22%20name%3D%22scalebar%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22scalebar%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Display scale bar, model_class: BooleanToolParameter,
+  name: scalebar, optional: false, truevalue: '', type: boolean, value: true}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22legend%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Unit name scale, model_class: TextToolParameter, name: legend,
+  optional: false, size: null, type: text, value: ''}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22leafPolice%22%20size%3D%2210%22%20value%3D%22sans-serif%22%3E',
+  is_dynamic: false, label: Leaf police, model_class: TextToolParameter, name: leafPolice,
+  optional: false, size: null, type: text, value: sans-serif}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22leafSize%22%20size%3D%2210%22%20value%3D%2210px%22%3E',
+  is_dynamic: false, label: Leaf font-size, model_class: TextToolParameter, name: leafSize,
+  optional: false, size: null, type: text, value: 10px}
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22supcolor%22%20size%3D%2210%22%20value%3D%22red%22%3E',
+      is_dynamic: false, label: color, model_class: TextToolParameter, name: supcolor,
+      optional: false, size: null, type: text, value: red}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22supfontsize%22%20size%3D%2210%22%20value%3D%2210px%22%3E',
+      is_dynamic: false, label: font-size, model_class: TextToolParameter, name: supfontsize,
+      optional: false, size: null, type: text, value: 10px}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22suptransform%22%20size%3D%2210%22%20value%3D%22translateY%281.5em%29%22%3E',
+      is_dynamic: false, label: move, model_class: TextToolParameter, name: suptransform,
+      optional: false, size: null, type: text, value: translateY(1.5em)}
+    model_class: ConditionalWhen
+    value: 'true'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'false'
+  model_class: Conditional
+  name: condbranchsupport
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22branchsupport%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22false%22%3E%0A%3Coption%20value%3D%22true%22%3EDisplay%20branch%20support%3C/option%3E%0A%3Coption%20value%3D%22false%22%20selected%3EHide%20branch%20support%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Branch support
+    model_class: SelectToolParameter
+    multiple: false
+    name: branchsupport
+    optional: false
+    options:
+    - [Display branch support, 'true', false]
+    - [Hide branch support, 'false', true]
+    type: select
+    value: 'false'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22lencolor%22%20size%3D%2210%22%20value%3D%22blue%22%3E',
+      is_dynamic: false, label: color, model_class: TextToolParameter, name: lencolor,
+      optional: false, size: null, type: text, value: blue}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22lenfontsize%22%20size%3D%2210%22%20value%3D%2210px%22%3E',
+      is_dynamic: false, label: font-size, model_class: TextToolParameter, name: lenfontsize,
+      optional: false, size: null, type: text, value: 10px}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22lentransform%22%20size%3D%2210%22%20value%3D%22translate%28-1.5em%2C0em%29%22%3E',
+      is_dynamic: false, label: move, model_class: TextToolParameter, name: lentransform,
+      optional: false, size: null, type: text, value: 'translate(-1.5em,0em)'}
+    model_class: ConditionalWhen
+    value: 'true'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'false'
+  model_class: Conditional
+  name: condbranchlength
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22branchlength%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22false%22%3E%0A%3Coption%20value%3D%22true%22%3EDisplay%20branch%20length%3C/option%3E%0A%3Coption%20value%3D%22false%22%20selected%3EHide%20branch%20length%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Branch length
+    model_class: SelectToolParameter
+    multiple: false
+    name: branchlength
+    optional: false
+    options:
+    - [Display branch length, 'true', false]
+    - [Hide branch length, 'false', true]
+    type: select
+    value: 'false'
+  type: conditional
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22width%22%20size%3D%2210%22%20value%3D%22800%22%3E',
+  is_dynamic: false, label: SVG Tree width (px), max: null, min: null, model_class: IntegerToolParameter,
+  name: width, optional: false, size: null, type: integer, value: '800'}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22radial%22%20name%3D%22radial%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22radial%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Draw a radial tree, model_class: BooleanToolParameter,
+  name: radial, optional: false, truevalue: -r, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fnewick_utilities%2Fnwdisplay%2F1
+min_width: -1
+model_class: Tool
+name: Newick Display
+outputs:
+- {edam_format: format_3547, format: svg, hidden: false, label: '${fileNewick.name}.svg',
+  model_class: ToolOutput, name: output}
+panel_section_id: phylogeny
+panel_section_name: Phylogeny
+target: galaxy_main
+version: '1'

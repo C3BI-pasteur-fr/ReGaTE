@@ -1,0 +1,249 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "CompareOverlapping-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "1.0.0", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/urgi_tools/CompareOverlapping/1.0.0", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "gff3", 
+                    "dataDescription": "outputFileGff", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "GFF3", 
+                            "uri": "http://edamontology.org/format_1975"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Print all the transcripts from a first file which overlap with the transcripts from a second file.", 
+            "input": [
+                {
+                    "dataHandle": "inputFileName1", 
+                    "dataDescription": "Input File 1", 
+                    "data": {
+                        "term": "Annotation track", 
+                        "uri": "http://edamontology.org/data_3002"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BED", 
+                            "uri": "http://edamontology.org/format_3003"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "inputFileName1", 
+                    "dataDescription": "Input File 1", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "GFF", 
+                            "uri": "http://edamontology.org/format_2305"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "inputFileName1", 
+                    "dataDescription": "Input File 1", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "inputFileName1", 
+                    "dataDescription": "Input File 1", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "GFF3", 
+                            "uri": "http://edamontology.org/format_1975"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "inputFileName1", 
+                    "dataDescription": "Input File 1", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "SAM", 
+                            "uri": "http://edamontology.org/format_2573"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "inputFileName1", 
+                    "dataDescription": "Input File 1", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "GTF", 
+                            "uri": "http://edamontology.org/format_2306"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "inputFileName2", 
+                    "dataDescription": "Input File 2", 
+                    "data": {
+                        "term": "Annotation track", 
+                        "uri": "http://edamontology.org/data_3002"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BED", 
+                            "uri": "http://edamontology.org/format_3003"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "inputFileName2", 
+                    "dataDescription": "Input File 2", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "GFF", 
+                            "uri": "http://edamontology.org/format_2305"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "inputFileName2", 
+                    "dataDescription": "Input File 2", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "inputFileName2", 
+                    "dataDescription": "Input File 2", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "GFF3", 
+                            "uri": "http://edamontology.org/format_1975"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "inputFileName2", 
+                    "dataDescription": "Input File 2", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "SAM", 
+                            "uri": "http://edamontology.org/format_2573"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "inputFileName2", 
+                    "dataDescription": "Input File 2", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "GTF", 
+                            "uri": "http://edamontology.org/format_2306"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Print all the transcripts from a first file which overlap with the transcripts from a second file.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/urgi_tools/CompareOverlapping/1.0.0", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/urgi_tools/CompareOverlapping/1.0.0\"", 
+            "usesVersion": "1.0.0"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "CompareOverlapping-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "1.0.0", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

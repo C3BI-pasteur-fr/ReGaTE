@@ -1,0 +1,561 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/mblastall/2758e7a82ad2/mblastall/mblastall.xml
+description: Search nucleotide database with nucleotide query sequence(s)
+id: toolshed.pasteur.fr/repos/fmareuil/mblastall/mblastall/2.2.26
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Nucleotide or proteique query sequence(s)
+  model_class: DataToolParameter
+  multiple: false
+  name: query
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_hits%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+  is_dynamic: false, label: Maximum number of hits to show regarless of the hit species,
+  max: null, min: null, model_class: IntegerToolParameter, name: max_hits, optional: false,
+  size: null, type: integer, value: '10'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22word_size%22%20size%3D%2210%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: 'Word size for wordfinder algorithm. Default if 0, meaning:
+    11 for blastn, 3 for all other type of blast.', max: null, min: null, model_class: IntegerToolParameter,
+  name: word_size, optional: false, size: null, type: integer, value: '0'}
+- {argument: null, falsevalue: F, help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22filter_query%22%20name%3D%22filter_query%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22filter_query%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Filter out low complexity regions (with DUST), model_class: BooleanToolParameter,
+  name: filter_query, optional: false, truevalue: T, type: boolean, value: true}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22evalue%22%20size%3D%2215%22%20value%3D%220.001%22%3E',
+  is_dynamic: false, label: Set expectation value cutoff, max: null, min: null, model_class: FloatToolParameter,
+  name: evalue, optional: false, size: '15', type: float, value: '0.001'}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22out_format%22%20last_selected_value%3D%228%22%3E%0A%3Coption%20value%3D%228%22%20selected%3ETabular%3C/option%3E%0A%3Coption%20value%3D%220%22%3EPairwise%20text%3C/option%3E%0A%3Coption%20value%3D%227%22%3EBLAST%20XML%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Output format
+  model_class: SelectToolParameter
+  multiple: false
+  name: out_format
+  optional: false
+  options:
+  - [Tabular, '8', true]
+  - [Pairwise text, '0', false]
+  - [BLAST XML, '7', false]
+  type: select
+  value: '8'
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22blast%22%20last_selected_value%3D%22blastn%22%3E%0A%3Coption%20value%3D%22blastn%22%20selected%3Eblastn%3C/option%3E%0A%3Coption%20value%3D%22blastp%22%3Eblastp%3C/option%3E%0A%3Coption%20value%3D%22blastx%22%3Eblastx%3C/option%3E%0A%3Coption%20value%3D%22tblastn%22%3Etblastn%3C/option%3E%0A%3Coption%20value%3D%22tblastx%22%3Etblastx%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: select blastn, blastp...
+      model_class: SelectToolParameter
+      multiple: false
+      name: blast
+      optional: false
+      options:
+      - [blastn, blastn, true]
+      - [blastp, blastp, false]
+      - [blastx, blastx, false]
+      - [tblastn, tblastn, false]
+      - [tblastx, tblastx, false]
+      type: select
+      value: blastn
+    - argument: null
+      extensions: [formatdb]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Home made Blast database from the history
+      model_class: DataCollectionToolParameter
+      multiple: false
+      name: private_database
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data_collection
+    model_class: ConditionalWhen
+    value: own_db
+  - inputs:
+    - cases:
+      - inputs:
+        - argument: null
+          display: null
+          help: For more informations about banks or genomes see https://biomaj.it.pasteur.fr/BmajWatcher/
+          hidden: false
+          html: '%3Cselect%20name%3D%22database%22%3E%0A%3Coption%20value%3D%22alunuc%22%3Ealunuc%3A%20alu%20nucleic%20database%3C/option%3E%0A%3Coption%20value%3D%22embl%22%3Eembl%3A%20Embl%20last%20release%20%2B%20updates%3C/option%3E%0A%3Coption%20value%3D%22embl_release%22%3Eembl_release%3A%20Embl%20release%3C/option%3E%0A%3Coption%20value%3D%22embl_update%22%3Eembl_update%3A%20Embl%20updates%3C/option%3E%0A%3Coption%20value%3D%22genbank%22%3Egenbank%3A%20Genbank%20last%20release%20%2B%20updates%3C/option%3E%0A%3Coption%20value%3D%22genbank_release%22%3Egenbank_release%3A%20Genbank%20release%3C/option%3E%0A%3Coption%20value%3D%22genbank_update%22%3Egenbank_update%3A%20Genbank%20updates%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_bct%22%3Egenbank_release_bacteria%3A%20genbank%20bacteria%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_con%22%3Egenbank_release_con%3A%20Constructed%20Sequences%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_env%22%3Egenbank_release_env%3A%20Environmental%20sampling%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_pri%22%3Egenbank_release_pri%3A%20primates%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_mam%22%3Egenbank_release_mam%3A%20other%20mammals%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_rod%22%3Egenbank_release_rod%3A%20rodents%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_vrt%22%3Egenbank_release_vrt%3A%20other%20vertebrates%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_inv%22%3Egenbank_release_inv%3A%20invertebrates%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_pln%22%3Egenbank_release_pln%3A%20plants%20%28including%20yeast%29%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_vrl%22%3Egenbank_release_vrl%3A%20virus%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_phg%22%3Egenbank_release_phg%3A%20phages%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_est%22%3Egenbank_release_est%3A%20EST%20%28Expressed%20Sequence%20Tags%29%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_sts%22%3Egenbank_release_sts%3A%20STS%20%28Sequence%20Tagged%20sites%29%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_syn%22%3Egenbank_release_syn%3A%20synthetic%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_pat%22%3Egenbank_release_pat%3A%20patented%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_una%22%3Egenbank_release_una%3A%20unannotated%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_gss%22%3Egenbank_release_gss%3A%20Genome%20Survey%20Sequences%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_htc%22%3Egenbank_release_htc%3A%20HTC%20%28high%20throughput%20cDNA%20sequencing%29%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_htg%22%3Egenbank_release_htg%3A%20HTG%20%28high%20throughput%20Genomic%20Sequencing%29%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_tsa%22%3Egenbank_release_tsa%3A%20Transcriptome%20shotgun%20assembly%3C/option%3E%0A%3Coption%20value%3D%22wgsnuc%22%3Ewgsnuc%3A%20Whole%20Genome%20Shotgun%3C/option%3E%0A%3Coption%20value%3D%22vector%22%3Evector%3A%20Vector%20subset%20of%20GenBank%28R%29%2C%20NCBI%3C/option%3E%0A%3Coption%20value%3D%22greengenes%22%3Egreengenes%3A%2016S%20rRNA%20gene%20database%3C/option%3E%0A%3Coption%20value%3D%22imgt%22%3Eimgt%3A%20IMGT/LIGM-DB%2C%20ImMunoGeneTics%20sequence%20database%3C/option%3E%0A%3Coption%20value%3D%22nt%22%3Ent%3A%20non%20redundant%20nucleotide%20sequence%20database%20%3C/option%3E%0A%3Coption%20value%3D%22refseqn_release%22%3Erefseqn_release%3A%20RefSeq%20Nucleic%20release%3C/option%3E%0A%3Coption%20value%3D%22refseqn_update%22%3Erefseqn_update%3A%20RefSeq%20Nucleic%20updates%3C/option%3E%0A%3Coption%20value%3D%22refseqn_release_vrl%22%3Erefseqn_release_vrl%3A%20RefSeq%20Nucleic%20release%20viral%3C/option%3E%0A%3Coption%20value%3D%22rdpii%22%3Erdpii%3A%20Ribosomal%20Database%20Project%3C/option%3E%0A%3Coption%20value%3D%22rdpii_cultured%22%3Erdpii_cultured%3A%20RPDII%20without%20uncultured%20bacteria%3C/option%3E%0A%3Coption%20value%3D%22silva%22%3Esilva%3A%20SILVA%20rRNA%20database%20project%3C/option%3E%0A%3Coption%20value%3D%22vipr_nt%22%3Evipr_nt%3A%20Virus%20Pathogen%20Resource%20%28Nucleic%29%3C/option%3E%0A%3Coption%20value%3D%22borrelia%22%3Eborrelia%3A%20Borrelia%20burgdorferi%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22bsubtilis%22%3Ebsubtilis%3A%20Bacillus%20Subtilis%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22btaurus%22%3Ebtaurus%3A%20Bos%20taurus%20genome%20%28Bovine%29%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22calbicans5314%22%3Ecalbicans5314%3A%20Candida%20albicans%20strain%205314%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22calbicansWO1%22%3EcalbicansWO1%3A%20Candida%20albicans%20strain%20WO1%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22cfamiliaris%22%3Ecfamiliaris%3A%20Canis%20familiaris%20dog%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22chiroptera%22%3Echiroptera%3A%20Bat%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22cneoformansH99%22%3EcneoformansH99%3A%20Cryptococcus%20neoformans%20grubii%20H99%2C%20complete%20genome%20%3C/option%3E%0A%3Coption%20value%3D%22cneoformansJEC21%22%3EcneoformansJEC21%3A%20Cryptococcus%20neoformans%20JEC21%2C%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22cpneumoniae%22%3Ecpneumoniae%3A%20Chlamydophila%20pneumoniae%20CWL029%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22csabaeus%22%3Ecsabaeus%3A%20Chlorocebus%20sabaeus%20green%20monkey%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22dmelanogaster%22%3Edmelanogaster%3A%20Drosophila%20melanogaster%20fly%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22ecaballus%22%3Eecaballus%3A%20Equus%20caballus%20horse%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22ecoli%22%3Eecoli%3A%20Escherichia%20Coli%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22epo%22%3Eepo%3A%20European%20Patent%20Office%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22fcactus%22%3Efcatus%3A%20Felis%20catus%20cat%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22genitalium%22%3Egenitalium%3A%20Mycoplasma%20Genitalium%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22hg19%22%3Ehg19%3A%20Homo%20sapiens%20Human%20v19%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22hpylori%22%3Ehpylori%3A%20Helicobacter%20Pylori%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22mlucifugus%22%3Emlucifugus%3A%20Myotis%20lucifugus%20Little%20brown%20bat%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22mm9%22%3Emm9%3A%20Mus%20musculus%20Mouse%20v9%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22mm10%22%3Emm10%3A%20Mus%20musculus%20Mouse%20v10%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22mtuberculosis%22%3Emtuberculosis%3A%20Mycobacterium%20tuberculosis%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22pfalciparum%22%3Epfalciparum%3A%20Plasmodium%20falciparum%203D7%3C/option%3E%0A%3Coption%20value%3D%22pneumoniae%22%3Epneumoniae%3A%20Mycoplasma%20Pneumoniae%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22pvampyrus%22%3Epvampyrus%3A%20teropus%20vampyrus%20Large%20flying%20fox%20%28bat%29%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22pvivax%22%3Epvivax%3A%20Plasmodium%20vivax%20strin%20Sal-I%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22scerevisiae%22%3Escerevisiae%3A%20Saccharomyces%20cerevisiae%20S288C%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22spombe%22%3Espombe%3A%20Schizosaccharomyces%20pombe%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22sscrofa%22%3Esscrofa%3A%20Sus%20scrofa%20pig%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22ypestis%22%3Eypestis%3A%20Yersinia%20pestis%20unfinished%20genome%3C/option%3E%0A%3Coption%20value%3D%22/pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/mdm_ref%22%3Emdm%3A%20Monodelphis%20domestica%20complete%20genome%20for%20findpromoter%20project%3C/option%3E%0A%3Coption%20value%3D%22/pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/hs_ncbi37%22%3Ehs_ncbi37%3A%20Human%20complete%20genome%20for%20findpromoter%20project%3C/option%3E%0A%3Coption%20value%3D%22/pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/mm_ref_ncbi37%22%3Emm_ncbi37%3A%20Mus%20Musculus%20complete%20genome%20for%20findpromoter%20project%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Nucleotide BLAST database
+          model_class: SelectToolParameter
+          multiple: false
+          name: database
+          optional: false
+          options:
+          - ['alunuc: alu nucleic database', alunuc, false]
+          - ['embl: Embl last release + updates', embl, false]
+          - ['embl_release: Embl release', embl_release, false]
+          - ['embl_update: Embl updates', embl_update, false]
+          - ['genbank: Genbank last release + updates', genbank, false]
+          - ['genbank_release: Genbank release', genbank_release, false]
+          - ['genbank_update: Genbank updates', genbank_update, false]
+          - ['genbank_release_bacteria: genbank bacteria', genbank_release_bct, false]
+          - ['genbank_release_con: Constructed Sequences', genbank_release_con, false]
+          - ['genbank_release_env: Environmental sampling', genbank_release_env, false]
+          - ['genbank_release_pri: primates', genbank_release_pri, false]
+          - ['genbank_release_mam: other mammals', genbank_release_mam, false]
+          - ['genbank_release_rod: rodents', genbank_release_rod, false]
+          - ['genbank_release_vrt: other vertebrates', genbank_release_vrt, false]
+          - ['genbank_release_inv: invertebrates', genbank_release_inv, false]
+          - ['genbank_release_pln: plants (including yeast)', genbank_release_pln,
+            false]
+          - ['genbank_release_vrl: virus', genbank_release_vrl, false]
+          - ['genbank_release_phg: phages', genbank_release_phg, false]
+          - ['genbank_release_est: EST (Expressed Sequence Tags)', genbank_release_est,
+            false]
+          - ['genbank_release_sts: STS (Sequence Tagged sites)', genbank_release_sts,
+            false]
+          - ['genbank_release_syn: synthetic', genbank_release_syn, false]
+          - ['genbank_release_pat: patented', genbank_release_pat, false]
+          - ['genbank_release_una: unannotated', genbank_release_una, false]
+          - ['genbank_release_gss: Genome Survey Sequences', genbank_release_gss,
+            false]
+          - ['genbank_release_htc: HTC (high throughput cDNA sequencing)', genbank_release_htc,
+            false]
+          - ['genbank_release_htg: HTG (high throughput Genomic Sequencing)', genbank_release_htg,
+            false]
+          - ['genbank_release_tsa: Transcriptome shotgun assembly', genbank_release_tsa,
+            false]
+          - ['wgsnuc: Whole Genome Shotgun', wgsnuc, false]
+          - ['vector: Vector subset of GenBank(R), NCBI', vector, false]
+          - ['greengenes: 16S rRNA gene database', greengenes, false]
+          - ['imgt: IMGT/LIGM-DB, ImMunoGeneTics sequence database', imgt, false]
+          - ['nt: non redundant nucleotide sequence database ', nt, false]
+          - ['refseqn_release: RefSeq Nucleic release', refseqn_release, false]
+          - ['refseqn_update: RefSeq Nucleic updates', refseqn_update, false]
+          - ['refseqn_release_vrl: RefSeq Nucleic release viral', refseqn_release_vrl,
+            false]
+          - ['rdpii: Ribosomal Database Project', rdpii, false]
+          - ['rdpii_cultured: RPDII without uncultured bacteria', rdpii_cultured,
+            false]
+          - ['silva: SILVA rRNA database project', silva, false]
+          - ['vipr_nt: Virus Pathogen Resource (Nucleic)', vipr_nt, false]
+          - ['borrelia: Borrelia burgdorferi complete genome', borrelia, false]
+          - ['bsubtilis: Bacillus Subtilis complete genome', bsubtilis, false]
+          - ['btaurus: Bos taurus genome (Bovine) complete genome', btaurus, false]
+          - ['calbicans5314: Candida albicans strain 5314 complete genome', calbicans5314,
+            false]
+          - ['calbicansWO1: Candida albicans strain WO1 complete genome', calbicansWO1,
+            false]
+          - ['cfamiliaris: Canis familiaris dog complete genome', cfamiliaris, false]
+          - ['chiroptera: Bat complete genome', chiroptera, false]
+          - ['cneoformansH99: Cryptococcus neoformans grubii H99, complete genome ',
+            cneoformansH99, false]
+          - ['cneoformansJEC21: Cryptococcus neoformans JEC21, complete genome', cneoformansJEC21,
+            false]
+          - ['cpneumoniae: Chlamydophila pneumoniae CWL029 complete genome', cpneumoniae,
+            false]
+          - ['csabaeus: Chlorocebus sabaeus green monkey complete genome', csabaeus,
+            false]
+          - ['dmelanogaster: Drosophila melanogaster fly complete genome', dmelanogaster,
+            false]
+          - ['ecaballus: Equus caballus horse complete genome', ecaballus, false]
+          - ['ecoli: Escherichia Coli complete genome', ecoli, false]
+          - ['epo: European Patent Office complete genome', epo, false]
+          - ['fcatus: Felis catus cat complete genome', fcactus, false]
+          - ['genitalium: Mycoplasma Genitalium complete genome', genitalium, false]
+          - ['hg19: Homo sapiens Human v19 complete genome', hg19, false]
+          - ['hpylori: Helicobacter Pylori complete genome', hpylori, false]
+          - ['mlucifugus: Myotis lucifugus Little brown bat complete genome', mlucifugus,
+            false]
+          - ['mm9: Mus musculus Mouse v9 complete genome', mm9, false]
+          - ['mm10: Mus musculus Mouse v10 complete genome', mm10, false]
+          - ['mtuberculosis: Mycobacterium tuberculosis complete genome', mtuberculosis,
+            false]
+          - ['pfalciparum: Plasmodium falciparum 3D7', pfalciparum, false]
+          - ['pneumoniae: Mycoplasma Pneumoniae complete genome', pneumoniae, false]
+          - ['pvampyrus: teropus vampyrus Large flying fox (bat) complete genome',
+            pvampyrus, false]
+          - ['pvivax: Plasmodium vivax strin Sal-I complete genome', pvivax, false]
+          - ['scerevisiae: Saccharomyces cerevisiae S288C complete genome', scerevisiae,
+            false]
+          - ['spombe: Schizosaccharomyces pombe complete genome', spombe, false]
+          - ['sscrofa: Sus scrofa pig complete genome', sscrofa, false]
+          - ['ypestis: Yersinia pestis unfinished genome', ypestis, false]
+          - ['mdm: Monodelphis domestica complete genome for findpromoter project',
+            /pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/mdm_ref,
+            false]
+          - ['hs_ncbi37: Human complete genome for findpromoter project', /pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/hs_ncbi37,
+            false]
+          - ['mm_ncbi37: Mus Musculus complete genome for findpromoter project', /pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/mm_ref_ncbi37,
+            false]
+          type: select
+          value: alunuc
+        model_class: ConditionalWhen
+        value: blastn
+      - inputs:
+        - argument: null
+          display: null
+          help: For more informations about banks or genomes see https://biomaj.it.pasteur.fr/BmajWatcher/
+          hidden: false
+          html: '%3Cselect%20name%3D%22database%22%3E%0A%3Coption%20value%3D%22alunuc%22%3Ealunuc%3A%20alu%20nucleic%20database%3C/option%3E%0A%3Coption%20value%3D%22embl%22%3Eembl%3A%20Embl%20last%20release%20%2B%20updates%3C/option%3E%0A%3Coption%20value%3D%22embl_release%22%3Eembl_release%3A%20Embl%20release%3C/option%3E%0A%3Coption%20value%3D%22embl_update%22%3Eembl_update%3A%20Embl%20updates%3C/option%3E%0A%3Coption%20value%3D%22genbank%22%3Egenbank%3A%20Genbank%20last%20release%20%2B%20updates%3C/option%3E%0A%3Coption%20value%3D%22genbank_release%22%3Egenbank_release%3A%20Genbank%20release%3C/option%3E%0A%3Coption%20value%3D%22genbank_update%22%3Egenbank_update%3A%20Genbank%20updates%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_bct%22%3Egenbank_release_bacteria%3A%20genbank%20bacteria%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_con%22%3Egenbank_release_con%3A%20Constructed%20Sequences%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_env%22%3Egenbank_release_env%3A%20Environmental%20sampling%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_pri%22%3Egenbank_release_pri%3A%20primates%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_mam%22%3Egenbank_release_mam%3A%20other%20mammals%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_rod%22%3Egenbank_release_rod%3A%20rodents%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_vrt%22%3Egenbank_release_vrt%3A%20other%20vertebrates%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_inv%22%3Egenbank_release_inv%3A%20invertebrates%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_pln%22%3Egenbank_release_pln%3A%20plants%20%28including%20yeast%29%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_vrl%22%3Egenbank_release_vrl%3A%20virus%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_phg%22%3Egenbank_release_phg%3A%20phages%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_est%22%3Egenbank_release_est%3A%20EST%20%28Expressed%20Sequence%20Tags%29%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_sts%22%3Egenbank_release_sts%3A%20STS%20%28Sequence%20Tagged%20sites%29%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_syn%22%3Egenbank_release_syn%3A%20synthetic%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_pat%22%3Egenbank_release_pat%3A%20patented%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_una%22%3Egenbank_release_una%3A%20unannotated%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_gss%22%3Egenbank_release_gss%3A%20Genome%20Survey%20Sequences%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_htc%22%3Egenbank_release_htc%3A%20HTC%20%28high%20throughput%20cDNA%20sequencing%29%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_htg%22%3Egenbank_release_htg%3A%20HTG%20%28high%20throughput%20Genomic%20Sequencing%29%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_tsa%22%3Egenbank_release_tsa%3A%20Transcriptome%20shotgun%20assembly%3C/option%3E%0A%3Coption%20value%3D%22wgsnuc%22%3Ewgsnuc%3A%20Whole%20Genome%20Shotgun%3C/option%3E%0A%3Coption%20value%3D%22vector%22%3Evector%3A%20Vector%20subset%20of%20GenBank%28R%29%2C%20NCBI%3C/option%3E%0A%3Coption%20value%3D%22greengenes%22%3Egreengenes%3A%2016S%20rRNA%20gene%20database%3C/option%3E%0A%3Coption%20value%3D%22imgt%22%3Eimgt%3A%20IMGT/LIGM-DB%2C%20ImMunoGeneTics%20sequence%20database%3C/option%3E%0A%3Coption%20value%3D%22nt%22%3Ent%3A%20non%20redundant%20nucleotide%20sequence%20database%20%3C/option%3E%0A%3Coption%20value%3D%22refseqn_release%22%3Erefseqn_release%3A%20RefSeq%20Nucleic%20release%3C/option%3E%0A%3Coption%20value%3D%22refseqn_update%22%3Erefseqn_update%3A%20RefSeq%20Nucleic%20updates%3C/option%3E%0A%3Coption%20value%3D%22refseqn_release_vrl%22%3Erefseqn_release_vrl%3A%20RefSeq%20Nucleic%20release%20viral%3C/option%3E%0A%3Coption%20value%3D%22rdpii%22%3Erdpii%3A%20Ribosomal%20Database%20Project%3C/option%3E%0A%3Coption%20value%3D%22rdpii_cultured%22%3Erdpii_cultured%3A%20RPDII%20without%20uncultured%20bacteria%3C/option%3E%0A%3Coption%20value%3D%22silva%22%3Esilva%3A%20SILVA%20rRNA%20database%20project%3C/option%3E%0A%3Coption%20value%3D%22vipr_nt%22%3Evipr_nt%3A%20Virus%20Pathogen%20Resource%20%28Nucleic%29%3C/option%3E%0A%3Coption%20value%3D%22borrelia%22%3Eborrelia%3A%20Borrelia%20burgdorferi%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22bsubtilis%22%3Ebsubtilis%3A%20Bacillus%20Subtilis%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22btaurus%22%3Ebtaurus%3A%20Bos%20taurus%20genome%20%28Bovine%29%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22calbicans5314%22%3Ecalbicans5314%3A%20Candida%20albicans%20strain%205314%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22calbicansWO1%22%3EcalbicansWO1%3A%20Candida%20albicans%20strain%20WO1%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22cfamiliaris%22%3Ecfamiliaris%3A%20Canis%20familiaris%20dog%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22chiroptera%22%3Echiroptera%3A%20Bat%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22cneoformansH99%22%3EcneoformansH99%3A%20Cryptococcus%20neoformans%20grubii%20H99%2C%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22cneoformansJEC21%22%3EcneoformansJEC21%3A%20Cryptococcus%20neoformans%20JEC21%2C%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22cpneumoniae%22%3Ecpneumoniae%3A%20Chlamydophila%20pneumoniae%20CWL029%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22csabaeus%22%3Ecsabaeus%3A%20Chlorocebus%20sabaeus%20green%20monkey%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22dmelanogaster%22%3Edmelanogaster%3A%20Drosophila%20melanogaster%20fly%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22ecaballus%22%3Eecaballus%3A%20Equus%20caballus%20horse%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22ecoli%22%3Eecoli%3A%20Escherichia%20Coli%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22epo%22%3Eepo%3A%20European%20Patent%20Office%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22fcactus%22%3Efcatus%3A%20Felis%20catus%20cat%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22genitalium%22%3Egenitalium%3A%20Mycoplasma%20Genitalium%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22hg19%22%3Ehg19%3A%20Homo%20sapiens%20Human%20v19%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22hpylori%22%3Ehpylori%3A%20Helicobacter%20Pylori%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22mlucifugus%22%3Emlucifugus%3A%20Myotis%20lucifugus%20Little%20brown%20bat%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22mm9%22%3Emm9%3A%20Mus%20musculus%20Mouse%20v9%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22mm10%22%3Emm10%3A%20Mus%20musculus%20Mouse%20v10%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22mtuberculosis%22%3Emtuberculosis%3A%20Mycobacterium%20tuberculosis%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22pfalciparum%22%3Epfalciparum%3A%20Plasmodium%20falciparum%203D7%3C/option%3E%0A%3Coption%20value%3D%22pneumoniae%22%3Epneumoniae%3A%20Mycoplasma%20Pneumoniae%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22pvampyrus%22%3Epvampyrus%3A%20teropus%20vampyrus%20Large%20flying%20fox%20%28bat%29%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22pvivax%22%3Epvivax%3A%20Plasmodium%20vivax%20strin%20Sal-I%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22scerevisiae%22%3Escerevisiae%3A%20Saccharomyces%20cerevisiae%20S288C%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22spombe%22%3Espombe%3A%20Schizosaccharomyces%20pombe%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22sscrofa%22%3Esscrofa%3A%20Sus%20scrofa%20pig%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22ypestis%22%3Eypestis%3A%20Yersinia%20pestis%20unfinished%20genome%3C/option%3E%0A%3Coption%20value%3D%22/pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/mdm_ref%22%3Emdm%3A%20Monodelphis%20domestica%20complete%20genome%20for%20findpromoter%20project%3C/option%3E%0A%3Coption%20value%3D%22/pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/hs_ncbi37%22%3Ehs_ncbi37%3A%20Human%20complete%20genome%20for%20findpromoter%20project%3C/option%3E%0A%3Coption%20value%3D%22/pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/mm_ref_ncbi37%22%3Emm_ncbi37%3A%20Mus%20Musculus%20complete%20genome%20for%20findpromoter%20project%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Nucleotide BLAST database
+          model_class: SelectToolParameter
+          multiple: false
+          name: database
+          optional: false
+          options:
+          - ['alunuc: alu nucleic database', alunuc, false]
+          - ['embl: Embl last release + updates', embl, false]
+          - ['embl_release: Embl release', embl_release, false]
+          - ['embl_update: Embl updates', embl_update, false]
+          - ['genbank: Genbank last release + updates', genbank, false]
+          - ['genbank_release: Genbank release', genbank_release, false]
+          - ['genbank_update: Genbank updates', genbank_update, false]
+          - ['genbank_release_bacteria: genbank bacteria', genbank_release_bct, false]
+          - ['genbank_release_con: Constructed Sequences', genbank_release_con, false]
+          - ['genbank_release_env: Environmental sampling', genbank_release_env, false]
+          - ['genbank_release_pri: primates', genbank_release_pri, false]
+          - ['genbank_release_mam: other mammals', genbank_release_mam, false]
+          - ['genbank_release_rod: rodents', genbank_release_rod, false]
+          - ['genbank_release_vrt: other vertebrates', genbank_release_vrt, false]
+          - ['genbank_release_inv: invertebrates', genbank_release_inv, false]
+          - ['genbank_release_pln: plants (including yeast)', genbank_release_pln,
+            false]
+          - ['genbank_release_vrl: virus', genbank_release_vrl, false]
+          - ['genbank_release_phg: phages', genbank_release_phg, false]
+          - ['genbank_release_est: EST (Expressed Sequence Tags)', genbank_release_est,
+            false]
+          - ['genbank_release_sts: STS (Sequence Tagged sites)', genbank_release_sts,
+            false]
+          - ['genbank_release_syn: synthetic', genbank_release_syn, false]
+          - ['genbank_release_pat: patented', genbank_release_pat, false]
+          - ['genbank_release_una: unannotated', genbank_release_una, false]
+          - ['genbank_release_gss: Genome Survey Sequences', genbank_release_gss,
+            false]
+          - ['genbank_release_htc: HTC (high throughput cDNA sequencing)', genbank_release_htc,
+            false]
+          - ['genbank_release_htg: HTG (high throughput Genomic Sequencing)', genbank_release_htg,
+            false]
+          - ['genbank_release_tsa: Transcriptome shotgun assembly', genbank_release_tsa,
+            false]
+          - ['wgsnuc: Whole Genome Shotgun', wgsnuc, false]
+          - ['vector: Vector subset of GenBank(R), NCBI', vector, false]
+          - ['greengenes: 16S rRNA gene database', greengenes, false]
+          - ['imgt: IMGT/LIGM-DB, ImMunoGeneTics sequence database', imgt, false]
+          - ['nt: non redundant nucleotide sequence database ', nt, false]
+          - ['refseqn_release: RefSeq Nucleic release', refseqn_release, false]
+          - ['refseqn_update: RefSeq Nucleic updates', refseqn_update, false]
+          - ['refseqn_release_vrl: RefSeq Nucleic release viral', refseqn_release_vrl,
+            false]
+          - ['rdpii: Ribosomal Database Project', rdpii, false]
+          - ['rdpii_cultured: RPDII without uncultured bacteria', rdpii_cultured,
+            false]
+          - ['silva: SILVA rRNA database project', silva, false]
+          - ['vipr_nt: Virus Pathogen Resource (Nucleic)', vipr_nt, false]
+          - ['borrelia: Borrelia burgdorferi complete genome', borrelia, false]
+          - ['bsubtilis: Bacillus Subtilis complete genome', bsubtilis, false]
+          - ['btaurus: Bos taurus genome (Bovine) complete genome', btaurus, false]
+          - ['calbicans5314: Candida albicans strain 5314 complete genome', calbicans5314,
+            false]
+          - ['calbicansWO1: Candida albicans strain WO1 complete genome', calbicansWO1,
+            false]
+          - ['cfamiliaris: Canis familiaris dog complete genome', cfamiliaris, false]
+          - ['chiroptera: Bat complete genome', chiroptera, false]
+          - ['cneoformansH99: Cryptococcus neoformans grubii H99, complete genome',
+            cneoformansH99, false]
+          - ['cneoformansJEC21: Cryptococcus neoformans JEC21, complete genome', cneoformansJEC21,
+            false]
+          - ['cpneumoniae: Chlamydophila pneumoniae CWL029 complete genome', cpneumoniae,
+            false]
+          - ['csabaeus: Chlorocebus sabaeus green monkey complete genome', csabaeus,
+            false]
+          - ['dmelanogaster: Drosophila melanogaster fly complete genome', dmelanogaster,
+            false]
+          - ['ecaballus: Equus caballus horse complete genome', ecaballus, false]
+          - ['ecoli: Escherichia Coli complete genome', ecoli, false]
+          - ['epo: European Patent Office complete genome', epo, false]
+          - ['fcatus: Felis catus cat complete genome', fcactus, false]
+          - ['genitalium: Mycoplasma Genitalium complete genome', genitalium, false]
+          - ['hg19: Homo sapiens Human v19 complete genome', hg19, false]
+          - ['hpylori: Helicobacter Pylori complete genome', hpylori, false]
+          - ['mlucifugus: Myotis lucifugus Little brown bat complete genome', mlucifugus,
+            false]
+          - ['mm9: Mus musculus Mouse v9 complete genome', mm9, false]
+          - ['mm10: Mus musculus Mouse v10 complete genome', mm10, false]
+          - ['mtuberculosis: Mycobacterium tuberculosis complete genome', mtuberculosis,
+            false]
+          - ['pfalciparum: Plasmodium falciparum 3D7', pfalciparum, false]
+          - ['pneumoniae: Mycoplasma Pneumoniae complete genome', pneumoniae, false]
+          - ['pvampyrus: teropus vampyrus Large flying fox (bat) complete genome',
+            pvampyrus, false]
+          - ['pvivax: Plasmodium vivax strin Sal-I complete genome', pvivax, false]
+          - ['scerevisiae: Saccharomyces cerevisiae S288C complete genome', scerevisiae,
+            false]
+          - ['spombe: Schizosaccharomyces pombe complete genome', spombe, false]
+          - ['sscrofa: Sus scrofa pig complete genome', sscrofa, false]
+          - ['ypestis: Yersinia pestis unfinished genome', ypestis, false]
+          - ['mdm: Monodelphis domestica complete genome for findpromoter project',
+            /pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/mdm_ref,
+            false]
+          - ['hs_ncbi37: Human complete genome for findpromoter project', /pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/hs_ncbi37,
+            false]
+          - ['mm_ncbi37: Mus Musculus complete genome for findpromoter project', /pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/mm_ref_ncbi37,
+            false]
+          type: select
+          value: alunuc
+        model_class: ConditionalWhen
+        value: tblastn
+      - inputs:
+        - argument: null
+          display: null
+          help: For more informations about banks or genomes see https://biomaj.it.pasteur.fr/BmajWatcher/
+          hidden: false
+          html: '%3Cselect%20name%3D%22database%22%3E%0A%3Coption%20value%3D%22alunuc%22%3Ealunuc%3A%20alu%20nucleic%20database%3C/option%3E%0A%3Coption%20value%3D%22embl%22%3Eembl%3A%20Embl%20last%20release%20%2B%20updates%3C/option%3E%0A%3Coption%20value%3D%22embl_release%22%3Eembl_release%3A%20Embl%20release%3C/option%3E%0A%3Coption%20value%3D%22embl_update%22%3Eembl_update%3A%20Embl%20updates%3C/option%3E%0A%3Coption%20value%3D%22genbank%22%3Egenbank%3A%20Genbank%20last%20release%20%2B%20updates%3C/option%3E%0A%3Coption%20value%3D%22genbank_release%22%3Egenbank_release%3A%20Genbank%20release%3C/option%3E%0A%3Coption%20value%3D%22genbank_update%22%3Egenbank_update%3A%20Genbank%20updates%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_bct%22%3Egenbank_release_bacteria%3A%20genbank%20bacteria%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_con%22%3Egenbank_release_con%3A%20Constructed%20Sequences%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_env%22%3Egenbank_release_env%3A%20Environmental%20sampling%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_pri%22%3Egenbank_release_pri%3A%20primates%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_mam%22%3Egenbank_release_mam%3A%20other%20mammals%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_rod%22%3Egenbank_release_rod%3A%20rodents%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_vrt%22%3Egenbank_release_vrt%3A%20other%20vertebrates%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_inv%22%3Egenbank_release_inv%3A%20invertebrates%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_pln%22%3Egenbank_release_pln%3A%20plants%20%28including%20yeast%29%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_vrl%22%3Egenbank_release_vrl%3A%20virus%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_phg%22%3Egenbank_release_phg%3A%20phages%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_est%22%3Egenbank_release_est%3A%20EST%20%28Expressed%20Sequence%20Tags%29%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_sts%22%3Egenbank_release_sts%3A%20STS%20%28Sequence%20Tagged%20sites%29%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_syn%22%3Egenbank_release_syn%3A%20synthetic%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_pat%22%3Egenbank_release_pat%3A%20patented%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_una%22%3Egenbank_release_una%3A%20unannotated%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_gss%22%3Egenbank_release_gss%3A%20Genome%20Survey%20Sequences%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_htc%22%3Egenbank_release_htc%3A%20HTC%20%28high%20throughput%20cDNA%20sequencing%29%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_htg%22%3Egenbank_release_htg%3A%20HTG%20%28high%20throughput%20Genomic%20Sequencing%29%3C/option%3E%0A%3Coption%20value%3D%22genbank_release_tsa%22%3Egenbank_release_tsa%3A%20Transcriptome%20shotgun%20assembly%3C/option%3E%0A%3Coption%20value%3D%22wgsnuc%22%3Ewgsnuc%3A%20Whole%20Genome%20Shotgun%3C/option%3E%0A%3Coption%20value%3D%22vector%22%3Evector%3A%20Vector%20subset%20of%20GenBank%28R%29%2C%20NCBI%3C/option%3E%0A%3Coption%20value%3D%22greengenes%22%3Egreengenes%3A%2016S%20rRNA%20gene%20database%3C/option%3E%0A%3Coption%20value%3D%22imgt%22%3Eimgt%3A%20IMGT/LIGM-DB%2C%20ImMunoGeneTics%20sequence%20database%3C/option%3E%0A%3Coption%20value%3D%22nt%22%3Ent%3A%20non%20redundant%20nucleotide%20sequence%20database%20%3C/option%3E%0A%3Coption%20value%3D%22refseqn_release%22%3Erefseqn_release%3A%20RefSeq%20Nucleic%20release%3C/option%3E%0A%3Coption%20value%3D%22refseqn_update%22%3Erefseqn_update%3A%20RefSeq%20Nucleic%20updates%3C/option%3E%0A%3Coption%20value%3D%22refseqn_release_vrl%22%3Erefseqn_release_vrl%3A%20RefSeq%20Nucleic%20release%20viral%3C/option%3E%0A%3Coption%20value%3D%22rdpii%22%3Erdpii%3A%20Ribosomal%20Database%20Project%3C/option%3E%0A%3Coption%20value%3D%22rdpii_cultured%22%3Erdpii_cultured%3A%20RPDII%20without%20uncultured%20bacteria%3C/option%3E%0A%3Coption%20value%3D%22silva%22%3Esilva%3A%20SILVA%20rRNA%20database%20project%3C/option%3E%0A%3Coption%20value%3D%22vipr_nt%22%3Evipr_nt%3A%20Virus%20Pathogen%20Resource%20%28Nucleic%29%3C/option%3E%0A%3Coption%20value%3D%22borrelia%22%3Eborrelia%3A%20Borrelia%20burgdorferi%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22bsubtilis%22%3Ebsubtilis%3A%20Bacillus%20Subtilis%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22btaurus%22%3Ebtaurus%3A%20Bos%20taurus%20genome%20%28Bovine%29%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22calbicans5314%22%3Ecalbicans5314%3A%20Candida%20albicans%20strain%205314%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22calbicansWO1%22%3EcalbicansWO1%3A%20Candida%20albicans%20strain%20WO1%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22cfamiliaris%22%3Ecfamiliaris%3A%20Canis%20familiaris%20dog%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22chiroptera%22%3Echiroptera%3A%20Bat%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22cneoformansH99%22%3EcneoformansH99%3A%20Cryptococcus%20neoformans%20grubii%20H99%2C%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22cneoformansJEC21%22%3EcneoformansJEC21%3ACryptococcus%20neoformans%20JEC21%2C%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22cpneumoniae%22%3Ecpneumoniae%3A%20Chlamydophila%20pneumoniae%20CWL029%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22csabaeus%22%3Ecsabaeus%3A%20Chlorocebus%20sabaeus%20green%20monkey%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22dmelanogaster%22%3Edmelanogaster%3A%20Drosophila%20melanogaster%20fly%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22ecaballus%22%3Eecaballus%3A%20Equus%20caballus%20horse%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22ecoli%22%3Eecoli%3A%20Escherichia%20Coli%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22epo%22%3Eepo%3A%20European%20Patent%20Office%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22fcactus%22%3Efcatus%3A%20Felis%20catus%20cat%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22genitalium%22%3Egenitalium%3A%20Mycoplasma%20Genitalium%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22hg19%22%3Ehg19%3A%20Homo%20sapiens%20Human%20v19%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22hpylori%22%3Ehpylori%3A%20Helicobacter%20Pylori%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22mlucifugus%22%3Emlucifugus%3A%20Myotis%20lucifugus%20Little%20brown%20bat%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22mm9%22%3Emm9%3A%20Mus%20musculus%20Mouse%20v9%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22mm10%22%3Emm10%3A%20Mus%20musculus%20Mouse%20v10%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22mtuberculosis%22%3Emtuberculosis%3A%20Mycobacterium%20tuberculosis%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22pfalciparum%22%3Epfalciparum%3A%20Plasmodium%20falciparum%203D7%3C/option%3E%0A%3Coption%20value%3D%22pneumoniae%22%3Epneumoniae%3A%20Mycoplasma%20Pneumoniae%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22pvampyrus%22%3Epvampyrus%3A%20teropus%20vampyrus%20Large%20flying%20fox%20%28bat%29%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22pvivax%22%3Epvivax%3A%20Plasmodium%20vivax%20strin%20Sal-I%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22scerevisiae%22%3Escerevisiae%3A%20Saccharomyces%20cerevisiae%20S288C%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22spombe%22%3Espombe%3A%20Schizosaccharomyces%20pombe%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22sscrofa%22%3Esscrofa%3A%20Sus%20scrofa%20pig%20complete%20genome%3C/option%3E%0A%3Coption%20value%3D%22ypestis%22%3Eypestis%3A%20Yersinia%20pestis%20unfinished%20genome%3C/option%3E%0A%3Coption%20value%3D%22/pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/mdm_ref%22%3Emdm%3A%20Monodelphis%20domestica%20complete%20genome%20for%20findpromoter%20project%3C/option%3E%0A%3Coption%20value%3D%22/pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/hs_ncbi37%22%3Ehs_ncbi37%3A%20Human%20complete%20genome%20for%20findpromoter%20project%3C/option%3E%0A%3Coption%20value%3D%22/pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/mm_ref_ncbi37%22%3Emm_ncbi37%3A%20Mus%20Musculus%20complete%20genome%20for%20findpromoter%20project%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Nucleotide BLAST database
+          model_class: SelectToolParameter
+          multiple: false
+          name: database
+          optional: false
+          options:
+          - ['alunuc: alu nucleic database', alunuc, false]
+          - ['embl: Embl last release + updates', embl, false]
+          - ['embl_release: Embl release', embl_release, false]
+          - ['embl_update: Embl updates', embl_update, false]
+          - ['genbank: Genbank last release + updates', genbank, false]
+          - ['genbank_release: Genbank release', genbank_release, false]
+          - ['genbank_update: Genbank updates', genbank_update, false]
+          - ['genbank_release_bacteria: genbank bacteria', genbank_release_bct, false]
+          - ['genbank_release_con: Constructed Sequences', genbank_release_con, false]
+          - ['genbank_release_env: Environmental sampling', genbank_release_env, false]
+          - ['genbank_release_pri: primates', genbank_release_pri, false]
+          - ['genbank_release_mam: other mammals', genbank_release_mam, false]
+          - ['genbank_release_rod: rodents', genbank_release_rod, false]
+          - ['genbank_release_vrt: other vertebrates', genbank_release_vrt, false]
+          - ['genbank_release_inv: invertebrates', genbank_release_inv, false]
+          - ['genbank_release_pln: plants (including yeast)', genbank_release_pln,
+            false]
+          - ['genbank_release_vrl: virus', genbank_release_vrl, false]
+          - ['genbank_release_phg: phages', genbank_release_phg, false]
+          - ['genbank_release_est: EST (Expressed Sequence Tags)', genbank_release_est,
+            false]
+          - ['genbank_release_sts: STS (Sequence Tagged sites)', genbank_release_sts,
+            false]
+          - ['genbank_release_syn: synthetic', genbank_release_syn, false]
+          - ['genbank_release_pat: patented', genbank_release_pat, false]
+          - ['genbank_release_una: unannotated', genbank_release_una, false]
+          - ['genbank_release_gss: Genome Survey Sequences', genbank_release_gss,
+            false]
+          - ['genbank_release_htc: HTC (high throughput cDNA sequencing)', genbank_release_htc,
+            false]
+          - ['genbank_release_htg: HTG (high throughput Genomic Sequencing)', genbank_release_htg,
+            false]
+          - ['genbank_release_tsa: Transcriptome shotgun assembly', genbank_release_tsa,
+            false]
+          - ['wgsnuc: Whole Genome Shotgun', wgsnuc, false]
+          - ['vector: Vector subset of GenBank(R), NCBI', vector, false]
+          - ['greengenes: 16S rRNA gene database', greengenes, false]
+          - ['imgt: IMGT/LIGM-DB, ImMunoGeneTics sequence database', imgt, false]
+          - ['nt: non redundant nucleotide sequence database ', nt, false]
+          - ['refseqn_release: RefSeq Nucleic release', refseqn_release, false]
+          - ['refseqn_update: RefSeq Nucleic updates', refseqn_update, false]
+          - ['refseqn_release_vrl: RefSeq Nucleic release viral', refseqn_release_vrl,
+            false]
+          - ['rdpii: Ribosomal Database Project', rdpii, false]
+          - ['rdpii_cultured: RPDII without uncultured bacteria', rdpii_cultured,
+            false]
+          - ['silva: SILVA rRNA database project', silva, false]
+          - ['vipr_nt: Virus Pathogen Resource (Nucleic)', vipr_nt, false]
+          - ['borrelia: Borrelia burgdorferi complete genome', borrelia, false]
+          - ['bsubtilis: Bacillus Subtilis complete genome', bsubtilis, false]
+          - ['btaurus: Bos taurus genome (Bovine) complete genome', btaurus, false]
+          - ['calbicans5314: Candida albicans strain 5314 complete genome', calbicans5314,
+            false]
+          - ['calbicansWO1: Candida albicans strain WO1 complete genome', calbicansWO1,
+            false]
+          - ['cfamiliaris: Canis familiaris dog complete genome', cfamiliaris, false]
+          - ['chiroptera: Bat complete genome', chiroptera, false]
+          - ['cneoformansH99: Cryptococcus neoformans grubii H99, complete genome',
+            cneoformansH99, false]
+          - ['cneoformansJEC21:Cryptococcus neoformans JEC21, complete genome', cneoformansJEC21,
+            false]
+          - ['cpneumoniae: Chlamydophila pneumoniae CWL029 complete genome', cpneumoniae,
+            false]
+          - ['csabaeus: Chlorocebus sabaeus green monkey complete genome', csabaeus,
+            false]
+          - ['dmelanogaster: Drosophila melanogaster fly complete genome', dmelanogaster,
+            false]
+          - ['ecaballus: Equus caballus horse complete genome', ecaballus, false]
+          - ['ecoli: Escherichia Coli complete genome', ecoli, false]
+          - ['epo: European Patent Office complete genome', epo, false]
+          - ['fcatus: Felis catus cat complete genome', fcactus, false]
+          - ['genitalium: Mycoplasma Genitalium complete genome', genitalium, false]
+          - ['hg19: Homo sapiens Human v19 complete genome', hg19, false]
+          - ['hpylori: Helicobacter Pylori complete genome', hpylori, false]
+          - ['mlucifugus: Myotis lucifugus Little brown bat complete genome', mlucifugus,
+            false]
+          - ['mm9: Mus musculus Mouse v9 complete genome', mm9, false]
+          - ['mm10: Mus musculus Mouse v10 complete genome', mm10, false]
+          - ['mtuberculosis: Mycobacterium tuberculosis complete genome', mtuberculosis,
+            false]
+          - ['pfalciparum: Plasmodium falciparum 3D7', pfalciparum, false]
+          - ['pneumoniae: Mycoplasma Pneumoniae complete genome', pneumoniae, false]
+          - ['pvampyrus: teropus vampyrus Large flying fox (bat) complete genome',
+            pvampyrus, false]
+          - ['pvivax: Plasmodium vivax strin Sal-I complete genome', pvivax, false]
+          - ['scerevisiae: Saccharomyces cerevisiae S288C complete genome', scerevisiae,
+            false]
+          - ['spombe: Schizosaccharomyces pombe complete genome', spombe, false]
+          - ['sscrofa: Sus scrofa pig complete genome', sscrofa, false]
+          - ['ypestis: Yersinia pestis unfinished genome', ypestis, false]
+          - ['mdm: Monodelphis domestica complete genome for findpromoter project',
+            /pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/mdm_ref,
+            false]
+          - ['hs_ncbi37: Human complete genome for findpromoter project', /pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/hs_ncbi37,
+            false]
+          - ['mm_ncbi37: Mus Musculus complete genome for findpromoter project', /pasteur/projets/common/galaxy/projets/genomes/promoteur_ljm/mm_ref_ncbi37,
+            false]
+          type: select
+          value: alunuc
+        model_class: ConditionalWhen
+        value: tblastx
+      - inputs:
+        - argument: null
+          display: null
+          help: For more informations about banks or genomes see https://biomaj.it.pasteur.fr/BmajWatcher/
+          hidden: false
+          html: '%3Cselect%20name%3D%22database%22%3E%0A%3Coption%20value%3D%22alupro%22%3Ealupro%3A%20alu%20protein%20database%3C/option%3E%0A%3Coption%20value%3D%22pdb%22%3Epdb%3A%20Protein%20Data%20Bank%3A%20Fasta%20section%2C%20fasta%20and%20blast2%20are%20available%3C/option%3E%0A%3Coption%20value%3D%22nrprot%22%3Enrprot%3A%20NCBI%20non-redundant%20Genbank%20CDS%20translations%2BPDB%2BSwissprot%2BPIR%3C/option%3E%0A%3Coption%20value%3D%22refseqp_release%22%3Erefseqp_release%3A%20RefSeq%20Protein%20release%3C/option%3E%0A%3Coption%20value%3D%22refseqp_update%22%3Erefseqp_update%3A%20RefSeq%20Protein%20updates%3C/option%3E%0A%3Coption%20value%3D%22refseqp_release_vrl%22%3Erefseqp_release_vrl%3A%20RefSeq%20Protein%20release%20viral%3C/option%3E%0A%3Coption%20value%3D%22sbase%22%3Esbase%3A%20annotated%20domains%20sequences%3C/option%3E%0A%3Coption%20value%3D%22uniprot%22%3Euniprot%3A%20Universal%20Protein%20Resource%20%3D%20SwissProt%20%2B%20TrEMBL%20%2B%20PIR%20%3C/option%3E%0A%3Coption%20value%3D%22uniprot_sprot%22%3Euniprot_sprot%3A%20Universal%20Protein%20Resource%20%28SwissProt%20part%29%3C/option%3E%0A%3Coption%20value%3D%22uniprot_trembl%22%3Euniprot_trembl%3A%20Universal%20Protein%20Resource%20%28TrEmbl%20part%29%3C/option%3E%0A%3Coption%20value%3D%22uniref90%22%3Euniref90%3A%20Clustered%20sets%20of%20sequences%20from%20UniProt%20Knowledgebase%3C/option%3E%0A%3Coption%20value%3D%22vipr_aa%22%3Evipr_aa%3A%20Virus%20Pathogen%20Resource%20%28Protein%29%3C/option%3E%0A%3Coption%20value%3D%22wgspro%22%3Ewgspro%3A%20Whole%20Genome%20Shotgun%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Protein BLAST database
+          model_class: SelectToolParameter
+          multiple: false
+          name: database
+          optional: false
+          options:
+          - ['alupro: alu protein database', alupro, false]
+          - ['pdb: Protein Data Bank: Fasta section, fasta and blast2 are available',
+            pdb, false]
+          - ['nrprot: NCBI non-redundant Genbank CDS translations+PDB+Swissprot+PIR',
+            nrprot, false]
+          - ['refseqp_release: RefSeq Protein release', refseqp_release, false]
+          - ['refseqp_update: RefSeq Protein updates', refseqp_update, false]
+          - ['refseqp_release_vrl: RefSeq Protein release viral', refseqp_release_vrl,
+            false]
+          - ['sbase: annotated domains sequences', sbase, false]
+          - ['uniprot: Universal Protein Resource = SwissProt + TrEMBL + PIR ', uniprot,
+            false]
+          - ['uniprot_sprot: Universal Protein Resource (SwissProt part)', uniprot_sprot,
+            false]
+          - ['uniprot_trembl: Universal Protein Resource (TrEmbl part)', uniprot_trembl,
+            false]
+          - ['uniref90: Clustered sets of sequences from UniProt Knowledgebase', uniref90,
+            false]
+          - ['vipr_aa: Virus Pathogen Resource (Protein)', vipr_aa, false]
+          - ['wgspro: Whole Genome Shotgun', wgspro, false]
+          type: select
+          value: alupro
+        model_class: ConditionalWhen
+        value: blastp
+      - inputs:
+        - argument: null
+          display: null
+          help: For more informations about banks or genomes see https://biomaj.it.pasteur.fr/BmajWatcher/
+          hidden: false
+          html: '%3Cselect%20name%3D%22database%22%3E%0A%3Coption%20value%3D%22alupro%22%3Ealupro%3A%20alu%20protein%20database%3C/option%3E%0A%3Coption%20value%3D%22pdb%22%3Epdb%3A%20Protein%20Data%20Bank%3A%20Fasta%20section%2C%20fasta%20and%20blast2%20are%20available%3C/option%3E%0A%3Coption%20value%3D%22nrprot%22%3Enrprot%3A%20NCBI%20non-redundant%20Genbank%20CDS%20translations%2BPDB%2BSwissprot%2BPIR%3C/option%3E%0A%3Coption%20value%3D%22refseqp_release%22%3Erefseqp_release%3A%20RefSeq%20Protein%20release%3C/option%3E%0A%3Coption%20value%3D%22refseqp_update%22%3Erefseqp_update%3A%20RefSeq%20Protein%20updates%3C/option%3E%0A%3Coption%20value%3D%22refseqp_release_vrl%22%3Erefseqp_release_vrl%3A%20RefSeq%20Protein%20release%20viral%3C/option%3E%0A%3Coption%20value%3D%22sbase%22%3Esbase%3A%20annotated%20domains%20sequences%3C/option%3E%0A%3Coption%20value%3D%22uniprot%22%3Euniprot%3A%20Universal%20Protein%20Resource%20%3D%20SwissProt%20%2B%20TrEMBL%20%2B%20PIR%20%3C/option%3E%0A%3Coption%20value%3D%22uniprot_sprot%22%3Euniprot_sprot%3A%20Universal%20Protein%20Resource%20%28SwissProt%20part%29%3C/option%3E%0A%3Coption%20value%3D%22uniprot_trembl%22%3Euniprot_trembl%3A%20Universal%20Protein%20Resource%20%28TrEmbl%20part%29%3C/option%3E%0A%3Coption%20value%3D%22uniref90%22%3Euniref90%3A%20Clustered%20sets%20of%20sequences%20from%20UniProt%20Knowledgebase%3C/option%3E%0A%3Coption%20value%3D%22vipr_aa%22%3Evipr_aa%3A%20Virus%20Pathogen%20Resource%20%28Protein%29%3C/option%3E%0A%3Coption%20value%3D%22wgspro%22%3Ewgspro%3A%20Whole%20Genome%20Shotgun%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Protein BLAST database
+          model_class: SelectToolParameter
+          multiple: false
+          name: database
+          optional: false
+          options:
+          - ['alupro: alu protein database', alupro, false]
+          - ['pdb: Protein Data Bank: Fasta section, fasta and blast2 are available',
+            pdb, false]
+          - ['nrprot: NCBI non-redundant Genbank CDS translations+PDB+Swissprot+PIR',
+            nrprot, false]
+          - ['refseqp_release: RefSeq Protein release', refseqp_release, false]
+          - ['refseqp_update: RefSeq Protein updates', refseqp_update, false]
+          - ['refseqp_release_vrl: RefSeq Protein release viral', refseqp_release_vrl,
+            false]
+          - ['sbase: annotated domains sequences', sbase, false]
+          - ['uniprot: Universal Protein Resource = SwissProt + TrEMBL + PIR ', uniprot,
+            false]
+          - ['uniprot_sprot: Universal Protein Resource (SwissProt part)', uniprot_sprot,
+            false]
+          - ['uniprot_trembl: Universal Protein Resource (TrEmbl part)', uniprot_trembl,
+            false]
+          - ['uniref90: Clustered sets of sequences from UniProt Knowledgebase', uniref90,
+            false]
+          - ['vipr_aa: Virus Pathogen Resource (Protein)', vipr_aa, false]
+          - ['wgspro: Whole Genome Shotgun', wgspro, false]
+          type: select
+          value: alupro
+        model_class: ConditionalWhen
+        value: blastx
+      model_class: Conditional
+      name: type_blast
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22blast%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22blastn%22%3E%0A%3Coption%20value%3D%22blastn%22%20selected%3Eblastn%3C/option%3E%0A%3Coption%20value%3D%22blastp%22%3Eblastp%3C/option%3E%0A%3Coption%20value%3D%22blastx%22%3Eblastx%3C/option%3E%0A%3Coption%20value%3D%22tblastn%22%3Etblastn%3C/option%3E%0A%3Coption%20value%3D%22tblastx%22%3Etblastx%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: select blastn, blastp...
+        model_class: SelectToolParameter
+        multiple: false
+        name: blast
+        optional: false
+        options:
+        - [blastn, blastn, true]
+        - [blastp, blastp, false]
+        - [blastx, blastx, false]
+        - [tblastn, tblastn, false]
+        - [tblastx, tblastx, false]
+        type: select
+        value: blastn
+      type: conditional
+    model_class: ConditionalWhen
+    value: available_db
+  model_class: Conditional
+  name: db_opts
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22db_opts_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22available_db%22%3E%0A%3Coption%20value%3D%22available_db%22%20selected%3EBLAST%20Database%3C/option%3E%0A%3Coption%20value%3D%22own_db%22%3EYour%20own%20database%20made%20with%20Formadb%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Subject database/sequences
+    model_class: SelectToolParameter
+    multiple: false
+    name: db_opts_selector
+    optional: false
+    options:
+    - [BLAST Database, available_db, true]
+    - [Your own database made with Formadb, own_db, false]
+    type: select
+    value: available_db
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fmblastall%2Fmblastall%2F2.2.26
+min_width: -1
+model_class: Tool
+name: Pasteur blastall for NGS data
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+panel_section_id: blast
+panel_section_name: Blast
+target: galaxy_main
+version: 2.2.26

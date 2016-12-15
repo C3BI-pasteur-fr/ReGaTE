@@ -1,0 +1,33 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/phenotype_association/gpass.xml
+description: significant single-SNP associations in case-control studies
+id: hgv_gpass
+inputs:
+- argument: null
+  edam_formats: [format_2331]
+  extensions: [lped]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Dataset
+  model_class: DataToolParameter
+  multiple: false
+  name: input1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fdr%22%20size%3D%2210%22%20value%3D%220.05%22%3E',
+  is_dynamic: false, label: FDR, max: null, min: null, model_class: FloatToolParameter,
+  name: fdr, optional: false, size: null, type: float, value: '0.05'}
+link: /tool_runner?tool_id=hgv_gpass
+min_width: -1
+model_class: Tool
+name: GPASS
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+panel_section_id: hgv
+panel_section_name: Phenotype Association
+target: galaxy_main
+version: 1.0.0

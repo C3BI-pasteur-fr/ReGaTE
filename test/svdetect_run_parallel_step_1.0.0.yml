@@ -1,0 +1,414 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/screno/svdetect_pasteur/1dddcc5f22fc/svdetect_pasteur/SVDetect_run_parallel.xml
+description: and identify structural variants
+id: toolshed.pasteur.fr/repos/screno/svdetect_pasteur/svdetect_run_parallel_step/1.0.0
+inputs:
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sample_name%22%20size%3D%2210%22%20value%3D%22sample%22%3E',
+  is_dynamic: false, label: Sample Name, model_class: TextToolParameter, name: sample_name,
+  optional: false, size: null, type: text, value: sample}
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_2572]
+      extensions: [bam]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input BAM file (.ab.bam)
+      model_class: DataToolParameter
+      multiple: false
+      name: mates_file
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: bam
+  - inputs:
+    - argument: null
+      edam_formats: [format_2573]
+      extensions: [sam]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input SAM file (.ab.sam)
+      model_class: DataToolParameter
+      multiple: false
+      name: mates_file
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: sam
+  model_class: Conditional
+  name: input_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22input_type_selector%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22bam%22%3EBAM%3C/option%3E%0A%3Coption%20value%3D%22sam%22%3ESAM%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Type of the input file
+    model_class: SelectToolParameter
+    multiple: false
+    name: input_type_selector
+    optional: false
+    options:
+    - [BAM, bam, false]
+    - [SAM, sam, false]
+    type: select
+    value: bam
+  type: conditional
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [len]
+  help: Tabulated file format with Chromosome ID (integer from 1), name and length
+  hidden: false
+  is_dynamic: false
+  label: Chromosomes list file (.len)
+  model_class: DataToolParameter
+  multiple: false
+  name: cmap_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22mates_orientation%22%20last_selected_value%3D%22FR%22%3E%0A%3Coption%20value%3D%22FR%22%3ESOLiD%20paired-ends%3C/option%3E%0A%3Coption%20value%3D%22RR%22%3ESOLiD%20mate-pairs%3C/option%3E%0A%3Coption%20value%3D%22FR%22%20selected%3EIllumina%20paired-ends%3C/option%3E%0A%3Coption%20value%3D%22RF%22%3EIllumina%20mate-pairs%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Type of sequencing technology and libraries
+  model_class: SelectToolParameter
+  multiple: false
+  name: mates_orientation
+  optional: false
+  options:
+  - [SOLiD paired-ends, FR, false]
+  - [SOLiD mate-pairs, RR, false]
+  - [Illumina paired-ends, FR, true]
+  - [Illumina mate-pairs, RF, false]
+  type: select
+  value: FR
+- {area: false, argument: null, help: Length of the first read in a pair (left read),
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read1_length%22%20size%3D%2210%22%20value%3D%2250%22%3E',
+  is_dynamic: false, label: Read 1 length (bp), max: null, min: null, model_class: IntegerToolParameter,
+  name: read1_length, optional: false, size: '10', type: integer, value: '50'}
+- {area: false, argument: null, help: Length of the second read in a pair (right read),
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read2_length%22%20size%3D%2210%22%20value%3D%2250%22%3E',
+  is_dynamic: false, label: Read 2 length (bp), max: null, min: null, model_class: IntegerToolParameter,
+  name: read2_length, optional: false, size: '10', type: integer, value: '50'}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22sv_type%22%3E%0A%3Coption%20value%3D%22all%22%3Eall%20types%20of%20SVs%3C/option%3E%0A%3Coption%20value%3D%22intra%22%3Eintrachromosomal%20SVs%20only%3C/option%3E%0A%3Coption%20value%3D%22inter%22%3Einterchromosomal%20SVs%20only%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Type of SV to detect
+  model_class: SelectToolParameter
+  multiple: false
+  name: sv_type
+  optional: false
+  options:
+  - [all types of SVs, all, false]
+  - [intrachromosomal SVs only, intra, false]
+  - [interchromosomal SVs only, inter, false]
+  type: select
+  value: all
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: ''
+  - inputs:
+    - {argument: null, falsevalue: do_not_split, help: Untick it if already done,
+      hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22splitmate%22%20name%3D%22splitmate%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22splitmate%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: 'Do you want to split the original mate file per chromosome
+        for parallel computing?', model_class: BooleanToolParameter, name: splitmate,
+      optional: false, truevalue: split, type: boolean, value: true}
+    - {area: false, argument: null, help: "Equal to at least \u201C2\xB5+2\u221A2\u03C3",
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22window_size%22%20size%3D%2220%22%20value%3D%223000%22%3E',
+      is_dynamic: false, label: Window size (bp), max: null, min: null, model_class: IntegerToolParameter,
+      name: window_size, optional: false, size: '20', type: integer, value: '3000'}
+    - {area: false, argument: null, help: Equal to 1/2 or 1/4 of the window size,
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22step_length%22%20size%3D%2220%22%20value%3D%22250%22%3E',
+      is_dynamic: false, label: Step length size (bp), max: null, min: null, model_class: IntegerToolParameter,
+      name: step_length, optional: false, size: '20', type: integer, value: '250'}
+    model_class: ConditionalWhen
+    value: linking
+  model_class: Conditional
+  name: getLinks
+  test_param:
+    argument: null
+    display: null
+    help: Detection and isolation of links
+    hidden: false
+    html: '%3Cselect%20name%3D%22linking%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22linking%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22%22%3ENo%2C%20already%20done%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Linking procedure
+    model_class: SelectToolParameter
+    multiple: false
+    name: linking
+    optional: false
+    options:
+    - ['Yes', linking, false]
+    - ['No, already done', '', false]
+    type: select
+    value: linking
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: ''
+  - inputs:
+    - {argument: null, falsevalue: do_not_split, help: Untick it if (the linking is)
+        already done, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22splitlink%22%20name%3D%22splitlink%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22splitlink%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: 'Do you want to split the original link file per chromosome
+        for parallel computing?', model_class: BooleanToolParameter, name: splitlink,
+      optional: false, truevalue: split, type: boolean, value: false}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22chromosomes%22%20size%3D%2220%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: List of chromosome names to keep or exclude, model_class: TextToolParameter,
+      name: chromosomes, optional: false, size: '20', type: text, value: null}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22nb_pairs_threshold%22%20size%3D%2220%22%20value%3D%225%22%3E',
+      is_dynamic: false, label: Minimum number of pairs in a cluster, max: null, min: null,
+      model_class: IntegerToolParameter, name: nb_pairs_threshold, optional: false,
+      size: '20', type: integer, value: '5'}
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: ''
+      - inputs:
+        - cases:
+          - inputs: []
+            model_class: ConditionalWhen
+            value: ''
+          - inputs:
+            - cases:
+              - inputs: []
+                model_class: ConditionalWhen
+                value: ''
+              - inputs:
+                - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22indel_sigma_threshold%22%20size%3D%2220%22%20value%3D%223%22%3E',
+                  is_dynamic: false, label: Minimal number of sigma fold for the insert
+                    size filtering and to call insertions and deletions, max: null,
+                  min: null, model_class: FloatToolParameter, name: indel_sigma_threshold,
+                  optional: false, size: '20', type: float, value: '3'}
+                - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22dup_sigma_threshold%22%20size%3D%2220%22%20value%3D%223%22%3E',
+                  is_dynamic: false, label: minimal number of sigma fold for the insert
+                    size filtering to call tandem duplications, max: null, min: null,
+                  model_class: FloatToolParameter, name: dup_sigma_threshold, optional: false,
+                  size: '20', type: float, value: '3'}
+                - {area: false, argument: null, help: for Illumina mate-pairs only,
+                  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22singleton_sigma_threshold%22%20size%3D%2220%22%20value%3D%224%22%3E',
+                  is_dynamic: false, label: Minimal number of sigma fold for the insert
+                    size filtering to call singletons, max: null, min: null, model_class: FloatToolParameter,
+                  name: singleton_sigma_threshold, optional: false, size: '20', type: float,
+                  value: '4'}
+                model_class: ConditionalWhen
+                value: insert
+              model_class: Conditional
+              name: filter3
+              test_param:
+                argument: null
+                display: null
+                help: ''
+                hidden: false
+                html: '%3Cselect%20name%3D%22insert_size_filtering%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22insert%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22%22%3ENo%3C/option%3E%0A%3C/select%3E'
+                is_dynamic: false
+                label: Insert-size filtering procedure
+                model_class: SelectToolParameter
+                multiple: false
+                name: insert_size_filtering
+                optional: false
+                options:
+                - ['Yes', insert, false]
+                - ['No', '', false]
+                type: select
+                value: insert
+              type: conditional
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22mu_length%22%20size%3D%2220%22%20value%3D%223000%22%3E',
+              is_dynamic: false, label: "Mean insert size value (\xB5) of normally\
+                \ mapped mate-pairs, in bp", max: null, min: null, model_class: IntegerToolParameter,
+              name: mu_length, optional: false, size: '20', type: integer, value: '3000'}
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sigma_length%22%20size%3D%2220%22%20value%3D%22250%22%3E',
+              is_dynamic: false, label: "Calculated sd value (\u03C3) from the distribution\
+                \ of normally mapped  mate-pairs, in bp", max: null, min: null, model_class: IntegerToolParameter,
+              name: sigma_length, optional: false, size: '20', type: integer, value: '250'}
+            - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22nb_pairs_order_threshold%22%20size%3D%2220%22%20value%3D%222%22%3E',
+              is_dynamic: false, label: Minimal number of pairs in a subgroup of paired-end
+                reads for balanced events, max: null, min: null, model_class: IntegerToolParameter,
+              name: nb_pairs_order_threshold, optional: false, size: '20', type: integer,
+              value: '2'}
+            model_class: ConditionalWhen
+            value: order
+          model_class: Conditional
+          name: filter2
+          test_param:
+            argument: null
+            display: null
+            help: ''
+            hidden: false
+            html: '%3Cselect%20name%3D%22order_filtering%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22order%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22%22%3ENo%3C/option%3E%0A%3C/select%3E'
+            is_dynamic: false
+            label: Order filtering procedure
+            model_class: SelectToolParameter
+            multiple: false
+            name: order_filtering
+            optional: false
+            options:
+            - ['Yes', order, false]
+            - ['No', '', false]
+            type: select
+            value: order
+          type: conditional
+        - {area: false, argument: null, help: A value of 1 means all the pairs in
+            a cluster were consistent between each other after applying filters, hidden: false,
+          html: '%3Cinput%20type%3D%22text%22%20name%3D%22final_score_threshold%22%20size%3D%2220%22%20value%3D%221.0%22%3E',
+          is_dynamic: false, label: Minimal final filtering score for calling SVs,
+          max: null, min: null, model_class: FloatToolParameter, name: final_score_threshold,
+          optional: false, size: '20', type: float, value: '1.0'}
+        model_class: ConditionalWhen
+        value: strand
+      model_class: Conditional
+      name: filter1
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22strand_filtering%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22strand%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22%22%3ENo%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Strand filtering procedure
+        model_class: SelectToolParameter
+        multiple: false
+        name: strand_filtering
+        optional: false
+        options:
+        - ['Yes', strand, false]
+        - ['No', '', false]
+        type: select
+        value: strand
+      type: conditional
+    - {argument: null, falsevalue: do_not_create, help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22links2SV%22%20name%3D%22links2SV%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22links2SV%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: 'Do you want to have filtered links in a tabulated
+        file format showing significant SVs?', model_class: BooleanToolParameter,
+      name: links2SV, optional: false, truevalue: create, type: boolean, value: true}
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: do_not_convert
+      - inputs:
+        - {argument: null, falsevalue: do_not_create, help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22links2circos%22%20name%3D%22links2circos%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22links2circos%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Converts the link list to the Circos link format,
+          model_class: BooleanToolParameter, name: links2circos, optional: false,
+          truevalue: create, type: boolean, value: true}
+        - {argument: null, falsevalue: do_not_create, help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22links2bed%22%20name%3D%22links2bed%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22links2bed%22%20value%3D%22true%22%3E',
+          is_dynamic: false, label: Converts the link list to the UCSC BED format,
+          model_class: BooleanToolParameter, name: links2bed, optional: false, truevalue: create,
+          type: boolean, value: false}
+        - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22organism_id%22%20size%3D%2210%22%20value%3D%22hs%22%3E',
+          is_dynamic: false, label: Organism ID, model_class: TextToolParameter, name: organism_id,
+          optional: false, size: '10', type: text, value: hs}
+        - default: 1
+          help: null
+          inputs:
+          - argument: null
+            display: null
+            help: ''
+            hidden: false
+            html: '%3Cselect%20name%3D%22color%22%3E%0A%3Coption%20value%3D%22grey%22%3Egrey%3C/option%3E%0A%3Coption%20value%3D%22black%22%3Eblack%3C/option%3E%0A%3Coption%20value%3D%22blue%22%3Eblue%3C/option%3E%0A%3Coption%20value%3D%22green%22%3Egreen%3C/option%3E%0A%3Coption%20value%3D%22purple%22%3Epurple%3C/option%3E%0A%3Coption%20value%3D%22orange%22%3Eorange%3C/option%3E%0A%3Coption%20value%3D%22red%22%3Ered%3C/option%3E%0A%3C/select%3E'
+            is_dynamic: false
+            label: Color
+            model_class: SelectToolParameter
+            multiple: false
+            name: color
+            optional: false
+            options:
+            - [grey, grey, false]
+            - [black, black, false]
+            - [blue, blue, false]
+            - [green, green, false]
+            - [purple, purple, false]
+            - [orange, orange, false]
+            - [red, red, false]
+            type: select
+            value: grey
+          - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22interval%22%20size%3D%2210%22%20value%3D%221%2C3%22%3E',
+            is_dynamic: false, label: Interval, model_class: TextToolParameter, name: interval,
+            optional: false, size: null, type: text, value: '1,3'}
+          max: 7.0
+          min: 1
+          model_class: Repeat
+          name: color_code
+          title: Color-code
+          type: repeat
+        model_class: ConditionalWhen
+        value: convert
+      model_class: Conditional
+      name: file_conversion
+      test_param:
+        argument: null
+        display: null
+        help: Converts filtered links to Circos/BED files format for graphical view
+          of SVs
+        hidden: false
+        html: '%3Cselect%20name%3D%22file_conversion_select%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22do_not_convert%22%3ENo%3C/option%3E%0A%3Coption%20value%3D%22convert%22%3EYes%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Output file conversion
+        model_class: SelectToolParameter
+        multiple: false
+        name: file_conversion_select
+        optional: false
+        options:
+        - ['No', do_not_convert, false]
+        - ['Yes', convert, false]
+        type: select
+        value: do_not_convert
+      type: conditional
+    model_class: ConditionalWhen
+    value: filtering
+  model_class: Conditional
+  name: getFilteredLinks
+  test_param:
+    argument: null
+    display: null
+    help: Filtering of links according different parameters and thresholds
+    hidden: false
+    html: '%3Cselect%20name%3D%22filtering%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22filtering%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22%22%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Filtering procedure
+    model_class: SelectToolParameter
+    multiple: false
+    name: filtering
+    optional: false
+    options:
+    - ['Yes', filtering, false]
+    - ['No', '', false]
+    type: select
+    value: filtering
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fscreno%2Fsvdetect_pasteur%2Fsvdetect_run_parallel_step%2F1.0.0
+min_width: -1
+model_class: Tool
+name: '[SVDetect] Detect clusters of anomalously mapped pairs'
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '${sample_name}.links',
+  model_class: ToolOutput, name: links_file}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${sample_name}.links.filtered',
+  model_class: ToolOutput, name: flinks_file}
+- {edam_format: format_3475, format: sv, hidden: false, label: '${sample_name}.sv',
+  model_class: ToolOutput, name: sv_file}
+- {edam_format: format_3475, format: segdup, hidden: false, label: '${sample_name}.segdup',
+  model_class: ToolOutput, name: circos_file}
+- {edam_format: format_3003, format: bed, hidden: false, label: '${sample_name}.bed',
+  model_class: ToolOutput, name: bed_file}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${sample_name}.svdetect_run.log',
+  model_class: ToolOutput, name: log_file}
+panel_section_id: ngs:_genomic_structural_variation
+panel_section_name: 'NGS: genomic structural variation'
+target: galaxy_main
+version: 1.0.0

@@ -1,0 +1,238 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/cuffcompare/bcc868ac2847/cuffcompare/cuffcompare_wrapper.xml
+description: compare assembled transcripts to a reference annotation and track Cufflinks
+  transcripts across multiple experiments
+id: toolshed.pasteur.fr/repos/fmareuil/cuffcompare/cuffcompare/2.2.1.0
+inputs:
+- argument: null
+  edam_formats: [format_2306]
+  extensions: [gtf]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: GTF file(s) produced by Cufflinks
+  max: null
+  min: null
+  model_class: DataToolParameter
+  multiple: true
+  name: inputs
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- default: 0
+  help: null
+  inputs:
+  - argument: null
+    extensions: [gtf]
+    help: ''
+    hidden: false
+    is_dynamic: false
+    label: GTF file(s) produced by Cufflinks
+    model_class: DataCollectionToolParameter
+    multiple: false
+    name: additional_inputs
+    optional: false
+    options:
+      hda: []
+      hdca: []
+    type: data_collection
+  max: __Infinity__
+  min: 0
+  model_class: Repeat
+  name: additional_inputs
+  title: Additional GTF Inputs (Lists)
+  type: repeat
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1975, format_2306]
+      extensions: [gff3, gtf]
+      help: Requires an annotation file in GFF3 or GTF format.
+      hidden: false
+      is_dynamic: false
+      label: Reference Annotation
+      model_class: DataToolParameter
+      multiple: false
+      name: reference_annotation
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {argument: null, falsevalue: 'false', help: consider only the reference transcripts
+        that overlap any of the input transfrags (Sn correction), hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22ignore_nonoverlapping_reference%22%20name%3D%22ignore_nonoverlapping_reference%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22ignore_nonoverlapping_reference%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Ignore reference transcripts that are not overlapped
+        by any input transfrags, model_class: BooleanToolParameter, name: ignore_nonoverlapping_reference,
+      optional: false, truevalue: 'true', type: boolean, value: false}
+    - {argument: null, falsevalue: 'false', help: 'consider only the input transcripts
+        that overlap any of the reference transcripts (Sp correction). Warning: this
+        will discard all ''novel'' loci!', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22ignore_nonoverlapping_transfrags%22%20name%3D%22ignore_nonoverlapping_transfrags%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22ignore_nonoverlapping_transfrags%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Ignore input transcripts that are not overlapped by
+        any reference transcripts, model_class: BooleanToolParameter, name: ignore_nonoverlapping_transfrags,
+      optional: false, truevalue: 'true', type: boolean, value: false}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: annotation
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22use_ref_annotation%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22No%22%3ENo%3C/option%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Use Reference Annotation
+    model_class: SelectToolParameter
+    multiple: false
+    name: use_ref_annotation
+    optional: false
+    options:
+    - ['No', 'No', false]
+    - ['Yes', 'Yes', false]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  - inputs:
+    - cases:
+      - inputs:
+        - argument: null
+          display: null
+          help: ''
+          hidden: false
+          is_dynamic: true
+          label: Using reference genome
+          model_class: SelectToolParameter
+          multiple: false
+          name: index
+          optional: false
+          options: []
+          type: select
+        model_class: ConditionalWhen
+        value: cached
+      - inputs:
+        - argument: null
+          edam_formats: [format_1929]
+          extensions: [fasta]
+          help: ''
+          hidden: false
+          is_dynamic: false
+          label: Using reference file
+          model_class: DataToolParameter
+          multiple: false
+          name: ref_file
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        model_class: ConditionalWhen
+        value: history
+      model_class: Conditional
+      name: seq_source
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22index_source%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22cached%22%3ELocally%20cached%3C/option%3E%0A%3Coption%20value%3D%22history%22%3EHistory%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Choose the source for the reference list
+        model_class: SelectToolParameter
+        multiple: false
+        name: index_source
+        optional: false
+        options:
+        - [Locally cached, cached, false]
+        - [History, history, false]
+        type: select
+        value: cached
+      type: conditional
+    model_class: ConditionalWhen
+    value: 'Yes'
+  model_class: Conditional
+  name: seq_data
+  test_param:
+    argument: null
+    display: null
+    help: Use sequence data for some optional classification functions, including
+      the addition of the p_id attribute required by Cuffdiff.
+    hidden: false
+    html: '%3Cselect%20name%3D%22use_seq_data%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Use Sequence Data
+    model_class: SelectToolParameter
+    multiple: false
+    name: use_seq_data
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', false]
+    type: select
+    value: 'Yes'
+  type: conditional
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22discard_single_exon%22%3E%0A%3Coption%20value%3D%22%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22-M%22%3EDiscard%20single-exon%20transfrags%20and%20reference%20transcripts%3C/option%3E%0A%3Coption%20value%3D%22-N%22%3EDiscard%20single-exon%20reference%20transcripts%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: discard (ignore) single-exon transcripts
+  model_class: SelectToolParameter
+  multiple: false
+  name: discard_single_exon
+  optional: false
+  options:
+  - ['No', '', true]
+  - [Discard single-exon transfrags and reference transcripts, -M, false]
+  - [Discard single-exon reference transcripts, -N, false]
+  type: select
+  value: ''
+- {area: false, argument: null, help: 'max. distance (range) allowed from free ends
+    of terminal exons of reference transcripts when assessing exon accuracy. Default:
+    100', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_dist_exon%22%20size%3D%2210%22%20value%3D%22100%22%3E',
+  is_dynamic: false, label: Max. Distance for assessing exon accuracy, max: null,
+  min: null, model_class: IntegerToolParameter, name: max_dist_exon, optional: false,
+  size: null, type: integer, value: '100'}
+- {area: false, argument: null, help: 'max. distance (range) for grouping transcript
+    start sites. Default: 100', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_dist_group%22%20size%3D%2210%22%20value%3D%22100%22%3E',
+  is_dynamic: false, label: Max.Distance for transcript grouping, max: null, min: null,
+  model_class: IntegerToolParameter, name: max_dist_group, optional: false, size: null,
+  type: integer, value: '100'}
+- {argument: null, falsevalue: 'false', help: Discard intron-redundant transfrags
+    if they share the 5' end (if they differ only at the 3' end), hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22discard_intron_redundant_transfrags%22%20name%3D%22discard_intron_redundant_transfrags%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22discard_intron_redundant_transfrags%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: discard intron-redundant transfrags sharing 5', model_class: BooleanToolParameter,
+  name: discard_intron_redundant_transfrags, optional: false, truevalue: 'true', type: boolean,
+  value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fcuffcompare%2Fcuffcompare%2F2.2.1.0
+min_width: -1
+model_class: Tool
+name: Cuffcompare
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}:
+    transcript accuracy', model_class: ToolOutput, name: transcripts_accuracy}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: data ${inputs[0].hid} tmap file', model_class: ToolOutput, name: input1_tmap}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: data ${inputs[0].hid} refmap file', model_class: ToolOutput,
+  name: input1_refmap}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: data ${inputs[1].hid} tmap file', model_class: ToolOutput, name: input2_tmap}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: data ${inputs[1].hid} refmap file', model_class: ToolOutput,
+  name: input2_refmap}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: transcript tracking', model_class: ToolOutput, name: transcripts_tracking}
+- {edam_format: format_2306, format: gtf, hidden: false, label: '${tool.name} on ${on_string}:
+    combined transcripts', model_class: ToolOutput, name: transcripts_combined}
+panel_section_id: ngs-rna-tools
+panel_section_name: 'NGS: RNA Analysis'
+target: galaxy_main
+version: 2.2.1.0

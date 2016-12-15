@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/samtools_sort/f1c99aed354a/samtools_sort/samtools_sort.xml
+description: sorts a BAM file
+id: toolshed.pasteur.fr/repos/fmareuil/samtools_sort/samtools_sort/0.1.18
+inputs:
+- argument: null
+  edam_formats: [format_2572]
+  extensions: [bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Select the bam file you need to sort
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fsamtools_sort%2Fsamtools_sort%2F0.1.18
+min_width: -1
+model_class: Tool
+name: samtools_sort
+outputs:
+- {edam_format: format_2572, format: bam, hidden: false, label: '${tool.name} on ${on_string}:
+    sorted BAM', model_class: ToolOutput, name: output}
+panel_section_id: samtools
+panel_section_name: 'NGS: SAM Tools'
+target: galaxy_main
+version: 0.1.18

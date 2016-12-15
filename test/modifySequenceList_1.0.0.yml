@@ -1,0 +1,90 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/galaxy/modifySequenceList.xml
+description: Extend or shring a list of sequences.
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/modifySequenceList/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: input file
+  model_class: DataToolParameter
+  multiple: false
+  name: inputFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22StartVal%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: StartVal, optional: false, size: null, type: integer, value: '0'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionStart
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22Start%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: keep first nucleotides
+    model_class: SelectToolParameter
+    multiple: false
+    name: Start
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22EndVal%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: EndVal, optional: false, size: null, type: integer, value: '0'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionEnd
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22End%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: keep last nucleotides
+    model_class: SelectToolParameter
+    multiple: false
+    name: End
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FmodifySequenceList%2F1.0.0
+min_width: -1
+model_class: Tool
+name: modify sequence list
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: '[modifySequenceList]
+    Output File', model_class: ToolOutput, name: outputFile}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

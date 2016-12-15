@@ -1,0 +1,61 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/2f92cb75946c/picard_pasteur_wrapper/rgPicardLibComplexity.xml
+description: ''
+id: toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/rgEstLibComp/1.56.0
+inputs:
+- argument: null
+  edam_formats: [format_2572, format_2573]
+  extensions: [bam, sam]
+  help: If empty, upload or import a SAM/BAM dataset.
+  hidden: false
+  is_dynamic: false
+  label: SAM/BAM dataset
+  model_class: DataToolParameter
+  multiple: false
+  name: input_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: Use this remind you what the job was for., hidden: false,
+  html: '%3Cinput%20type%3D%22text%22%20name%3D%22out_prefix%22%20size%3D%2280%22%20value%3D%22Library%20Complexity%22%3E',
+  is_dynamic: false, label: Title for the output file, model_class: TextToolParameter,
+  name: out_prefix, optional: false, size: '80', type: text, value: Library Complexity}
+- {area: false, argument: null, help: Total_reads / 4^max_id_bases reads will be compared
+    at a time. Lower numbers = more accurate results and exponentially more time/memory.,
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minIDbases%22%20size%3D%225%22%20value%3D%225%22%3E',
+  is_dynamic: false, label: Minimum identical bases at starts of reads for grouping,
+  max: null, min: null, model_class: IntegerToolParameter, name: minIDbases, optional: false,
+  size: '5', type: integer, value: '5'}
+- {area: false, argument: null, help: The maximum rate of differences between two
+    reads to call them identical, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxDiff%22%20size%3D%225%22%20value%3D%220.03%22%3E',
+  is_dynamic: false, label: Maximum difference rate for identical reads, max: null,
+  min: null, model_class: FloatToolParameter, name: maxDiff, optional: false, size: '5',
+  type: float, value: '0.03'}
+- {area: false, argument: null, help: The minimum mean quality of bases in a read
+    pair. Lower average quality reads filtered out from all calculations, hidden: false,
+  html: '%3Cinput%20type%3D%22text%22%20name%3D%22minMeanQ%22%20size%3D%225%22%20value%3D%2220%22%3E',
+  is_dynamic: false, label: Minimum percentage, max: null, min: null, model_class: IntegerToolParameter,
+  name: minMeanQ, optional: false, size: '5', type: integer, value: '20'}
+- {area: false, argument: null, help: 'Names are parsed to extract: tile/region, x
+    coordinate and y coordinate, to estimate optical duplication rate', hidden: false,
+  html: '%3Cinput%20type%3D%22text%22%20name%3D%22readRegex%22%20size%3D%22120%22%20value%3D%22%5Ba-zA-Z0-9%5D%2B%3A%5B0-9%5D%3A%28%5B0-9%5D%2B%29%3A%28%5B0-9%5D%2B%29%3A%28%5B0-9%5D%2B%29.%2A%22%3E',
+  is_dynamic: false, label: Regular expression that can be used to parse read names
+    in the incoming SAM file, model_class: TextToolParameter, name: readRegex, optional: false,
+  size: '120', type: text, value: '[a-zA-Z0-9]+:[0-9]:([0-9]+):([0-9]+):([0-9]+).*'}
+- {area: false, argument: null, help: 'e.g. 5-10 pixels. Later Illumina software versions
+    multiply pixel values by 10, in which case 50-100', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22optDupeDist%22%20size%3D%225%22%20value%3D%22100%22%3E',
+  is_dynamic: false, label: The maximum offset between two duplicte clusters in order
+    to consider them optical duplicates., model_class: TextToolParameter, name: optDupeDist,
+  optional: false, size: '5', type: text, value: '100'}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fpicard_pasteur_wrapper%2FrgEstLibComp%2F1.56.0
+min_width: -1
+model_class: Tool
+name: Estimate Library Complexity
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '${out_prefix}_lib_complexity.html',
+  model_class: ToolOutput, name: html_file}
+panel_section_id: ngs:_picard_tools
+panel_section_name: 'NGS: Picard Tools'
+target: galaxy_main
+version: 1.56.0

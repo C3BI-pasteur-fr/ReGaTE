@@ -1,0 +1,53 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/frogs/36109d143f38/frogs/biom_to_tsv.xml
+description: Converts a BIOM file in TSV file.
+id: toolshed.pasteur.fr/repos/mvalade/frogs/FROGS_biom_to_tsv/2.1.0
+inputs:
+- argument: null
+  edam_formats: [format_3464]
+  extensions: [biom1]
+  help: 'The BIOM file to convert (format: BIOM).'
+  hidden: false
+  is_dynamic: false
+  label: Abundance file
+  model_class: DataToolParameter
+  multiple: false
+  name: biom_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: 'The sequences file (format: fasta). If you use this option the sequences
+    will be add in TSV.'
+  hidden: false
+  is_dynamic: false
+  label: Sequences file
+  model_class: DataToolParameter
+  multiple: false
+  name: sequence_file
+  optional: true
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: 'false', help: 'If you have used FROGS affiliation
+    on your data, you can extract information about multiple alignements in a second
+    TSV.', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22extract_multi_align%22%20name%3D%22extract_multi_align%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22extract_multi_align%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Extract multi-alignments, model_class: BooleanToolParameter,
+  name: extract_multi_align, optional: false, truevalue: 'true', type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Ffrogs%2FFROGS_biom_to_tsv%2F2.1.0
+min_width: -1
+model_class: Tool
+name: FROGS BIOM to TSV
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}:
+    abundance.tsv', model_class: ToolOutput, name: tsv_file}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}:
+    multi_hits.tsv', model_class: ToolOutput, name: multi_affi_file}
+panel_section_id: frogs_metagenomic_pipeline
+panel_section_name: FROGS Metagenomic pipeline
+target: galaxy_main
+version: 2.1.0

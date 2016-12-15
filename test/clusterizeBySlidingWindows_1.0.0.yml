@@ -1,0 +1,274 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/galaxy/clusterizeBySlidingWindows.xml
+description: Produces a GFF3 file that clusters a list of transcripts using a sliding
+  window. Cluster the data into regions (defined by size and overlap with next region)
+  and keep only highest peaks.
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/clusterizeBySlidingWindows/1.0.0
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3003]
+      extensions: [bed]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: bed
+  - inputs:
+    - argument: null
+      edam_formats: [format_2305]
+      extensions: [gff]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff
+  - inputs:
+    - argument: null
+      edam_formats: [null]
+      extensions: [gff2]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff2
+  - inputs:
+    - argument: null
+      edam_formats: [format_1975]
+      extensions: [gff3]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff3
+  - inputs:
+    - argument: null
+      edam_formats: [format_2573]
+      extensions: [sam]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: sam
+  - inputs:
+    - argument: null
+      edam_formats: [format_2306]
+      extensions: [gtf]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gtf
+  model_class: Conditional
+  name: formatType
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22FormatInputFileName%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22bed%22%3Ebed%3C/option%3E%0A%3Coption%20value%3D%22gff%22%3Egff%3C/option%3E%0A%3Coption%20value%3D%22gff2%22%3Egff2%3C/option%3E%0A%3Coption%20value%3D%22gff3%22%3Egff3%3C/option%3E%0A%3Coption%20value%3D%22sam%22%3Esam%3C/option%3E%0A%3Coption%20value%3D%22gtf%22%3Egtf%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Input File Format
+    model_class: SelectToolParameter
+    multiple: false
+    name: FormatInputFileName
+    optional: false
+    options:
+    - [bed, bed, false]
+    - [gff, gff, false]
+    - [gff2, gff2, false]
+    - [gff3, gff3, false]
+    - [sam, sam, false]
+    - [gtf, gtf, false]
+    type: select
+    value: bed
+  type: conditional
+- {area: false, argument: null, help: Size of the regions., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22size%22%20size%3D%2210%22%20value%3D%2250000%22%3E',
+  is_dynamic: false, label: Size option, model_class: TextToolParameter, name: size,
+  optional: false, size: null, type: text, value: '50000'}
+- {area: false, argument: null, help: Overlap between two consecutive regions., hidden: false,
+  html: '%3Cinput%20type%3D%22text%22%20name%3D%22overlap%22%20size%3D%2210%22%20value%3D%2250%22%3E',
+  is_dynamic: false, label: Overlap option, model_class: TextToolParameter, name: overlap,
+  optional: false, size: null, type: text, value: '50'}
+- {argument: null, falsevalue: '', help: This option normalizes (Warning!! Only for
+    GFF3 file!), hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22normalize%22%20name%3D%22normalize%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22normalize%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Normalize option for only GFF3 file format, model_class: BooleanToolParameter,
+  name: normalize, optional: false, truevalue: -m, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: Consider the two strands separately., hidden: false,
+  html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22strands%22%20name%3D%22strands%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22strands%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: strands option, model_class: BooleanToolParameter, name: strands,
+  optional: false, truevalue: '-2', type: boolean, value: false}
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: write a tag name you want to observe., hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22value%22%20size%3D%2210%22%20value%3D%22None%22%3E',
+      is_dynamic: false, label: tag option, model_class: TextToolParameter, name: value,
+      optional: false, size: null, type: text, value: None}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionTag
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22tag%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: use a given tag as input (instead of summing number of features)
+    model_class: SelectToolParameter
+    multiple: false
+    name: tag
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: 'You can ONLY choose one of fowlling operation
+        : sum, avg, med, min, max.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22value%22%20size%3D%2210%22%20value%3D%22None%22%3E',
+      is_dynamic: false, label: operation option, model_class: TextToolParameter,
+      name: value, optional: false, size: null, type: text, value: None}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionsOperation
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22operation%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: combine tag value with given operation [choice (sum, avg, med, min, max)]
+    model_class: SelectToolParameter
+    multiple: false
+    name: operation
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: print the result in the given tag (default
+        usually is 'nbElements'), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22value%22%20size%3D%2210%22%20value%3D%22nbElements%22%3E',
+      is_dynamic: false, label: write tag option, model_class: TextToolParameter,
+      name: value, optional: false, size: null, type: text, value: nbElements}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionWriteTag
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22writeTag%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: write a new tag in output file
+    model_class: SelectToolParameter
+    multiple: false
+    name: writeTag
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- {argument: null, falsevalue: '', help: This option considers the two strands separately.,
+  hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22strand%22%20name%3D%22strand%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22strand%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: strand option, model_class: BooleanToolParameter, name: strand,
+  optional: false, truevalue: '-2', type: boolean, value: false}
+- {argument: null, falsevalue: '', help: This option creates a png file., hidden: false,
+  html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22plot%22%20name%3D%22plot%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22plot%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: plot option, model_class: BooleanToolParameter, name: plot,
+  optional: false, truevalue: -p, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: This option creates a csv file., hidden: false,
+  html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22excel%22%20name%3D%22excel%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22excel%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: excel option, model_class: BooleanToolParameter, name: excel,
+  optional: false, truevalue: -x, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FclusterizeBySlidingWindows%2F1.0.0
+min_width: -1
+model_class: Tool
+name: clusterize By SlidingWindows
+outputs:
+- {edam_format: format_1975, format: gff3, hidden: false, label: '', model_class: ToolOutput,
+  name: outputFileGff}
+- {edam_format: format_3475, format: csv, hidden: false, label: '', model_class: ToolOutput,
+  name: excelOutput}
+- {edam_format: format_3547, format: png, hidden: false, label: '', model_class: ToolOutput,
+  name: plotPng}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

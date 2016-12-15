@@ -1,0 +1,120 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/kronatools/07dd2d9ac3bb/kronatools/taxonomy_krona_chart.xml
+description: from taxonomic profile
+id: toolshed.pasteur.fr/repos/odoppelt/kronatools/taxonomy_krona_chart/2.0.0
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [taxonomy]
+      help: Select a taxonomy dataset
+      hidden: false
+      is_dynamic: false
+      label: Input file
+      max: null
+      min: null
+      model_class: DataToolParameter
+      multiple: true
+      name: input
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      display: null
+      help: -d; Show all level from root up to this point
+      hidden: false
+      html: '%3Cselect%20name%3D%22max_rank%22%3E%0A%3Coption%20value%3D%228%22%3EClass%3C/option%3E%0A%3Coption%20value%3D%220%22%3EShow%20entire%20tree%3C/option%3E%0A%3Coption%20value%3D%221%22%3ESuperkingdom%3C/option%3E%0A%3Coption%20value%3D%222%22%3EKingdom%3C/option%3E%0A%3Coption%20value%3D%223%22%3ESubkingdom%3C/option%3E%0A%3Coption%20value%3D%224%22%3ESuperphylum%3C/option%3E%0A%3Coption%20value%3D%225%22%3EPhylum%3C/option%3E%0A%3Coption%20value%3D%226%22%3ESubphylum%3C/option%3E%0A%3Coption%20value%3D%227%22%3ESuperclass%3C/option%3E%0A%3Coption%20value%3D%229%22%3ESubclass%3C/option%3E%0A%3Coption%20value%3D%2210%22%3ESuperorder%3C/option%3E%0A%3Coption%20value%3D%2211%22%3EOrder%3C/option%3E%0A%3Coption%20value%3D%2212%22%3ESuborder%3C/option%3E%0A%3Coption%20value%3D%2213%22%3ESuperfamily%3C/option%3E%0A%3Coption%20value%3D%2214%22%3EFamily%3C/option%3E%0A%3Coption%20value%3D%2215%22%3ESubfamily%3C/option%3E%0A%3Coption%20value%3D%2216%22%3ETribe%3C/option%3E%0A%3Coption%20value%3D%2217%22%3ESubtribe%3C/option%3E%0A%3Coption%20value%3D%2218%22%3EGenus%3C/option%3E%0A%3Coption%20value%3D%2219%22%3ESubgenus%3C/option%3E%0A%3Coption%20value%3D%2220%22%3ESpecies%3C/option%3E%0A%3Coption%20value%3D%2221%22%3ESubspecies%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: show ranks from root to
+      model_class: SelectToolParameter
+      multiple: false
+      name: max_rank
+      optional: false
+      options:
+      - [Class, '8', false]
+      - [Show entire tree, '0', false]
+      - [Superkingdom, '1', false]
+      - [Kingdom, '2', false]
+      - [Subkingdom, '3', false]
+      - [Superphylum, '4', false]
+      - [Phylum, '5', false]
+      - [Subphylum, '6', false]
+      - [Superclass, '7', false]
+      - [Subclass, '9', false]
+      - [Superorder, '10', false]
+      - [Order, '11', false]
+      - [Suborder, '12', false]
+      - [Superfamily, '13', false]
+      - [Family, '14', false]
+      - [Subfamily, '15', false]
+      - [Tribe, '16', false]
+      - [Subtribe, '17', false]
+      - [Genus, '18', false]
+      - [Subgenus, '19', false]
+      - [Species, '20', false]
+      - [Subspecies, '21', false]
+      type: select
+      value: '8'
+    model_class: ConditionalWhen
+    value: taxonomy
+  - inputs:
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [tabular]
+      help: Select a MetaPhlAn dataset
+      hidden: false
+      is_dynamic: false
+      label: Input file
+      max: null
+      min: null
+      model_class: DataToolParameter
+      multiple: true
+      name: input
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: text
+  model_class: Conditional
+  name: type_of_data
+  test_param:
+    argument: null
+    display: null
+    help: Select between Galaxy Taxonomy and MetaPhlAn Text
+    hidden: false
+    html: '%3Cselect%20name%3D%22type_of_data_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22taxonomy%22%3E%0A%3Coption%20value%3D%22taxonomy%22%20selected%3ETaxonomy%3C/option%3E%0A%3Coption%20value%3D%22text%22%3EMetaPhlAn%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: What is the type of your input data
+    model_class: SelectToolParameter
+    multiple: false
+    name: type_of_data_selector
+    optional: false
+    options:
+    - [Taxonomy, taxonomy, true]
+    - [MetaPhlAn, text, false]
+    type: select
+    value: taxonomy
+  type: conditional
+- {area: false, argument: null, help: -n; Otherwise it will simply be called "Root",
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22root_name%22%20size%3D%2220%22%20value%3D%22Root%22%3E',
+  is_dynamic: false, label: Provide a name for the basal rank, model_class: TextToolParameter,
+  name: root_name, optional: false, size: '20', type: text, value: Root}
+- {argument: null, falsevalue: '', help: '-c; Combine data from each dataset, rather
+    than creating separate datasets within the chart', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22combine_inputs%22%20name%3D%22combine_inputs%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22combine_inputs%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'Combine data from multiple datasets?', model_class: BooleanToolParameter,
+  name: combine_inputs, optional: false, truevalue: -c, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Fkronatools%2Ftaxonomy_krona_chart%2F2.0.0
+min_width: -1
+model_class: Tool
+name: Krona pie chart
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '${tool.name} on
+    ${on_string}: HTML', model_class: ToolOutput, name: output}
+panel_section_id: tax_manipulation
+panel_section_name: Metagenomic analyses
+target: galaxy_main
+version: 2.0.0

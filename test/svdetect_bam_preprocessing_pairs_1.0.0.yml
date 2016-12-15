@@ -1,0 +1,119 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/screno/svdetect_pasteur/1dddcc5f22fc/svdetect_pasteur/BAM_preprocessingPairs.xml
+description: to get abnormal pairs
+id: toolshed.pasteur.fr/repos/screno/svdetect_pasteur/svdetect_bam_preprocessing_pairs/1.0.0
+inputs:
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22sample_name%22%20size%3D%2210%22%20value%3D%22sample%22%3E',
+  is_dynamic: false, label: Sample Name, model_class: TextToolParameter, name: sample_name,
+  optional: false, size: null, type: text, value: sample}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22input_type%22%3E%0A%3Coption%20value%3D%22-a%22%3EBAM%3C/option%3E%0A%3Coption%20value%3D%22%22%3ESAM%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Type of file you want to give as input
+  model_class: SelectToolParameter
+  multiple: false
+  name: input_type
+  optional: false
+  options:
+  - [BAM, -a, false]
+  - [SAM, '', false]
+  type: select
+  value: -a
+- argument: null
+  edam_formats: [format_2572, format_2573]
+  extensions: [bam, sam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: BAM input file
+  model_class: DataToolParameter
+  multiple: false
+  name: input_dataset
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22readType%22%20last_selected_value%3D%221%22%3E%0A%3Coption%20value%3D%221%22%20selected%3EIllumina%3C/option%3E%0A%3Coption%20value%3D%220%22%3ESOLiD%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Read type
+  model_class: SelectToolParameter
+  multiple: false
+  name: readType
+  optional: false
+  options:
+  - [Illumina, '1', true]
+  - [SOLiD, '0', false]
+  type: select
+  value: '1'
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22pairType%22%20last_selected_value%3D%221%22%3E%0A%3Coption%20value%3D%221%22%20selected%3EPaired-end%3C/option%3E%0A%3Coption%20value%3D%220%22%3EMate-Pair%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Library type
+  model_class: SelectToolParameter
+  multiple: false
+  name: pairType
+  optional: false
+  options:
+  - [Paired-end, '1', true]
+  - [Mate-Pair, '0', false]
+  type: select
+  value: '1'
+- argument: null
+  display: null
+  help: Dump normal pairs into a file sample_name.norm.bam/sam
+  hidden: false
+  html: '%3Cselect%20name%3D%22pairNormal%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Do you want an additional bam file listing concordant mapped pairs?
+  model_class: SelectToolParameter
+  multiple: false
+  name: pairNormal
+  optional: false
+  options:
+  - ['Yes', 'yes', false]
+  - ['No', 'no', true]
+  type: select
+  value: 'no'
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22nbrePair%22%20size%3D%2230%22%20value%3D%221000000%22%3E',
+  is_dynamic: false, label: "Number of pairs for calculating mu (\xB5) and sigma (\u03C3\
+    ) lengths", max: null, min: 1000, model_class: IntegerToolParameter, name: nbrePair,
+  optional: false, size: '30', type: integer, value: '1000000'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22isizeMin%22%20size%3D%2230%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: "Minimum value of ISIZE for calculating mu (\xB5) and\
+    \ sigma (\u03C3) lengths", max: null, min: 0, model_class: IntegerToolParameter,
+  name: isizeMin, optional: false, size: '30', type: integer, value: '0'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22isizeMax%22%20size%3D%2230%22%20value%3D%2210000%22%3E',
+  is_dynamic: false, label: "Maximum value of ISIZE for calculating mu (\xB5) and\
+    \ sigma( \u03C3) lengths", max: null, min: 0, model_class: IntegerToolParameter,
+  name: isizeMax, optional: false, size: '30', type: integer, value: '10000'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22foldPair%22%20size%3D%2230%22%20value%3D%223%22%3E',
+  is_dynamic: false, label: "Minimal number of sigma (\u03C3) fold for filtering pairs",
+  max: null, min: 0, model_class: IntegerToolParameter, name: foldPair, optional: false,
+  size: '30', type: integer, value: '3'}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fscreno%2Fsvdetect_pasteur%2Fsvdetect_bam_preprocessing_pairs%2F1.0.0
+min_width: -1
+model_class: Tool
+name: '[SVDetect] BAM preprocessing'
+outputs:
+- {edam_format: format_2572, format: bam, hidden: false, label: '${$sample_name}.ab.bam',
+  model_class: ToolOutput, name: abBAM}
+- {edam_format: format_2573, format: sam, hidden: false, label: '${$sample_name}.ab.sam',
+  model_class: ToolOutput, name: abSAM}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${$sample_name}.svdetect_preprocessing.log',
+  model_class: ToolOutput, name: log}
+- {edam_format: format_2572, format: bam, hidden: false, label: '${$sample_name}.norm.bam',
+  model_class: ToolOutput, name: normBAM}
+panel_section_id: ngs:_genomic_structural_variation
+panel_section_name: 'NGS: genomic structural variation'
+target: galaxy_main
+version: 1.0.0

@@ -1,0 +1,115 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/express/98149568e9e2/express/express_wrapper.xml
+description: Quantify the abundances of a set of target sequences from sampled subsequences
+id: toolshed.pasteur.fr/repos/fmareuil/express/express/1.3.1
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: The multi-FASTA file can also be a fasta file.
+  hidden: false
+  is_dynamic: false
+  label: A set of target references (annotation) in multi-FASTA format
+  model_class: DataToolParameter
+  multiple: false
+  name: multiFasta
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_2573, format_2572]
+  extensions: [sam, bam]
+  help: The set of aligned reads.
+  hidden: false
+  is_dynamic: false
+  label: Alignments in the BAM or SAM format
+  model_class: DataToolParameter
+  multiple: false
+  name: bamOrSamFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  - inputs:
+    - {area: false, argument: null, help: 0 is default. Can improve accuracy at the
+        cost of time., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22additional_batch%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Additional batch EM rounds, max: null, min: null,
+      model_class: IntegerToolParameter, name: additional_batch, optional: false,
+      size: null, type: integer, value: '0'}
+    - {area: false, argument: null, help: 0 is default. Can improve accuracy at the
+        cost of time., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22additional_online%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Additional online EM rounds, max: null, min: null,
+      model_class: IntegerToolParameter, name: additional_online, optional: false,
+      size: null, type: integer, value: '0'}
+    - {argument: null, falsevalue: '', help: This calculation requires slightly more
+        time and memory., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22calc_covar%22%20name%3D%22calc_covar%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22calc_covar%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: 'Calculate the covariance between targets and outputs?',
+      model_class: BooleanToolParameter, name: calc_covar, optional: false, truevalue: --calc-covar,
+      type: boolean, value: false}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22f_stranded%22%20name%3D%22f_stranded%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22f_stranded%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Accept only forward single-end alignments (second-stranded
+        protocols), model_class: BooleanToolParameter, name: f_stranded, optional: false,
+      truevalue: --f-stranded, type: boolean, value: false}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22r_stranded%22%20name%3D%22r_stranded%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22r_stranded%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Accept only reverse single-end alignments (first-stranded
+        protocols), model_class: BooleanToolParameter, name: r_stranded, optional: false,
+      truevalue: --r-stranded, type: boolean, value: false}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_bias_correct%22%20name%3D%22no_bias_correct%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_bias_correct%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: disables bias correction, model_class: BooleanToolParameter,
+      name: no_bias_correct, optional: false, truevalue: --no-bias-correct, type: boolean,
+      value: false}
+    - {area: false, argument: null, help: '200 is default. While the empirical distribution
+        is estimated from paired-end reads on-the-fly, this value paramaterizes the
+        prior distribution.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22mean_fragment_length%22%20size%3D%2210%22%20value%3D%22200%22%3E',
+      is_dynamic: false, label: Specifies the mean fragment length, max: null, min: null,
+      model_class: IntegerToolParameter, name: mean_fragment_length, optional: false,
+      size: null, type: integer, value: '200'}
+    - {area: false, argument: null, help: '60 is default. While the empirical distribution
+        is estimated from paired-end reads on-the-fly, this value paramaterizes the
+        prior distribution.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fragment_length_deviation%22%20size%3D%2210%22%20value%3D%2260%22%3E',
+      is_dynamic: false, label: Specified the fragment length standard deviation,
+      max: null, min: null, model_class: IntegerToolParameter, name: fragment_length_deviation,
+      optional: false, size: null, type: integer, value: '60'}
+    model_class: ConditionalWhen
+    value: 'yes'
+  model_class: Conditional
+  name: additional_params
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22use_additional%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22no%22%3ENo%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Use Additional Parameters?
+    model_class: SelectToolParameter
+    multiple: false
+    name: use_additional
+    optional: false
+    options:
+    - ['No', 'no', false]
+    - ['Yes', 'yes', false]
+    type: select
+    value: 'no'
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fexpress%2Fexpress%2F1.3.1
+min_width: -1
+model_class: Tool
+name: eXpress
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: 'params on ${multiFasta.name}
+    and ${bamOrSamFile.name}', model_class: ToolOutput, name: params}
+- {edam_format: format_2330, format: txt, hidden: false, label: 'results on ${multiFasta.name}
+    and ${bamOrSamFile.name}', model_class: ToolOutput, name: results}
+- {edam_format: format_2330, format: txt, hidden: false, label: '', model_class: ToolOutput,
+  name: varcov}
+panel_section_id: ngs-rna-tools
+panel_section_name: 'NGS: RNA Analysis'
+target: galaxy_main
+version: 1.3.1

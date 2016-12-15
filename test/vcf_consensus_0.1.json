@@ -1,0 +1,109 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "vcf_consensus-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.1", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/screno/vcf_perl_scripts/vcf_consensus/0.1", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "fasta", 
+                    "dataDescription": "fasta_output", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Apply VCF variants to a fasta file to create a new consensus sequence.", 
+            "input": [
+                {
+                    "dataHandle": "ref_file", 
+                    "dataDescription": "Reference fasta dataset from your history", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "vcf_file", 
+                    "dataDescription": "VCF Dataset containing the variants to apply to the reference", 
+                    "data": {
+                        "term": "Sequence variations", 
+                        "uri": "http://edamontology.org/data_3498"
+                    }, 
+                    "format": [
+                        {
+                            "term": "VCF", 
+                            "uri": "http://edamontology.org/format_3016"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Apply VCF variants to a fasta file to create a new consensus sequence.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/screno/vcf_perl_scripts/vcf_consensus/0.1", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/screno/vcf_perl_scripts/vcf_consensus/0.1\"", 
+            "usesVersion": "0.1"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "vcf_consensus-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.1", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

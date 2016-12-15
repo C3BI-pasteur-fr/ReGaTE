@@ -1,0 +1,35 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/afelten/microbiome_analyses/cacc5a90438f/microbiome_analyses/Sabund.xml
+description: Make Sabund and Rabund files from a CD-HIT cluster output
+id: toolshed.pasteur.fr/repos/afelten/microbiome_analyses/Sabund/0.1 beta
+inputs:
+- argument: null
+  edam_formats: [null]
+  extensions: [text]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: CD-HIT cluster output tabular file
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22precision%22%20size%3D%223%22%20value%3D%220.9%22%3E',
+  is_dynamic: false, label: CD-HIT Similarity threshold, max: null, min: null, model_class: FloatToolParameter,
+  name: precision, optional: false, size: '3', type: float, value: '0.9'}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fafelten%2Fmicrobiome_analyses%2FSabund%2F0.1+beta
+min_width: -1
+model_class: Tool
+name: Sabund and Rabund
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: '$${on_string}:
+    Sabund', model_class: ToolOutput, name: Sabund}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '$${on_string}:
+    Rabund', model_class: ToolOutput, name: Rabund}
+panel_section_id: microbiome_analysis
+panel_section_name: Microbiome Analysis
+target: galaxy_main
+version: 0.1 beta

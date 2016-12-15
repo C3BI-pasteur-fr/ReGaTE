@@ -1,0 +1,386 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/stampy_mapper/a95bc243181e/stampy_mapper/stampy_mapper.xml
+description: Mapper for divergent genomes
+id: toolshed.pasteur.fr/repos/fmareuil/stampy_mapper/stampy_mapper/1.0.20
+inputs:
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [stampy_index]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Output from stampy index (with log file)
+  model_class: DataToolParameter
+  multiple: false
+  name: input_genome
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22substitutionrate%22%20size%3D%2210%22%20value%3D%220.001%22%3E',
+  is_dynamic: false, label: Substitution/divergence rate between the sequenced genome
+    and the reference., max: 1.0, min: 0.0, model_class: FloatToolParameter, name: substitutionrate,
+  optional: false, size: null, type: float, value: '0.001'}
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1932, format_1931, format_1929]
+      extensions: [fastqsanger, fastqillumina, fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Original fastq or fasta dataset from your history
+      model_class: DataToolParameter
+      multiple: false
+      name: input
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: single
+  - inputs:
+    - argument: null
+      edam_formats: [format_2572]
+      extensions: [bam]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: BWA BAM dataset from your history
+      model_class: DataToolParameter
+      multiple: false
+      name: input_bam
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22bamkeepgoodreads%22%20name%3D%22bamkeepgoodreads%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22bamkeepgoodreads%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: 'If checked, do not re-map already well-mapped reads
+        from BAM', model_class: BooleanToolParameter, name: bamkeepgoodreads, optional: false,
+      truevalue: --bamkeepgoodreads, type: boolean, value: false}
+    model_class: ConditionalWhen
+    value: single_bam
+  - inputs:
+    - argument: null
+      edam_formats: [format_1932, format_1931, format_1929]
+      extensions: [fastqsanger, fastqillumina, fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Read 1 fastq dataset from your history
+      model_class: DataToolParameter
+      multiple: false
+      name: input1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_1932, format_1931, format_1929]
+      extensions: [fastqsanger, fastqillumina, fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Read 2 fastq dataset from your history
+      model_class: DataToolParameter
+      multiple: false
+      name: input2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22insertsize%22%20size%3D%2210%22%20value%3D%22250%22%3E',
+      is_dynamic: false, label: Mean insert size of the paired-end reads, max: null,
+      min: 50, model_class: IntegerToolParameter, name: insertsize, optional: false,
+      size: null, type: integer, value: '250'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22insertsd%22%20size%3D%2210%22%20value%3D%2260%22%3E',
+      is_dynamic: false, label: Standard deviation for the insert size, max: null,
+      min: 0, model_class: IntegerToolParameter, name: insertsd, optional: false,
+      size: null, type: integer, value: '60'}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22noautosense%22%20name%3D%22noautosense%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22noautosense%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Do not auto-sense insert size distribution(s), model_class: BooleanToolParameter,
+      name: noautosense, optional: false, truevalue: --noautosense, type: boolean,
+      value: false}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxpairseeds%22%20size%3D%2210%22%20value%3D%2225%22%3E',
+      is_dynamic: false, label: Number of ambiguous single mappings to take forward
+        for paired realignment, max: null, min: 0, model_class: IntegerToolParameter,
+      name: maxpairseeds, optional: false, size: null, type: integer, value: '25'}
+    model_class: ConditionalWhen
+    value: paired_end
+  - inputs:
+    - argument: null
+      edam_formats: [format_2572]
+      extensions: [bam]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: BWA BAM dataset from your history
+      model_class: DataToolParameter
+      multiple: false
+      name: input_bam
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22bamkeepgoodreads%22%20name%3D%22bamkeepgoodreads%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22bamkeepgoodreads%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: 'If checked, do not re-map already well-mapped reads
+        from BAM', model_class: BooleanToolParameter, name: bamkeepgoodreads, optional: false,
+      truevalue: --bamkeepgoodreads, type: boolean, value: false}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22insertsize%22%20size%3D%2210%22%20value%3D%22250%22%3E',
+      is_dynamic: false, label: Mean insert size of the paired-end reads, max: null,
+      min: 50, model_class: IntegerToolParameter, name: insertsize, optional: false,
+      size: null, type: integer, value: '250'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22insertsd%22%20size%3D%2210%22%20value%3D%2260%22%3E',
+      is_dynamic: false, label: Standard deviation for the insert size, max: null,
+      min: 0, model_class: IntegerToolParameter, name: insertsd, optional: false,
+      size: null, type: integer, value: '60'}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22noautosense%22%20name%3D%22noautosense%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22noautosense%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Do not auto-sense insert size distribution(s), model_class: BooleanToolParameter,
+      name: noautosense, optional: false, truevalue: --noautosense, type: boolean,
+      value: false}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxpairseeds%22%20size%3D%2210%22%20value%3D%2225%22%3E',
+      is_dynamic: false, label: Number of ambiguous single mappings to take forward
+        for paired realignment, max: null, min: 0, model_class: IntegerToolParameter,
+      name: maxpairseeds, optional: false, size: null, type: integer, value: '25'}
+    model_class: ConditionalWhen
+    value: paired_end_bam
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22insertsize2%22%20size%3D%2210%22%20value%3D%22-2000%22%3E',
+      is_dynamic: false, label: (Initial) mean insert size for mate pairs, max: null,
+      min: null, model_class: IntegerToolParameter, name: insertsize2, optional: false,
+      size: null, type: integer, value: '-2000'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22insertsd2%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+      is_dynamic: false, label: (Initial) standard deviation for mate pairs, max: null,
+      min: -1, model_class: IntegerToolParameter, name: insertsd2, optional: false,
+      size: null, type: integer, value: '-1'}
+    model_class: ConditionalWhen
+    value: mate_pairs
+  model_class: Conditional
+  name: read_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22read_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22single%22%3E%0A%3Coption%20value%3D%22single%22%20selected%3ESingle%20Read%20fastq%20or%20fasta%20file%3C/option%3E%0A%3Coption%20value%3D%22paired_end%22%3EPaired%20End%20fastq%20or%20fasta%20file%3C/option%3E%0A%3Coption%20value%3D%22mate_pairs%22%3EMate%20Pairs%20fastq%20or%20fasta%20file%3C/option%3E%0A%3Coption%20value%3D%22single_bam%22%3ESingle%20Read%20BAM%20file%3C/option%3E%0A%3Coption%20value%3D%22paired_end_bam%22%3EPaired%20End%20BAM%20file%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Type of input data
+    model_class: SelectToolParameter
+    multiple: false
+    name: read_type_selector
+    optional: false
+    options:
+    - [Single Read fastq or fasta file, single, true]
+    - [Paired End fastq or fasta file, paired_end, false]
+    - [Mate Pairs fastq or fasta file, mate_pairs, false]
+    - [Single Read BAM file, single_bam, false]
+    - [Paired End BAM file, paired_end_bam, false]
+    type: select
+    value: single
+  type: conditional
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22qualtype%22%20last_selected_value%3D%22--sanger%22%3E%0A%3Coption%20value%3D%22--solexa%22%3EIllumina%201.5%20-%201.7%3C/option%3E%0A%3Coption%20value%3D%22--sanger%22%20selected%3ESanger/Illumina%201.8%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Type of quality
+  model_class: SelectToolParameter
+  multiple: false
+  name: qualtype
+  optional: false
+  options:
+  - [Illumina 1.5 - 1.7, --solexa, false]
+  - [Sanger/Illumina 1.8, --sanger, true]
+  type: select
+  value: --sanger
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22separator1%22%20size%3D%221%22%20value%3D%22%3A%22%3E',
+      is_dynamic: false, label: 'Use this character as separator for Casava data columns
+        [:]', model_class: TextToolParameter, name: separator1, optional: false, size: '1',
+      type: text, value: ':'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22separator2%22%20size%3D%221%22%20value%3D%22%20%22%3E',
+      is_dynamic: false, label: 'Use this character as separator between first 7 columns,
+        and the auxiliary columns [ ]', model_class: TextToolParameter, name: separator2,
+      optional: false, size: '1', type: text, value: ' '}
+    model_class: ConditionalWhen
+    value: 'true'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'false'
+  model_class: Conditional
+  name: casava_cond
+  test_param: {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22casava8%22%20name%3D%22casava8%22%20value%3D%22true%22%20refresh_on_change%3D%22true%22%20%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22casava8%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: Parse Casava v1.8 FastQ headers; include but do not
+      map filtered reads, model_class: BooleanToolParameter, name: casava8, optional: false,
+    truevalue: 'true', type: boolean, value: false}
+  type: conditional
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22gapopen%22%20size%3D%2210%22%20value%3D%2240%22%3E',
+  is_dynamic: false, label: Gap open penalty (phred score), max: 60, min: 1, model_class: IntegerToolParameter,
+  name: gapopen, optional: false, size: null, type: integer, value: '40'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22gapextend%22%20size%3D%2210%22%20value%3D%223%22%3E',
+  is_dynamic: false, label: Gap extension penalty (phred score), max: 60, min: 1,
+  model_class: IntegerToolParameter, name: gapextend, optional: false, size: null,
+  type: integer, value: '3'}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22sensitivity%22%3E%0A%3Coption%20value%3D%22%22%20selected%3Edefault%20sensitivity%3C/option%3E%0A%3Coption%20value%3D%22--sensitive%22%3EMore%20sensitive%3B%20about%2025-50%25%20slower%3C/option%3E%0A%3Coption%20value%3D%22--fast%22%3ELess%20sensitive%3B%20about%2050%25%20to%20100%25%20faster%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Mapping sensitivity
+  model_class: SelectToolParameter
+  multiple: false
+  name: sensitivity
+  optional: false
+  options:
+  - [default sensitivity, '', true]
+  - [More sensitive; about 25-50% slower, --sensitive, false]
+  - [Less sensitive; about 50% to 100% faster, --fast, false]
+  type: select
+  value: ''
+- cases:
+  - inputs:
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22baq%22%20name%3D%22baq%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22baq%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: (SAM format) Compute base-alignment quality (BAQ;
+        BQ tag), model_class: BooleanToolParameter, name: baq, optional: false, truevalue: --baq,
+      type: boolean, value: false}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22alignquals%22%20name%3D%22alignquals%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22alignquals%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: (SAM format) Compute posterior alignment probabilities
+        (YQ tag), model_class: BooleanToolParameter, name: alignquals, optional: false,
+      truevalue: --alignquals, type: boolean, value: false}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22norefoutput%22%20name%3D%22norefoutput%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22norefoutput%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: (SAM format) Use = signs at read positions that match
+        the reference, model_class: BooleanToolParameter, name: norefoutput, optional: false,
+      truevalue: --norefoutput, type: boolean, value: false}
+    - {area: false, argument: null, help: 'ID:id,tag:value,...', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22readgroup%22%20size%3D%22128%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: '(SAM format) Set readgroup tags (ID,SM,LB,DS,PU,PI,CN,DT,PL);
+        ,, quotes ,', model_class: TextToolParameter, name: readgroup, optional: true,
+      size: '128', type: text, value: ''}
+    model_class: ConditionalWhen
+    value: sam
+  - inputs: []
+    model_class: ConditionalWhen
+    value: maqtxt
+  model_class: Conditional
+  name: output_cond
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22outputformat%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22sam%22%3E%0A%3Coption%20value%3D%22sam%22%20selected%3ESAM%3C/option%3E%0A%3Coption%20value%3D%22maqtxt%22%3EMaq%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Type of output format
+    model_class: SelectToolParameter
+    multiple: false
+    name: outputformat
+    optional: false
+    options:
+    - [SAM, sam, true]
+    - [Maq, maqtxt, false]
+    type: select
+    value: sam
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: basic
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minposterior%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: 'Optional: Minimum read mapping phred posterior',
+      max: 93, min: 0, model_class: IntegerToolParameter, name: minposterior, optional: true,
+      size: null, type: integer, value: null}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxscore%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: 'Optional: Maximum read likelihood phred score', max: null,
+      min: 0, model_class: IntegerToolParameter, name: maxscore, optional: true, size: null,
+      type: integer, value: null}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22xa_max%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: 'Number of alternative hits to output for single/concordant
+        paired reads [0, max 20]', max: 20, min: 0, model_class: IntegerToolParameter,
+      name: xa_max, optional: false, size: null, type: integer, value: '0'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22xa_max_discordant%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: Number of alternative hits to output for discordant
+        paired reads, max: null, min: 0, model_class: IntegerToolParameter, name: xa_max_discordant,
+      optional: false, size: null, type: integer, value: '0'}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22rightmost%22%20name%3D%22rightmost%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22rightmost%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Flush gaps to rightmost position in reference coordinates,
+      model_class: BooleanToolParameter, name: rightmost, optional: false, truevalue: --rightmost,
+      type: boolean, value: false}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22gatkcigarworkaround%22%20name%3D%22gatkcigarworkaround%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22gatkcigarworkaround%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: 'Remove adjacent I/D CIGAR operators (valid in SAM
+        spec, but trips up GATK)', model_class: BooleanToolParameter, name: gatkcigarworkaround,
+      optional: false, truevalue: --gatkcigarworkaround, type: boolean, value: false}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22banding%22%20size%3D%2210%22%20value%3D%2260%22%3E',
+      is_dynamic: false, label: Band size for banded alignment; -1=none, max: null,
+      min: null, model_class: IntegerToolParameter, name: banding, optional: false,
+      size: null, type: integer, value: '60'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fastaqual%22%20size%3D%2210%22%20value%3D%2230%22%3E',
+      is_dynamic: false, label: Base quality for fasta input, max: 93, min: null,
+      model_class: IntegerToolParameter, name: fastaqual, optional: false, size: null,
+      type: integer, value: '30'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxbasequal%22%20size%3D%2210%22%20value%3D%2250%22%3E',
+      is_dynamic: false, label: Maximum accepted base quality, max: 93, min: null,
+      model_class: IntegerToolParameter, name: maxbasequal, optional: false, size: null,
+      type: integer, value: '50'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22svprior%22%20size%3D%2210%22%20value%3D%2255%22%3E',
+      is_dynamic: false, label: Prior probability of read pair bridging a SV (phred
+        score), max: 93, min: null, model_class: IntegerToolParameter, name: svprior,
+      optional: false, size: null, type: integer, value: '55'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22longindelprior%22%20size%3D%2210%22%20value%3D%2240%22%3E',
+      is_dynamic: false, label: Prior probability of read pair bridging a long indel
+        (phred score), max: 93, min: null, model_class: IntegerToolParameter, name: longindelprior,
+      optional: false, size: null, type: integer, value: '40'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22baseentropy%22%20size%3D%2210%22%20value%3D%225%22%3E',
+      is_dynamic: false, label: Entropy of inserted nucleotides (phred score), max: 93,
+      min: null, model_class: IntegerToolParameter, name: baseentropy, optional: false,
+      size: null, type: integer, value: '5'}
+    - {argument: null, falsevalue: --keepreforder, help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22alphabetical%22%20name%3D%22alphabetical%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22alphabetical%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Order reference identifiers alphabetically rather
+        than in reference dataset order, model_class: BooleanToolParameter, name: alphabetical,
+      optional: false, truevalue: --alphabetical, type: boolean, value: false}
+    model_class: ConditionalWhen
+    value: advanced
+  model_class: Conditional
+  name: param_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22param_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22basic%22%3E%0A%3Coption%20value%3D%22basic%22%20selected%3EBasic%3C/option%3E%0A%3Coption%20value%3D%22advanced%22%3EAdvanced%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Basic or Advanced options
+    model_class: SelectToolParameter
+    multiple: false
+    name: param_type_selector
+    optional: false
+    options:
+    - [Basic, basic, true]
+    - [Advanced, advanced, false]
+    type: select
+    value: basic
+  type: conditional
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22out_prefix_string%22%20size%3D%2232%22%20value%3D%22Stampy%20mapping%22%3E',
+  is_dynamic: false, label: Title for the output dataset - to remind you what the
+    job was for, model_class: TextToolParameter, name: out_prefix_string, optional: false,
+  size: '32', type: text, value: Stampy mapping}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fstampy_mapper%2Fstampy_mapper%2F1.0.20
+min_width: -1
+model_class: Tool
+name: Stampy mapper
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: $out_prefix_string
+    log file, model_class: ToolOutput, name: log_file}
+- {edam_format: format_2573, format: sam, hidden: false, label: $out_prefix_string,
+  model_class: ToolOutput, name: output1}
+panel_section_id: solexa_tools
+panel_section_name: 'NGS: Mapping'
+target: galaxy_main
+version: 1.0.20

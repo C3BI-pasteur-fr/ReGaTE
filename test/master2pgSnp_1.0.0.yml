@@ -1,0 +1,46 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/phenotype_association/master2pg.xml
+description: Convert from MasterVar to pgSnp format
+id: master2pgSnp
+inputs:
+- argument: null
+  edam_formats: [null]
+  extensions: [tab]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Complete Genomics MasterVar dataset
+  model_class: DataToolParameter
+  multiple: false
+  name: input1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22indel%22%3E%0A%3Coption%20value%3D%22%22%20selected%3Eno%3C/option%3E%0A%3Coption%20value%3D%22indel%22%3Eyes%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Convert indels
+  model_class: SelectToolParameter
+  multiple: false
+  name: indel
+  optional: false
+  options:
+  - ['no', '', true]
+  - ['yes', indel, false]
+  type: select
+  value: ''
+link: /tool_runner?tool_id=master2pgSnp
+min_width: -1
+model_class: Tool
+name: MasterVar to pgSnp
+outputs:
+- {edam_format: format_3475, format: interval, hidden: false, label: '', model_class: ToolOutput,
+  name: out_file1}
+panel_section_id: hgv
+panel_section_name: Phenotype Association
+target: galaxy_main
+version: 1.0.0

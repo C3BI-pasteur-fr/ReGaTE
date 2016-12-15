@@ -1,0 +1,34 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/fastafilter/f79141e99f1d/fastafilter/pe_filter.xml
+description: split sorted fasta sequences Paired End into two seperate fasta files
+id: toolshed.pasteur.fr/repos/fmareuil/fastafilter/pe_filter/0.01
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: 'Input filter fasta file '
+  model_class: DataToolParameter
+  multiple: false
+  name: inputfasta
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Ffastafilter%2Fpe_filter%2F0.01
+min_width: -1
+model_class: Tool
+name: pe filter
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: pe1 file of $inputfasta.name,
+  model_class: ToolOutput, name: outputfastape1}
+- {edam_format: format_1929, format: fasta, hidden: false, label: pe2 file of $inputfasta.name,
+  model_class: ToolOutput, name: outputfastape2}
+- {edam_format: format_1929, format: fasta, hidden: false, label: se file of $inputfasta.name,
+  model_class: ToolOutput, name: outputfastase}
+panel_section_id: fasta_manipulation
+panel_section_name: FASTA manipulation
+target: galaxy_main
+version: '0.01'

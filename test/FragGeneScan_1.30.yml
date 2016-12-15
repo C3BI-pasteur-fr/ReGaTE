@@ -1,0 +1,74 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/fraggenescan/7562d72c7a48/fraggenescan/fragGeneScan.xml
+description: Application for finding (fragmented) genes in short and Error-prone Reads.
+id: toolshed.pasteur.fr/repos/odoppelt/fraggenescan/FragGeneScan/1.30
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: sequence file name
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22sequence_type%22%20last_selected_value%3D%221%22%3E%0A%3Coption%20value%3D%220%22%3Eshort%20sequence%20reads%20%3C/option%3E%0A%3Coption%20value%3D%221%22%20selected%3Ecomplete%20genomic%20sequence%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: sequence type
+  model_class: SelectToolParameter
+  multiple: false
+  name: sequence_type
+  optional: false
+  options:
+  - ['short sequence reads ', '0', false]
+  - [complete genomic sequence, '1', true]
+  type: select
+  value: '1'
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22train_file_name%22%20last_selected_value%3D%22complete%22%3E%0A%3Coption%20value%3D%22complete%22%20selected%3Ecomplete%3C/option%3E%0A%3Coption%20value%3D%22sanger_5%22%3Esanger_5%3C/option%3E%0A%3Coption%20value%3D%22sanger_10%22%3Esanger_10%3C/option%3E%0A%3Coption%20value%3D%22454_5%22%3E454_5%3C/option%3E%0A%3Coption%20value%3D%22454_10%22%3E454_10%3C/option%3E%0A%3Coption%20value%3D%22454_30%22%3E454_30%3C/option%3E%0A%3Coption%20value%3D%22illumina_5%22%3Eillumina_5%3C/option%3E%0A%3Coption%20value%3D%22illumina_10%22%3Eillumina_10%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Choose a model parameters file
+  model_class: SelectToolParameter
+  multiple: false
+  name: train_file_name
+  optional: false
+  options:
+  - [complete, complete, true]
+  - [sanger_5, sanger_5, false]
+  - [sanger_10, sanger_10, false]
+  - ['454_5', '454_5', false]
+  - ['454_10', '454_10', false]
+  - ['454_30', '454_30', false]
+  - [illumina_5, illumina_5, false]
+  - [illumina_10, illumina_10, false]
+  type: select
+  value: complete
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Ffraggenescan%2FFragGeneScan%2F1.30
+min_width: -1
+model_class: Tool
+name: FragGeneScan
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: 'output,$tool.name
+    on ${on_string}', model_class: ToolOutput, name: output}
+- {edam_format: format_1929, format: fasta, hidden: false, label: 'fnn,$tool.name
+    on ${on_string}', model_class: ToolOutput, name: output_fnn}
+- {edam_format: format_1929, format: fasta, hidden: false, label: 'faa, $tool.name
+    on ${on_string}', model_class: ToolOutput, name: output_faa}
+- {edam_format: format_2305, format: gff, hidden: false, label: 'gff, $tool.name on
+    ${on_string}', model_class: ToolOutput, name: output_gff}
+panel_section_id: motifs
+panel_section_name: Motif Tools
+target: galaxy_main
+version: '1.30'

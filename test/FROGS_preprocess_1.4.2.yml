@@ -1,0 +1,376 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/frogs/36109d143f38/frogs/preprocess.xml
+description: 'Step 1 in metagenomics analysis: denoising and dereplication.'
+id: toolshed.pasteur.fr/repos/mvalade/frogs/FROGS_preprocess/1.4.2
+inputs:
+- cases:
+  - inputs:
+    - cases:
+      - inputs:
+        - argument: null
+          edam_formats: [format_1915]
+          extensions: [data]
+          help: The tar file containing the sequences file(s) for each sample.
+          hidden: false
+          is_dynamic: false
+          label: Archive file
+          model_class: DataToolParameter
+          multiple: false
+          name: archive_file
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        - cases:
+          - inputs:
+            - {area: false, argument: null, help: The read1 size., hidden: false,
+              html: '%3Cinput%20type%3D%22text%22%20name%3D%22R1_size%22%20size%3D%2210%22%20value%3D%22%22%3E',
+              is_dynamic: false, label: Reads 1 size, max: null, min: null, model_class: IntegerToolParameter,
+              name: R1_size, optional: false, size: null, type: integer, value: ''}
+            - {area: false, argument: null, help: The read2 size., hidden: false,
+              html: '%3Cinput%20type%3D%22text%22%20name%3D%22R2_size%22%20size%3D%2210%22%20value%3D%22%22%3E',
+              is_dynamic: false, label: Reads 2 size, max: null, min: null, model_class: IntegerToolParameter,
+              name: R2_size, optional: false, size: null, type: integer, value: ''}
+            - {area: false, argument: null, help: Maximum amplicon length expected
+                in approximately 90% of the amplicons., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22expected_amplicon_size%22%20size%3D%2210%22%20value%3D%22%22%3E',
+              is_dynamic: false, label: Expected amplicon size, max: null, min: null,
+              model_class: IntegerToolParameter, name: expected_amplicon_size, optional: false,
+              size: null, type: integer, value: ''}
+            model_class: ConditionalWhen
+            value: paired
+          - inputs: []
+            model_class: ConditionalWhen
+            value: already_contiged
+          model_class: Conditional
+          name: archive_type
+          test_param:
+            argument: null
+            display: null
+            help: 'The archive contains 1 file by sample : Reads 1 and Reads 2 are
+              already contiged by pair.'
+            hidden: false
+            html: '%3Cselect%20name%3D%22archive_type_selected%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22paired%22%3E%0A%3Coption%20value%3D%22paired%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22already_contiged%22%3EYes%3C/option%3E%0A%3C/select%3E'
+            is_dynamic: false
+            label: Reads already contiged ?
+            model_class: SelectToolParameter
+            multiple: false
+            name: archive_type_selected
+            optional: false
+            options:
+            - ['No', paired, true]
+            - ['Yes', already_contiged, false]
+            type: select
+            value: paired
+          type: conditional
+        model_class: ConditionalWhen
+        value: archive
+      - inputs:
+        - cases:
+          - inputs:
+            - default: 1
+              help: null
+              inputs:
+              - {area: false, argument: null, help: The sample name. MANDATORY field,
+                hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22name%22%20size%3D%2210%22%20value%3D%22Sample%22%3E',
+                is_dynamic: false, label: Name, model_class: TextToolParameter, name: name,
+                optional: false, size: null, type: text, value: Sample}
+              - argument: null
+                edam_formats: [format_1930]
+                extensions: [fastq]
+                help: R1 FASTQ file of paired-end reads.
+                hidden: false
+                is_dynamic: false
+                label: Reads 1
+                model_class: DataToolParameter
+                multiple: false
+                name: R1_file
+                optional: false
+                options:
+                  hda: []
+                  hdca: []
+                type: data
+              - argument: null
+                edam_formats: [format_1930]
+                extensions: [fastq]
+                help: R2 FASTQ file of paired-end reads.
+                hidden: false
+                is_dynamic: false
+                label: reads 2
+                model_class: DataToolParameter
+                multiple: false
+                name: R2_file
+                optional: false
+                options:
+                  hda: []
+                  hdca: []
+                type: data
+              max: __Infinity__
+              min: 1
+              model_class: Repeat
+              name: samples
+              title: Samples
+              type: repeat
+            - {area: false, argument: null, help: The read1 size., hidden: false,
+              html: '%3Cinput%20type%3D%22text%22%20name%3D%22R1_size%22%20size%3D%2210%22%20value%3D%22%22%3E',
+              is_dynamic: false, label: Reads 1 size, max: null, min: null, model_class: IntegerToolParameter,
+              name: R1_size, optional: false, size: null, type: integer, value: ''}
+            - {area: false, argument: null, help: The read2 size., hidden: false,
+              html: '%3Cinput%20type%3D%22text%22%20name%3D%22R2_size%22%20size%3D%2210%22%20value%3D%22%22%3E',
+              is_dynamic: false, label: Reads 2 size, max: null, min: null, model_class: IntegerToolParameter,
+              name: R2_size, optional: false, size: null, type: integer, value: ''}
+            - {area: false, argument: null, help: Maximum amplicon length expected
+                in approximately 90% of the amplicons., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22expected_amplicon_size%22%20size%3D%2210%22%20value%3D%22%22%3E',
+              is_dynamic: false, label: Expected amplicon size, max: null, min: null,
+              model_class: IntegerToolParameter, name: expected_amplicon_size, optional: false,
+              size: null, type: integer, value: ''}
+            model_class: ConditionalWhen
+            value: paired
+          - inputs:
+            - default: 1
+              help: null
+              inputs:
+              - {area: false, argument: null, help: The sample name., hidden: false,
+                html: '%3Cinput%20type%3D%22text%22%20name%3D%22name%22%20size%3D%2210%22%20value%3D%22%22%3E',
+                is_dynamic: false, label: Name, model_class: TextToolParameter, name: name,
+                optional: false, size: null, type: text, value: null}
+              - argument: null
+                edam_formats: [format_1930]
+                extensions: [fastq]
+                help: FASTQ file of contiged reads.
+                hidden: false
+                is_dynamic: false
+                label: Sequence file
+                model_class: DataToolParameter
+                multiple: false
+                name: R1_file
+                optional: false
+                options:
+                  hda: []
+                  hdca: []
+                type: data
+              max: __Infinity__
+              min: 1
+              model_class: Repeat
+              name: samples
+              title: Samples
+              type: repeat
+            model_class: ConditionalWhen
+            value: already_contiged
+          model_class: Conditional
+          name: files_by_samples_type
+          test_param:
+            argument: null
+            display: null
+            help: 'The inputs contain 1 file by sample : Reads 1 and Reads 2 are already
+              contiged by pair.'
+            hidden: false
+            html: '%3Cselect%20name%3D%22files_by_samples_type_selected%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22paired%22%3E%0A%3Coption%20value%3D%22paired%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22already_contiged%22%3EYes%3C/option%3E%0A%3C/select%3E'
+            is_dynamic: false
+            label: Reads already contiged ?
+            model_class: SelectToolParameter
+            multiple: false
+            name: files_by_samples_type_selected
+            optional: false
+            options:
+            - ['No', paired, true]
+            - ['Yes', already_contiged, false]
+            type: select
+            value: paired
+          type: conditional
+        model_class: ConditionalWhen
+        value: files_by_samples
+      model_class: Conditional
+      name: input_type
+      test_param:
+        argument: null
+        display: null
+        help: Samples files can be provided in single archive or with two files (R1
+          and R2) by sample.
+        hidden: false
+        html: '%3Cselect%20name%3D%22input_type_selected%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22files_by_samples%22%3E%0A%3Coption%20value%3D%22files_by_samples%22%20selected%3EFiles%20by%20samples%3C/option%3E%0A%3Coption%20value%3D%22archive%22%3EArchive%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Input type
+        model_class: SelectToolParameter
+        multiple: false
+        name: input_type_selected
+        optional: false
+        options:
+        - [Files by samples, files_by_samples, true]
+        - [Archive, archive, false]
+        type: select
+        value: files_by_samples
+      type: conditional
+    - {area: false, argument: null, help: The minimum size for the amplicons., hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_amplicon_size%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Minimum amplicon size, max: null, min: null, model_class: IntegerToolParameter,
+      name: min_amplicon_size, optional: false, size: null, type: integer, value: ''}
+    - {area: false, argument: null, help: The maximum size for the amplicons., hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_amplicon_size%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Maximum amplicon size, max: null, min: null, model_class: IntegerToolParameter,
+      name: max_amplicon_size, optional: false, size: null, type: integer, value: ''}
+    - cases:
+      - inputs:
+        - {area: false, argument: null, help: The 5' primer sequence (wildcards are
+            accepted). The orientation is detailed below in 'Primers parameters'.,
+          hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22five_prim_primer%22%20size%3D%2220%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: 5' primer, model_class: TextToolParameter, name: five_prim_primer,
+          optional: false, size: '20', type: text, value: null}
+        - {area: false, argument: null, help: The 3' primer sequence (wildcards are
+            accepted). The orientation is detailed below in 'Primers parameters'.,
+          hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22three_prim_primer%22%20size%3D%2220%22%20value%3D%22%22%3E',
+          is_dynamic: false, label: 3' primer, model_class: TextToolParameter, name: three_prim_primer,
+          optional: false, size: '20', type: text, value: null}
+        model_class: ConditionalWhen
+        value: standard
+      - inputs: []
+        model_class: ConditionalWhen
+        value: without_primers
+      model_class: Conditional
+      name: sequencing_protocol
+      test_param:
+        argument: null
+        display: null
+        help: 'The protocol used for sequencing step: standard or custom with PCR
+          primers as sequencing primers.'
+        hidden: false
+        html: '%3Cselect%20name%3D%22sequencing_protocol_selected%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22standard%22%3E%0A%3Coption%20value%3D%22standard%22%20selected%3EIllumina%20standard%3C/option%3E%0A%3Coption%20value%3D%22without_primers%22%3ECustom%20protocol%20%28Kozich%20et%20al.%202013%29%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Sequencing protocol
+        model_class: SelectToolParameter
+        multiple: false
+        name: sequencing_protocol_selected
+        optional: false
+        options:
+        - [Illumina standard, standard, true]
+        - [Custom protocol (Kozich et al. 2013), without_primers, false]
+        type: select
+        value: standard
+      type: conditional
+    model_class: ConditionalWhen
+    value: illumina
+  - inputs:
+    - cases:
+      - inputs:
+        - argument: null
+          edam_formats: [format_1915]
+          extensions: [data]
+          help: The tar file containing the sequences file for each sample.
+          hidden: false
+          is_dynamic: false
+          label: Archive file
+          model_class: DataToolParameter
+          multiple: false
+          name: archive_file
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        model_class: ConditionalWhen
+        value: archive
+      - inputs:
+        - default: 1
+          help: null
+          inputs:
+          - {area: false, argument: null, help: The sample name., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22name%22%20size%3D%2210%22%20value%3D%22Sample%22%3E',
+            is_dynamic: false, label: Name, model_class: TextToolParameter, name: name,
+            optional: false, size: null, type: text, value: Sample}
+          - argument: null
+            edam_formats: [format_1930]
+            extensions: [fastq]
+            help: FASTQ file of sample.
+            hidden: false
+            is_dynamic: false
+            label: Sequence file
+            model_class: DataToolParameter
+            multiple: false
+            name: R1_file
+            optional: false
+            options:
+              hda: []
+              hdca: []
+            type: data
+          max: __Infinity__
+          min: 1
+          model_class: Repeat
+          name: samples
+          title: Samples
+          type: repeat
+        model_class: ConditionalWhen
+        value: files_by_samples
+      model_class: Conditional
+      name: input_type
+      test_param:
+        argument: null
+        display: null
+        help: Samples files can be provided in single archive or with one file by
+          sample.
+        hidden: false
+        html: '%3Cselect%20name%3D%22input_type_selected%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22files_by_samples%22%3E%0A%3Coption%20value%3D%22files_by_samples%22%20selected%3EOne%20file%20by%20sample%3C/option%3E%0A%3Coption%20value%3D%22archive%22%3EArchive%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Input type
+        model_class: SelectToolParameter
+        multiple: false
+        name: input_type_selected
+        optional: false
+        options:
+        - [One file by sample, files_by_samples, true]
+        - [Archive, archive, false]
+        type: select
+        value: files_by_samples
+      type: conditional
+    - {area: false, argument: null, help: The minimum size for the amplicons (with
+        primers)., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_amplicon_size%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Minimum amplicon size, max: null, min: null, model_class: IntegerToolParameter,
+      name: min_amplicon_size, optional: false, size: null, type: integer, value: ''}
+    - {area: false, argument: null, help: The maximum size for the amplicons (with
+        primers)., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_amplicon_size%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Maximum amplicon size, max: null, min: null, model_class: IntegerToolParameter,
+      name: max_amplicon_size, optional: false, size: null, type: integer, value: ''}
+    - {area: false, argument: null, help: The 5' primer sequence (wildcards are accepted).
+        The orientation is detailed below in 'Primers parameters'., hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22five_prim_primer%22%20size%3D%2220%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: 5' primer, model_class: TextToolParameter, name: five_prim_primer,
+      optional: false, size: '20', type: text, value: null}
+    - {area: false, argument: null, help: The 3' primer sequence (wildcards are accepted).
+        The orientation is detailed below in 'Primers parameters'., hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22three_prim_primer%22%20size%3D%2220%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: 3' primer, model_class: TextToolParameter, name: three_prim_primer,
+      optional: false, size: '20', type: text, value: null}
+    model_class: ConditionalWhen
+    value: '454'
+  model_class: Conditional
+  name: sequencer_type
+  test_param:
+    argument: null
+    display: null
+    help: Select the sequencer family used to produce the sequences.
+    hidden: false
+    html: '%3Cselect%20name%3D%22sequencer_selected%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22illumina%22%3E%0A%3Coption%20value%3D%22illumina%22%20selected%3EIllumina%3C/option%3E%0A%3Coption%20value%3D%22454%22%3E454%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Sequencer
+    model_class: SelectToolParameter
+    multiple: false
+    name: sequencer_selected
+    optional: false
+    options:
+    - [Illumina, illumina, true]
+    - ['454', '454', false]
+    type: select
+    value: illumina
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Ffrogs%2FFROGS_preprocess%2F1.4.2
+min_width: -1
+model_class: Tool
+name: FROGS Pre-process
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: '${tool.name}: dereplicated.fasta',
+  model_class: ToolOutput, name: dereplicated_file}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}:
+    count.tsv', model_class: ToolOutput, name: count_file}
+- {edam_format: format_2331, format: html, hidden: false, label: '${tool.name}: report.html',
+  model_class: ToolOutput, name: summary_file}
+panel_section_id: frogs_metagenomic_pipeline
+panel_section_name: FROGS Metagenomic pipeline
+target: galaxy_main
+version: 1.4.2

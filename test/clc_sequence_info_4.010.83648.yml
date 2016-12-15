@@ -1,0 +1,36 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/clc_assembly_4/1bcc27a85c4c/clc_assembly_4/clc_sequence_info.xml
+description: Print some information about a sequence file.
+id: toolshed.pasteur.fr/repos/fmareuil/clc_assembly_4/clc_sequence_info/4.010.83648
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: fasta file containing contigs
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22l%22%20name%3D%22l%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22l%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Print the length of each sequence, model_class: BooleanToolParameter,
+  name: l, optional: false, truevalue: -l, type: boolean, value: true}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22n%22%20name%3D%22n%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22n%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'Calculate the N50, N80 and N90 values', model_class: BooleanToolParameter,
+  name: n, optional: false, truevalue: -n, type: boolean, value: true}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fclc_assembly_4%2Fclc_sequence_info%2F4.010.83648
+min_width: -1
+model_class: Tool
+name: clc_sequence_info
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: 'Statistics about
+    contigs of ${input.name}', model_class: ToolOutput, name: output}
+panel_section_id: ngs:_assembly
+panel_section_name: 'NGS: Assembly package clc 4'
+target: galaxy_main
+version: 4.010.83648

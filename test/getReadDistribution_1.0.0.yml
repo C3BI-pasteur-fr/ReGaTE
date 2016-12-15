@@ -1,0 +1,133 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/galaxy/getReadDistribution.xml
+description: 'Get Read Distribution v1.0.1: Plot the number of identical reads and
+  give the most represented.'
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/getReadDistribution/1.0.0
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Sequence input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: fasta
+  - inputs:
+    - argument: null
+      edam_formats: [format_1930]
+      extensions: [fastq]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Sequence input File
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: fastq
+  model_class: Conditional
+  name: formatType
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22FormatInputFileName%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22fasta%22%3Efasta%3C/option%3E%0A%3Coption%20value%3D%22fastq%22%3Efastq%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: 'Sequence input File Format '
+    model_class: SelectToolParameter
+    multiple: false
+    name: FormatInputFileName
+    optional: false
+    options:
+    - [fasta, fasta, false]
+    - [fastq, fastq, false]
+    type: select
+    value: fasta
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22bestNumber%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: bestNumber, optional: false, size: null, type: integer, value: '0'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: optionnumber
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22number%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: keep the best n
+    model_class: SelectToolParameter
+    multiple: false
+    name: number
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22percentage%22%20size%3D%2210%22%20value%3D%220%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: percentage, optional: false, size: null, type: integer, value: '0'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: optionpercent
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22percent%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: keep the best n percentage
+    model_class: SelectToolParameter
+    multiple: false
+    name: percent
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FgetReadDistribution%2F1.0.0
+min_width: -1
+model_class: Tool
+name: get read distribution
+outputs:
+- {edam_format: format_2330, format: tar, hidden: false, label: '[getReadDistribution]
+    tar out file', model_class: ToolOutput, name: outputFile}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

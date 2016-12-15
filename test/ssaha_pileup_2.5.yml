@@ -1,0 +1,193 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/ssaha_pileup/fa869bdad5ba/ssaha_pileup/ssaha_pileup.xml
+description: for Illumina data
+id: toolshed.pasteur.fr/repos/fmareuil/ssaha_pileup/ssaha_pileup/2.5
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Choose your reference fasta file from the history.
+  model_class: DataToolParameter
+  multiple: false
+  name: ref
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: Must be odd number
+  hidden: false
+  html: '%3Cselect%20name%3D%22kmersize%22%20last_selected_value%3D%2213%22%3E%0A%3Coption%20value%3D%2215%22%3E15%3C/option%3E%0A%3Coption%20value%3D%2213%22%20selected%3E13%3C/option%3E%0A%3Coption%20value%3D%2211%22%3E11%3C/option%3E%0A%3Coption%20value%3D%229%22%3E9%3C/option%3E%0A%3Coption%20value%3D%227%22%3E7%3C/option%3E%0A%3Coption%20value%3D%225%22%3E5%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Choose your kmer size
+  model_class: SelectToolParameter
+  multiple: false
+  name: kmersize
+  optional: false
+  options:
+  - ['15', '15', false]
+  - ['13', '13', true]
+  - ['11', '11', false]
+  - ['9', '9', false]
+  - ['7', '7', false]
+  - ['5', '5', false]
+  type: select
+  value: '13'
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22rtype%22%20last_selected_value%3D%22solexa%22%3E%0A%3Coption%20value%3D%22solexa%22%20selected%3EIllumina/Solexa%3C/option%3E%0A%3Coption%20value%3D%22454%22%3E454%3C/option%3E%0A%3Coption%20value%3D%22abi%22%3EABI%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Type of data
+  model_class: SelectToolParameter
+  multiple: false
+  name: rtype
+  optional: false
+  options:
+  - [Illumina/Solexa, solexa, true]
+  - ['454', '454', false]
+  - [ABI, abi, false]
+  type: select
+  value: solexa
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1930]
+      extensions: [fastq]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Reads
+      model_class: DataToolParameter
+      multiple: false
+      name: reads
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: single
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22lowerbound%22%20size%3D%225%22%20value%3D%22180%22%3E',
+      is_dynamic: false, label: Lowerbound of insert size, max: null, min: null, model_class: IntegerToolParameter,
+      name: lowerbound, optional: false, size: '5', type: integer, value: '180'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22upperbound%22%20size%3D%225%22%20value%3D%22500%22%3E',
+      is_dynamic: false, label: Upperbound of insert size, max: null, min: null, model_class: IntegerToolParameter,
+      name: upperbound, optional: false, size: '5', type: integer, value: '500'}
+    - cases:
+      - inputs:
+        - argument: null
+          edam_formats: [format_1930]
+          extensions: [fastq]
+          help: ''
+          hidden: false
+          is_dynamic: false
+          label: FASTQ file for interleaved read 1 and 2
+          model_class: DataToolParameter
+          multiple: false
+          name: reads
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        model_class: ConditionalWhen
+        value: one
+      - inputs:
+        - argument: null
+          edam_formats: [format_1930]
+          extensions: [fastq]
+          help: ''
+          hidden: false
+          is_dynamic: false
+          label: FASTQ file for read 1
+          model_class: DataToolParameter
+          multiple: false
+          name: reads1
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        - argument: null
+          edam_formats: [format_1930]
+          extensions: [fastq]
+          help: ''
+          hidden: false
+          is_dynamic: false
+          label: FASTQ file for read 2
+          model_class: DataToolParameter
+          multiple: false
+          name: reads2
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        model_class: ConditionalWhen
+        value: two
+      model_class: Conditional
+      name: interleaved
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22number_of_files%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22two%22%3E%0A%3Coption%20value%3D%22one%22%3E1%3C/option%3E%0A%3Coption%20value%3D%22two%22%20selected%3E2%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Number of files paired-end
+        model_class: SelectToolParameter
+        multiple: false
+        name: number_of_files
+        optional: false
+        options:
+        - ['1', one, false]
+        - ['2', two, true]
+        type: select
+        value: two
+      type: conditional
+    model_class: ConditionalWhen
+    value: paired
+  model_class: Conditional
+  name: mate
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22singleOrPairs%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22single%22%3E%0A%3Coption%20value%3D%22single%22%20selected%3ESingle-end%3C/option%3E%0A%3Coption%20value%3D%22paired%22%3EPaired-end%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: 'Type of run: Single-end/Paired-End'
+    model_class: SelectToolParameter
+    multiple: false
+    name: singleOrPairs
+    optional: false
+    options:
+    - [Single-end, single, true]
+    - [Paired-end, paired, false]
+    type: select
+    value: single
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fssaha_pileup%2Fssaha_pileup%2F2.5
+min_width: -1
+model_class: Tool
+name: Map with the pileup pipeline of ssaha2
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '', model_class: ToolOutput,
+  name: cns}
+- {edam_format: format_2330, format: txt, hidden: false, label: '', model_class: ToolOutput,
+  name: snp}
+- {edam_format: format_2330, format: txt, hidden: false, label: '', model_class: ToolOutput,
+  name: ins}
+- {edam_format: format_2330, format: txt, hidden: false, label: '', model_class: ToolOutput,
+  name: del}
+panel_section_id: solexa_tools
+panel_section_name: 'NGS: Mapping'
+target: galaxy_main
+version: '2.5'

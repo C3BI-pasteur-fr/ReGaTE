@@ -1,0 +1,101 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/clc_assembly_4/1bcc27a85c4c/clc_assembly_4/clc_unmapped_reads.xml
+description: Outputs the unmapped reads
+id: toolshed.pasteur.fr/repos/fmareuil/clc_assembly_4/clc_unmapped_reads/4.010.83648
+inputs:
+- argument: null
+  edam_formats: [format_2333]
+  extensions: [cas]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Binary Assembly file
+  model_class: DataToolParameter
+  multiple: false
+  name: casFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minlenght%22%20size%3D%2210%22%20value%3D%2230%22%3E',
+      is_dynamic: false, label: Output sequences with minimum length of, max: null,
+      min: null, model_class: IntegerToolParameter, name: minlenght, optional: false,
+      size: null, type: integer, value: '30'}
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22flag_unaligned_paired%22%20last_selected_value%3D%22%20%22%3E%0A%3Coption%20value%3D%22-u%22%3EOutput%20unaligned%20portions%20of%20reads%3C/option%3E%0A%3Coption%20value%3D%22-p%22%3EOutput%20both%20reads%20even%20if%20one%20of%20them%20has%20been%20mapped%3C/option%3E%0A%3Coption%20value%3D%22%20%22%20selected%3EOutput%20only%20full%20reads%20considered%20individualy%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: 'Output unaligned portions of reads (-u), output reads in pair (if at
+        least one of them is unmapped: -p) or consider only individual full reads.'
+      model_class: SelectToolParameter
+      multiple: false
+      name: flag_unaligned_paired
+      optional: false
+      options:
+      - [Output unaligned portions of reads, -u, false]
+      - [Output both reads even if one of them has been mapped, -p, false]
+      - [Output only full reads considered individualy, ' ', true]
+      type: select
+      value: ' '
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs:
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22flag_paired%22%20name%3D%22flag_paired%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22flag_paired%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: 'Output both reads of the pair, even if one of them
+        has been mapped. (-p)', model_class: BooleanToolParameter, name: flag_paired,
+      optional: false, truevalue: -p, type: boolean, value: false}
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: minlenght_selector
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22flag_minlenght%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22yes%22%3Eyes%3C/option%3E%0A%3Coption%20value%3D%22no%22%20selected%3Eno%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Output only sequences with a certain minimum length to set. (-l) option
+    model_class: SelectToolParameter
+    multiple: false
+    name: flag_minlenght
+    optional: false
+    options:
+    - ['yes', 'yes', false]
+    - ['no', 'no', true]
+    type: select
+    value: 'no'
+  type: conditional
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22output_format%22%20last_selected_value%3D%22fastq%22%3E%0A%3Coption%20value%3D%22fastq%22%20selected%3EFastq%20Format%3C/option%3E%0A%3Coption%20value%3D%22fasta%22%3EFasta%20Format%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Type of output format
+  model_class: SelectToolParameter
+  multiple: false
+  name: output_format
+  optional: false
+  options:
+  - [Fastq Format, fastq, true]
+  - [Fasta Format, fasta, false]
+  type: select
+  value: fastq
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fclc_assembly_4%2Fclc_unmapped_reads%2F4.010.83648
+min_width: -1
+model_class: Tool
+name: clc_unmapped_reads
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: 'unmapped_reads
+    from ${casFile.name}', model_class: ToolOutput, name: output_fasta}
+- {edam_format: format_1930, format: fastq, hidden: false, label: 'unmapped_reads
+    from ${casFile.name}', model_class: ToolOutput, name: output_fastq}
+panel_section_id: ngs:_assembly
+panel_section_name: 'NGS: Assembly package clc 4'
+target: galaxy_main
+version: 4.010.83648

@@ -1,0 +1,29 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/evolution/add_scores.xml
+description: interspecies conservation scores
+id: hgv_add_scores
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [interval]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Dataset
+  model_class: DataToolParameter
+  multiple: false
+  name: input1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=hgv_add_scores
+min_width: -1
+model_class: Tool
+name: phyloP
+outputs:
+- {format: input, hidden: false, label: '', model_class: ToolOutput, name: out_file1}
+panel_section_id: hgv
+panel_section_name: Phenotype Association
+target: galaxy_main
+version: 1.0.0

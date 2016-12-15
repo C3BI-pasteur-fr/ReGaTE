@@ -1,0 +1,46 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/gdtools/fe6986ae4399/gdtools/gdtools_mutations.xml
+description: ''
+id: toolshed.pasteur.fr/repos/mvalade/gdtools/gdtools_MUTATIONS/0.26
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [gd]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: GD input file
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1915]
+  extensions: [data]
+  help: File containing reference sequences in GenBank, GFF3, or FASTA format. Option
+    may be provided multiple times for multiple files (REQUIRED)
+  hidden: false
+  is_dynamic: false
+  label: Reference sequences file
+  model_class: DataToolParameter
+  multiple: false
+  name: reference
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Fgdtools%2Fgdtools_MUTATIONS%2F0.26
+min_width: -1
+model_class: Tool
+name: gdtools MUTATIONS - v0.26
+outputs:
+- {edam_format: format_3475, format: gd, hidden: false, label: gdtools MUTATIONS GD
+    output file, model_class: ToolOutput, name: output}
+panel_section_id: ngs:_snp/indel_annotation
+panel_section_name: 'NGS: SNP/Indel Annotation'
+target: galaxy_main
+version: '0.26'

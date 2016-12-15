@@ -1,0 +1,58 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/gi2taxonomy/f8a640015ac6/gi2taxonomy/gi2taxonomy.xml
+description: ''
+id: toolshed.pasteur.fr/repos/odoppelt/gi2taxonomy/Fetch Taxonomic Ranks/1.1.0
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Show taxonomic representation for
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  data_ref: input
+  display: null
+  help: select column containing GI numbers
+  hidden: false
+  is_dynamic: true
+  label: GIs column
+  model_class: ColumnListParameter
+  multiple: false
+  name: giField
+  numerical: true
+  optional: false
+  options: []
+  type: data_column
+- argument: null
+  data_ref: input
+  display: null
+  help: select column containing identifiers you want to include into output
+  hidden: false
+  is_dynamic: true
+  label: Name column
+  model_class: ColumnListParameter
+  multiple: false
+  name: idField
+  numerical: false
+  optional: false
+  options: []
+  type: data_column
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Fgi2taxonomy%2FFetch+Taxonomic+Ranks%2F1.1.0
+min_width: -1
+model_class: Tool
+name: Fetch taxonomic representation
+outputs:
+- {edam_format: format_3475, format: taxonomy, hidden: false, label: '', model_class: ToolOutput,
+  name: out_file1}
+panel_section_id: tax_manipulation
+panel_section_name: Metagenomic analyses
+target: galaxy_main
+version: 1.1.0

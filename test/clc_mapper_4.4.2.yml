@@ -1,0 +1,249 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/clc_assembly_4/4ccb1f9f67f5/clc_assembly_4/clc_mapper.xml
+description: Maps reads on reference sequences.
+id: toolshed.pasteur.fr/repos/fmareuil/clc_assembly_4/clc_mapper/4.4.2
+inputs:
+- default: 1
+  help: null
+  inputs:
+  - cases:
+    - inputs:
+      - argument: null
+        edam_formats: [format_1930]
+        extensions: [fastq]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: Reads to map
+        model_class: DataToolParameter
+        multiple: false
+        name: read1
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      model_class: ConditionalWhen
+      value: single
+    - inputs:
+      - argument: null
+        edam_formats: [format_1930]
+        extensions: [fastq]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: Read 1 fastq dataset from your history
+        model_class: DataToolParameter
+        multiple: false
+        name: read1
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      - argument: null
+        edam_formats: [format_1930]
+        extensions: [fastq]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: Read 2 fastq dataset from your history
+        model_class: DataToolParameter
+        multiple: false
+        name: read2
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      - argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22orientMode%22%20last_selected_value%3D%22fb%22%3E%0A%3Coption%20value%3D%22fb%22%20selected%3Eforward%20reverse%20%28fb%29%3C/option%3E%0A%3Coption%20value%3D%22bf%22%3Ereverse%20forward%20%28bf%29%3C/option%3E%0A%3Coption%20value%3D%22ff%22%3Eforward%20forward%20%28ff%29%3C/option%3E%0A%3Coption%20value%3D%22bb%22%3Ereverse%20reverse%20%28bb%29%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Select your read orientation mode
+        model_class: SelectToolParameter
+        multiple: false
+        name: orientMode
+        optional: false
+        options:
+        - [forward reverse (fb), fb, true]
+        - [reverse forward (bf), bf, false]
+        - [forward forward (ff), ff, false]
+        - [reverse reverse (bb), bb, false]
+        type: select
+        value: fb
+      - argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22distMode%22%20last_selected_value%3D%22ss%22%3E%0A%3Coption%20value%3D%22ss%22%20selected%3Estart%20and%20start%20mode%20%28ss%29%3C/option%3E%0A%3Coption%20value%3D%22se%22%3Estart%20and%20end%20mode%20%28se%29%3C/option%3E%0A%3Coption%20value%3D%22es%22%3Eend%20and%20start%20mode%20%28es%29%3C/option%3E%0A%3Coption%20value%3D%22ee%22%3Eend%20and%20end%20mode%20%28ee%29%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Select your distance mode
+        model_class: SelectToolParameter
+        multiple: false
+        name: distMode
+        optional: false
+        options:
+        - [start and start mode (ss), ss, true]
+        - [start and end mode (se), se, false]
+        - [end and start mode (es), es, false]
+        - [end and end mode (ee), ee, false]
+        type: select
+        value: ss
+      - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minDist%22%20size%3D%224%22%20value%3D%22200%22%3E',
+        is_dynamic: false, label: Minimal distance (nucleotides) between paired reads,
+        max: null, min: 100, model_class: IntegerToolParameter, name: minDist, optional: false,
+        size: '4', type: integer, value: '200'}
+      - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxDist%22%20size%3D%224%22%20value%3D%22550%22%3E',
+        is_dynamic: false, label: Maximal distance (nucleotides) between paired reads,
+        max: null, min: 100, model_class: IntegerToolParameter, name: maxDist, optional: false,
+        size: '4', type: integer, value: '550'}
+      model_class: ConditionalWhen
+      value: paired_end
+    model_class: Conditional
+    name: read_type
+    test_param:
+      argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22read_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22single%22%3E%0A%3Coption%20value%3D%22single%22%20selected%3ESingle%20Read%3C/option%3E%0A%3Coption%20value%3D%22paired_end%22%3EPaired%20End%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Type of input data
+      model_class: SelectToolParameter
+      multiple: false
+      name: read_type_selector
+      optional: false
+      options:
+      - [Single Read, single, true]
+      - [Paired End, paired_end, false]
+      type: select
+      value: single
+    type: conditional
+  max: __Infinity__
+  min: 1
+  model_class: Repeat
+  name: read_repeats
+  title: Read datasets
+  type: repeat
+- default: 1
+  help: Genbank or fasta
+  inputs:
+  - argument: null
+    edam_formats: [format_1929, format_2330, format_2330]
+    extensions: [fasta, gb, gbk]
+    help: ''
+    hidden: false
+    is_dynamic: false
+    label: Select a reference dataset
+    model_class: DataToolParameter
+    multiple: false
+    name: refSeqFile
+    optional: false
+    options:
+      hda: []
+      hdca: []
+    type: data
+  - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22circular%22%20name%3D%22circular%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22circular%22%20value%3D%22true%22%3E',
+    is_dynamic: false, label: This reference dataset contains circular sequences,
+    model_class: BooleanToolParameter, name: circular, optional: false, truevalue: -z,
+    type: boolean, value: true}
+  max: __Infinity__
+  min: 1
+  model_class: Repeat
+  name: reference_datasets
+  title: Reference sequence / contig dataset
+  type: repeat
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22mismatchCost%22%20size%3D%224%22%20value%3D%222%22%3E',
+  is_dynamic: false, label: Set the mismatch cost. Range from 1 to 3, max: 3, min: 1,
+  model_class: IntegerToolParameter, name: mismatchCost, optional: false, size: '4',
+  type: integer, value: '2'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22gapCost%22%20size%3D%224%22%20value%3D%223%22%3E',
+  is_dynamic: false, label: Set the gap cost. Range from 1 to 3, max: 3, min: 1, model_class: IntegerToolParameter,
+  name: gapCost, optional: false, size: '4', type: integer, value: '3'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22gapopen%22%20size%3D%224%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: Set affine insertion and deletion open cost (integer from
+    0 to 10), max: 10, min: 0, model_class: IntegerToolParameter, name: gapopen, optional: false,
+  size: '4', type: integer, value: '0'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22deletionCost%22%20size%3D%224%22%20value%3D%223%22%3E',
+  is_dynamic: false, label: Set the deletion cost in which case the gap cost setting
+    only applies to insertions. Range from 1 to 3, max: 3, min: 1, model_class: IntegerToolParameter,
+  name: deletionCost, optional: false, size: '4', type: integer, value: '3'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22deletionopen%22%20size%3D%224%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: Set affine deletion open cost (integer from 0 to 10),
+  max: 10, min: 0, model_class: IntegerToolParameter, name: deletionopen, optional: false,
+  size: '4', type: integer, value: '0'}
+- argument: null
+  display: radio
+  help: ''
+  hidden: false
+  html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22repeatMatch%22%20value%3D%22random%22%20id%3D%22repeatMatch%7Crandom%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22repeatMatch%7Crandom%22%3Erandom%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22repeatMatch%22%20value%3D%22ignore%22%20id%3D%22repeatMatch%7Cignore%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22repeatMatch%7Cignore%22%3Eignore%3C/label%3E%3C/div%3E'
+  is_dynamic: false
+  label: ' Set the behavior for reads that match more than once'
+  model_class: SelectToolParameter
+  multiple: false
+  name: repeatMatch
+  optional: false
+  options:
+  - [random, random, false]
+  - [ignore, ignore, false]
+  type: select
+  value: random
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22lengthFraction%22%20size%3D%2210%22%20value%3D%220.5%22%3E',
+  is_dynamic: false, label: Set the fraction of the read that must match. A real number
+    between 0.0 and 1.0 (-l), max: 1.0, min: 0.0, model_class: FloatToolParameter,
+  name: lengthFraction, optional: false, size: null, type: float, value: '0.5'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22similarity%22%20size%3D%2210%22%20value%3D%220.8%22%3E',
+  is_dynamic: false, label: Set the limit for the similarity in the fraction of the
+    read that must match according to the fraction length (-l) option, max: 1.0, min: 0.0,
+  model_class: FloatToolParameter, name: similarity, optional: false, size: null,
+  type: float, value: '0.8'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxAlign%22%20size%3D%2210%22%20value%3D%221%22%3E',
+  is_dynamic: false, label: Set the maximum number of alignments to report for each
+    read, max: null, min: null, model_class: IntegerToolParameter, name: maxAlign,
+  optional: false, size: null, type: integer, value: '1'}
+- argument: null
+  display: radio
+  help: ''
+  hidden: false
+  html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22alignMode%22%20value%3D%22local%22%20id%3D%22alignMode%7Clocal%22%20checked%3D%27checked%27%3E%3Clabel%20class%3D%22inline%22%20for%3D%22alignMode%7Clocal%22%3E%20local%20alignment%20%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22alignMode%22%20value%3D%22global%22%20id%3D%22alignMode%7Cglobal%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22alignMode%7Cglobal%22%3E%20global%20alignment%20%3C/label%3E%3C/div%3E'
+  is_dynamic: false
+  label: Set the alignment mode
+  model_class: SelectToolParameter
+  multiple: false
+  name: alignMode
+  optional: false
+  options:
+  - [' local alignment ', local, true]
+  - [' global alignment ', global, false]
+  type: select
+  value: local
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22oneDirectionOnly%22%20last_selected_value%3D%22%20%22%3E%0A%3Coption%20value%3D%22%20%22%20selected%3EMatch%20reads%20in%20both%20directions%3C/option%3E%0A%3Coption%20value%3D%22-f%22%3EOnly%20match%20reads%20in%20the%20forward%20direction%3C/option%3E%0A%3Coption%20value%3D%22-b%22%3EOnly%20match%20reads%20in%20the%20backward%20direction%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Select the direction of the reads
+  model_class: SelectToolParameter
+  multiple: false
+  name: oneDirectionOnly
+  optional: false
+  options:
+  - [Match reads in both directions, ' ', true]
+  - [Only match reads in the forward direction, -f, false]
+  - [Only match reads in the backward direction, -b, false]
+  type: select
+  value: ' '
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fclc_assembly_4%2Fclc_mapper%2F4.4.2
+min_width: -1
+model_class: Tool
+name: clc_mapper
+outputs:
+- {edam_format: format_2333, format: cas, hidden: false, label: 'clc_mapper on ${on_string}',
+  model_class: ToolOutput, name: casFile}
+panel_section_id: ngs:_assembly
+panel_section_name: 'NGS: Assembly package clc 4'
+target: galaxy_main
+version: 4.4.2

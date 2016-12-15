@@ -1,0 +1,588 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/galaxy/getDistance.xml
+description: Give the distances between every data from the first input set and the
+  data from the second input set
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/GetDistance/1.0.0
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3003]
+      extensions: [bed]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 1
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: bed
+  - inputs:
+    - argument: null
+      edam_formats: [format_2305]
+      extensions: [gff]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 1
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff
+  - inputs:
+    - argument: null
+      edam_formats: [null]
+      extensions: [gff2]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 1
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff2
+  - inputs:
+    - argument: null
+      edam_formats: [format_1975]
+      extensions: [gff3]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 1
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff3
+  - inputs:
+    - argument: null
+      edam_formats: [format_2573]
+      extensions: [sam]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 1
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: sam
+  - inputs:
+    - argument: null
+      edam_formats: [format_2306]
+      extensions: [gtf]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 1
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gtf
+  model_class: Conditional
+  name: formatType
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22FormatInputFileName1%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22bed%22%3Ebed%3C/option%3E%0A%3Coption%20value%3D%22gff%22%3Egff%3C/option%3E%0A%3Coption%20value%3D%22gff2%22%3Egff2%3C/option%3E%0A%3Coption%20value%3D%22gff3%22%3Egff3%3C/option%3E%0A%3Coption%20value%3D%22sam%22%3Esam%3C/option%3E%0A%3Coption%20value%3D%22gtf%22%3Egtf%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Input File Format 1
+    model_class: SelectToolParameter
+    multiple: false
+    name: FormatInputFileName1
+    optional: false
+    options:
+    - [bed, bed, false]
+    - [gff, gff, false]
+    - [gff2, gff2, false]
+    - [gff3, gff3, false]
+    - [sam, sam, false]
+    - [gtf, gtf, false]
+    type: select
+    value: bed
+  type: conditional
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3003]
+      extensions: [bed]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 2
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: bed
+  - inputs:
+    - argument: null
+      edam_formats: [format_2305]
+      extensions: [gff]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 2
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff
+  - inputs:
+    - argument: null
+      edam_formats: [null]
+      extensions: [gff2]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 2
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff2
+  - inputs:
+    - argument: null
+      edam_formats: [format_1975]
+      extensions: [gff3]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 2
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff3
+  - inputs:
+    - argument: null
+      edam_formats: [format_2573]
+      extensions: [sam]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 2
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: sam
+  - inputs:
+    - argument: null
+      edam_formats: [format_2306]
+      extensions: [gtf]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 2
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gtf
+  model_class: Conditional
+  name: formatType2
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22FormatInputFileName2%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22bed%22%3Ebed%3C/option%3E%0A%3Coption%20value%3D%22gff%22%3Egff%3C/option%3E%0A%3Coption%20value%3D%22gff2%22%3Egff2%3C/option%3E%0A%3Coption%20value%3D%22gff3%22%3Egff3%3C/option%3E%0A%3Coption%20value%3D%22sam%22%3Esam%3C/option%3E%0A%3Coption%20value%3D%22gtf%22%3Egtf%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Input File Format 2
+    model_class: SelectToolParameter
+    multiple: false
+    name: FormatInputFileName2
+    optional: false
+    options:
+    - [bed, bed, false]
+    - [gff, gff, false]
+    - [gff2, gff2, false]
+    - [gff3, gff3, false]
+    - [sam, sam, false]
+    - [gtf, gtf, false]
+    type: select
+    value: bed
+  type: conditional
+- {argument: null, falsevalue: '', help: This option create a GFF3 output file containing
+    the distance for each element of the query., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22outputDistance%22%20name%3D%22outputDistance%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22outputDistance%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: distance option, model_class: BooleanToolParameter, name: outputDistance,
+  optional: false, truevalue: -O, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: This option gives the absolute value of the
+    distance., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22absolute%22%20name%3D%22absolute%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22absolute%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: absolute value option, model_class: BooleanToolParameter,
+  name: absolute, optional: false, truevalue: -b, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: This option gives the proportion on the y-axis
+    instead of the number of distances., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22proportion%22%20name%3D%22proportion%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22proportion%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: proportion option, model_class: BooleanToolParameter,
+  name: proportion, optional: false, truevalue: -p, type: boolean, value: false}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: Colinear
+  - inputs: []
+    model_class: ConditionalWhen
+    value: AntiSens
+  - inputs: []
+    model_class: ConditionalWhen
+    value: NONE
+  model_class: Conditional
+  name: OptionColinearOrAntiSens
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22OptionCA%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22NONE%22%3E%0A%3Coption%20value%3D%22Colinear%22%3EColinear%3C/option%3E%0A%3Coption%20value%3D%22AntiSens%22%3EAntiSens%3C/option%3E%0A%3Coption%20value%3D%22NONE%22%20selected%3ENONE%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Colinear or anti-sens
+    model_class: SelectToolParameter
+    multiple: false
+    name: OptionCA
+    optional: false
+    options:
+    - [Colinear, Colinear, false]
+    - [AntiSens, AntiSens, false]
+    - [NONE, NONE, true]
+    type: select
+    value: NONE
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Be Careful! The value must be upper than
+        0, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22first5File1%22%20size%3D%2210%22%20value%3D%221%22%3E',
+      is_dynamic: false, label: in file 1, max: null, min: null, model_class: IntegerToolParameter,
+      name: first5File1, optional: false, size: null, type: integer, value: '1'}
+    - {area: false, argument: null, help: Be Careful! The value must be upper than
+        0, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22first5File2%22%20size%3D%2210%22%20value%3D%221%22%3E',
+      is_dynamic: false, label: in file 2, max: null, min: null, model_class: IntegerToolParameter,
+      name: first5File2, optional: false, size: null, type: integer, value: '1'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionFirstNucl5
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22FirstNu5%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: only consider the n first 5' nucleotides for input files
+    model_class: SelectToolParameter
+    multiple: false
+    name: FirstNu5
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Be Careful! The value must be upper than
+        0, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22first3File1%22%20size%3D%2210%22%20value%3D%221%22%3E',
+      is_dynamic: false, label: in file 1, max: null, min: null, model_class: IntegerToolParameter,
+      name: first3File1, optional: false, size: null, type: integer, value: '1'}
+    - {area: false, argument: null, help: Be Careful! The value must be upper than
+        0, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22first3File2%22%20size%3D%2210%22%20value%3D%221%22%3E',
+      is_dynamic: false, label: in file 2, max: null, min: null, model_class: IntegerToolParameter,
+      name: first3File2, optional: false, size: null, type: integer, value: '1'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionFirstNucl3
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22FirstNu3%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: only consider the n first 3' nucleotides for input files
+    model_class: SelectToolParameter
+    multiple: false
+    name: FirstNu3
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minDistance%22%20size%3D%2210%22%20value%3D%221%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: minDistance, optional: false, size: null, type: integer, value: '1'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionMinDistance
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22MinD%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: minimum distance considered between two transcripts
+    model_class: SelectToolParameter
+    multiple: false
+    name: MinD
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxDistance%22%20size%3D%2210%22%20value%3D%221000%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: maxDistance, optional: false, size: null, type: integer, value: '1000'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionMaxDistance
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22MaxD%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: maximum distance considered between two transcripts
+    model_class: SelectToolParameter
+    multiple: false
+    name: MaxD
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- {argument: null, falsevalue: '', help: Consider the elements from input file 1 which
+    are upstream of elements of input file 2, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22fivePrime%22%20name%3D%22fivePrime%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22fivePrime%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: five prime option, model_class: BooleanToolParameter,
+  name: fivePrime, optional: false, truevalue: '-5', type: boolean, value: false}
+- {argument: null, falsevalue: '', help: Consider the elements from input file1 which
+    are downstream of elements of input file 2, hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22threePrime%22%20name%3D%22threePrime%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22threePrime%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: three prime option, model_class: BooleanToolParameter,
+  name: threePrime, optional: false, truevalue: '-3', type: boolean, value: false}
+- {argument: null, falsevalue: '', help: Compute Spearman rho., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22spearMan%22%20name%3D%22spearMan%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22spearMan%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: spearman option, model_class: BooleanToolParameter, name: spearMan,
+  optional: false, truevalue: -r, type: boolean, value: false}
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22buckets%22%20size%3D%2210%22%20value%3D%221%22%3E',
+      is_dynamic: false, label: Interval size, max: null, min: null, model_class: IntegerToolParameter,
+      name: buckets, optional: false, size: null, type: integer, value: '1'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionBuckets
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22OBuckets%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Plots histogram instead of line plot with given interval size.
+    model_class: SelectToolParameter
+    multiple: false
+    name: OBuckets
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minXaxis%22%20size%3D%2210%22%20value%3D%221%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: minXaxis, optional: false, size: null, type: integer, value: '1'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionMinXaxis
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22MinX%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Minimum value on the x-axis to plot.
+    model_class: SelectToolParameter
+    multiple: false
+    name: MinX
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxXaxis%22%20size%3D%2210%22%20value%3D%221%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+      name: maxXaxis, optional: false, size: null, type: integer, value: '1'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionMaxXaxis
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22MaxX%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Maximum value on the x-axis to plot.
+    model_class: SelectToolParameter
+    multiple: false
+    name: MaxX
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22title%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: '', model_class: TextToolParameter, name: title, optional: false,
+      size: null, type: text, value: ''}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: OptionTitle
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22OTitle%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Title for the graph.
+    model_class: SelectToolParameter
+    multiple: false
+    name: OTitle
+    optional: false
+    options:
+    - ['Yes', 'Yes', false]
+    - ['No', 'No', true]
+    type: select
+    value: 'No'
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FGetDistance%2F1.0.0
+min_width: -1
+model_class: Tool
+name: get distance
+outputs:
+- {edam_format: format_3547, format: png, hidden: false, label: '', model_class: ToolOutput,
+  name: outputFilePng}
+- {edam_format: format_1975, format: gff3, hidden: false, label: '', model_class: ToolOutput,
+  name: outputFileDistance}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

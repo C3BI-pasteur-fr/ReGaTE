@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/solid_tools/solid_qual_boxplot.xml
+description: for SOLiD data
+id: solid_qual_boxplot
+inputs:
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Statistics report file (output of 'Quality Statistics for SOLiD data' tool)
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=solid_qual_boxplot
+min_width: -1
+model_class: Tool
+name: Draw quality score boxplot
+outputs:
+- {edam_format: format_3547, format: png, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: 1.0.0

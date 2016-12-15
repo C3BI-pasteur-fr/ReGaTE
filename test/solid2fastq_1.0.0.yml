@@ -1,0 +1,156 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/next_gen_conversion/solid2fastq.xml
+description: SOLiD output to fastq
+id: solid2fastq
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [csfasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Select reads
+  model_class: DataToolParameter
+  multiple: false
+  name: input1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [qualsolid]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Select qualities
+  model_class: DataToolParameter
+  multiple: false
+  name: input2
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [csfasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select Reverse reads
+      model_class: DataToolParameter
+      multiple: false
+      name: input3
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [qualsolid]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select Reverse qualities
+      model_class: DataToolParameter
+      multiple: false
+      name: input4
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: is_run
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22paired%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Is this a mate-pair run?
+    model_class: SelectToolParameter
+    multiple: false
+    name: paired
+    optional: false
+    options:
+    - ['No', 'no', true]
+    - ['Yes', 'yes', false]
+    type: select
+    value: 'no'
+  type: conditional
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22qual%22%20size%3D%2210%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: Remove reads containing color qualities below this value,
+  max: null, min: null, model_class: IntegerToolParameter, name: qual, optional: false,
+  size: null, type: integer, value: '0'}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22trim_name%22%20last_selected_value%3D%22-t%22%3E%0A%3Coption%20value%3D%22-t%22%20selected%3EYes%3C/option%3E%0A%3Coption%20value%3D%22%22%3ENo%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Trim trailing "_F3" and "_R3" ?
+  model_class: SelectToolParameter
+  multiple: false
+  name: trim_name
+  optional: false
+  options:
+  - ['Yes', -t, true]
+  - ['No', '', false]
+  type: select
+  value: -t
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22trim_first_base%22%3E%0A%3Coption%20value%3D%22-f%22%3EYes%20%28BWA%29%3C/option%3E%0A%3Coption%20value%3D%22%22%20selected%3ENo%20%28bowtie%29%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Trim first base?
+  model_class: SelectToolParameter
+  multiple: false
+  name: trim_first_base
+  optional: false
+  options:
+  - [Yes (BWA), -f, false]
+  - [No (bowtie), '', true]
+  type: select
+  value: ''
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22double_encode%22%3E%0A%3Coption%20value%3D%22-d%22%3EYes%20%28BWA%29%3C/option%3E%0A%3Coption%20value%3D%22%22%20selected%3ENo%20%28bowtie%29%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Double encode?
+  model_class: SelectToolParameter
+  multiple: false
+  name: double_encode
+  optional: false
+  options:
+  - [Yes (BWA), -d, false]
+  - [No (bowtie), '', true]
+  type: select
+  value: ''
+link: /tool_runner?tool_id=solid2fastq
+min_width: -1
+model_class: Tool
+name: Convert
+outputs:
+- {edam_format: format_1930, format: fastqcssanger, hidden: false, label: '', model_class: ToolOutput,
+  name: out_file1}
+- {edam_format: format_1930, format: fastqcssanger, hidden: false, label: '', model_class: ToolOutput,
+  name: out_file2}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: 1.0.0

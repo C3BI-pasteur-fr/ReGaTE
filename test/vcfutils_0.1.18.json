@@ -1,0 +1,99 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "vcfutils-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.1.18", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/odoppelt/vcfutils/vcfutils/0.1.18", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "fastq", 
+                    "dataDescription": "output", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTQ", 
+                            "uri": "http://edamontology.org/format_1930"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Program from SAMtools/BCFtools package (only vcf2fq command is implemented)", 
+            "input": [
+                {
+                    "dataHandle": "input", 
+                    "dataDescription": "vcf file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "VCF", 
+                            "uri": "http://edamontology.org/format_3016"
+                        }, 
+                        {
+                            "term": "BCF", 
+                            "uri": "http://edamontology.org/format_3020"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Program from SAMtools/BCFtools package (only vcf2fq command is implemented).", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/odoppelt/vcfutils/vcfutils/0.1.18", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/odoppelt/vcfutils/vcfutils/0.1.18\"", 
+            "usesVersion": "0.1.18"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "vcfutils-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.1.18", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

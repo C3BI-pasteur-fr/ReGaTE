@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/cf3e04ffae51/oneclick_phylogeny/seqtypedetect/seqtypedetect.xml
+description: Detect sequence datatype on fasta file
+id: toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/seqtypedetect/1.0
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: Fasta sequence file
+  hidden: false
+  is_dynamic: false
+  label: Source file
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Foneclick_phylogeny%2Fseqtypedetect%2F1.0
+min_width: -1
+model_class: Tool
+name: Sequence type detection
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: Information, model_class: ToolOutput,
+  name: output}
+panel_section_id: oneclick_phylogeny
+panel_section_name: Oneclick Phylogeny
+target: galaxy_main
+version: '1.0'

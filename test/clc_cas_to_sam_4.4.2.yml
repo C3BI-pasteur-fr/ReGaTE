@@ -1,0 +1,58 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/clc_assembly_4/4ccb1f9f67f5/clc_assembly_4/clc_cas_to_sam.xml
+description: Convert a cas file to sam or bam format.
+id: toolshed.pasteur.fr/repos/fmareuil/clc_assembly_4/clc_cas_to_sam/4.4.2
+inputs:
+- argument: null
+  edam_formats: [format_2333]
+  extensions: [cas]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Set the input cas file (required)
+  model_class: DataToolParameter
+  multiple: false
+  name: assembly
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22output_format%22%20last_selected_value%3D%22bam%22%3E%0A%3Coption%20value%3D%22bam%22%20selected%3EBAM%20Format%3C/option%3E%0A%3Coption%20value%3D%22sam%22%3ESAM%20Format%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Type of output format
+  model_class: SelectToolParameter
+  multiple: false
+  name: output_format
+  optional: false
+  options:
+  - [BAM Format, bam, true]
+  - [SAM Format, sam, false]
+  type: select
+  value: bam
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22offset%22%20size%3D%2210%22%20value%3D%2264%22%3E',
+  is_dynamic: false, label: Set the ascii offset value in fastq files (default is
+    64)., max: null, min: null, model_class: IntegerToolParameter, name: offset, optional: false,
+  size: null, type: integer, value: '64'}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22discardunassembled%22%20name%3D%22discardunassembled%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22discardunassembled%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Discard the unmapped reads, model_class: BooleanToolParameter,
+  name: discardunassembled, optional: false, truevalue: -u, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22multimatch%22%20name%3D%22multimatch%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22multimatch%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Output all available alignments in each match, model_class: BooleanToolParameter,
+  name: multimatch, optional: false, truevalue: -m, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fclc_assembly_4%2Fclc_cas_to_sam%2F4.4.2
+min_width: -1
+model_class: Tool
+name: clc_cas_to_sam
+outputs:
+- {edam_format: format_2572, format: bam, hidden: false, label: cas_to_bam on $on_string
+    (BAM format), model_class: ToolOutput, name: output_bam}
+- {edam_format: format_2573, format: sam, hidden: false, label: cas_to_bam on $on_string
+    (SAM format), model_class: ToolOutput, name: output_sam}
+panel_section_id: ngs:_assembly
+panel_section_name: 'NGS: Assembly package clc 4'
+target: galaxy_main
+version: 4.4.2

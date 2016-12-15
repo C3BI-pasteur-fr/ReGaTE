@@ -1,0 +1,29 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.g2.bx.psu.edu/repos/devteam/fastx_reverse_complement/5bd826723d61/fastx_reverse_complement/fastx_reverse_complement.xml
+description: ''
+id: toolshed.g2.bx.psu.edu/repos/devteam/fastx_reverse_complement/cshl_fastx_reverse_complement/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_1929, format_1933, format_1932]
+  extensions: [fasta, fastqsolexa, fastqsanger]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Library to reverse-complement
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Fdevteam%2Ffastx_reverse_complement%2Fcshl_fastx_reverse_complement%2F1.0.0
+min_width: -1
+model_class: Tool
+name: Reverse-Complement
+outputs:
+- {format: input, hidden: false, label: '', model_class: ToolOutput, name: output}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: 1.0.0

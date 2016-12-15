@@ -1,0 +1,66 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/bamstats/6b434a2433a0/bamstats/bamStats.xml
+description: Generate mapping statistics from the bam file
+id: toolshed.pasteur.fr/repos/fmareuil/bamstats/bamStats/1.0.0
+inputs:
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22readType%22%20last_selected_value%3D%22se%22%3E%0A%3Coption%20value%3D%22pe%22%3EPaired-end%3C/option%3E%0A%3Coption%20value%3D%22se%22%20selected%3ESingle-end%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Read type
+  model_class: SelectToolParameter
+  multiple: false
+  name: readType
+  optional: false
+  options:
+  - [Paired-end, pe, false]
+  - [Single-end, se, true]
+  type: select
+  value: se
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22sequencerType%22%3E%0A%3Coption%20value%3D%22-t%20solid%22%3ESolid%3C/option%3E%0A%3Coption%20value%3D%22%22%20selected%3EOther%20%28Illumina...%29%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Sequencer type
+  model_class: SelectToolParameter
+  multiple: false
+  name: sequencerType
+  optional: false
+  options:
+  - [Solid, -t solid, false]
+  - [Other (Illumina...), '', true]
+  type: select
+  value: ''
+- argument: null
+  edam_formats: [format_2572]
+  extensions: [bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Bam file
+  model_class: DataToolParameter
+  multiple: false
+  name: bamFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fbamstats%2FbamStats%2F1.0.0
+min_width: -1
+model_class: Tool
+name: Statistics on bam file
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '', model_class: ToolOutput,
+  name: stats}
+- {edam_format: format_2330, format: txt, hidden: false, label: '', model_class: ToolOutput,
+  name: f3stats}
+- {edam_format: format_2330, format: txt, hidden: false, label: '', model_class: ToolOutput,
+  name: f5stats}
+panel_section_id: samtools
+panel_section_name: 'NGS: SAM Tools'
+target: galaxy_main
+version: 1.0.0

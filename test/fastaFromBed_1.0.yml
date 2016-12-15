@@ -1,0 +1,45 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/fastafrombed/319a9ac9b507/fastafrombed/fastaFromBed_wrapper.xml
+description: ''
+id: toolshed.pasteur.fr/repos/fmareuil/fastafrombed/fastaFromBed/1.0
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Genome file (fasta)
+  model_class: DataToolParameter
+  multiple: false
+  name: fastaFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3003]
+  extensions: [bed]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Bed file
+  model_class: DataToolParameter
+  multiple: false
+  name: bedFile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Ffastafrombed%2FfastaFromBed%2F1.0
+min_width: -1
+model_class: Tool
+name: fastaFromBed
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: Fasta file, model_class: ToolOutput,
+  name: fastaOut}
+panel_section_id: nebula_tools
+panel_section_name: ChIP-SEQ Analysis Nebula Tools, Institut Curie
+target: galaxy_main
+version: '1.0'

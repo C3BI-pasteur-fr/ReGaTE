@@ -1,0 +1,107 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "nwdisplay-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "1.6", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/fmareuil/newick_utilities/nwdisplay/1.6", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "svg", 
+                    "dataDescription": "output", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Display a phylogenetic tree as SVG", 
+            "input": [
+                {
+                    "dataHandle": "fileNewick", 
+                    "dataDescription": "Newick file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }, 
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }, 
+                        {
+                            "term": "newick", 
+                            "uri": "http://edamontology.org/format_1910"
+                        }, 
+                        {
+                            "term": "newick", 
+                            "uri": "http://edamontology.org/format_1910"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Display a phylogenetic tree as SVG.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/fmareuil/newick_utilities/nwdisplay/1.6", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/fmareuil/newick_utilities/nwdisplay/1.6\"", 
+            "usesVersion": "1.6"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "nwdisplay-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "1.6", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

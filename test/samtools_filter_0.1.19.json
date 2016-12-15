@@ -1,0 +1,113 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "samtools_filter-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.1.19", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/odoppelt/samtools_filter/samtools_filter/0.1.19", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "data", 
+                    "dataDescription": "output1", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Format", 
+                            "uri": "http://edamontology.org/format_1915"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "uses the samtools view command in SAMTools toolkit to filter a SAM or BAM file on the MAPQ (mapping quality), FLAG bits, Read Group, Library, or region", 
+            "input": [
+                {
+                    "dataHandle": "input1", 
+                    "dataDescription": "SAM or BAM File to Filter", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "SAM", 
+                            "uri": "http://edamontology.org/format_2573"
+                        }, 
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "bed_file", 
+                    "dataDescription": "Output alignments overlapping the regions in the BED FILE", 
+                    "data": {
+                        "term": "Annotation track", 
+                        "uri": "http://edamontology.org/data_3002"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BED", 
+                            "uri": "http://edamontology.org/format_3003"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Uses the samtools view command in SAMTools toolkit to filter a SAM or BAM file on the MAPQ (mapping quality), FLAG bits, Read Group, Library, or region.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/odoppelt/samtools_filter/samtools_filter/0.1.19", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/odoppelt/samtools_filter/samtools_filter/0.1.19\"", 
+            "usesVersion": "0.1.19"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "samtools_filter-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.1.19", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

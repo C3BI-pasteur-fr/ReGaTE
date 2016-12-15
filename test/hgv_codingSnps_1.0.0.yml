@@ -1,0 +1,142 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/evolution/codingSnps.xml
+description: amino-acid changes caused by a set of SNPs
+id: hgv_codingSnps
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [interval]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: SNP dataset
+  model_class: DataToolParameter
+  multiple: false
+  name: input1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  data_ref: input1
+  display: null
+  help: ''
+  hidden: false
+  is_dynamic: true
+  label: Column with SNPs
+  model_class: ColumnListParameter
+  multiple: false
+  name: col1
+  numerical: false
+  optional: false
+  options: []
+  type: data_column
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [interval]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Gene dataset
+  model_class: DataToolParameter
+  multiple: false
+  name: input2
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22keep%22%20last_selected_value%3D%220%22%3E%0A%3Coption%20value%3D%220%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%221%22%3EYes%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Keep columns from SNP dataset
+  model_class: SelectToolParameter
+  multiple: false
+  name: keep
+  optional: false
+  options:
+  - ['No', '0', true]
+  - ['Yes', '1', false]
+  type: select
+  value: '0'
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22uniqpos%22%20last_selected_value%3D%221%22%3E%0A%3Coption%20value%3D%221%22%20selected%3EYes%3C/option%3E%0A%3Coption%20value%3D%220%22%3ENo%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Only report each SNP position once
+  model_class: SelectToolParameter
+  multiple: false
+  name: uniqpos
+  optional: false
+  options:
+  - ['Yes', '1', true]
+  - ['No', '0', false]
+  type: select
+  value: '1'
+- cases:
+  - inputs:
+    - argument: null
+      data_ref: input1
+      display: null
+      help: ''
+      hidden: false
+      is_dynamic: true
+      label: Column with strand
+      model_class: ColumnListParameter
+      multiple: false
+      name: strand_col
+      numerical: false
+      optional: false
+      options: []
+      type: data_column
+    model_class: ConditionalWhen
+    value: data_column
+  - inputs:
+    - {argument: null, help: '', hidden: true, html: '%3Cinput%20type%3D%22hidden%22%20name%3D%22strand_col%22%20value%3D%22%2B%22%3E',
+      is_dynamic: false, label: '', model_class: HiddenToolParameter, name: strand_col,
+      optional: false, type: hidden, value: +}
+    model_class: ConditionalWhen
+    value: all_pos
+  - inputs:
+    - {argument: null, help: '', hidden: true, html: '%3Cinput%20type%3D%22hidden%22%20name%3D%22strand_col%22%20value%3D%22-%22%3E',
+      is_dynamic: false, label: '', model_class: HiddenToolParameter, name: strand_col,
+      optional: false, type: hidden, value: '-'}
+    model_class: ConditionalWhen
+    value: all_neg
+  model_class: Conditional
+  name: strand_source
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22strand_choice%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22all_pos%22%3E%0A%3Coption%20value%3D%22data_column%22%3Ea%20column%20in%20the%20dataset%3C/option%3E%0A%3Coption%20value%3D%22all_pos%22%20selected%3Eall%20on%20sense/forward/%2B%20strand%3C/option%3E%0A%3Coption%20value%3D%22all_neg%22%3Eall%20on%20antisense/reverse/-%20strand%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Strand info
+    model_class: SelectToolParameter
+    multiple: false
+    name: strand_choice
+    optional: false
+    options:
+    - [a column in the dataset, data_column, false]
+    - [all on sense/forward/+ strand, all_pos, true]
+    - [all on antisense/reverse/- strand, all_neg, false]
+    type: select
+    value: all_pos
+  type: conditional
+link: /tool_runner?tool_id=hgv_codingSnps
+min_width: -1
+model_class: Tool
+name: aaChanges
+outputs:
+- {edam_format: format_3475, format: interval, hidden: false, label: '', model_class: ToolOutput,
+  name: out_file1}
+panel_section_id: hgv
+panel_section_name: Phenotype Association
+target: galaxy_main
+version: 1.0.0

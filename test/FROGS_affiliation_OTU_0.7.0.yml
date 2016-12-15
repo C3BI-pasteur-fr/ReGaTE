@@ -1,0 +1,71 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/frogs/36109d143f38/frogs/affiliation_OTU.xml
+description: 'Step 4 in metagenomics analysis : Taxonomic affiliation of each OTU''s
+  seed by RDPtools and BLAST'
+id: toolshed.pasteur.fr/repos/mvalade/frogs/FROGS_affiliation_OTU/0.7.0
+inputs:
+- {argument: null, help: The number of Go to allocation for java, hidden: true, html: '%3Cinput%20type%3D%22hidden%22%20name%3D%22mem%22%20value%3D%22100%22%3E',
+  is_dynamic: false, label: Memory allocation, model_class: HiddenToolParameter, name: mem,
+  optional: false, type: hidden, value: '100'}
+- argument: null
+  display: null
+  help: Select reference from the list
+  hidden: false
+  html: '%3Cselect%20name%3D%22ref_file%22%3E%0A%3Coption%20value%3D%22/local/databases/rel/frogs/current/uncompressed/silva_123_16S/silva_123_16S.fasta%22%3Esilva_16S%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/rel/frogs/current/uncompressed/silva_123_18S/silva_123_18S.fasta%22%3Esilva_18S%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/rel/frogs/current/uncompressed/silva_123_23S/silva_123_23S.fasta%22%3Esilva_23S%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: true
+  label: Using reference database
+  model_class: SelectToolParameter
+  multiple: false
+  name: ref_file
+  optional: false
+  options:
+  - [silva_16S, /local/databases/rel/frogs/current/uncompressed/silva_123_16S/silva_123_16S.fasta,
+    false]
+  - [silva_18S, /local/databases/rel/frogs/current/uncompressed/silva_123_18S/silva_123_18S.fasta,
+    false]
+  - [silva_23S, /local/databases/rel/frogs/current/uncompressed/silva_123_23S/silva_123_23S.fasta,
+    false]
+  type: select
+  value: /local/databases/rel/frogs/current/uncompressed/silva_123_16S/silva_123_16S.fasta
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: 'OTU sequences (format: fasta).'
+  hidden: false
+  is_dynamic: false
+  label: OTU seed sequence
+  model_class: DataToolParameter
+  multiple: false
+  name: fasta_sequences
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3464]
+  extensions: [biom1]
+  help: 'OTU abundances (format: BIOM).'
+  hidden: false
+  is_dynamic: false
+  label: Abundance file
+  model_class: DataToolParameter
+  multiple: false
+  name: biom_abundance
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Ffrogs%2FFROGS_affiliation_OTU%2F0.7.0
+min_width: -1
+model_class: Tool
+name: FROGS Affiliation OTU
+outputs:
+- {edam_format: format_3464, format: biom1, hidden: false, label: '${tool.name}: affiliation.biom',
+  model_class: ToolOutput, name: biom_affiliation}
+- {edam_format: format_2331, format: html, hidden: false, label: '${tool.name}: report.html',
+  model_class: ToolOutput, name: summary}
+panel_section_id: frogs_metagenomic_pipeline
+panel_section_name: FROGS Metagenomic pipeline
+target: galaxy_main
+version: 0.7.0

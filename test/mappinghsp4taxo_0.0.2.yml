@@ -1,0 +1,167 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/taxonomy_analysis/98189979e262/taxonomy_analysis/mappinghsp4taxo.xml
+description: Analyses taxoptimizer output file to find the most relevant database's
+  sequence using taxonomics informations (kronaextract output) and draw picture(s)
+  with the mapping of all hsp on it.
+id: toolshed.pasteur.fr/repos/odoppelt/taxonomy_analysis/mappinghsp4taxo/0.0.2
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [tabular]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: One column kronaextract output file (kronaextract.offset only)
+      model_class: DataToolParameter
+      multiple: false
+      name: oneColumnInput
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: oneColumn
+  - inputs:
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [tabular]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Two columns kronaextract output file (read ID and its offset )
+      model_class: DataToolParameter
+      multiple: false
+      name: twoColumnInput
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: twoColumns
+  model_class: Conditional
+  name: input_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22input_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22oneColumn%22%3E%0A%3Coption%20value%3D%22oneColumn%22%20selected%3E%20Input%20file%20contains%20one%20column%20%28offsets%29%20%3C/option%3E%0A%3Coption%20value%3D%22twoColumns%22%3E%20Input%20file%20contains%20two%20columns%20%28sequence%20id%20and%20its%20offset%29%20%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: select the input type
+    model_class: SelectToolParameter
+    multiple: false
+    name: input_selector
+    optional: false
+    options:
+    - [' Input file contains one column (offsets) ', oneColumn, true]
+    - [' Input file contains two columns (sequence id and its offset) ', twoColumns,
+      false]
+    type: select
+    value: oneColumn
+  type: conditional
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: '[p]taxoptimizer output file'
+  model_class: DataToolParameter
+  multiple: false
+  name: taxoptimizerOutput
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22p%22%20name%3D%22p%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22p%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Draw png picture(s), model_class: BooleanToolParameter,
+  name: p, optional: false, truevalue: -p, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22x%22%20name%3D%22x%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22x%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Split mapping acccording to strand's orientation (minus
+    and plus orientations), model_class: BooleanToolParameter, name: x, optional: false,
+  truevalue: -x, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22m%22%20name%3D%22m%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22m%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Draw all hsp in one line, model_class: BooleanToolParameter,
+  name: m, optional: false, truevalue: -m, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22M%22%20name%3D%22M%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22M%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Draw non overlapping hsp in few lines, model_class: BooleanToolParameter,
+  name: M, optional: false, truevalue: -M, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22e%22%20name%3D%22e%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22e%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'Do you want to extract lines of interest in a subset
+    taxoptimizer output ?', model_class: BooleanToolParameter, name: e, optional: false,
+  truevalue: -e, type: boolean, value: false}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: basic
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22colNum%22%20size%3D%224%22%20value%3D%222%22%3E',
+      is_dynamic: false, label: Column number to parse, max: null, min: null, model_class: IntegerToolParameter,
+      name: colNum, optional: false, size: '4', type: integer, value: '2'}
+    model_class: ConditionalWhen
+    value: advanced
+  model_class: Conditional
+  name: adv_opts
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22adv_opts_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22basic%22%3E%0A%3Coption%20value%3D%22basic%22%20selected%3E%20Hide%20Advanced%20Options%3C/option%3E%0A%3Coption%20value%3D%22advanced%22%3EShow%20Advanced%20Options%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Advanced Options
+    model_class: SelectToolParameter
+    multiple: false
+    name: adv_opts_selector
+    optional: false
+    options:
+    - [' Hide Advanced Options', basic, true]
+    - [Show Advanced Options, advanced, false]
+    type: select
+    value: basic
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Ftaxonomy_analysis%2Fmappinghsp4taxo%2F0.0.2
+min_width: -1
+model_class: Tool
+name: mappinghsp4taxo
+outputs:
+- {edam_format: null, format: text, hidden: false, label: 'lines of interest on ${taxoptimizerOutput.name}',
+  model_class: ToolOutput, name: taxoExtractOutput}
+- {edam_format: format_3547, format: png, hidden: false, label: Picture of the HSPs,
+  model_class: ToolOutput, name: prefix}
+- {edam_format: format_3547, format: png, hidden: false, label: 'HSPs merge ', model_class: ToolOutput,
+  name: prefix_merge}
+- {edam_format: format_3547, format: png, hidden: false, label: HSPs no overlap, model_class: ToolOutput,
+  name: prefix_noOverlap}
+- {edam_format: format_3547, format: png, hidden: false, label: HSPs merge, model_class: ToolOutput,
+  name: prefix_merge2}
+- {edam_format: format_3547, format: png, hidden: false, label: HSPs no overlap, model_class: ToolOutput,
+  name: prefix_noOverlap2}
+- {edam_format: format_3547, format: png, hidden: false, label: HSPs Plus, model_class: ToolOutput,
+  name: prefix_plus}
+- {edam_format: format_3547, format: png, hidden: false, label: HSPs Minus, model_class: ToolOutput,
+  name: prefix_minus}
+- {edam_format: format_3547, format: png, hidden: false, label: HSPs merge Plus, model_class: ToolOutput,
+  name: prefix_merge_plus}
+- {edam_format: format_3547, format: png, hidden: false, label: HSPs merge Minus,
+  model_class: ToolOutput, name: prefix_merge_minus}
+- {edam_format: format_3547, format: png, hidden: false, label: HSPs no overlap Plus,
+  model_class: ToolOutput, name: prefix_noOverlap_plus}
+- {edam_format: format_3547, format: png, hidden: false, label: HSPs no overlap Minus,
+  model_class: ToolOutput, name: prefix_noOverlap_minus}
+- {edam_format: format_3547, format: png, hidden: false, label: HSPs merge Plus, model_class: ToolOutput,
+  name: prefix_merge_plus2}
+- {edam_format: format_3547, format: png, hidden: false, label: HSPs merge Minus,
+  model_class: ToolOutput, name: prefix_merge_minus2}
+- {edam_format: format_3547, format: png, hidden: false, label: HSPs no overlap Plus,
+  model_class: ToolOutput, name: prefix_noOverlap_plus2}
+- {edam_format: format_3547, format: png, hidden: false, label: HSPs no overlap Minus,
+  model_class: ToolOutput, name: prefix_noOverlap_minus2}
+panel_section_id: tax_manipulation
+panel_section_name: Metagenomic analyses
+target: galaxy_main
+version: 0.0.2

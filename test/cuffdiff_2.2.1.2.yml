@@ -1,0 +1,555 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/cuffdiff/542a33104c93/cuffdiff/cuffdiff_wrapper.xml
+description: find significant changes in transcript expression, splicing, and promoter
+  use
+id: toolshed.pasteur.fr/repos/fmareuil/cuffdiff/cuffdiff/2.2.1.2
+inputs:
+- argument: null
+  edam_formats: [format_2306, format_1975]
+  extensions: [gtf, gff3]
+  help: A transcript GFF3 or GTF file produced by cufflinks, cuffcompare, or other
+    source.
+  hidden: false
+  is_dynamic: false
+  label: Transcripts
+  model_class: DataToolParameter
+  multiple: false
+  name: gtf_input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: 'no', help: Discard the tabular output., hidden: false,
+  html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22omit_tabular_output%22%20name%3D%22omit_tabular_output%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22omit_tabular_output%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Omit Tabular Datasets, model_class: BooleanToolParameter,
+  name: omit_tabular_output, optional: false, truevalue: 'yes', type: boolean, value: false}
+- {argument: null, falsevalue: 'no', help: Generate a SQLite database for use with
+    cummeRbund., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22generate_sqlite%22%20name%3D%22generate_sqlite%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22generate_sqlite%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Generate SQLite, model_class: BooleanToolParameter, name: generate_sqlite,
+  optional: false, truevalue: 'yes', type: boolean, value: false}
+- cases:
+  - inputs:
+    - default: 2
+      help: null
+      inputs:
+      - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22name%22%20size%3D%2210%22%20value%3D%22%22%3E',
+        is_dynamic: false, label: Name, model_class: TextToolParameter, name: name,
+        optional: false, size: null, type: text, value: null}
+      - argument: null
+        edam_formats: [format_2573, format_2572]
+        extensions: [sam, bam]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: Replicates
+        max: null
+        min: null
+        model_class: DataToolParameter
+        multiple: true
+        name: samples
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      max: __Infinity__
+      min: 2
+      model_class: Repeat
+      name: conditions
+      title: Condition
+      type: repeat
+    model_class: ConditionalWhen
+    value: BAM
+  - inputs:
+    - default: 2
+      help: null
+      inputs:
+      - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22name%22%20size%3D%2210%22%20value%3D%22%22%3E',
+        is_dynamic: false, label: Name, model_class: TextToolParameter, name: name,
+        optional: false, size: null, type: text, value: null}
+      - argument: null
+        edam_formats: [format_2333]
+        extensions: [cxb]
+        help: ''
+        hidden: false
+        is_dynamic: false
+        label: Replicates
+        max: null
+        min: null
+        model_class: DataToolParameter
+        multiple: true
+        name: samples
+        optional: false
+        options:
+          hda: []
+          hdca: []
+        type: data
+      max: __Infinity__
+      min: 2
+      model_class: Repeat
+      name: conditions
+      title: Condition
+      type: repeat
+    model_class: ConditionalWhen
+    value: CXB
+  - inputs:
+    - argument: null
+      extensions: [data]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: ''
+      model_class: DataCollectionToolParameter
+      multiple: false
+      name: conditions
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data_collection
+    model_class: ConditionalWhen
+    value: CONDITION_LIST
+  - inputs:
+    - argument: null
+      extensions: [data]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: ''
+      model_class: DataCollectionToolParameter
+      multiple: false
+      name: conditions
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data_collection
+    model_class: ConditionalWhen
+    value: CONDITION_REPLICATE_LIST
+  model_class: Conditional
+  name: in_type
+  test_param:
+    argument: null
+    display: null
+    help: 'CuffNorm supports either CXB (from cuffquant) or SAM/BAM input files. Mixing
+      is not supported. Default: SAM/BAM'
+    hidden: false
+    html: '%3Cselect%20name%3D%22set_in_type%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22BAM%22%3ESAM/BAM%3C/option%3E%0A%3Coption%20value%3D%22CXB%22%3ECuffquant%20%28CXB%29%3C/option%3E%0A%3Coption%20value%3D%22CONDITION_LIST%22%3EList%20of%20single%20replicate%20conditions%3C/option%3E%0A%3Coption%20value%3D%22CONDITION_REPLICATE_LIST%22%3EList%20of%20multiple%20replicate%20conditions%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Input data type
+    model_class: SelectToolParameter
+    multiple: false
+    name: set_in_type
+    optional: false
+    options:
+    - [SAM/BAM, BAM, false]
+    - [Cuffquant (CXB), CXB, false]
+    - [List of single replicate conditions, CONDITION_LIST, false]
+    - [List of multiple replicate conditions, CONDITION_REPLICATE_LIST, false]
+    type: select
+    value: BAM
+  type: conditional
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22library_norm_method%22%20last_selected_value%3D%22geometric%22%3E%0A%3Coption%20value%3D%22geometric%22%20selected%3Egeometric%3C/option%3E%0A%3Coption%20value%3D%22classic-fpkm%22%3Eclassic-fpkm%3C/option%3E%0A%3Coption%20value%3D%22quartile%22%3Equartile%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Library normalization method
+  model_class: SelectToolParameter
+  multiple: false
+  name: library_norm_method
+  optional: false
+  options:
+  - [geometric, geometric, true]
+  - [classic-fpkm, classic-fpkm, false]
+  - [quartile, quartile, false]
+  type: select
+  value: geometric
+- argument: null
+  display: null
+  help: If using only one sample per condition, you must use 'blind.'
+  hidden: false
+  html: '%3Cselect%20name%3D%22dispersion_method%22%20last_selected_value%3D%22pooled%22%3E%0A%3Coption%20value%3D%22pooled%22%20selected%3Epooled%3C/option%3E%0A%3Coption%20value%3D%22per-condition%22%3Eper-condition%3C/option%3E%0A%3Coption%20value%3D%22blind%22%3Eblind%3C/option%3E%0A%3Coption%20value%3D%22poisson%22%3Epoisson%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Dispersion estimation method
+  model_class: SelectToolParameter
+  multiple: false
+  name: dispersion_method
+  optional: false
+  options:
+  - [pooled, pooled, true]
+  - [per-condition, per-condition, false]
+  - [blind, blind, false]
+  - [poisson, poisson, false]
+  type: select
+  value: pooled
+- {area: false, argument: null, help: The allowed false discovery rate., hidden: false,
+  html: '%3Cinput%20type%3D%22text%22%20name%3D%22fdr%22%20size%3D%2210%22%20value%3D%220.05%22%3E',
+  is_dynamic: false, label: False Discovery Rate, max: null, min: null, model_class: FloatToolParameter,
+  name: fdr, optional: false, size: null, type: float, value: '0.05'}
+- {area: false, argument: null, help: The minimum number of alignments in a locus
+    for needed to conduct significance testing on changes in that locus observed between
+    samples., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_alignment_count%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+  is_dynamic: false, label: Min Alignment Count, max: null, min: null, model_class: IntegerToolParameter,
+  name: min_alignment_count, optional: false, size: null, type: integer, value: '10'}
+- {argument: null, falsevalue: 'false', help: Tells Cufflinks to do an initial estimation
+    procedure to more accurately weight reads mapping to multiple locations in the
+    genome., hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22multiread_correct%22%20name%3D%22multiread_correct%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22multiread_correct%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Use multi-read correct, model_class: BooleanToolParameter,
+  name: multiread_correct, optional: false, truevalue: 'true', type: boolean, value: false}
+- cases:
+  - inputs:
+    - cases:
+      - inputs:
+        - argument: null
+          display: null
+          help: ''
+          hidden: false
+          is_dynamic: true
+          label: Using reference genome
+          model_class: SelectToolParameter
+          multiple: false
+          name: index
+          optional: false
+          options: []
+          type: select
+        model_class: ConditionalWhen
+        value: cached
+      - inputs:
+        - argument: null
+          edam_formats: [format_1929]
+          extensions: [fasta]
+          help: ''
+          hidden: false
+          is_dynamic: false
+          label: Using reference file
+          model_class: DataToolParameter
+          multiple: false
+          name: ref_file
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        model_class: ConditionalWhen
+        value: history
+      model_class: Conditional
+      name: seq_source
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22index_source%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22cached%22%3ELocally%20cached%3C/option%3E%0A%3Coption%20value%3D%22history%22%3EHistory%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Reference sequence data
+        model_class: SelectToolParameter
+        multiple: false
+        name: index_source
+        optional: false
+        options:
+        - [Locally cached, cached, false]
+        - [History, history, false]
+        type: select
+        value: cached
+      type: conditional
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: bias_correction
+  test_param:
+    argument: null
+    display: null
+    help: Bias detection and correction can significantly improve accuracy of transcript
+      abundance estimates.
+    hidden: false
+    html: '%3Cselect%20name%3D%22do_bias_correction%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22No%22%3ENo%3C/option%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Perform Bias Correction
+    model_class: SelectToolParameter
+    multiple: false
+    name: do_bias_correction
+    optional: false
+    options:
+    - ['No', 'No', false]
+    - ['Yes', 'Yes', false]
+    type: select
+    value: 'No'
+  type: conditional
+- argument: null
+  display: null
+  help: Read group datasets provide information on replicates.
+  hidden: false
+  html: '%3Cselect%20name%3D%22include_read_group_files%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Include Read Group Datasets
+  model_class: SelectToolParameter
+  multiple: false
+  name: include_read_group_files
+  optional: false
+  options:
+  - ['No', 'No', true]
+  - ['Yes', 'Yes', false]
+  type: select
+  value: 'No'
+- argument: null
+  display: null
+  help: Cuffdiff estimates the number of fragments that originated from each transcript,
+    primary transcript, and gene in each sample. Primary transcript and gene counts
+    are computed by summing the counts of transcripts in each primary transcript group
+    or gene group.
+  hidden: false
+  html: '%3Cselect%20name%3D%22include_count_files%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Include Count Based output files
+  model_class: SelectToolParameter
+  multiple: false
+  name: include_count_files
+  optional: false
+  options:
+  - ['No', 'No', true]
+  - ['Yes', 'Yes', false]
+  type: select
+  value: 'No'
+- argument: null
+  display: null
+  help: mode of length normalization to transcript fpkm.
+  hidden: false
+  html: '%3Cselect%20name%3D%22length_correction%22%3E%0A%3Coption%20value%3D%22%22%20selected%3Ecufflinks%20effective%20length%20correction%3C/option%3E%0A%3Coption%20value%3D%22--no-effective-length-correction%22%3Estandard%20length%20correction%3C/option%3E%0A%3Coption%20value%3D%22--no-length-correction%22%3Eno%20length%20correction%20at%20all%20%28use%20raw%20counts%29%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: apply length correction
+  model_class: SelectToolParameter
+  multiple: false
+  name: length_correction
+  optional: false
+  options:
+  - [cufflinks effective length correction, '', true]
+  - [standard length correction, --no-effective-length-correction, false]
+  - [no length correction at all (use raw counts), --no-length-correction, false]
+  type: select
+  value: ''
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22frag_mean_len%22%20size%3D%2210%22%20value%3D%22200%22%3E',
+      is_dynamic: false, label: Average Fragment Length, max: null, min: null, model_class: IntegerToolParameter,
+      name: frag_mean_len, optional: false, size: null, type: integer, value: '200'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22frag_len_std_dev%22%20size%3D%2210%22%20value%3D%2280%22%3E',
+      is_dynamic: false, label: Fragment Length Standard Deviation, max: null, min: null,
+      model_class: IntegerToolParameter, name: frag_len_std_dev, optional: false,
+      size: null, type: integer, value: '80'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  model_class: Conditional
+  name: additional
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22sAdditional%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Set Additional Parameters for single end reads? (not recommended for paired-end
+      reads)
+    model_class: SelectToolParameter
+    multiple: false
+    name: sAdditional
+    optional: false
+    options:
+    - ['No', 'No', true]
+    - ['Yes', 'Yes', false]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22library_type%22%20last_selected_value%3D%22auto%22%3E%0A%3Coption%20value%3D%22auto%22%20selected%3EAuto%20Detect%3C/option%3E%0A%3Coption%20value%3D%22ff-firststrand%22%3Eff-firststrand%3C/option%3E%0A%3Coption%20value%3D%22ff-secondstrand%22%3Eff-secondstrand%3C/option%3E%0A%3Coption%20value%3D%22ff-unstranded%22%3Eff-unstranded%3C/option%3E%0A%3Coption%20value%3D%22fr-firststrand%22%3Efr-firststrand%3C/option%3E%0A%3Coption%20value%3D%22fr-secondstrand%22%3Efr-secondstrand%3C/option%3E%0A%3Coption%20value%3D%22fr-unstranded%22%3Efr-unstranded%3C/option%3E%0A%3Coption%20value%3D%22transfrags%22%3Etransfrags%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Library prep used for input reads
+      model_class: SelectToolParameter
+      multiple: false
+      name: library_type
+      optional: false
+      options:
+      - [Auto Detect, auto, true]
+      - [ff-firststrand, ff-firststrand, false]
+      - [ff-secondstrand, ff-secondstrand, false]
+      - [ff-unstranded, ff-unstranded, false]
+      - [fr-firststrand, fr-firststrand, false]
+      - [fr-secondstrand, fr-secondstrand, false]
+      - [fr-unstranded, fr-unstranded, false]
+      - [transfrags, transfrags, false]
+      type: select
+      value: auto
+    - argument: null
+      edam_formats: [format_2306, format_1975]
+      extensions: [gtf, gff3]
+      help: Ignore all alignment within transcripts in this file
+      hidden: false
+      is_dynamic: false
+      label: Mask File
+      model_class: DataToolParameter
+      multiple: false
+      name: mask_file
+      optional: true
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {argument: null, falsevalue: 'false', help: 'Instructs Cuffdiff to analyze the
+        provided samples as a time series, rather than testing for differences between
+        all pairs of samples. Samples should be provided in increasing time order
+        at the command line (e.g first time point SAM, second timepoint SAM, etc.)',
+      hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22time_series%22%20name%3D%22time_series%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22time_series%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Perform Time Series analysis, model_class: BooleanToolParameter,
+      name: time_series, optional: false, truevalue: 'true', type: boolean, value: false}
+    - {area: false, argument: null, help: Maximum iterations allowed for Maximal Likelyhood
+        Estimation calculations, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_mle_iterations%22%20size%3D%2210%22%20value%3D%225000%22%3E',
+      is_dynamic: false, label: Max MLE iterations, max: null, min: null, model_class: IntegerToolParameter,
+      name: max_mle_iterations, optional: false, size: null, type: integer, value: '5000'}
+    - argument: null
+      display: null
+      help: 'All Hits: With this option, Cufflinks counts all fragments, including
+        those not compatible with any reference transcript, towards the number of
+        mapped fragments used in the FPKM denominator. Compatible Hits: With this
+        option, Cufflinks counts only those fragments compatible with some reference
+        transcript towards the number of mapped fragments used in the FPKM denominator.
+        Using this mode is generally recommended in Cuffdiff to reduce certain types
+        of bias caused by differential amounts of ribosomal reads which can create
+        the impression of falsely differentially expressed genes. It is active by
+        default.'
+      hidden: false
+      html: '%3Cselect%20name%3D%22hits_norm%22%20last_selected_value%3D%22--compatible-hits-norm%22%3E%0A%3Coption%20value%3D%22--compatible-hits-norm%22%20selected%3ECompatible%20Hits%3C/option%3E%0A%3Coption%20value%3D%22--total-hits-norm%22%3EAll%20Hits%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Hits included in normalization
+      model_class: SelectToolParameter
+      multiple: false
+      name: hits_norm
+      optional: false
+      options:
+      - [Compatible Hits, --compatible-hits-norm, true]
+      - [All Hits, --total-hits-norm, false]
+      type: select
+      value: --compatible-hits-norm
+    - {area: false, argument: null, help: 'Sets the maximum number of fragments a
+        locus may have before being skipped. Skipped loci are listed in skipped.gtf.
+        Default: 500,000', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_bundle_frags%22%20size%3D%2210%22%20value%3D%22500000%22%3E',
+      is_dynamic: false, label: Maximum number of fragments per locus, max: null,
+      min: null, model_class: IntegerToolParameter, name: max_bundle_frags, optional: false,
+      size: null, type: integer, value: '500000'}
+    - {area: false, argument: null, help: 'Cuffdiff will make this many draws from
+        each transcript''s predicted negative binomial random numbder generator. Each
+        draw is a number of fragments that will be probabilistically assigned to the
+        transcripts in the transcriptome. Used to estimate the variance-covariance
+        matrix on assigned fragment counts. Default: 100.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22num_frag_count_draws%22%20size%3D%2210%22%20value%3D%22100%22%3E',
+      is_dynamic: false, label: Number of fragment generation samples, max: null,
+      min: null, model_class: IntegerToolParameter, name: num_frag_count_draws, optional: false,
+      size: null, type: integer, value: '100'}
+    - {area: false, argument: null, help: 'For each fragment drawn from a transcript,
+        Cuffdiff will assign it this many times (probabilistically), thus estimating
+        the assignment uncertainty for each transcript. Used to estimate the variance-covariance
+        matrix on assigned fragment counts. Default: 50.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22num_frag_assign_draws%22%20size%3D%2210%22%20value%3D%2250%22%3E',
+      is_dynamic: false, label: Number of fragment assignment samples per generation,
+      max: null, min: null, model_class: IntegerToolParameter, name: num_frag_assign_draws,
+      optional: false, size: null, type: integer, value: '50'}
+    - {area: false, argument: null, help: 'Cuffdiff won''t test genes for differential
+        regulation unless the conditions in question have at least this many replicates.
+        Default: 3.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_reps_for_js_test%22%20size%3D%2210%22%20value%3D%223%22%3E',
+      is_dynamic: false, label: Minimal Replicates for isoform shift testing, max: null,
+      min: null, model_class: IntegerToolParameter, name: min_reps_for_js_test, optional: false,
+      size: null, type: integer, value: '3'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  model_class: Conditional
+  name: advanced_settings
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22sAdvanced%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: 'Set Advanced Cuffdiff parameters? '
+    model_class: SelectToolParameter
+    multiple: false
+    name: sAdvanced
+    optional: false
+    options:
+    - ['No', 'No', true]
+    - ['Yes', 'Yes', false]
+    type: select
+    value: 'No'
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fcuffdiff%2Fcuffdiff%2F2.2.1.2
+min_width: -1
+model_class: Tool
+name: Cuffdiff
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: isoforms read group tracking', model_class: ToolOutput, name: isoforms_read_group}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: genes read group tracking', model_class: ToolOutput, name: genes_read_group}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: CDs read group tracking', model_class: ToolOutput, name: cds_read_group}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: TSS groups read group tracking', model_class: ToolOutput, name: tss_groups_read_group}
+- {edam_format: null, format: text, hidden: false, label: '${tool.name} on ${on_string}:
+    read group info', model_class: ToolOutput, name: read_group_info}
+- {edam_format: null, format: text, hidden: false, label: '${tool.name} on ${on_string}:
+    run info', model_class: ToolOutput, name: run_info}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: splicing differential expression testing', model_class: ToolOutput,
+  name: splicing_diff}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: promoters differential expression testing', model_class: ToolOutput,
+  name: promoters_diff}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: CDS overloading diffential expression testing', model_class: ToolOutput,
+  name: cds_diff}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: CDS FPKM differential expression testing', model_class: ToolOutput,
+  name: cds_exp_fpkm_tracking}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: CDS FPKM tracking', model_class: ToolOutput, name: cds_fpkm_tracking}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: CDS count tracking', model_class: ToolOutput, name: cds_count_tracking}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: TSS groups differential expression testing', model_class: ToolOutput,
+  name: tss_groups_exp}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: TSS groups FPKM tracking', model_class: ToolOutput, name: tss_groups_fpkm_tracking}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: TSS count FPKM tracking', model_class: ToolOutput, name: tss_groups_count_tracking}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: gene differential expression testing', model_class: ToolOutput,
+  name: genes_exp}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: gene FPKM tracking', model_class: ToolOutput, name: genes_fpkm_tracking}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: gene count tracking', model_class: ToolOutput, name: genes_count_tracking}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: transcript differential expression testing', model_class: ToolOutput,
+  name: isoforms_exp}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: transcript FPKM tracking', model_class: ToolOutput, name: isoforms_fpkm_tracking}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: transcript count tracking', model_class: ToolOutput, name: isoforms_count_tracking}
+- {edam_format: format_2333, format: sqlite, hidden: false, label: '${tool.name} on
+    ${on_string}: cummeRbund SQLite database', model_class: ToolOutput, name: output_cummerbund}
+panel_section_id: ngs-rna-tools
+panel_section_name: 'NGS: RNA Analysis'
+target: galaxy_main
+version: 2.2.1.2

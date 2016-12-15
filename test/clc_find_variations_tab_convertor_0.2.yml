@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/clc_assembly_4/4ccb1f9f67f5/clc_assembly_4/clc_find_variations_tab_convertor.xml
+description: Convert CLC find_variations output into a snpEff compliant tabular format
+id: toolshed.pasteur.fr/repos/fmareuil/clc_assembly_4/clc_find_variations_tab_convertor/0.2
+inputs:
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: CLC find_variation output
+  model_class: DataToolParameter
+  multiple: false
+  name: input_variation
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fclc_assembly_4%2Fclc_find_variations_tab_convertor%2F0.2
+min_width: -1
+model_class: Tool
+name: CLC find_variations convertor
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: 'Tabular conversion
+    on ${on_string}', model_class: ToolOutput, name: output}
+panel_section_id: ngs:_assembly
+panel_section_name: 'NGS: Assembly package clc 4'
+target: galaxy_main
+version: '0.2'

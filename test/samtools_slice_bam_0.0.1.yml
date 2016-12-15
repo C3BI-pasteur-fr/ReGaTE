@@ -1,0 +1,45 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.g2.bx.psu.edu/repos/devteam/samtools_slice_bam/68ba55e96489/samtools_slice_bam/samtools_slice_bam.xml
+description: by provided regions
+id: toolshed.g2.bx.psu.edu/repos/devteam/samtools_slice_bam/samtools_slice_bam/0.0.1
+inputs:
+- argument: null
+  edam_formats: [format_2572]
+  extensions: [bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: BAM file
+  model_class: DataToolParameter
+  multiple: false
+  name: input_bam
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3003]
+  extensions: [bed]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: BED file
+  model_class: DataToolParameter
+  multiple: false
+  name: input_interval
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Fdevteam%2Fsamtools_slice_bam%2Fsamtools_slice_bam%2F0.0.1
+min_width: -1
+model_class: Tool
+name: Slice BAM
+outputs:
+- {edam_format: format_2572, format: bam, hidden: false, label: '', model_class: ToolOutput,
+  name: output_bam}
+panel_section_id: samtools
+panel_section_name: 'NGS: SAM Tools'
+target: galaxy_main
+version: 0.0.1

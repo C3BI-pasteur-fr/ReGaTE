@@ -1,0 +1,127 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/2f92cb75946c/picard_pasteur_wrapper/rgPicardASMetrics.xml
+description: ''
+id: toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/PicardASMetrics/1.56.0
+inputs:
+- argument: null
+  edam_formats: [format_2573, format_2572]
+  extensions: [sam, bam]
+  help: If empty, upload or import a SAM/BAM dataset.
+  hidden: false
+  is_dynamic: false
+  label: SAM/BAM dataset to generate statistics for
+  model_class: DataToolParameter
+  multiple: false
+  name: input_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: Use this remind you what the job was for., hidden: false,
+  html: '%3Cinput%20type%3D%22text%22%20name%3D%22out_prefix%22%20size%3D%2280%22%20value%3D%22Picard%20Alignment%20Summary%20Metrics%22%3E',
+  is_dynamic: false, label: Title for the output file, model_class: TextToolParameter,
+  name: out_prefix, optional: false, size: '80', type: text, value: Picard Alignment
+    Summary Metrics}
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: Galaxy thinks that the reads in you dataset were aligned against this
+        reference. If this is not correct, use the 'Select a build-in reference genome'
+        option of the 'Select Reference Genome' dropdown to select approprtiate Reference.
+      hidden: false
+      is_dynamic: true
+      label: Check the assigned reference genome
+      model_class: SelectToolParameter
+      multiple: false
+      name: index
+      optional: false
+      options: []
+      type: select
+    model_class: ConditionalWhen
+    value: default
+  - inputs:
+    - argument: null
+      display: null
+      help: This list contains genomes cached at this Galaxy instance. If your genome
+        of interest is not present here request it by using 'Help' link at the top
+        of Galaxy interface or use the 'Use a genome (fasta format) from my history'
+        option of the 'Select Reference Genome' dropdown.
+      hidden: false
+      html: '%3Cselect%20name%3D%22index%22%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: Select a built-in reference genome
+      model_class: SelectToolParameter
+      multiple: false
+      name: index
+      optional: false
+      options: []
+      type: select
+    model_class: ConditionalWhen
+    value: indexed
+  - inputs:
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [fasta]
+      help: This option works best for relatively small genomes. If you are working
+        with large human-sized genomes, send request to Galaxy team for adding your
+        reference to this Galaxy instance by using 'Help' link at the top of Galaxy
+        interface.
+      hidden: false
+      is_dynamic: false
+      label: Select a reference genome from history
+      model_class: DataToolParameter
+      multiple: false
+      name: ownFile
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: history
+  model_class: Conditional
+  name: genomeSource
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22refGenomeSource%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22default%22%3E%0A%3Coption%20value%3D%22default%22%20selected%3EUse%20the%20assigned%20data%20genome/build%3C/option%3E%0A%3Coption%20value%3D%22indexed%22%3ESelect%20a%20different%20built-in%20genome%3C/option%3E%0A%3Coption%20value%3D%22history%22%3EUse%20a%20genome%20%28fasta%20format%29%20from%20my%20history%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Select Reference Genome
+    model_class: SelectToolParameter
+    multiple: false
+    name: refGenomeSource
+    optional: false
+    options:
+    - [Use the assigned data genome/build, default, true]
+    - [Select a different built-in genome, indexed, false]
+    - [Use a genome (fasta format) from my history, history, false]
+    type: select
+    value: default
+  type: conditional
+- {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22sorted%22%20name%3D%22sorted%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22sorted%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Assume the input file is already sorted, model_class: BooleanToolParameter,
+  name: sorted, optional: false, truevalue: 'true', type: boolean, value: true}
+- {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22bisulphite%22%20name%3D%22bisulphite%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22bisulphite%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Input file contains Bisulphite sequenced reads, model_class: BooleanToolParameter,
+  name: bisulphite, optional: false, truevalue: 'true', type: boolean, value: false}
+- {area: true, argument: null, help: One per line if multiple, hidden: false, html: '%3Ctextarea%20name%3D%22adaptors%22%20rows%3D%225%22%20cols%3D%22120%22%3E%3C/textarea%3E',
+  is_dynamic: false, label: Adapter sequences, model_class: TextToolParameter, name: adaptors,
+  optional: false, size: 5x120, type: text, value: ''}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxinsert%22%20size%3D%2220%22%20value%3D%22100000%22%3E',
+  is_dynamic: false, label: 'Larger paired end reads and inter-chromosomal pairs considered
+    chimeric ', max: null, min: null, model_class: IntegerToolParameter, name: maxinsert,
+  optional: false, size: '20', type: integer, value: '100000'}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fpicard_pasteur_wrapper%2FPicardASMetrics%2F1.56.0
+min_width: -1
+model_class: Tool
+name: SAM/BAM Alignment Summary Metrics
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '${out_prefix}.html',
+  model_class: ToolOutput, name: html_file}
+panel_section_id: ngs:_picard_tools
+panel_section_name: 'NGS: Picard Tools'
+target: galaxy_main
+version: 1.56.0

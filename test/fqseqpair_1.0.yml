@@ -1,0 +1,45 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/fqtools/4801a84ea16e/fqtools/fqseqpair.xml
+description: '"List names of sequence pairs from two FASTQ formatted files"'
+id: toolshed.pasteur.fr/repos/odoppelt/fqtools/fqseqpair/1.0
+inputs:
+- argument: null
+  edam_formats: [format_1933, format_1931, format_1930]
+  extensions: [fastqsolexa, fastqillumina, fastq]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: First FASTQ formatted sequence file
+  model_class: DataToolParameter
+  multiple: false
+  name: input1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1933, format_1931, format_1930]
+  extensions: [fastqsolexa, fastqillumina, fastq]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Second FASTQ formatted sequence file
+  model_class: DataToolParameter
+  multiple: false
+  name: input2
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Ffqtools%2Ffqseqpair%2F1.0
+min_width: -1
+model_class: Tool
+name: fqseqpair
+outputs:
+- {edam_format: format_3475, format: lst, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: '1.0'

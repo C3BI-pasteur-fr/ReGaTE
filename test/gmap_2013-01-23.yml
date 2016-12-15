@@ -1,0 +1,560 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/gmap_gsnap/727552d0c045/gmap_gsnap/gmap.xml
+description: Genomic Mapping and Alignment Program for mRNA and EST sequences
+id: toolshed.pasteur.fr/repos/fmareuil/gmap_gsnap/gmap/2013-01-23
+inputs:
+- argument: null
+  edam_formats: [format_1929, format_1932, format_1931]
+  extensions: [fasta, fastqsanger, fastqillumina]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: <H2>Input Sequences</H2>Select an mRNA or EST dataset to map
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- default: 0
+  help: null
+  inputs:
+  - argument: null
+    edam_formats: [format_1929, format_1932, format_1931]
+    extensions: [fasta, fastqsanger, fastqillumina]
+    help: ''
+    hidden: false
+    is_dynamic: false
+    label: ''
+    model_class: DataToolParameter
+    multiple: false
+    name: added_input
+    optional: false
+    options:
+      hda: []
+      hdca: []
+    type: data
+  max: __Infinity__
+  min: 0
+  model_class: Repeat
+  name: inputs
+  title: addtional mRNA or EST dataset to map
+  type: repeat
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22quality_protocol%22%3E%0A%3Coption%20value%3D%22%22%3ENo%20quality%20scores%3C/option%3E%0A%3Coption%20value%3D%22sanger%22%3ESanger%20quality%20scores%3C/option%3E%0A%3Coption%20value%3D%22illumina%22%3EIllumina%20quality%20scores%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Protocol for input quality scores
+  model_class: SelectToolParameter
+  multiple: false
+  name: quality_protocol
+  optional: false
+  options:
+  - [No quality scores, '', false]
+  - [Sanger quality scores, sanger, false]
+  - [Illumina quality scores, illumina, false]
+  type: select
+  value: ''
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: if your genome of interest is not listed - contact Galaxy team
+      hidden: false
+      html: '%3Cselect%20name%3D%22gmapindex%22%20refresh_on_change%3D%22true%22%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: Select a reference genome
+      model_class: SelectToolParameter
+      multiple: false
+      name: gmapindex
+      optional: false
+      options: []
+      type: select
+    - argument: null
+      display: null
+      help: Defaults to highest available kmer size
+      hidden: false
+      is_dynamic: true
+      label: kmer size
+      model_class: SelectToolParameter
+      multiple: false
+      name: kmer
+      optional: false
+      options: []
+      type: select
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      is_dynamic: true
+      label: Look for splicing involving known sites or known introns
+      model_class: SelectToolParameter
+      multiple: false
+      name: map
+      optional: false
+      options: []
+      type: select
+    model_class: ConditionalWhen
+    value: indexed
+  - inputs:
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [gmapdb]
+      help: A GMAP database built with GMAP Build
+      hidden: false
+      is_dynamic: false
+      label: Select a gmapdb
+      model_class: DataToolParameter
+      multiple: false
+      name: gmapdb
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      display: null
+      help: Defaults to highest available kmer size
+      hidden: false
+      is_dynamic: true
+      label: kmer size
+      model_class: SelectToolParameter
+      multiple: false
+      name: kmer
+      optional: false
+      options: []
+      type: select
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      is_dynamic: true
+      label: Use map for splicing involving known sites or known introns
+      model_class: SelectToolParameter
+      multiple: false
+      name: map
+      optional: false
+      options: []
+      type: select
+    model_class: ConditionalWhen
+    value: gmapdb
+  - inputs:
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [fasta]
+      help: Fasta containing genomic DNA sequence
+      hidden: false
+      is_dynamic: false
+      label: Select the reference genome
+      model_class: DataToolParameter
+      multiple: false
+      name: ownFile
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: history
+  model_class: Conditional
+  name: refGenomeSource
+  test_param:
+    argument: null
+    display: null
+    help: Built-ins were indexed using default options
+    hidden: false
+    html: '%3Cselect%20name%3D%22genomeSource%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22indexed%22%3EUse%20a%20built-in%20index%3C/option%3E%0A%3Coption%20value%3D%22gmapdb%22%3EUse%20gmapdb%20from%20the%20history%3C/option%3E%0A%3Coption%20value%3D%22history%22%3EUse%20a%20fasta%20reference%20sequence%20from%20the%20history%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: <HR><H2>Map To</H2>Will you map to a reference genome from your history
+      or use a built-in index?
+    model_class: SelectToolParameter
+    multiple: false
+    name: genomeSource
+    optional: false
+    options:
+    - [Use a built-in index, indexed, false]
+    - [Use gmapdb from the history, gmapdb, false]
+    - [Use a fasta reference sequence from the history, history, false]
+    type: select
+    value: indexed
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: default
+  - inputs:
+    - {argument: null, falsevalue: '', help: (useful for aligning genomic sequences
+        onto a genome), hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22nosplicing%22%20name%3D%22nosplicing%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22nosplicing%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Turn off splicing, model_class: BooleanToolParameter,
+      name: nosplicing, optional: false, truevalue: --nosplicing, type: boolean, value: false}
+    - {area: false, argument: null, help: 'Below this size, a genomic gap will be
+        considered a deletion rather than an intron.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_intronlength%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Min length for one internal intron (default 9)., max: null,
+      min: null, model_class: IntegerToolParameter, name: min_intronlength, optional: true,
+      size: null, type: integer, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22intronlength%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Max length for one intron (default 1000000), max: null,
+      min: null, model_class: IntegerToolParameter, name: intronlength, optional: true,
+      size: null, type: integer, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22localsplicedist%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Max length for known splice sites at ends of sequence
+        (default 200000), max: null, min: null, model_class: IntegerToolParameter,
+      name: localsplicedist, optional: true, size: null, type: integer, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22totallength%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Max total intron length (default 2400000), max: null,
+      min: null, model_class: IntegerToolParameter, name: totallength, optional: true,
+      size: null, type: integer, value: ''}
+    - {area: false, argument: null, help: ' default is 40, To turn off, set to a large
+        value (greater than the query length)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22chimera_margin%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Amount of unaligned sequence that triggers search
+        for a chimera, max: null, min: null, model_class: IntegerToolParameter, name: chimera_margin,
+      optional: true, size: null, type: integer, value: ''}
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22direction%22%3E%0A%3Coption%20value%3D%22auto%22%3Eauto%3C/option%3E%0A%3Coption%20value%3D%22sense_force%22%3Esense_force%3C/option%3E%0A%3Coption%20value%3D%22antisense_force%22%3Eantisense_force%3C/option%3E%0A%3Coption%20value%3D%22sense_filter%22%3Esense_filter%3C/option%3E%0A%3Coption%20value%3D%22antisense_filter%22%3Eantisense_filter%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: cDNA direction
+      model_class: SelectToolParameter
+      multiple: false
+      name: direction
+      optional: false
+      options:
+      - [auto, auto, false]
+      - [sense_force, sense_force, false]
+      - [antisense_force, antisense_force, false]
+      - [sense_filter, sense_filter, false]
+      - [antisense_filter, antisense_filter, false]
+      type: select
+      value: auto
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22trimendexons%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: 'Trim end exons with fewer than given number of matches
+        (in nt, default 12)', max: null, min: null, model_class: IntegerToolParameter,
+      name: trimendexons, optional: true, size: null, type: integer, value: ''}
+    - {argument: null, falsevalue: '', help: 'For cross-species alignments, use a
+        more sensitive search for canonical splicing', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22cross_species%22%20name%3D%22cross_species%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22cross_species%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Cross-species alignment, model_class: BooleanToolParameter,
+      name: cross_species, optional: false, truevalue: --cross-species, type: boolean,
+      value: false}
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22canonical%22%3E%0A%3Coption%20value%3D%221%22%3Ehigh%20reward%20%28default%29%3C/option%3E%0A%3Coption%20value%3D%220%22%3Elow%20reward%3C/option%3E%0A%3Coption%20value%3D%222%22%3Elow%20reward%20for%20high-identity%20sequences%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Reward for canonical and semi-canonical introns
+      model_class: SelectToolParameter
+      multiple: false
+      name: canonical
+      optional: false
+      options:
+      - [high reward (default), '1', false]
+      - [low reward, '0', false]
+      - [low reward for high-identity sequences, '2', false]
+      type: select
+      value: '1'
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22allow_close_indels%22%20last_selected_value%3D%221%22%3E%0A%3Coption%20value%3D%221%22%20selected%3Eyes%20%28default%29%3C/option%3E%0A%3Coption%20value%3D%220%22%3Eno%3C/option%3E%0A%3Coption%20value%3D%222%22%3Eonly%20for%20high-quality%20alignments%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Allow an insertion and deletion close to each other
+      model_class: SelectToolParameter
+      multiple: false
+      name: allow_close_indels
+      optional: false
+      options:
+      - [yes (default), '1', true]
+      - ['no', '0', false]
+      - [only for high-quality alignments, '2', false]
+      type: select
+      value: '1'
+    - {area: false, argument: null, help: Allow microexons only if one of the splice
+        site probabilities is greater than this value (default 0.90), hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22microexon_spliceprob%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Micro Exon splice probablility threshold, max: null,
+      min: null, model_class: FloatToolParameter, name: microexon_spliceprob, optional: true,
+      size: null, type: float, value: ''}
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22prunelevel%22%3E%0A%3Coption%20value%3D%220%22%3Eno%20pruning%20%28default%29%3C/option%3E%0A%3Coption%20value%3D%221%22%3Epoor%20sequences%3C/option%3E%0A%3Coption%20value%3D%222%22%3Erepetitive%20sequences%3C/option%3E%0A%3Coption%20value%3D%223%22%3Epoor%20and%20repetitive%20sequences%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Pruning level
+      model_class: SelectToolParameter
+      multiple: false
+      name: prunelevel
+      optional: false
+      options:
+      - [no pruning (default), '0', false]
+      - [poor sequences, '1', false]
+      - [repetitive sequences, '2', false]
+      - [poor and repetitive sequences, '3', false]
+      type: select
+      value: '0'
+    model_class: ConditionalWhen
+    value: advanced
+  model_class: Conditional
+  name: computation
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22options%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22default%22%3EUse%20default%20settings%3C/option%3E%0A%3Coption%20value%3D%22advanced%22%3ESet%20Computation%20Options%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: <HR>Computational Settings
+    model_class: SelectToolParameter
+    multiple: false
+    name: options
+    optional: false
+    options:
+    - [Use default settings, default, false]
+    - [Set Computation Options, advanced, false]
+    type: select
+    value: default
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: default
+  - inputs:
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22nolengths%22%20name%3D%22nolengths%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22nolengths%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: No intron lengths in alignment, model_class: BooleanToolParameter,
+      name: nolengths, optional: false, truevalue: --nolengths=true, type: boolean,
+      value: false}
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22invertmode%22%3E%0A%3Coption%20value%3D%22%22%3EDon%27t%20invert%20the%20cDNA%20%28default%29%3C/option%3E%0A%3Coption%20value%3D%22--invertmode%3D1%22%3EInvert%20cDNA%20and%20print%20genomic%20%28-%29%20strand%3C/option%3E%0A%3Coption%20value%3D%22--invertmode%3D2%22%3EInvert%20cDNA%20and%20print%20genomic%20%28%2B%29%20strand%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: ' Mode for alignments to genomic (-) strand'
+      model_class: SelectToolParameter
+      multiple: false
+      name: invertmode
+      optional: false
+      options:
+      - [Don't invert the cDNA (default), '', false]
+      - [Invert cDNA and print genomic (-) strand, --invertmode=1, false]
+      - [Invert cDNA and print genomic (+) strand, --invertmode=2, false]
+      type: select
+      value: ''
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22introngap%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Nucleotides to show on each end of intron (default=3),
+      max: null, min: null, model_class: IntegerToolParameter, name: introngap, optional: true,
+      size: null, type: integer, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22wraplength%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Line Wrap length for alignment (default=50), max: null,
+      min: null, model_class: IntegerToolParameter, name: wraplength, optional: true,
+      size: null, type: integer, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22npaths%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: 'Maximum number of paths to show.  Ignored if negative.  If
+        0, prints two paths if chimera detected, else one.', max: null, min: null,
+      model_class: IntegerToolParameter, name: npaths, optional: true, size: null,
+      type: integer, value: ''}
+    - {area: false, argument: null, help: By default the program prints all paths
+        found., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22suboptimal_score%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Report only paths whose score is within this value
+        of the best path, max: null, min: null, model_class: IntegerToolParameter,
+      name: suboptimal_score, optional: true, size: null, type: integer, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22chimera_overlap%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: 'Overlap to show, if any, at chimera breakpoint (default
+        0)', max: null, min: null, model_class: IntegerToolParameter, name: chimera_overlap,
+      optional: true, size: null, type: integer, value: ''}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22tolerant%22%20name%3D%22tolerant%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22tolerant%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Translates cDNA with corrections for frameshifts,
+      model_class: BooleanToolParameter, name: tolerant, optional: false, truevalue: --tolerant=true,
+      type: boolean, value: false}
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22protein%22%3E%0A%3Coption%20value%3D%22%22%3Edefault%3C/option%3E%0A%3Coption%20value%3D%22--fulllength%3Dtrue%22%3EAssume%20full-length%20protein%2C%20starting%20with%20Met%3C/option%3E%0A%3Coption%20value%3D%22--truncate%3Dtrue%22%3ETruncate%20alignment%20around%20full-length%20protein%2C%20Met%20to%20Stop%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Protein alignment
+      model_class: SelectToolParameter
+      multiple: false
+      name: protein
+      optional: false
+      options:
+      - [default, '', false]
+      - ['Assume full-length protein, starting with Met', --fulllength=true, false]
+      - ['Truncate alignment around full-length protein, Met to Stop', --truncate=true,
+        false]
+      type: select
+      value: ''
+    model_class: ConditionalWhen
+    value: used
+  model_class: Conditional
+  name: advanced
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22options%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22default%22%3EUse%20default%20settings%3C/option%3E%0A%3Coption%20value%3D%22used%22%3ESet%20Options%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: <HR>Advanced Settings
+    model_class: SelectToolParameter
+    multiple: false
+    name: options
+    optional: false
+    options:
+    - [Use default settings, default, false]
+    - [Set Options, used, false]
+    type: select
+    value: default
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: gmap
+  - inputs: []
+    model_class: ConditionalWhen
+    value: summary
+  - inputs: []
+    model_class: ConditionalWhen
+    value: align
+  - inputs: []
+    model_class: ConditionalWhen
+    value: continuous
+  - inputs: []
+    model_class: ConditionalWhen
+    value: continuous-by-exon
+  - inputs: []
+    model_class: ConditionalWhen
+    value: compress
+  - inputs: []
+    model_class: ConditionalWhen
+    value: exons_dna
+  - inputs: []
+    model_class: ConditionalWhen
+    value: exons_gen
+  - inputs: []
+    model_class: ConditionalWhen
+    value: protein_dna
+  - inputs: []
+    model_class: ConditionalWhen
+    value: protein_gen
+  - inputs: []
+    model_class: ConditionalWhen
+    value: psl
+  - inputs: []
+    model_class: ConditionalWhen
+    value: gff3_gene
+  - inputs: []
+    model_class: ConditionalWhen
+    value: gff3_match_cdna
+  - inputs: []
+    model_class: ConditionalWhen
+    value: gff3_match_est
+  - inputs: []
+    model_class: ConditionalWhen
+    value: splicesites
+  - inputs: []
+    model_class: ConditionalWhen
+    value: introns
+  - inputs: []
+    model_class: ConditionalWhen
+    value: map_exons
+  - inputs: []
+    model_class: ConditionalWhen
+    value: map_genes
+  - inputs: []
+    model_class: ConditionalWhen
+    value: coords
+  - inputs:
+    - {argument: null, falsevalue: samse, help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22sam_paired_read%22%20name%3D%22sam_paired_read%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22sam_paired_read%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: SAM paired reads, model_class: BooleanToolParameter,
+      name: sam_paired_read, optional: false, truevalue: sampe, type: boolean, value: false}
+    - {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22no_sam_headers%22%20name%3D%22no_sam_headers%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22no_sam_headers%22%20value%3D%22true%22%3E',
+      is_dynamic: false, label: Do not print headers beginning with '@', model_class: BooleanToolParameter,
+      name: no_sam_headers, optional: false, truevalue: --no-sam-headers, type: boolean,
+      value: false}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read_group_id%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Value to put into read-group id (RG-ID) field, model_class: TextToolParameter,
+      name: read_group_id, optional: false, size: null, type: text, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read_group_name%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Value to put into read-group name (RG-SM) field, model_class: TextToolParameter,
+      name: read_group_name, optional: false, size: null, type: text, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read_group_library%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Value to put into read-group library (RG-LB) field,
+      model_class: TextToolParameter, name: read_group_library, optional: false, size: null,
+      type: text, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read_group_platform%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Value to put into read-group library platform (RG-PL)
+        field, model_class: TextToolParameter, name: read_group_platform, optional: false,
+      size: null, type: text, value: ''}
+    model_class: ConditionalWhen
+    value: sam
+  model_class: Conditional
+  name: result
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22format%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22sam%22%3E%0A%3Coption%20value%3D%22gmap%22%3EGMAP%20default%20output%3C/option%3E%0A%3Coption%20value%3D%22summary%22%3ESummary%20of%20alignments%3C/option%3E%0A%3Coption%20value%3D%22align%22%3EAlignment%3C/option%3E%0A%3Coption%20value%3D%22continuous%22%3EAlignment%20in%20three%20continuous%20lines%3C/option%3E%0A%3Coption%20value%3D%22continuous-by-exon%22%3EAlignment%20in%20three%20lines%20per%20exon%3C/option%3E%0A%3Coption%20value%3D%22compress%22%3EPrint%20output%20in%20compressed%20format%3C/option%3E%0A%3Coption%20value%3D%22exons_dna%22%3EPrint%20exons%20cDNA%3C/option%3E%0A%3Coption%20value%3D%22exons_gen%22%3EPrint%20exons%20genomic%3C/option%3E%0A%3Coption%20value%3D%22protein_dna%22%3EPrint%20protein%20sequence%20%28cDNA%29%3C/option%3E%0A%3Coption%20value%3D%22protein_gen%22%3EPrint%20protein%20sequence%20%28genomic%29%3C/option%3E%0A%3Coption%20value%3D%22psl%22%3EPSL%20%28BLAT%29%20format%3C/option%3E%0A%3Coption%20value%3D%22gff3_gene%22%3EGFF3%20gene%20format%3C/option%3E%0A%3Coption%20value%3D%22gff3_match_cdna%22%3EGFF3%20match%20cDNA%20format%3C/option%3E%0A%3Coption%20value%3D%22gff3_match_est%22%3EGFF3%20match%20EST%20format%3C/option%3E%0A%3Coption%20value%3D%22splicesites%22%3Esplicesites%20output%20%28for%20GSNAP%29%3C/option%3E%0A%3Coption%20value%3D%22introns%22%3Eintrons%20output%20%28for%20GSNAP%29%3C/option%3E%0A%3Coption%20value%3D%22map_exons%22%3EIIT%20FASTA%20exon%20map%20format%3C/option%3E%0A%3Coption%20value%3D%22map_genes%22%3EIIT%20FASTA%20map%20format%3C/option%3E%0A%3Coption%20value%3D%22coords%22%3Ecoords%20in%20table%20format%3C/option%3E%0A%3Coption%20value%3D%22sam%22%20selected%3ESAM%20format%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: <HR><H2>Output</H2>Select the output format
+    model_class: SelectToolParameter
+    multiple: false
+    name: format
+    optional: false
+    options:
+    - [GMAP default output, gmap, false]
+    - [Summary of alignments, summary, false]
+    - [Alignment, align, false]
+    - [Alignment in three continuous lines, continuous, false]
+    - [Alignment in three lines per exon, continuous-by-exon, false]
+    - [Print output in compressed format, compress, false]
+    - [Print exons cDNA, exons_dna, false]
+    - [Print exons genomic, exons_gen, false]
+    - [Print protein sequence (cDNA), protein_dna, false]
+    - [Print protein sequence (genomic), protein_gen, false]
+    - [PSL (BLAT) format, psl, false]
+    - [GFF3 gene format, gff3_gene, false]
+    - [GFF3 match cDNA format, gff3_match_cdna, false]
+    - [GFF3 match EST format, gff3_match_est, false]
+    - [splicesites output (for GSNAP), splicesites, false]
+    - [introns output (for GSNAP), introns, false]
+    - [IIT FASTA exon map format, map_exons, false]
+    - [IIT FASTA map format, map_genes, false]
+    - [coords in table format, coords, false]
+    - [SAM format, sam, true]
+    type: select
+    value: sam
+  type: conditional
+- {argument: null, falsevalue: '', help: (chimera only when chimera-margin is selected),
+  hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22split_output%22%20name%3D%22split_output%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22split_output%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'Separate outputs for nomapping, uniq, mult, and chimera',
+  model_class: BooleanToolParameter, name: split_output, optional: false, truevalue: --split-output=gmap_out,
+  type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fgmap_gsnap%2Fgmap%2F2013-01-23
+min_width: -1
+model_class: Tool
+name: GMAP
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}:
+    stderr', model_class: ToolOutput, name: gmap_stderr}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}
+    ${result.format}', model_class: ToolOutput, name: output}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}
+    uniq.${result.format}', model_class: ToolOutput, name: uniq}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}
+    transloc.${result.format}', model_class: ToolOutput, name: transloc}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}
+    nomapping.${result.format}', model_class: ToolOutput, name: nomapping}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}
+    mult.${result.format}', model_class: ToolOutput, name: mult}
+panel_section_id: ngs:_rnaseq_and_short-read_nucleotide
+panel_section_name: 'NGS: RNAseq and short-read Nucleotide'
+target: galaxy_main
+version: '2013-01-23'

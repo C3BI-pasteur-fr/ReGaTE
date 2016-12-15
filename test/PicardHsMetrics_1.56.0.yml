@@ -1,0 +1,64 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/2f92cb75946c/picard_pasteur_wrapper/rgPicardHsMetrics.xml
+description: for targeted resequencing data
+id: toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/PicardHsMetrics/1.56.0
+inputs:
+- argument: null
+  edam_formats: [format_2573, format_2572]
+  extensions: [sam, bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: SAM/BAM dataset to generate statistics for
+  model_class: DataToolParameter
+  multiple: false
+  name: input_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: Use to remind you what the job was for., hidden: false,
+  html: '%3Cinput%20type%3D%22text%22%20name%3D%22out_prefix%22%20size%3D%2280%22%20value%3D%22Picard%20HS%20Metrics%22%3E',
+  is_dynamic: false, label: Title for the output file, model_class: TextToolParameter,
+  name: out_prefix, optional: false, size: '80', type: text, value: Picard HS Metrics}
+- argument: null
+  edam_formats: [format_3003, format_3475]
+  extensions: [bed, interval]
+  help: Note specific format requirements below!
+  hidden: false
+  is_dynamic: false
+  label: 'Bait intervals: Sequences for bait in the design'
+  model_class: DataToolParameter
+  multiple: false
+  name: bait_bed
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3003, format_3475]
+  extensions: [bed, interval]
+  help: Note specific format requirements below!
+  hidden: false
+  is_dynamic: false
+  label: 'Target intervals: Sequences for targets in the design'
+  model_class: DataToolParameter
+  multiple: false
+  name: target_bed
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fpicard_pasteur_wrapper%2FPicardHsMetrics%2F1.56.0
+min_width: -1
+model_class: Tool
+name: SAM/BAM Hybrid Selection Metrics
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '${out_prefix}.html',
+  model_class: ToolOutput, name: html_file}
+panel_section_id: ngs:_picard_tools
+panel_section_name: 'NGS: Picard Tools'
+target: galaxy_main
+version: 1.56.0

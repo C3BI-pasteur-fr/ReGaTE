@@ -1,0 +1,66 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/bedtools_pasteur/02951b8c385e/bedtools_pasteur/genomeCoverageBed_bedgraph.xml
+description: ''
+id: toolshed.pasteur.fr/repos/fmareuil/bedtools_pasteur/bedtools_genomecoveragebed_bedgraph/0.1.0
+inputs:
+- argument: null
+  edam_formats: [format_3003, format_2572]
+  extensions: [bed, bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: The BAM or BED file from which coverage should be computed
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: '', help: 'If set, regions without any coverage will
+    also be reported.', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22zero_regions%22%20name%3D%22zero_regions%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22zero_regions%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Report regions with zero coverage, model_class: BooleanToolParameter,
+  name: zero_regions, optional: false, truevalue: -bga, type: boolean, value: true}
+- {argument: null, falsevalue: '', help: 'If set, the coverage will be calculated
+    based the spliced intervals only. For BAM files, this inspects the CIGAR N operation
+    to infer the blocks for computing coverage. For BED12 files, this inspects the
+    BlockCount, BlockStarts, and BlockEnds fields (i.e., columns 10,11,12). If this
+    option is not set, coverage will be calculated based on the interval''s START/END
+    coordinates, and would include introns in the case of RNAseq data.', hidden: false,
+  html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22split%22%20name%3D%22split%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22split%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Treat split/spliced BAM or BED12 entries as distinct BED
+    intervals when computing coverage., model_class: BooleanToolParameter, name: split,
+  optional: false, truevalue: -split, type: boolean, value: false}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22strand%22%3E%0A%3Coption%20value%3D%22%22%3Eboth%20strands%20combined%3C/option%3E%0A%3Coption%20value%3D%22-strand%20%2B%22%3Epositive%20strand%20only%3C/option%3E%0A%3Coption%20value%3D%22-strand%20-%22%3Enegative%20strand%20only%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Calculate coverage based on
+  model_class: SelectToolParameter
+  multiple: false
+  name: strand
+  optional: false
+  options:
+  - [both strands combined, '', false]
+  - [positive strand only, -strand +, false]
+  - [negative strand only, -strand -, false]
+  type: select
+  value: ''
+- {area: false, argument: null, help: 'Each BEDGRAPH coverage value is multiplied
+    by this factor before being reported. Useful for normalizing coverage by, e.g.,
+    reads per million (RPM)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22scale%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Scale the coverage by a constant factor, model_class: TextToolParameter,
+  name: scale, optional: true, size: null, type: text, value: null}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fbedtools_pasteur%2Fbedtools_genomecoveragebed_bedgraph%2F0.1.0
+min_width: -1
+model_class: Tool
+name: Create a BedGraph of genome coverage
+outputs:
+- {edam_format: format_3475, format: bedgraph, hidden: false, label: '${input.name}
+    (Genome Coverage BedGraph)', model_class: ToolOutput, name: output}
+panel_section_id: ngs:_bedtools
+panel_section_name: 'NGS: BedTools'
+target: galaxy_main
+version: 0.1.0

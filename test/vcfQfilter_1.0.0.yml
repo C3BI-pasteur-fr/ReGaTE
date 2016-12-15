@@ -1,0 +1,51 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/vcffilters/4ee08f554609/vcffilters/vcfQfilter.xml
+description: Filters SNPs from one or several VCF files
+id: toolshed.pasteur.fr/repos/odoppelt/vcffilters/vcfQfilter/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_3016]
+  extensions: [vcf]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: ''
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22coverage%22%20size%3D%223%22%20value%3D%224%22%3E',
+  is_dynamic: false, label: 'Nb of reads supporting a SNPs (default: 4)', max: null,
+  min: null, model_class: IntegerToolParameter, name: coverage, optional: false, size: '3',
+  type: integer, value: '4'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22fraction%22%20size%3D%224%22%20value%3D%220.80%22%3E',
+  is_dynamic: false, label: 'Fraction of variants (default: 0.80)', max: null, min: null,
+  model_class: FloatToolParameter, name: fraction, optional: false, size: '4', type: float,
+  value: '0.80'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22thresMapQual%22%20size%3D%223%22%20value%3D%2230%22%3E',
+  is_dynamic: false, label: 'Threshold mapping quality value (default:30)', max: null,
+  min: null, model_class: IntegerToolParameter, name: thresMapQual, optional: false,
+  size: '3', type: integer, value: '30'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22depth%22%20size%3D%223%22%20value%3D%2210%22%3E',
+  is_dynamic: false, label: 'Threshold depth value (default: 10)', max: null, min: null,
+  model_class: IntegerToolParameter, name: depth, optional: false, size: '3', type: integer,
+  value: '10'}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22verbose%22%20name%3D%22verbose%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22verbose%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Verbose mode, model_class: BooleanToolParameter, name: verbose,
+  optional: false, truevalue: -v, type: boolean, value: true}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Fvcffilters%2FvcfQfilter%2F1.0.0
+min_width: -1
+model_class: Tool
+name: VCFs Quality filter
+outputs:
+- {edam_format: format_3016, format: vcf, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+- {edam_format: null, format: text, hidden: false, label: '', model_class: ToolOutput,
+  name: verbose_file}
+panel_section_id: ngs_vcf_tools
+panel_section_name: 'NGS: VCF Tools'
+target: galaxy_main
+version: 1.0.0

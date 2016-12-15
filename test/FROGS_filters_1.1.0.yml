@@ -1,0 +1,234 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/frogs/36109d143f38/frogs/filters.xml
+description: Filters OTUs on several criteria.
+id: toolshed.pasteur.fr/repos/mvalade/frogs/FROGS_filters/1.1.0
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: 'The sequence file to filter (format: fasta).'
+  hidden: false
+  is_dynamic: false
+  label: Sequences file
+  model_class: DataToolParameter
+  multiple: false
+  name: input_fasta
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3464]
+  extensions: [biom1]
+  help: 'The abundance file to filter (format: BIOM).'
+  hidden: false
+  is_dynamic: false
+  label: Abundance file
+  model_class: DataToolParameter
+  multiple: false
+  name: input_biom
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Fill the field only if you want this treatment.,
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_sample_presence%22%20size%3D%225%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: 'Remove OTUs that are not present at least in XX samples;
+        how many samples do you choose? ', max: null, min: null, model_class: IntegerToolParameter,
+      name: min_sample_presence, optional: true, size: '5', type: integer, value: null}
+    - {area: false, argument: null, help: Fill the field only if you want this treatment.
+        Use decimal to express proportion (0.01 for 1%) integer to express number
+        of sequence (1 for singleton)., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_abundance%22%20size%3D%225%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Proportion/number of sequences threshold to remove
+        an OTU, model_class: TextToolParameter, name: min_abundance, optional: true,
+      size: '5', type: text, value: null}
+    - {area: false, argument: null, help: Fill the fields only if you want this treatment.,
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22nb_biggest_otu%22%20size%3D%225%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: 'When sorted by abundance, how many OTU do you want
+        to keep ?', max: null, min: null, model_class: IntegerToolParameter, name: nb_biggest_otu,
+      optional: true, size: '5', type: integer, value: null}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: abundance_filters
+  test_param:
+    argument: null
+    display: null
+    help: If you want to filter OTUs on their abundance and occurrence.
+    hidden: false
+    html: '%3Cselect%20name%3D%22abundance_filters_areApplied%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22no%22%3ENo%20filters%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3EApply%20filters%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: ' *** THE FILTERS ON OTUS IN SAMPLES, OTUS SIZE and SEQUENCE PERCENTAGE'
+    model_class: SelectToolParameter
+    multiple: false
+    name: abundance_filters_areApplied
+    optional: false
+    options:
+    - [No filters, 'no', false]
+    - [Apply filters, 'yes', false]
+    type: select
+    value: 'no'
+  type: conditional
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22rdp_rank%22%3E%0A%3Coption%20value%3D%22Domain%22%3EDomain%3C/option%3E%0A%3Coption%20value%3D%22Phylum%22%3EPhylum%3C/option%3E%0A%3Coption%20value%3D%22Class%22%3EClass%3C/option%3E%0A%3Coption%20value%3D%22Order%22%3EOrder%3C/option%3E%0A%3Coption%20value%3D%22Family%22%3EFamily%3C/option%3E%0A%3Coption%20value%3D%22Genus%22%3EGenus%3C/option%3E%0A%3Coption%20value%3D%22Species%22%3ESpecies%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Rank with the bootstrap filter
+      model_class: SelectToolParameter
+      multiple: false
+      name: rdp_rank
+      optional: true
+      options:
+      - [Domain, Domain, false]
+      - [Phylum, Phylum, false]
+      - [Class, Class, false]
+      - [Order, Order, false]
+      - [Family, Family, false]
+      - [Genus, Genus, false]
+      - [Species, Species, false]
+      type: select
+      value: Domain
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22rdp_bootstrap%22%20size%3D%225%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Minimum bootstrap % (between 0 and 1), max: 1.0, min: 0.0,
+      model_class: FloatToolParameter, name: rdp_bootstrap, optional: true, size: '5',
+      type: float, value: null}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: RDP_filters
+  test_param:
+    argument: null
+    display: null
+    help: If you want to filter OTUs on their taxonomic affiliation produced by RDP.
+    hidden: false
+    html: '%3Cselect%20name%3D%22RDP_filters_areApplied%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22no%22%3ENo%20filters%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3EApply%20filters%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: ' *** THE FILTERS ON RDP'
+    model_class: SelectToolParameter
+    multiple: false
+    name: RDP_filters_areApplied
+    optional: false
+    options:
+    - [No filters, 'no', false]
+    - [Apply filters, 'yes', false]
+    type: select
+    value: 'no'
+  type: conditional
+- cases:
+  - inputs:
+    - {area: false, argument: null, help: Fill the field only if you want this treatment,
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_blast_evalue%22%20size%3D%225%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Maximum e-value (between 0 and 1), model_class: TextToolParameter,
+      name: max_blast_evalue, optional: false, size: '5', type: text, value: ''}
+    - {area: false, argument: null, help: Fill the field only if you want this treatment,
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_blast_identity%22%20size%3D%225%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Minimum identity % (between 0 and 1), max: 1.0, min: 0.0,
+      model_class: FloatToolParameter, name: min_blast_identity, optional: true, size: '5',
+      type: float, value: null}
+    - {area: false, argument: null, help: Fill the field only if you want this treatment,
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_blast_coverage%22%20size%3D%225%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Minimum coverage % (between 0 and 1), max: 1.0, min: 0.0,
+      model_class: FloatToolParameter, name: min_blast_coverage, optional: true, size: '5',
+      type: float, value: null}
+    - {area: false, argument: null, help: Fill the field only if you want this treatment,
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_blast_length%22%20size%3D%225%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: Minimum alignment length, max: null, min: null, model_class: IntegerToolParameter,
+      name: min_blast_length, optional: true, size: '5', type: integer, value: null}
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: blast_filters
+  test_param:
+    argument: null
+    display: null
+    help: If you want to filter OTUs on their taxonomic affiliation produced by Blast.
+    hidden: false
+    html: '%3Cselect%20name%3D%22blast_filters_areApplied%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22no%22%3ENo%20filters%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3EApply%20filters%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: ' *** THE FILTERS ON BLAST'
+    model_class: SelectToolParameter
+    multiple: false
+    name: blast_filters_areApplied
+    optional: false
+    options:
+    - [No filters, 'no', false]
+    - [Apply filters, 'yes', false]
+    type: select
+    value: 'no'
+  type: conditional
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: The phiX databank (the phiX is a control added in Illumina sequencing
+        technologies).
+      hidden: false
+      html: '%3Cselect%20name%3D%22contaminants_db%22%3E%0A%3Coption%20value%3D%22/local/databases/fasta/phiX.fa%22%3EphiX%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: Cotaminant databank
+      model_class: SelectToolParameter
+      multiple: false
+      name: contaminants_db
+      optional: false
+      options:
+      - [phiX, /local/databases/fasta/phiX.fa, false]
+      type: select
+      value: /local/databases/fasta/phiX.fa
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: contaminations_filter
+  test_param:
+    argument: null
+    display: null
+    help: If you want to filter OTUs on classical contaminations.
+    hidden: false
+    html: '%3Cselect%20name%3D%22contaminations_filter_isApplied%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22no%22%3ENo%20filters%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3EApply%20filters%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: ' *** THE FILTERS ON CONTAMINATIONS'
+    model_class: SelectToolParameter
+    multiple: false
+    name: contaminations_filter_isApplied
+    optional: false
+    options:
+    - [No filters, 'no', false]
+    - [Apply filters, 'yes', false]
+    type: select
+    value: 'no'
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Ffrogs%2FFROGS_filters%2F1.1.0
+min_width: -1
+model_class: Tool
+name: FROGS Filters
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: '${tool.name}: sequences.fasta',
+  model_class: ToolOutput, name: output_fasta}
+- {edam_format: format_3464, format: biom1, hidden: false, label: '${tool.name}: abundance.biom',
+  model_class: ToolOutput, name: output_biom}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}:
+    excluded.tsv', model_class: ToolOutput, name: output_excluded}
+- {edam_format: format_2331, format: html, hidden: false, label: '${tool.name}: report.html',
+  model_class: ToolOutput, name: output_summary}
+panel_section_id: frogs_metagenomic_pipeline
+panel_section_name: FROGS Metagenomic pipeline
+target: galaxy_main
+version: 1.1.0

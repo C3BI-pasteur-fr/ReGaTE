@@ -1,0 +1,48 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/promoteur_tools/58e8aae1fa83/promoteur_tools/setuppromoter.xml
+description: builds a fasta file of sequences from a reference genome using promoter
+  region coordinates.
+id: toolshed.pasteur.fr/repos/fmareuil/promoteur_tools/setuppromoter/1.0
+inputs:
+- argument: null
+  display: radio
+  help: species from which the promoters/adapter seq originate.
+  hidden: false
+  html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22species%22%20value%3D%22Hs%22%20id%3D%22species%7CHs%22%20checked%3D%27checked%27%3E%3Clabel%20class%3D%22inline%22%20for%3D%22species%7CHs%22%3EHomo%20sapiens%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22species%22%20value%3D%22Mm%22%20id%3D%22species%7CMm%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22species%7CMm%22%3EMus%20musculus%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22species%22%20value%3D%22Md%22%20id%3D%22species%7CMd%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22species%7CMd%22%3EMonodelphis%20domestica%3C/label%3E%3C/div%3E'
+  is_dynamic: false
+  label: source species
+  model_class: SelectToolParameter
+  multiple: false
+  name: species
+  optional: false
+  options:
+  - [Homo sapiens, Hs, true]
+  - [Mus musculus, Mm, false]
+  - [Monodelphis domestica, Md, false]
+  type: select
+  value: Hs
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [csv]
+  help: '2 formats possible: chr:start-end or id chr start end strand rest'
+  hidden: false
+  is_dynamic: false
+  label: Promoter region coordinates for the source species.
+  model_class: DataToolParameter
+  multiple: false
+  name: coordinate
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fpromoteur_tools%2Fsetuppromoter%2F1.0
+min_width: -1
+model_class: Tool
+name: setuppromoter
+outputs:
+- {edam_format: format_1929, format: fasta, hidden: false, label: 'setuppromoter on
+    ${coordinate.name}', model_class: ToolOutput, name: name_project}
+panel_section_id: phylogeny_findpromoteur
+panel_section_name: Phylogeny Find Promoteur Project
+target: galaxy_main
+version: '1.0'

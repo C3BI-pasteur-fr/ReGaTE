@@ -1,0 +1,35 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/export_sbw/3bc515a28b29/export_sbw/export_sbw.xml
+description: To export history data for SynBioWatch projet files and user, WARNING
+  this tool duplicate the data, remember to delete redundant data
+id: toolshed.pasteur.fr/repos/odoppelt/export_sbw/export_sbw/1.0
+inputs:
+- argument: null
+  edam_formats: [format_1915]
+  extensions: [data]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Source file
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: No space or accent in the name, hidden: false,
+  html: '%3Cinput%20type%3D%22text%22%20name%3D%22prefix%22%20size%3D%2250%22%20value%3D%22exp%22%3E',
+  is_dynamic: false, label: Prefix for the data to export, model_class: TextToolParameter,
+  name: prefix, optional: false, size: '50', type: text, value: exp}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Fexport_sbw%2Fexport_sbw%2F1.0
+min_width: -1
+model_class: Tool
+name: export data for SynBioWatch
+outputs:
+- {edam_format: null, format: text, hidden: false, label: log of export of datas in
+    /outputs/yourlogin, model_class: ToolOutput, name: output}
+panel_section_id: tests
+panel_section_name: TESTS
+target: galaxy_main
+version: '1.0'

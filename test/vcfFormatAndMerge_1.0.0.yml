@@ -1,0 +1,52 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/vcffilters/4ee08f554609/vcffilters/vcfFormatAndMerge.xml
+description: launches vcf-merge, vcf-stats and outputs vcfs files corresponding to
+  specific and common SNPs, in VCF files
+id: toolshed.pasteur.fr/repos/odoppelt/vcffilters/vcfFormatAndMerge/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_3016]
+  extensions: [vcf]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: ''
+  model_class: DataToolParameter
+  multiple: false
+  name: vcf1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3016]
+  extensions: [vcf]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: ''
+  model_class: DataToolParameter
+  multiple: false
+  name: vcf2
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Fvcffilters%2FvcfFormatAndMerge%2F1.0.0
+min_width: -1
+model_class: Tool
+name: Vcfs Format And Merge
+outputs:
+- {edam_format: format_3016, format: vcf, hidden: false, label: '', model_class: ToolOutput,
+  name: merge}
+- {edam_format: format_3016, format: vcf, hidden: false, label: '', model_class: ToolOutput,
+  name: spe1}
+- {edam_format: format_3016, format: vcf, hidden: false, label: '', model_class: ToolOutput,
+  name: spe2}
+- {edam_format: format_3016, format: vcf, hidden: false, label: '', model_class: ToolOutput,
+  name: shared}
+panel_section_id: ngs_vcf_tools
+panel_section_name: 'NGS: VCF Tools'
+target: galaxy_main
+version: 1.0.0

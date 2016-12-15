@@ -1,0 +1,35 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/export_one_data/c4088d4a6f17/export_one_data/export_one_data.xml
+description: To export ONE history data, WARNING this tool duplicate the data, remember
+  to delete redundant data
+id: toolshed.pasteur.fr/repos/odoppelt/export_one_data/export_one_data/1.0
+inputs:
+- argument: null
+  edam_formats: [format_1915]
+  extensions: [data]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Source file
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: No space or accent in the name, hidden: false,
+  html: '%3Cinput%20type%3D%22text%22%20name%3D%22name%22%20size%3D%2250%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Name of the data, model_class: TextToolParameter, name: name,
+  optional: false, size: '50', type: text, value: null}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Fexport_one_data%2Fexport_one_data%2F1.0
+min_width: -1
+model_class: Tool
+name: export one data
+outputs:
+- {edam_format: null, format: text, hidden: false, label: log of export of datas in
+    /outputs/yourlogin, model_class: ToolOutput, name: output}
+panel_section_id: tests
+panel_section_name: TESTS
+target: galaxy_main
+version: '1.0'

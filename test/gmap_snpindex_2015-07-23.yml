@@ -1,0 +1,216 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/gmap_gsnap/01017f02a64e/gmap_gsnap/snpindex.xml
+description: build index files for known SNPs
+id: toolshed.pasteur.fr/repos/fmareuil/gmap_gsnap/gmap_snpindex/2015-07-23
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: if your genome of interest is not listed - contact Galaxy team
+      hidden: false
+      html: '%3Cselect%20name%3D%22gmapindex%22%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/btaurus%22%3Ebtaurus%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/calbicans5314%22%3Ecalbicans5314%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/calbicansWO1%22%3EcalbicansWO1%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/cfamiliaris%22%3Ecfamiliaris%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/chiroptera%22%3Echiroptera%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/cneoformansH99%22%3EcneoformansH99%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/cneoformansJEC21%22%3EcneoformansJEC21%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/csabaeus%22%3Ecsabaeus%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/dmelanogaster%22%3Edmelanogaster%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/ecaballus%22%3Eecaballus%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/fcatus%22%3Efcatus%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/hg18%22%3Ehg18%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/hg19%22%3Ehg19%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/mlucifugus%22%3Emlucifugus%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/mm10%22%3Emm10%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/mm9%22%3Emm9%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/mm8%22%3Emm8%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/pfalciparum%22%3Epfalciparum%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/pvampyrus%22%3Epvampyrus%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/pvivax%22%3Epvivax%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/scerevisiae%22%3Escerevisiae%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/spombe%22%3Espombe%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/gmap/sscrofa%22%3Esscrofa%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: Select a reference genome
+      model_class: SelectToolParameter
+      multiple: false
+      name: gmapindex
+      optional: false
+      options:
+      - [btaurus, /local/databases/index/gmap/btaurus, false]
+      - [calbicans5314, /local/databases/index/gmap/calbicans5314, false]
+      - [calbicansWO1, /local/databases/index/gmap/calbicansWO1, false]
+      - [cfamiliaris, /local/databases/index/gmap/cfamiliaris, false]
+      - [chiroptera, /local/databases/index/gmap/chiroptera, false]
+      - [cneoformansH99, /local/databases/index/gmap/cneoformansH99, false]
+      - [cneoformansJEC21, /local/databases/index/gmap/cneoformansJEC21, false]
+      - [csabaeus, /local/databases/index/gmap/csabaeus, false]
+      - [dmelanogaster, /local/databases/index/gmap/dmelanogaster, false]
+      - [ecaballus, /local/databases/index/gmap/ecaballus, false]
+      - [fcatus, /local/databases/index/gmap/fcatus, false]
+      - [hg18, /local/databases/index/gmap/hg18, false]
+      - [hg19, /local/databases/index/gmap/hg19, false]
+      - [mlucifugus, /local/databases/index/gmap/mlucifugus, false]
+      - [mm10, /local/databases/index/gmap/mm10, false]
+      - [mm9, /local/databases/index/gmap/mm9, false]
+      - [mm8, /local/databases/index/gmap/mm8, false]
+      - [pfalciparum, /local/databases/index/gmap/pfalciparum, false]
+      - [pvampyrus, /local/databases/index/gmap/pvampyrus, false]
+      - [pvivax, /local/databases/index/gmap/pvivax, false]
+      - [scerevisiae, /local/databases/index/gmap/scerevisiae, false]
+      - [spombe, /local/databases/index/gmap/spombe, false]
+      - [sscrofa, /local/databases/index/gmap/sscrofa, false]
+      type: select
+      value: /local/databases/index/gmap/btaurus
+    model_class: ConditionalWhen
+    value: indexed
+  - inputs:
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [gmapdb]
+      help: A GMAP database built with GMAP Build
+      hidden: false
+      is_dynamic: false
+      label: Select a gmapdb
+      model_class: DataToolParameter
+      multiple: false
+      name: gmapdb
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gmapdb
+  model_class: Conditional
+  name: refGenomeSource
+  test_param:
+    argument: null
+    display: null
+    help: Built-ins were indexed using default options
+    hidden: false
+    html: '%3Cselect%20name%3D%22genomeSource%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22indexed%22%3EUse%20a%20built-in%20index%3C/option%3E%0A%3Coption%20value%3D%22gmapdb%22%3EUse%20gmapdb%20from%20the%20history%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Will you map to a reference genome from your history or use a built-in
+      index?
+    model_class: SelectToolParameter
+    multiple: false
+    name: genomeSource
+    optional: false
+    options:
+    - [Use a built-in index, indexed, false]
+    - [Use gmapdb from the history, gmapdb, false]
+    type: select
+    value: indexed
+  type: conditional
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [tabular]
+      help: 'Example: ftp://hgdownload.cse.ucsc.edu/goldenPath/hg18/database/snp130.txt.gz'
+      hidden: false
+      is_dynamic: false
+      label: UCSC SNPs table
+      model_class: DataToolParameter
+      multiple: false
+      name: snps
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_3475]
+      extensions: [tabular]
+      help: 'Example: ftp://hgdownload.cse.ucsc.edu/goldenPath/hg18/database/snp130Exceptions.txt.gz'
+      hidden: false
+      is_dynamic: false
+      label: UCSC SNP Exceptions table
+      model_class: DataToolParameter
+      multiple: false
+      name: snpsex
+      optional: true
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22weight%22%20last_selected_value%3D%221%22%3E%0A%3Coption%20value%3D%221%22%20selected%3E1%20%28High%29%3C/option%3E%0A%3Coption%20value%3D%222%22%3E2%20%28Medium%29%3C/option%3E%0A%3Coption%20value%3D%223%22%3E3%20%28All%29%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Include SNPs with at least Confidence Level
+      model_class: SelectToolParameter
+      multiple: false
+      name: weight
+      optional: false
+      options:
+      - [1 (High), '1', true]
+      - [2 (Medium), '2', false]
+      - [3 (All), '3', false]
+      type: select
+      value: '1'
+    model_class: ConditionalWhen
+    value: snpTable
+  - inputs:
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [gmap_snps]
+      help: 'Format (3 columns):                 <br>>rs62211261 21:14379270 CG                 <br>>rs62211262
+        21:14379281 CG                 <br>Each line must start with a > character,
+        then be followed by an                 identifier (which may have duplicates).  Then
+        there should be the                 chromosomal coordinate of the SNP.  (Coordinates
+        are all 1-based, so                 the first character of a chromosome is
+        number 1.)  Finally, there                 should be the two possible alleles:
+        ( AC AG AT CG CT GT or AN CN GN TN)                 <br>These alleles must
+        correspond to the possible nucleotides on the plus strand of the genome.                   If
+        the one of these two letters does not match the allele in the reference                 sequence,
+        that SNP will be ignored in subsequent processing as a probable error.                 The
+        N stands for any other allele.'
+      hidden: false
+      is_dynamic: false
+      label: GMAP SNPs file
+      model_class: DataToolParameter
+      multiple: false
+      name: snps
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: snpFile
+  - inputs:
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [snps.iit]
+      help: 'Created by: GMAP iit store'
+      hidden: false
+      is_dynamic: false
+      label: GMAP SNPs map
+      model_class: DataToolParameter
+      multiple: false
+      name: snpIIT
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: snpIIT
+  model_class: Conditional
+  name: dbsnp
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22snp_source%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22snpTable%22%3EUCSC%20SNP%20Table%3C/option%3E%0A%3Coption%20value%3D%22snpFile%22%3EGMAP%20SNP%20File%3C/option%3E%0A%3Coption%20value%3D%22snpIIT%22%3E%26quot%3BGMAP%20SNPs%20map%20from%20GMAP%20iit%20store%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Add SNP info from
+    model_class: SelectToolParameter
+    multiple: false
+    name: snp_source
+    optional: false
+    options:
+    - [UCSC SNP Table, snpTable, false]
+    - [GMAP SNP File, snpFile, false]
+    - ['"GMAP SNPs map from GMAP iit store', snpIIT, false]
+    type: select
+    value: snpTable
+  type: conditional
+- {area: false, argument: null, help: no white space characters, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22snps_name%22%20size%3D%2210%22%20value%3D%22snps%22%3E',
+  is_dynamic: false, label: Name for this SNP index, model_class: TextToolParameter,
+  name: snps_name, optional: false, size: null, type: text, value: snps}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fgmap_gsnap%2Fgmap_snpindex%2F2015-07-23
+min_width: -1
+model_class: Tool
+name: GMAP SNP Index
+outputs:
+- {edam_format: format_2330, format: gmapsnpindex, hidden: false, label: '${tool.name}
+    on ${on_string} snpindex', model_class: ToolOutput, name: output}
+panel_section_id: ngs:_rnaseq_and_short-read_nucleotide
+panel_section_name: 'NGS: RNAseq and short-read Nucleotide'
+target: galaxy_main
+version: '2015-07-23'

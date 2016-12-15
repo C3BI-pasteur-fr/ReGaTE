@@ -1,0 +1,72 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/bedtools_pasteur/02951b8c385e/bedtools_pasteur/coverageBed_counts.xml
+description: ''
+id: toolshed.pasteur.fr/repos/fmareuil/bedtools_pasteur/bedtools_coveragebed_counts/0.1.0
+inputs:
+- argument: null
+  edam_formats: [format_3003, format_2572]
+  extensions: [bed, bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Count how many intervals in this BED or BAM file (source)
+  model_class: DataToolParameter
+  multiple: false
+  name: inputA
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3003]
+  extensions: [bed]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: overlap the intervals in this BED file (target)
+  model_class: DataToolParameter
+  multiple: false
+  name: inputB
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: '', help: 'If set, the coverage will be calculated
+    based the spliced intervals only. For BAM files, this inspects the CIGAR N operation
+    to infer the blocks for computing coverage. For BED12 files, this inspects the
+    BlockCount, BlockStarts, and BlockEnds fields (i.e., columns 10,11,12). If this
+    option is not set, coverage will be calculated based on the interval''s START/END
+    coordinates, and would include introns in the case of RNAseq data.', hidden: false,
+  html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22split%22%20name%3D%22split%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22split%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Treat split/spliced BAM or BED12 entries as distinct BED
+    intervals when computing coverage., model_class: BooleanToolParameter, name: split,
+  optional: false, truevalue: -split, type: boolean, value: false}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22strand%22%3E%0A%3Coption%20value%3D%22%22%3Eoverlaps%20on%20either%20strand%3C/option%3E%0A%3Coption%20value%3D%22-s%22%3Eonly%20overlaps%20occurring%20on%20the%20%2A%2Asame%2A%2A%20strand.%3C/option%3E%0A%3Coption%20value%3D%22-S%22%3Eonly%20overlaps%20occurring%20on%20the%20%2A%2Aopposite%2A%2A%20strand.%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Count
+  model_class: SelectToolParameter
+  multiple: false
+  name: strand
+  optional: false
+  options:
+  - [overlaps on either strand, '', false]
+  - [only overlaps occurring on the **same** strand., -s, false]
+  - [only overlaps occurring on the **opposite** strand., -S, false]
+  type: select
+  value: ''
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fbedtools_pasteur%2Fbedtools_coveragebed_counts%2F0.1.0
+min_width: -1
+model_class: Tool
+name: Count intervals in one file overlapping intervals in another file
+outputs:
+- {edam_format: format_3003, format: bed, hidden: false, label: 'count of overlaps
+    in ${inputA.name} on ${inputB.name}', model_class: ToolOutput, name: output}
+panel_section_id: ngs:_bedtools
+panel_section_name: 'NGS: BedTools'
+target: galaxy_main
+version: 0.1.0

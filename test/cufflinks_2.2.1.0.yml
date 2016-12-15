@@ -1,0 +1,417 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/cufflinks/803f5b301603/cufflinks/cufflinks_wrapper.xml
+description: transcript assembly and FPKM (RPKM) estimates for RNA-Seq data
+id: toolshed.pasteur.fr/repos/fmareuil/cufflinks/cufflinks/2.2.1.0
+inputs:
+- argument: null
+  edam_formats: [format_2573, format_2572]
+  extensions: [sam, bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: SAM or BAM file of aligned RNA-Seq reads
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: ignore alignments with gaps longer than this,
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_intron_len%22%20size%3D%2210%22%20value%3D%22300000%22%3E',
+  is_dynamic: false, label: Max Intron Length, max: 600000, min: 1, model_class: IntegerToolParameter,
+  name: max_intron_len, optional: false, size: null, type: integer, value: '300000'}
+- {area: false, argument: null, help: suppress transcripts below this abundance level,
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_isoform_fraction%22%20size%3D%2210%22%20value%3D%220.10%22%3E',
+  is_dynamic: false, label: Min Isoform Fraction, max: 1.0, min: 0.0, model_class: FloatToolParameter,
+  name: min_isoform_fraction, optional: false, size: null, type: float, value: '0.10'}
+- {area: false, argument: null, help: suppress intra-intronic transcripts below this
+    level, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22pre_mrna_fraction%22%20size%3D%2210%22%20value%3D%220.15%22%3E',
+  is_dynamic: false, label: Pre MRNA Fraction, max: 1.0, min: 0.0, model_class: FloatToolParameter,
+  name: pre_mrna_fraction, optional: false, size: null, type: float, value: '0.15'}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  - inputs:
+    - argument: null
+      edam_formats: [format_1975, format_2306]
+      extensions: [gff3, gtf]
+      help: Gene annotation dataset in GTF or GFF3 format.
+      hidden: false
+      is_dynamic: false
+      label: Reference Annotation
+      model_class: DataToolParameter
+      multiple: false
+      name: reference_annotation_file
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      display: null
+      help: With this option, Cufflinks counts only those fragments compatible with
+        some reference transcript towards the number of mapped hits used in the FPKM
+        denominator. This option can only be used in combination with --GTF.
+      hidden: false
+      html: '%3Cselect%20name%3D%22compatible_hits_norm%22%3E%0A%3Coption%20value%3D%22%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22--compatible-hits-norm%22%3EYes%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Count hits compatible with reference RNAs only
+      model_class: SelectToolParameter
+      multiple: false
+      name: compatible_hits_norm
+      optional: false
+      options:
+      - ['No', '', true]
+      - ['Yes', --compatible-hits-norm, false]
+      type: select
+      value: ''
+    model_class: ConditionalWhen
+    value: Use reference annotation
+  - inputs:
+    - argument: null
+      edam_formats: [format_1975, format_2306]
+      extensions: [gff3, gtf]
+      help: Gene annotation dataset in GTF or GFF3 format.
+      hidden: false
+      is_dynamic: false
+      label: Reference Annotation
+      model_class: DataToolParameter
+      multiple: false
+      name: reference_annotation_guide_file
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {area: false, argument: null, help: 'The number of bp allowed to overhang the
+        3prime end of a reference transcript when determining if an assembled transcript
+        should be merged with it (ie, the assembled transcript is not novel). The
+        default is 600 bp.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22three_overhang_tolerance%22%20size%3D%2210%22%20value%3D%22600%22%3E',
+      is_dynamic: false, label: 3prime overhang tolerance, max: null, min: null, model_class: IntegerToolParameter,
+      name: three_overhang_tolerance, optional: false, size: null, type: integer,
+      value: '600'}
+    - {area: false, argument: null, help: 'The number of bp allowed to enter the intron
+        of a reference transcript when determining if an assembled transcript should
+        be merged with it (ie, the assembled transcript is not novel). The default
+        is 50 bp.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22intron_overhang_tolerance%22%20size%3D%2210%22%20value%3D%2250%22%3E',
+      is_dynamic: false, label: Intronic overhang tolerance, max: null, min: null,
+      model_class: IntegerToolParameter, name: intron_overhang_tolerance, optional: false,
+      size: null, type: integer, value: '50'}
+    - argument: null
+      display: null
+      help: This option disables tiling of the reference transcripts with faux reads.
+        Use this if you only want to use sequencing reads in assembly but do not want
+        to output assembled transcripts that lay within reference transcripts. All
+        reference transcripts in the input annotation will also be included in the
+        output.
+      hidden: false
+      html: '%3Cselect%20name%3D%22no_faux_reads%22%3E%0A%3Coption%20value%3D%22%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22--no-faux-reads%22%3EYes%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Disable tiling of reference transcripts
+      model_class: SelectToolParameter
+      multiple: false
+      name: no_faux_reads
+      optional: false
+      options:
+      - ['No', '', true]
+      - ['Yes', --no-faux-reads, false]
+      type: select
+      value: ''
+    model_class: ConditionalWhen
+    value: Use reference annotation guide
+  model_class: Conditional
+  name: reference_annotation
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22use_ref%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22Use%20reference%20annotation%22%3EUse%20reference%20annotation%3C/option%3E%0A%3Coption%20value%3D%22Use%20reference%20annotation%20guide%22%3EUse%20reference%20annotation%20as%20guide%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Use Reference Annotation
+    model_class: SelectToolParameter
+    multiple: false
+    name: use_ref
+    optional: false
+    options:
+    - ['No', 'No', true]
+    - [Use reference annotation, Use reference annotation, false]
+    - [Use reference annotation as guide, Use reference annotation guide, false]
+    type: select
+    value: 'No'
+  type: conditional
+- cases:
+  - inputs:
+    - cases:
+      - inputs:
+        - argument: null
+          display: null
+          help: ''
+          hidden: false
+          is_dynamic: true
+          label: Using reference genome
+          model_class: SelectToolParameter
+          multiple: false
+          name: index
+          optional: false
+          options: []
+          type: select
+        model_class: ConditionalWhen
+        value: cached
+      - inputs:
+        - argument: null
+          edam_formats: [format_1929]
+          extensions: [fasta]
+          help: ''
+          hidden: false
+          is_dynamic: false
+          label: Using reference file
+          model_class: DataToolParameter
+          multiple: false
+          name: ref_file
+          optional: false
+          options:
+            hda: []
+            hdca: []
+          type: data
+        model_class: ConditionalWhen
+        value: history
+      model_class: Conditional
+      name: seq_source
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22index_source%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22cached%22%3E%0A%3Coption%20value%3D%22cached%22%20selected%3ELocally%20cached%3C/option%3E%0A%3Coption%20value%3D%22history%22%3EHistory%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Reference sequence data
+        model_class: SelectToolParameter
+        multiple: false
+        name: index_source
+        optional: false
+        options:
+        - [Locally cached, cached, true]
+        - [History, history, false]
+        type: select
+        value: cached
+      type: conditional
+    model_class: ConditionalWhen
+    value: 'Yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  model_class: Conditional
+  name: bias_correction
+  test_param:
+    argument: null
+    display: null
+    help: Bias detection and correction can significantly improve accuracy of transcript
+      abundance estimates.
+    hidden: false
+    html: '%3Cselect%20name%3D%22do_bias_correction%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Perform Bias Correction
+    model_class: SelectToolParameter
+    multiple: false
+    name: do_bias_correction
+    optional: false
+    options:
+    - ['No', 'No', true]
+    - ['Yes', 'Yes', false]
+    type: select
+    value: 'No'
+  type: conditional
+- argument: null
+  display: null
+  help: Tells Cufflinks to do an initial estimation procedure to more accurately weight
+    reads mapping to multiple locations in the genome.
+  hidden: false
+  html: '%3Cselect%20name%3D%22multiread_correct%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Use multi-read correct
+  model_class: SelectToolParameter
+  multiple: false
+  name: multiread_correct
+  optional: false
+  options:
+  - ['No', 'No', true]
+  - ['Yes', 'Yes', false]
+  type: select
+  value: 'No'
+- argument: null
+  display: null
+  help: Mode of length normalization to transcript FPKM.
+  hidden: false
+  html: '%3Cselect%20name%3D%22length_correction%22%3E%0A%3Coption%20value%3D%22%22%20selected%3ECufflinks%20Effective%20Length%20Correction%3C/option%3E%0A%3Coption%20value%3D%22--no-effective-length-correction%22%3EStandard%20Length%20Correction%3C/option%3E%0A%3Coption%20value%3D%22--no-length-correction%22%3ENo%20Length%20Correction%20at%20all%20%28use%20raw%20counts%29%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Apply length correction
+  model_class: SelectToolParameter
+  multiple: false
+  name: length_correction
+  optional: false
+  options:
+  - [Cufflinks Effective Length Correction, '', true]
+  - [Standard Length Correction, --no-effective-length-correction, false]
+  - [No Length Correction at all (use raw counts), --no-length-correction, false]
+  type: select
+  value: ''
+- argument: null
+  edam_formats: [format_1915]
+  extensions: [data]
+  help: ''
+  hidden: true
+  html: '%3Cinput%20type%3D%22hidden%22%20name%3D%22global_model%22%20value%3D%22None%22%3E'
+  is_dynamic: false
+  label: Global model (for use in Trackster)
+  model_class: HiddenDataToolParameter
+  multiple: false
+  name: global_model
+  optional: true
+  options:
+    hda: []
+    hdca: []
+  type: hidden_data
+  value: None
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'No'
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22library_type%22%20last_selected_value%3D%22auto%22%3E%0A%3Coption%20value%3D%22auto%22%20selected%3EAuto%20Detect%3C/option%3E%0A%3Coption%20value%3D%22ff-firststrand%22%3Eff-firststrand%3C/option%3E%0A%3Coption%20value%3D%22ff-secondstrand%22%3Eff-secondstrand%3C/option%3E%0A%3Coption%20value%3D%22ff-unstranded%22%3Eff-unstranded%3C/option%3E%0A%3Coption%20value%3D%22fr-firststrand%22%3Efr-firststrand%3C/option%3E%0A%3Coption%20value%3D%22fr-secondstrand%22%3Efr-secondstrand%3C/option%3E%0A%3Coption%20value%3D%22fr-unstranded%22%3Efr-unstranded%3C/option%3E%0A%3Coption%20value%3D%22transfrags%22%3Etransfrags%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Library prep used for input reads
+      model_class: SelectToolParameter
+      multiple: false
+      name: library_type
+      optional: false
+      options:
+      - [Auto Detect, auto, true]
+      - [ff-firststrand, ff-firststrand, false]
+      - [ff-secondstrand, ff-secondstrand, false]
+      - [ff-unstranded, ff-unstranded, false]
+      - [fr-firststrand, fr-firststrand, false]
+      - [fr-secondstrand, fr-secondstrand, false]
+      - [fr-unstranded, fr-unstranded, false]
+      - [transfrags, transfrags, false]
+      type: select
+      value: auto
+    - argument: null
+      edam_formats: [format_1975, format_2306]
+      extensions: [gff3, gtf]
+      help: 'Ignore all alignment within transcripts in this file '
+      hidden: false
+      is_dynamic: false
+      label: Mask File
+      model_class: DataToolParameter
+      multiple: false
+      name: mask_file
+      optional: true
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - {area: false, argument: null, help: 'This is the expected (mean) inner distance
+        between mate pairs. For, example, for paired end runs with fragments selected
+        at 300bp,where each end is 50bp, you should set it as 200. The default is
+        45bp.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22inner_mean_dist%22%20size%3D%2210%22%20value%3D%2245%22%3E',
+      is_dynamic: false, label: Inner mean distance, max: null, min: null, model_class: IntegerToolParameter,
+      name: inner_mean_dist, optional: false, size: null, type: integer, value: '45'}
+    - {area: false, argument: null, help: The standard deviation for the distribution
+        on inner distances between mate pairs. The default is 20bp., hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22inner_dist_std_dev%22%20size%3D%2210%22%20value%3D%2220%22%3E',
+      is_dynamic: false, label: Inner distance standard deviation, max: null, min: null,
+      model_class: IntegerToolParameter, name: inner_dist_std_dev, optional: false,
+      size: null, type: integer, value: '20'}
+    - {area: false, argument: null, help: 'Sets the number of iterations allowed during
+        maximum likelihood estimation of abundances. Default: 5000', hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_mle_iterations%22%20size%3D%2210%22%20value%3D%225000%22%3E',
+      is_dynamic: false, label: Max MLE iterations, max: null, min: null, model_class: IntegerToolParameter,
+      name: max_mle_iterations, optional: false, size: null, type: integer, value: '5000'}
+    - {area: false, argument: null, help: 'Default: 0.001', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22junc_alpha%22%20size%3D%2210%22%20value%3D%220.001%22%3E',
+      is_dynamic: false, label: Alpha value for the binomial test used during false
+        positive spliced alignment filtration, max: 1.0, min: 0.0, model_class: FloatToolParameter,
+      name: junc_alpha, optional: false, size: null, type: float, value: '0.001'}
+    - {area: false, argument: null, help: 'Spliced reads with less than this percent
+        of their length on each side of the junction are considered suspicious and
+        are candidates for filtering prior to assembly. Default: 0.09.', hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22small_anchor_fraction%22%20size%3D%2210%22%20value%3D%220.09%22%3E',
+      is_dynamic: false, label: percent read overhang taken as suspiciously small,
+      max: 1.0, min: 0.0, model_class: FloatToolParameter, name: small_anchor_fraction,
+      optional: false, size: null, type: float, value: '0.09'}
+    - {area: false, argument: null, help: The number of bp allowed to enter the intron
+        of a transcript when determining if a read or another transcript is mappable
+        to/compatible with it. The default is 8 bp based on the default bowtie/TopHat
+        parameters., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22overhang_tolerance%22%20size%3D%2210%22%20value%3D%228%22%3E',
+      is_dynamic: false, label: Intronic overhang tolerance, max: null, min: null,
+      model_class: IntegerToolParameter, name: overhang_tolerance, optional: false,
+      size: null, type: integer, value: '8'}
+    - {area: false, argument: null, help: 'Default: 3,500,000bp', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_bundle_length%22%20size%3D%2210%22%20value%3D%223500000%22%3E',
+      is_dynamic: false, label: Maximum genomic length of a given bundle, max: null,
+      min: null, model_class: IntegerToolParameter, name: max_bundle_length, optional: false,
+      size: null, type: integer, value: '3500000'}
+    - {area: false, argument: null, help: 'Sets the maximum number of fragments a
+        locus may have before being skipped. Skipped loci are listed in skipped.gtf.
+        Default: 1,000,000', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22max_bundle_frags%22%20size%3D%2210%22%20value%3D%221000000%22%3E',
+      is_dynamic: false, label: Maximum number of fragments per locus, max: null,
+      min: null, model_class: IntegerToolParameter, name: max_bundle_frags, optional: false,
+      size: null, type: integer, value: '1000000'}
+    - {area: false, argument: null, help: 'Default: 50bp', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_intron_length%22%20size%3D%2210%22%20value%3D%2250%22%3E',
+      is_dynamic: false, label: Minimal allowed intron size, max: null, min: null,
+      model_class: IntegerToolParameter, name: min_intron_length, optional: false,
+      size: null, type: integer, value: '50'}
+    - {area: false, argument: null, help: 'Default: 10', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22trim_three_avgcov_thresh%22%20size%3D%2210%22%20value%3D%2210%22%3E',
+      is_dynamic: false, label: Minimum average coverage required to attempt 3prime
+        trimming., max: null, min: null, model_class: IntegerToolParameter, name: trim_three_avgcov_thresh,
+      optional: false, size: null, type: integer, value: '10'}
+    - {area: false, argument: null, help: 'Default: 0.1', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22trim_three_dropoff_frac%22%20size%3D%2210%22%20value%3D%220.1%22%3E',
+      is_dynamic: false, label: The fraction of average coverage below which to trim
+        the 3prime end of an assembled transcript., max: 1.0, min: 0.0, model_class: FloatToolParameter,
+      name: trim_three_dropoff_frac, optional: false, size: null, type: float, value: '0.1'}
+    model_class: ConditionalWhen
+    value: 'Yes'
+  model_class: Conditional
+  name: advanced_settings
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22use_advanced_settings%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22No%22%3E%0A%3Coption%20value%3D%22No%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22Yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Set advanced Cufflinks options
+    model_class: SelectToolParameter
+    multiple: false
+    name: use_advanced_settings
+    optional: false
+    options:
+    - ['No', 'No', true]
+    - ['Yes', 'Yes', false]
+    type: select
+    value: 'No'
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fcufflinks%2Fcufflinks%2F2.2.1.0
+min_width: -1
+model_class: Tool
+name: Cufflinks
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: gene expression', model_class: ToolOutput, name: genes_expression}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: transcript expression', model_class: ToolOutput, name: transcripts_expression}
+- {edam_format: format_2306, format: gtf, hidden: false, label: '${tool.name} on ${on_string}:
+    assembled transcripts', model_class: ToolOutput, name: assembled_isoforms}
+- {edam_format: format_2330, format: txt, hidden: true, label: '${tool.name} on ${on_string}:
+    total map mass', model_class: ToolOutput, name: total_map_mass}
+- {edam_format: format_2306, format: gtf, hidden: false, label: '${tool.name} on ${on_string}:
+    Skipped Transcripts', model_class: ToolOutput, name: skipped}
+panel_section_id: ngs-rna-tools
+panel_section_name: 'NGS: RNA Analysis'
+target: galaxy_main
+version: 2.2.1.0

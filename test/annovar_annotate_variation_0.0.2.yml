@@ -1,0 +1,66 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/annovar_annotate_variation/caa090f228dd/annovar_annotate_variation/annovar.xml
+description: annotate genetic variants detected from diverse genomes
+id: toolshed.pasteur.fr/repos/fmareuil/annovar_annotate_variation/annovar_annotate_variation/0.0.2
+inputs:
+- argument: null
+  edam_formats: [format_2330, format_3475]
+  extensions: [txt, tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Query dataset containing SNPs in columns
+  model_class: DataToolParameter
+  multiple: false
+  name: snp_input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1975]
+  extensions: [gff3]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: GFF3 dataset the reference genome annotations
+  model_class: DataToolParameter
+  multiple: false
+  name: db_input_gff
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Fasta dataset of mRNA sequences from the reference genome
+  model_class: DataToolParameter
+  multiple: false
+  name: db_input_mrna
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22out_prefix_string%22%20size%3D%2230%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Title for the output file - to remind you what the job
+    was for, model_class: TextToolParameter, name: out_prefix_string, optional: false,
+  size: '30', type: text, value: ''}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fannovar_annotate_variation%2Fannovar_annotate_variation%2F0.0.2
+min_width: -1
+model_class: Tool
+name: Annovar Annotate Variation
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: $out_prefix_string
+    (variant function), model_class: ToolOutput, name: output1}
+- {edam_format: format_3475, format: tabular, hidden: false, label: $out_prefix_string
+    (exonic variant function), model_class: ToolOutput, name: output2}
+panel_section_id: ngs:_snp/indel_annotation
+panel_section_name: 'NGS: SNP/Indel Annotation'
+target: galaxy_main
+version: 0.0.2

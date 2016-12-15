@@ -1,0 +1,84 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/vcf_remove_filtered/cb85eb36c149/vcf_remove_filtered/remove_filtered.xml
+description: Remove filtered lines from vcf files
+id: toolshed.pasteur.fr/repos/fmareuil/vcf_remove_filtered/vcf_remove_filtered/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_3016]
+  extensions: [vcf]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: VCF file to annotate
+  model_class: DataToolParameter
+  multiple: false
+  name: input1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22RefN%22%20name%3D%22RefN%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22RefN%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Ignore position if the base in the reference is N, model_class: BooleanToolParameter,
+  name: RefN, optional: false, truevalue: RefN, type: boolean, value: true}
+- {area: false, argument: null, help: 'If let to -1.0, won''t be taken into account',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22StrandBias%22%20size%3D%2210%22%20value%3D%22-1.0%22%3E',
+  is_dynamic: false, label: Min P-value for strand bias (given PV4). Example 0.0001,
+  max: null, min: null, model_class: FloatToolParameter, name: StrandBias, optional: false,
+  size: null, type: float, value: '-1.0'}
+- {area: false, argument: null, help: 'If let to -1.0, won''t be taken into account',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22BaseQualBias%22%20size%3D%2210%22%20value%3D%22-1.0%22%3E',
+  is_dynamic: false, label: Min P-value for baseQ bias, max: null, min: null, model_class: FloatToolParameter,
+  name: BaseQualBias, optional: false, size: null, type: float, value: '-1.0'}
+- {area: false, argument: null, help: 'If let to -1.0, won''t be taken into account',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22MapQualBias%22%20size%3D%2210%22%20value%3D%22-1.0%22%3E',
+  is_dynamic: false, label: ' Min P-value for mapQ bias', max: null, min: null, model_class: FloatToolParameter,
+  name: MapQualBias, optional: false, size: null, type: float, value: '-1.0'}
+- {area: false, argument: null, help: 'If let to -1.0, won''t be taken into account',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22EndDistBias%22%20size%3D%2210%22%20value%3D%22-1.0%22%3E',
+  is_dynamic: false, label: Min P-value for end distance bias, max: null, min: null,
+  model_class: FloatToolParameter, name: EndDistBias, optional: false, size: null,
+  type: float, value: '-1.0'}
+- {area: false, argument: null, help: 'If let to -1, won''t be taken into account',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22MinAB%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+  is_dynamic: false, label: Minimum number of alternate bases, max: null, min: null,
+  model_class: IntegerToolParameter, name: MinAB, optional: false, size: null, type: integer,
+  value: '-1'}
+- {area: false, argument: null, help: 'If let to -1, won''t be taken into account',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22MinDP%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+  is_dynamic: false, label: Minimum read depth, max: null, min: null, model_class: IntegerToolParameter,
+  name: MinDP, optional: false, size: null, type: integer, value: '-1'}
+- {area: false, argument: null, help: 'If let to -1, won''t be taken into account',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22MaxDP%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+  is_dynamic: false, label: Maximum read depth, max: null, min: null, model_class: IntegerToolParameter,
+  name: MaxDP, optional: false, size: null, type: integer, value: '-1'}
+- {area: false, argument: null, help: 'If let to -1, won''t be taken into account',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22MinMQ%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+  is_dynamic: false, label: Minimum RMS mapping quality for SNPs, max: null, min: null,
+  model_class: IntegerToolParameter, name: MinMQ, optional: false, size: null, type: integer,
+  value: '-1'}
+- {area: false, argument: null, help: 'If let to -1, won''t be taken into account',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22Qual%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+  is_dynamic: false, label: Minimum value of the QUAL field, max: null, min: null,
+  model_class: IntegerToolParameter, name: Qual, optional: false, size: null, type: integer,
+  value: '-1'}
+- {area: false, argument: null, help: 'If let to -1, won''t be taken into account',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22GapWin%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+  is_dynamic: false, label: Window size for filtering adjacent gaps, max: null, min: null,
+  model_class: IntegerToolParameter, name: GapWin, optional: false, size: null, type: integer,
+  value: '-1'}
+- {area: false, argument: null, help: 'If let to -1, won''t be taken into account',
+  hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22SnpGap%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+  is_dynamic: false, label: SNP within INT bp around a gap to be filtered, max: null,
+  min: null, model_class: IntegerToolParameter, name: SnpGap, optional: false, size: null,
+  type: integer, value: '-1'}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fvcf_remove_filtered%2Fvcf_remove_filtered%2F1.0.0
+min_width: -1
+model_class: Tool
+name: vcf-annotate
+outputs:
+- {edam_format: format_3016, format: vcf, hidden: false, label: '${tool.name} on ${input1.name}',
+  model_class: ToolOutput, name: output_filtered}
+panel_section_id: ngs_vcf_tools
+panel_section_name: 'NGS: VCF Tools'
+target: galaxy_main
+version: 1.0.0

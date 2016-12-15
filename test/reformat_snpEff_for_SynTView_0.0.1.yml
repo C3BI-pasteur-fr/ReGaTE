@@ -1,0 +1,52 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/snp_indel_convertor/eb92cfd1ed5c/snp_indel_convertor/reformat_snpEff_for_SynTView.xml
+description: Convert a tabular snpEff file into a SynTView .snp and .indel files
+id: toolshed.pasteur.fr/repos/fmareuil/snp_indel_convertor/reformat_snpEff_for_SynTView/0.0.1
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: .ptt file
+  model_class: DataToolParameter
+  multiple: false
+  name: inputptt
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_3475, null]
+  extensions: [tabular, ' vcf']
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: snpEff output file
+  model_class: DataToolParameter
+  multiple: false
+  name: inputsnp
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: 'no', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22flaglog%22%20name%3D%22flaglog%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22flaglog%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Optional log file, model_class: BooleanToolParameter,
+  name: flaglog, optional: false, truevalue: 'yes', type: boolean, value: true}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fsnp_indel_convertor%2Freformat_snpEff_for_SynTView%2F0.0.1
+min_width: -1
+model_class: Tool
+name: snp/indel convertor
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}
+    log output', model_class: ToolOutput, name: outputlog}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string} snp output', model_class: ToolOutput, name: output_snp}
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string} indel output', model_class: ToolOutput, name: output_indel}
+panel_section_id: convert
+panel_section_name: Convert Formats
+target: galaxy_main
+version: 0.0.1

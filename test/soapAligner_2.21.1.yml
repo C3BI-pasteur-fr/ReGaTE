@@ -1,0 +1,235 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/soap/7b363f1bf7ec/soap/soap.xml
+description: Soap aligner/soap2
+id: toolshed.pasteur.fr/repos/odoppelt/soap/soapAligner/2.21.1
+inputs:
+- argument: null
+  edam_formats: [format_1930, null]
+  extensions: [fastq, ' fasta']
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Read 1 preprocessed
+  model_class: DataToolParameter
+  multiple: false
+  name: fqinput
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: single
+  - inputs:
+    - argument: null
+      edam_formats: [format_1930, format_1929]
+      extensions: [fastq, fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Read 2 preprocessed
+      model_class: DataToolParameter
+      multiple: false
+      name: fqinput2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: paired_end
+  model_class: Conditional
+  name: read_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22read_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22single%22%3E%0A%3Coption%20value%3D%22single%22%20selected%3ESingle%20Read%3C/option%3E%0A%3Coption%20value%3D%22paired_end%22%3EPaired%20End%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Type of input data
+    model_class: SelectToolParameter
+    multiple: false
+    name: read_type_selector
+    optional: false
+    options:
+    - [Single Read, single, true]
+    - [Paired End, paired_end, false]
+    type: select
+    value: single
+  type: conditional
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22def%22%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/btaurus.fa.index%22%3Ebtaurus%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/calbicans5314.fa.index%22%3Ecalbicans5314%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/calbicansW01.fa.index%22%3EcalbicansWO1%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/cfamiliaris.fa.index%22%3Ecfamiliaris%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/chiroptera.fa.index%22%3Echiroptera%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/cneoformansH99.fa.index%22%3EcneoformansH99%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/cneoformansJEC21.fa.index%22%3EcneoformansJEC21%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/csabaeus.fa.index%22%3Ecsabaeus%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/dmelanogaster.fa.index%22%3Edmelanogaster%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/ecaballus.fa.index%22%3Eecaballus%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/fcatus.fa.index%22%3Efcatus%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/hg19.fa.index%22%3Ehg19%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/hg18.fa.index%22%3Ehg18%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/mlucifugus.fa.index%22%3Emlucifugus%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/mm10.fa.index%22%3Emm10%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/mm9.fa.index%22%3Emm9%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/mm8.fa.index%22%3Emm8%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/pfalciparum.fa.index%22%3Epfalciparum%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/pvampyrus.fa.index%22%3Epvampyrus%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/pvivax.fa.index%22%3Epvivax%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/scerevisiae.fa.index%22%3Escerevisiae%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/spombe.fa.index%22%3Espombe%3C/option%3E%0A%3Coption%20value%3D%22/local/databases/index/soap/2.21/sscrofa.fa.index%22%3Esscrofa%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: soap_indexes
+      model_class: SelectToolParameter
+      multiple: false
+      name: def
+      optional: false
+      options:
+      - [btaurus, /local/databases/index/soap/2.21/btaurus.fa.index, false]
+      - [calbicans5314, /local/databases/index/soap/2.21/calbicans5314.fa.index, false]
+      - [calbicansWO1, /local/databases/index/soap/2.21/calbicansW01.fa.index, false]
+      - [cfamiliaris, /local/databases/index/soap/2.21/cfamiliaris.fa.index, false]
+      - [chiroptera, /local/databases/index/soap/2.21/chiroptera.fa.index, false]
+      - [cneoformansH99, /local/databases/index/soap/2.21/cneoformansH99.fa.index,
+        false]
+      - [cneoformansJEC21, /local/databases/index/soap/2.21/cneoformansJEC21.fa.index,
+        false]
+      - [csabaeus, /local/databases/index/soap/2.21/csabaeus.fa.index, false]
+      - [dmelanogaster, /local/databases/index/soap/2.21/dmelanogaster.fa.index, false]
+      - [ecaballus, /local/databases/index/soap/2.21/ecaballus.fa.index, false]
+      - [fcatus, /local/databases/index/soap/2.21/fcatus.fa.index, false]
+      - [hg19, /local/databases/index/soap/2.21/hg19.fa.index, false]
+      - [hg18, /local/databases/index/soap/2.21/hg18.fa.index, false]
+      - [mlucifugus, /local/databases/index/soap/2.21/mlucifugus.fa.index, false]
+      - [mm10, /local/databases/index/soap/2.21/mm10.fa.index, false]
+      - [mm9, /local/databases/index/soap/2.21/mm9.fa.index, false]
+      - [mm8, /local/databases/index/soap/2.21/mm8.fa.index, false]
+      - [pfalciparum, /local/databases/index/soap/2.21/pfalciparum.fa.index, false]
+      - [pvampyrus, /local/databases/index/soap/2.21/pvampyrus.fa.index, false]
+      - [pvivax, /local/databases/index/soap/2.21/pvivax.fa.index, false]
+      - [scerevisiae, /local/databases/index/soap/2.21/scerevisiae.fa.index, false]
+      - [spombe, /local/databases/index/soap/2.21/spombe.fa.index, false]
+      - [sscrofa, /local/databases/index/soap/2.21/sscrofa.fa.index, false]
+      type: select
+      value: /local/databases/index/soap/2.21/btaurus.fa.index
+    model_class: ConditionalWhen
+    value: default
+  - inputs:
+    - argument: null
+      edam_formats: [format_1915]
+      extensions: [data]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select an index from history
+      model_class: DataToolParameter
+      multiple: false
+      name: ownIndex
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: history
+  model_class: Conditional
+  name: indexSource
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22refIndexSource%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22default%22%3E%20Use%20stored%20Soap%20indexes%20%3C/option%3E%0A%3Coption%20value%3D%22history%22%3E%20Use%20index%20from%20the%20history%20%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Do you want to use a built-in index
+    model_class: SelectToolParameter
+    multiple: false
+    name: refIndexSource
+    optional: false
+    options:
+    - [' Use stored Soap indexes ', default, false]
+    - [' Use index from the history ', history, false]
+    type: select
+    value: default
+  type: conditional
+- {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22u%22%20name%3D%22u%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22u%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: outputs the unmapped read in an output file, model_class: BooleanToolParameter,
+  name: u, optional: false, truevalue: 'true', type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22t%22%20name%3D%22t%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22t%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: outputs reads id instead reads name, model_class: BooleanToolParameter,
+  name: t, optional: false, truevalue: --t, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22R%22%20name%3D%22R%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22R%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'for long insert size of pair end reads RF. [none](means
+    FR pair)', model_class: BooleanToolParameter, name: R, optional: false, truevalue: --R,
+  type: boolean, value: false}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22l%22%20size%3D%223%22%20value%3D%22256%22%3E',
+  is_dynamic: false, label: 'align the initial n bps as a seed [256] means whole length
+    of read', max: null, min: null, model_class: IntegerToolParameter, name: l, optional: false,
+  size: '3', type: integer, value: '256'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22n%22%20size%3D%222%22%20value%3D%225%22%3E',
+  is_dynamic: false, label: 'filter low-quality reads containing >n Ns before alignment,
+    [5]', max: null, min: null, model_class: IntegerToolParameter, name: n, optional: false,
+  size: '2', type: integer, value: '5'}
+- argument: null
+  display: radio
+  help: ''
+  hidden: false
+  html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22r%22%20value%3D%220%22%20id%3D%22r%7C0%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22r%7C0%22%3E0%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22r%22%20value%3D%221%22%20id%3D%22r%7C1%22%20checked%3D%27checked%27%3E%3Clabel%20class%3D%22inline%22%20for%3D%22r%7C1%22%3E1%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22r%22%20value%3D%222%22%20id%3D%22r%7C2%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22r%7C2%22%3E2%3C/label%3E%3C/div%3E'
+  is_dynamic: false
+  label: how to report repeat hits, 0=none; 1=random one; 2=all
+  model_class: SelectToolParameter
+  multiple: false
+  name: r
+  optional: false
+  options:
+  - ['0', '0', false]
+  - ['1', '1', true]
+  - ['2', '2', false]
+  type: select
+  value: '1'
+- argument: null
+  display: radio
+  help: ''
+  hidden: false
+  html: '%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22mode%22%20value%3D%220%22%20id%3D%22mode%7C0%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22mode%7C0%22%3E%3A%200%20exact%20match%20only%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22mode%22%20value%3D%221%22%20id%3D%22mode%7C1%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22mode%7C1%22%3E%3A%201%20mismatch%20match%20only%3C/label%3E%3C/div%3E%0A%3Cdiv%3E%3Cinput%20type%3D%22radio%22%20name%3D%22mode%22%20value%3D%222%22%20id%3D%22mode%7C2%22%3E%3Clabel%20class%3D%22inline%22%20for%3D%22mode%7C2%22%3E%3A%202%20mismatch%20match%20only%3C/label%3E%3C/div%3E%0A%3Cdiv%20class%3D%22odd_row%22%3E%3Cinput%20type%3D%22radio%22%20name%3D%22mode%22%20value%3D%224%22%20id%3D%22mode%7C4%22%20checked%3D%27checked%27%3E%3Clabel%20class%3D%22inline%22%20for%3D%22mode%7C4%22%3E%3A%204%20find%20the%20best%20hits%3C/label%3E%3C/div%3E'
+  is_dynamic: false
+  label: ' match mode for each read or the seed part of read, which shouldn''t contain
+    more than 2 mismaches'
+  model_class: SelectToolParameter
+  multiple: false
+  name: mode
+  optional: false
+  options:
+  - [': 0 exact match only', '0', false]
+  - [': 1 mismatch match only', '1', false]
+  - [': 2 mismatch match only', '2', false]
+  - [': 4 find the best hits', '4', true]
+  type: select
+  value: '4'
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22m%22%20size%3D%223%22%20value%3D%22400%22%3E',
+  is_dynamic: false, label: 'minimal insert size allowed, [400]', max: null, min: null,
+  model_class: IntegerToolParameter, name: m, optional: false, size: '3', type: integer,
+  value: '400'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22x%22%20size%3D%223%22%20value%3D%22600%22%3E',
+  is_dynamic: false, label: 'maximal insert size allowed, [400]', max: null, min: null,
+  model_class: IntegerToolParameter, name: x, optional: false, size: '3', type: integer,
+  value: '600'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22v%22%20size%3D%222%22%20value%3D%225%22%3E',
+  is_dynamic: false, label: 'maximum number of mismatches allowed on a read. [5] bp',
+  max: null, min: null, model_class: IntegerToolParameter, name: v, optional: false,
+  size: '2', type: integer, value: '5'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22s%22%20size%3D%223%22%20value%3D%22255%22%3E',
+  is_dynamic: false, label: 'minimal alignment length (for soft clip) [255] bp', max: null,
+  min: null, model_class: IntegerToolParameter, name: s, optional: false, size: '3',
+  type: integer, value: '255'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22g%22%20size%3D%223%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: 'one continuous gap size allowed on a read. [0] bp', max: null,
+  min: null, model_class: IntegerToolParameter, name: g, optional: false, size: '3',
+  type: integer, value: '0'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22e%22%20size%3D%223%22%20value%3D%225%22%3E',
+  is_dynamic: false, label: 'will not allow gap exist inside n-bp edge of a read,
+    default=5', max: null, min: null, model_class: IntegerToolParameter, name: e,
+  optional: false, size: '3', type: integer, value: '5'}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Fsoap%2FsoapAligner%2F2.21.1
+min_width: -1
+model_class: Tool
+name: Soap aligner
+outputs:
+- {edam_format: null, format: text, hidden: false, label: Soap mapped reads, model_class: ToolOutput,
+  name: output}
+- {edam_format: format_1929, format: fasta, hidden: false, label: Soap UnMapped reads,
+  model_class: ToolOutput, name: unmappedreads}
+- {edam_format: null, format: text, hidden: false, label: Soap UnPaired reads, model_class: ToolOutput,
+  name: unpairedreads}
+panel_section_id: solexa_tools
+panel_section_name: 'NGS: Mapping'
+target: galaxy_main
+version: 2.21.1

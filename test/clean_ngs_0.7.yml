@@ -1,0 +1,127 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/adapterremoval/caa83618f9bb/adapterremoval/clean_ngs.xml
+description: Use adapters definition file ADAPTER.txt and remove the adapters from
+  the input read files. The program writes out the cleansed reads and the rejected
+  reads. Nucleotides are also removed based on quality thresholds from the 5' and
+  3'.
+id: toolshed.pasteur.fr/repos/odoppelt/adapterremoval/clean_ngs/0.7
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1930]
+      extensions: [fastq]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: 1st FASTQ file to convert
+      model_class: DataToolParameter
+      multiple: false
+      name: input_file
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_1930]
+      extensions: [fastq]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: 2nd FASTQ file to convert
+      model_class: DataToolParameter
+      multiple: false
+      name: input_file2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: paired
+  - inputs:
+    - argument: null
+      edam_formats: [format_1930]
+      extensions: [fastq]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: FASTQ file to convert
+      model_class: DataToolParameter
+      multiple: false
+      name: input_file
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: single
+  model_class: Conditional
+  name: pairedEnd
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22selected%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22single%22%3E%0A%3Coption%20value%3D%22single%22%20selected%3ESingle%20Read%3C/option%3E%0A%3Coption%20value%3D%22paired%22%3EPaired%20End%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Experiment is paired-End
+    model_class: SelectToolParameter
+    multiple: false
+    name: selected
+    optional: false
+    options:
+    - [Single Read, single, true]
+    - [Paired End, paired, false]
+    type: select
+    value: single
+  type: conditional
+- {area: false, argument: null, help: 'minimum length of sequences [1..], def: 0 (off)
+    (default: 0)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minLen%22%20size%3D%2210%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+  name: minLen, optional: false, size: null, type: integer, value: '0'}
+- {area: false, argument: null, help: 'maximum length of sequences [1..], def: 0 (off)
+    (default: 0)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxLen%22%20size%3D%2210%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+  name: maxLen, optional: false, size: null, type: integer, value: '0'}
+- {area: false, argument: null, help: 'quality threshold for 3 prime trimming [0..],
+    def: -1 (off) (default: -1)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22qTh3%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+  is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+  name: qTh3, optional: false, size: null, type: integer, value: '-1'}
+- {area: false, argument: null, help: 'quality threshold for 5 prime trimming [0..],
+    def: -1 (off) (default: -1)', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22qTh5%22%20size%3D%2210%22%20value%3D%22-1%22%3E',
+  is_dynamic: false, label: '', max: null, min: null, model_class: IntegerToolParameter,
+  name: qTh5, optional: false, size: null, type: integer, value: '-1'}
+- argument: null
+  edam_formats: [format_2330]
+  extensions: [txt]
+  help: See section Adapters File Format below for more information.
+  hidden: false
+  is_dynamic: false
+  label: Adapter definition file
+  model_class: DataToolParameter
+  multiple: false
+  name: adapterSeqs
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Fadapterremoval%2Fclean_ngs%2F0.7
+min_width: -1
+model_class: Tool
+name: Clean NGS
+outputs:
+- {format: input, hidden: false, label: '${tool.name} on ${on_string}: filtered forward
+    sequences', model_class: ToolOutput, name: output_file}
+- {format: input, hidden: false, label: '${tool.name} on ${on_string}: filtered reverse
+    sequences', model_class: ToolOutput, name: output_file2}
+- {format: input, hidden: false, label: '${tool.name} on ${on_string}: rejected forward
+    sequences', model_class: ToolOutput, name: rejectedFQ}
+- {format: input, hidden: false, label: '${tool.name} on ${on_string}: rejected reverse
+    sequences', model_class: ToolOutput, name: rejectedFQ2}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: '0.7'

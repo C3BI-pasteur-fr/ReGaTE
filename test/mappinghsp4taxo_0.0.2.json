@@ -1,0 +1,333 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "mappinghsp4taxo-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.0.2", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/odoppelt/taxonomy_analysis/mappinghsp4taxo/0.0.2", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "text", 
+                    "dataDescription": "taxoExtractOutput", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Textual format", 
+                            "uri": "http://edamontology.org/format_2330"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "prefix", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "prefix_merge", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "prefix_noOverlap", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "prefix_merge2", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "prefix_noOverlap2", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "prefix_plus", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "prefix_minus", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "prefix_merge_plus", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "prefix_merge_minus", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "prefix_noOverlap_plus", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "prefix_noOverlap_minus", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "prefix_merge_plus2", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "prefix_merge_minus2", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "prefix_noOverlap_plus2", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "prefix_noOverlap_minus2", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Analyses taxoptimizer output file to find the most relevant database's sequence using taxonomics informations (kronaextract output) and draw picture(s) with the mapping of all hsp on it.", 
+            "input": [
+                {
+                    "dataHandle": "oneColumnInput", 
+                    "dataDescription": "One column kronaextract output file (kronaextract.offset only)", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "twoColumnInput", 
+                    "dataDescription": "Two columns kronaextract output file (read ID and its offset )", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "taxoptimizerOutput", 
+                    "dataDescription": "[p]taxoptimizer output file", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Analyses taxoptimizer output file to find the most relevant database's sequence using taxonomics informations (kronaextract output) and draw picture(s) with the mapping of all hsp on it.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/odoppelt/taxonomy_analysis/mappinghsp4taxo/0.0.2", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/odoppelt/taxonomy_analysis/mappinghsp4taxo/0.0.2\"", 
+            "usesVersion": "0.0.2"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "mappinghsp4taxo-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.0.2", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

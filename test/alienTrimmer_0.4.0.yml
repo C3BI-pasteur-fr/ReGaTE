@@ -1,0 +1,324 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/alientrimmer/a49fa8984b59/alientrimmer/alienTrimmer.xml
+description: Fast trimming to filter out non-confident  nucleotides and alien oligo-nucleotide
+  sequences (adaptors, primers) in both 5' and 3' read ends
+id: toolshed.pasteur.fr/repos/odoppelt/alientrimmer/alienTrimmer/0.4.0
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1930]
+      extensions: [fastq]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Original fastq file from your history
+      model_class: DataToolParameter
+      multiple: false
+      name: read1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: single
+  - inputs:
+    - argument: null
+      edam_formats: [format_1930]
+      extensions: [fastq]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Read 1 fastq dataset from your history
+      model_class: DataToolParameter
+      multiple: false
+      name: read1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_1930]
+      extensions: [fastq]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Read 2 fastq dataset from your history
+      model_class: DataToolParameter
+      multiple: false
+      name: read2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: paired_end
+  model_class: Conditional
+  name: read_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22read_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22single%22%3E%0A%3Coption%20value%3D%22single%22%20selected%3ESingle%20Read%3C/option%3E%0A%3Coption%20value%3D%22paired_end%22%3EPaired%20End%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Type of input data
+    model_class: SelectToolParameter
+    multiple: false
+    name: read_type_selector
+    optional: false
+    options:
+    - [Single Read, single, true]
+    - [Paired End, paired_end, false]
+    type: select
+    value: single
+  type: conditional
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22def%22%3E%0A%3Coption%20value%3D%22/pasteur/projets/policy01/galaxy-prod/projets/fqCleaner/Liste_primers_adaptors_illumina_March14.fasta%22%3EilluminaContaminantMar14%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: fqCleaner_contaminants
+      model_class: SelectToolParameter
+      multiple: false
+      name: def
+      optional: false
+      options:
+      - [illuminaContaminantMar14, /pasteur/projets/policy01/galaxy-prod/projets/fqCleaner/Liste_primers_adaptors_illumina_March14.fasta,
+        false]
+      type: select
+      value: /pasteur/projets/policy01/galaxy-prod/projets/fqCleaner/Liste_primers_adaptors_illumina_March14.fasta
+    model_class: ConditionalWhen
+    value: default_single
+  - inputs:
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select a contaminant sequence fasta file from history
+      model_class: DataToolParameter
+      multiple: false
+      name: ownFile
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: history_single
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22def_fwd%22%3E%0A%3Coption%20value%3D%22/pasteur/projets/policy01/galaxy-prod/projets/fqCleaner/Liste_primers_adaptors_illumina_March14.fasta%22%3EilluminaContaminantMar14%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: AlienTrimmer forward contaminants
+      model_class: SelectToolParameter
+      multiple: false
+      name: def_fwd
+      optional: false
+      options:
+      - [illuminaContaminantMar14, /pasteur/projets/policy01/galaxy-prod/projets/fqCleaner/Liste_primers_adaptors_illumina_March14.fasta,
+        false]
+      type: select
+      value: /pasteur/projets/policy01/galaxy-prod/projets/fqCleaner/Liste_primers_adaptors_illumina_March14.fasta
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22def_rev%22%3E%0A%3Coption%20value%3D%22/pasteur/projets/policy01/galaxy-prod/projets/fqCleaner/Liste_primers_adaptors_illumina_March14.fasta%22%3EilluminaContaminantMar14%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: AlienTrimmer reverse contaminants
+      model_class: SelectToolParameter
+      multiple: false
+      name: def_rev
+      optional: false
+      options:
+      - [illuminaContaminantMar14, /pasteur/projets/policy01/galaxy-prod/projets/fqCleaner/Liste_primers_adaptors_illumina_March14.fasta,
+        false]
+      type: select
+      value: /pasteur/projets/policy01/galaxy-prod/projets/fqCleaner/Liste_primers_adaptors_illumina_March14.fasta
+    model_class: ConditionalWhen
+    value: default_paired_end
+  - inputs:
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select a contaminant sequence fasta file for forward reads from history
+      model_class: DataToolParameter
+      multiple: false
+      name: forward_history_list
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select a contaminant sequence fasta file for reverse read from history
+      model_class: DataToolParameter
+      multiple: false
+      name: reverse_history_list
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: twolists
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22def_fwd%22%3E%0A%3Coption%20value%3D%22/pasteur/projets/policy01/galaxy-prod/projets/fqCleaner/Liste_primers_adaptors_illumina_March14.fasta%22%3EilluminaContaminantMar14%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: AlienTrimmer forward contaminants
+      model_class: SelectToolParameter
+      multiple: false
+      name: def_fwd
+      optional: false
+      options:
+      - [illuminaContaminantMar14, /pasteur/projets/policy01/galaxy-prod/projets/fqCleaner/Liste_primers_adaptors_illumina_March14.fasta,
+        false]
+      type: select
+      value: /pasteur/projets/policy01/galaxy-prod/projets/fqCleaner/Liste_primers_adaptors_illumina_March14.fasta
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select a contaminant sequence fasta file for reverse read from history
+      model_class: DataToolParameter
+      multiple: false
+      name: reverse_history_list
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: default_fwd_and_history_rev
+  - inputs:
+    - argument: null
+      edam_formats: [format_1929]
+      extensions: [fasta]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Select a contaminant sequence fasta file for forward reads from history
+      model_class: DataToolParameter
+      multiple: false
+      name: forward_history_list
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22def_rev%22%3E%0A%3Coption%20value%3D%22/pasteur/projets/policy01/galaxy-prod/projets/fqCleaner/Liste_primers_adaptors_illumina_March14.fasta%22%3EilluminaContaminantMar14%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: true
+      label: AlienTrimmer reverse contaminants
+      model_class: SelectToolParameter
+      multiple: false
+      name: def_rev
+      optional: false
+      options:
+      - [illuminaContaminantMar14, /pasteur/projets/policy01/galaxy-prod/projets/fqCleaner/Liste_primers_adaptors_illumina_March14.fasta,
+        false]
+      type: select
+      value: /pasteur/projets/policy01/galaxy-prod/projets/fqCleaner/Liste_primers_adaptors_illumina_March14.fasta
+    model_class: ConditionalWhen
+    value: history_fwd_and_default_rev
+  model_class: Conditional
+  name: contaminantSource
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22refContaminantSource%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22default_single%22%3E%20SINGLE%20READ%20-%20Use%20AlienTrimmer%20contaminant%20list%20%3C/option%3E%0A%3Coption%20value%3D%22history_single%22%3E%20SINGLE%20READ%20-%20Use%20one%20from%20the%20history%20%3C/option%3E%0A%3Coption%20value%3D%22default_paired_end%22%3E%20PAIRED%20END%20-%20Use%20AlienTrimmer%20contaminant%20lists%20%3C/option%3E%0A%3Coption%20value%3D%22default_fwd_and_history_rev%22%3E%20PAIRED%20END%20-%20Use%20AlienTrimmer%20contaminant%20list%20for%20forward%20reads%20and%20one%20from%20the%20history%20for%20reverse%20%3C/option%3E%0A%3Coption%20value%3D%22history_fwd_and_default_rev%22%3E%20PAIRED%20END%20-%20Use%20list%20from%20the%20history%20for%20forward%20reads%20and%20AlienTrimmer%20contaminant%20list%20for%20reverse%20%3C/option%3E%0A%3Coption%20value%3D%22twolists%22%3E%20PAIRED%20END%20-%20Use%20a%20reverse%20AND%20a%20forward%20contaminant%20list%20from%20your%20history%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Select a contaminant Fasta file from your history (Beware of the kind of
+      read your are analysing (PAIRED-END or SINGLE READ)
+    model_class: SelectToolParameter
+    multiple: false
+    name: refContaminantSource
+    optional: false
+    options:
+    - [' SINGLE READ - Use AlienTrimmer contaminant list ', default_single, false]
+    - [' SINGLE READ - Use one from the history ', history_single, false]
+    - [' PAIRED END - Use AlienTrimmer contaminant lists ', default_paired_end, false]
+    - [' PAIRED END - Use AlienTrimmer contaminant list for forward reads and one
+        from the history for reverse ', default_fwd_and_history_rev, false]
+    - [' PAIRED END - Use list from the history for forward reads and AlienTrimmer
+        contaminant list for reverse ', history_fwd_and_default_rev, false]
+    - [' PAIRED END - Use a reverse AND a forward contaminant list from your history',
+      twolists, false]
+    type: select
+    value: default_single
+  type: conditional
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22k%22%20size%3D%223%22%20value%3D%2210%22%3E',
+  is_dynamic: false, label: 'k value for k-mer decomposition;  must lie between 5
+    and 15 (default: k=10)', max: 15, min: 5, model_class: IntegerToolParameter, name: k,
+  optional: false, size: '3', type: integer, value: '10'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22m%22%20size%3D%223%22%20value%3D%225%22%3E',
+  is_dynamic: false, label: 'allowed mismatch value (default: m=k/2)', max: 15, min: 0,
+  model_class: IntegerToolParameter, name: m, optional: false, size: '3', type: integer,
+  value: '5'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22l%22%20size%3D%223%22%20value%3D%2250%22%3E',
+  is_dynamic: false, label: 'minimum read  length to output;  all trimmed reads  with
+    length below this value are filtered out (default: l=15)', max: null, min: 50,
+  model_class: IntegerToolParameter, name: l, optional: false, size: '3', type: integer,
+  value: '50'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22q%22%20size%3D%223%22%20value%3D%2220%22%3E',
+  is_dynamic: false, label: 'Phred quality score cutoff  to trim off low-quality read
+    ends; must lie between 0 and 40 (default: 20)', max: 40, min: 0, model_class: IntegerToolParameter,
+  name: q, optional: false, size: '3', type: integer, value: '20'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22p%22%20size%3D%223%22%20value%3D%2280%22%3E',
+  is_dynamic: false, label: 'minimum   allowed   percentage   of   correctly called
+    nucleotides  (i.e.  with Phred  quality score  character higher than q); all reads
+    with a percentage of correctly called nucleotide lower than this value are filtered
+    out (default: p=0)', max: null, min: 50, model_class: IntegerToolParameter, name: p,
+  optional: false, size: '3', type: integer, value: '80'}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22verbose%22%20name%3D%22verbose%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22verbose%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: ' displays trimming details during the whole process',
+  model_class: BooleanToolParameter, name: verbose, optional: false, truevalue: -v,
+  type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Falientrimmer%2FalienTrimmer%2F0.4.0
+min_width: -1
+model_class: Tool
+name: alienTrimmer
+outputs:
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: AlienTrimmer
+    output file name, model_class: ToolOutput, name: output}
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: AlienTrimmer
+    output file name for trimmed fwd reads, model_class: ToolOutput, name: out_fwd}
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: AlienTrimmer
+    output file name for trimmed rev reads, model_class: ToolOutput, name: out_rev}
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: AlienTrimmer
+    output file name for remaining  trimmed single (sgl) reads, model_class: ToolOutput,
+  name: out_remain}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: 0.4.0

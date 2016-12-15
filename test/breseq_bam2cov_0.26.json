@@ -1,0 +1,137 @@
+{
+    "accessibility": [
+        "Open access"
+    ], 
+    "topic": [
+        {
+            "term": "Topic", 
+            "uri": "http://edamontology.org/topic_0003"
+        }
+    ], 
+    "id": "breseq_bam2cov-IP", 
+    "platform": [
+        "Linux"
+    ], 
+    "version": "0.26", 
+    "homepage": "https://galaxy.pasteur.fr/tool_runner?tool_id=toolshed.pasteur.fr/repos/mvalade/breseq/breseq_bam2cov/0.26", 
+    "function": [
+        {
+            "output": [
+                {
+                    "dataHandle": "png", 
+                    "dataDescription": "report", 
+                    "data": {
+                        "term": "Image", 
+                        "uri": "http://edamontology.org/data_2968"
+                    }, 
+                    "format": [
+                        {
+                            "term": "Image format", 
+                            "uri": "http://edamontology.org/format_3547"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "pdf", 
+                    "dataDescription": "report1", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "PDF", 
+                            "uri": "http://edamontology.org/format_3508"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "tabular", 
+                    "dataDescription": "report2", 
+                    "data": {
+                        "term": "Data", 
+                        "uri": "http://edamontology.org/data_0006"
+                    }, 
+                    "format": [
+                        {
+                            "term": "TSV", 
+                            "uri": "http://edamontology.org/format_3475"
+                        }
+                    ]
+                }
+            ], 
+            "operation": [
+                {
+                    "term": "Operation", 
+                    "uri": "http://edamontology.org/operation_0004"
+                }
+            ], 
+            "functionHandle": "functionHandle", 
+            "functionDescription": "Create a coverage plot or table for the specified region", 
+            "input": [
+                {
+                    "dataHandle": "bam_path", 
+                    "dataDescription": "bam_path", 
+                    "data": {
+                        "term": "Sequence trace", 
+                        "uri": "http://edamontology.org/data_0924"
+                    }, 
+                    "format": [
+                        {
+                            "term": "BAM", 
+                            "uri": "http://edamontology.org/format_2572"
+                        }
+                    ]
+                }, 
+                {
+                    "dataHandle": "fasta_path", 
+                    "dataDescription": "fasta_path", 
+                    "data": {
+                        "term": "Sequence alignment", 
+                        "uri": "http://edamontology.org/data_0863"
+                    }, 
+                    "format": [
+                        {
+                            "term": "FASTA", 
+                            "uri": "http://edamontology.org/format_1929"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "description": "Create a coverage plot or table for the specified region.", 
+    "toolType": [
+        "Web application"
+    ], 
+    "collection": [
+        "galaxyPasteur"
+    ], 
+    "uses": [
+        {
+            "usesHomepage": "http://toolshed.pasteur.fr/repos/mvalade/breseq/breseq_bam2cov/0.26", 
+            "usesName": "Toolshed entry for \"toolshed.pasteur.fr/repos/mvalade/breseq/breseq_bam2cov/0.26\"", 
+            "usesVersion": "0.26"
+        }
+    ], 
+    "interface": [
+        {
+            "interfaceType": "Web UI"
+        }
+    ], 
+    "name": "breseq_bam2cov-IP", 
+    "resourceType": [
+        "Tool"
+    ], 
+    "maturity": "Mature", 
+    "versionID": "0.26", 
+    "contact": [
+        {
+            "email": "hmenager@pasteur.fr", 
+            "name": "Herv\u00e9 M\u00e9nager"
+        }
+    ], 
+    "publications": {
+        "publicationsPrimaryID": "None"
+    }
+}

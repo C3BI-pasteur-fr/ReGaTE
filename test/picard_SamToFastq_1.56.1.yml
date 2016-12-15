@@ -1,0 +1,117 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/2f92cb75946c/picard_pasteur_wrapper/picard_SamToFastq.xml
+description: creates a FASTQ file
+id: toolshed.pasteur.fr/repos/fmareuil/picard_pasteur_wrapper/picard_SamToFastq/1.56.1
+inputs:
+- argument: null
+  edam_formats: [format_2573, format_2572]
+  extensions: [sam, bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: BAM/SAM file
+  model_class: DataToolParameter
+  multiple: false
+  name: input_sam
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read1_trim%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: The number of bases to trim from the beginning of read
+    1., max: null, min: null, model_class: IntegerToolParameter, name: read1_trim,
+  optional: true, size: null, type: integer, value: ''}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read1_max_bases_to_write%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: The maximum number of bases to write from read 1 after
+    trimming., max: null, min: null, model_class: IntegerToolParameter, name: read1_max_bases_to_write,
+  optional: true, size: null, type: integer, value: ''}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22output_per_read_group_selector%22%20last_selected_value%3D%22per_sam_file%22%3E%0A%3Coption%20value%3D%22per_sam_file%22%20selected%3EPer%20BAM/SAM%20file%3C/option%3E%0A%3Coption%20value%3D%22per_read_group%22%3EPer%20Read%20Group%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Output per read group
+  model_class: SelectToolParameter
+  multiple: false
+  name: output_per_read_group_selector
+  optional: false
+  options:
+  - [Per BAM/SAM file, per_sam_file, true]
+  - [Per Read Group, per_read_group, false]
+  type: select
+  value: per_sam_file
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: single
+  - inputs:
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read2_trim%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: The number of bases to trim from the beginning of
+        read 2., max: null, min: null, model_class: IntegerToolParameter, name: read2_trim,
+      optional: true, size: null, type: integer, value: ''}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22read2_max_bases_to_write%22%20size%3D%2210%22%20value%3D%22%22%3E',
+      is_dynamic: false, label: The maximum number of bases to write from read 2 after
+        trimming., max: null, min: null, model_class: IntegerToolParameter, name: read2_max_bases_to_write,
+      optional: true, size: null, type: integer, value: ''}
+    model_class: ConditionalWhen
+    value: paired
+  model_class: Conditional
+  name: single_paired_end_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22single_paired_end_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22single%22%3E%0A%3Coption%20value%3D%22single%22%20selected%3ESingle%3C/option%3E%0A%3Coption%20value%3D%22paired%22%3EPaired%20end%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Single or Paired end
+    model_class: SelectToolParameter
+    multiple: false
+    name: single_paired_end_type_selector
+    optional: false
+    options:
+    - [Single, single, true]
+    - [Paired end, paired, false]
+    type: select
+    value: single
+  type: conditional
+- {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22re_reverse%22%20name%3D%22re_reverse%22%20value%3D%22true%22%20checked%3D%22checked%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22re_reverse%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Re-reverse bases and qualities of reads on negative strand,
+  model_class: BooleanToolParameter, name: re_reverse, optional: false, truevalue: 'true',
+  type: boolean, value: true}
+- {argument: null, falsevalue: 'false', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22include_non_pf_reads%22%20name%3D%22include_non_pf_reads%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22include_non_pf_reads%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Include non-PF reads from the SAM file into the output
+    FASTQ files., model_class: BooleanToolParameter, name: include_non_pf_reads, optional: false,
+  truevalue: 'true', type: boolean, value: false}
+- {area: false, argument: null, help: Leave blank for null, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22clipping_attribute%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: The attribute that stores the position at which the SAM
+    record should be clipped, model_class: TextToolParameter, name: clipping_attribute,
+  optional: false, size: null, type: text, value: ''}
+- {area: false, argument: null, help: '''X'' means the reads and qualities should
+    be trimmed at the clipped position; ''N'' means the bases should be changed to
+    Ns in the clipped region; and any integer means that the base qualities should
+    be set to that value in the clipped region. Leave blank for null', hidden: false,
+  html: '%3Cinput%20type%3D%22text%22%20name%3D%22clipping_action%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: The action that should be taken with clipped reads, model_class: TextToolParameter,
+  name: clipping_action, optional: false, size: null, type: text, value: ''}
+- {argument: null, falsevalue: 'false', help: 'Support of non-primary alignments in
+    SamToFastq is not comprehensive, so there may be exceptions if this is set to
+    true and there are paired reads with non-primary alignments.', hidden: false,
+  html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22include_non_primary_alignments%22%20name%3D%22include_non_primary_alignments%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22include_non_primary_alignments%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'If true, include non-primary alignments in the output.',
+  model_class: BooleanToolParameter, name: include_non_primary_alignments, optional: false,
+  truevalue: 'true', type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fpicard_pasteur_wrapper%2Fpicard_SamToFastq%2F1.56.1
+min_width: -1
+model_class: Tool
+name: SAM to FASTQ
+outputs:
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: '${tool.name}
+    on ${on_string}: FASTQ 1', model_class: ToolOutput, name: output_fastq1}
+- {edam_format: format_1932, format: fastqsanger, hidden: false, label: '${tool.name}
+    on ${on_string}: FASTQ 2', model_class: ToolOutput, name: output_fastq2}
+panel_section_id: ngs:_picard_tools
+panel_section_name: 'NGS: Picard Tools'
+target: galaxy_main
+version: 1.56.1

@@ -1,0 +1,86 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/phenotype_association/linkToGProfile.xml
+description: tools for functional profiling of gene lists
+id: hgv_linkToGProfile
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Dataset
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  data_ref: input
+  display: null
+  help: ''
+  hidden: false
+  is_dynamic: true
+  label: Column with identifiers
+  model_class: ColumnListParameter
+  multiple: false
+  name: genes
+  numerical: false
+  optional: false
+  options: []
+  type: data_column
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22region%22%20last_selected_value%3D%220%22%3E%0A%3Coption%20value%3D%220%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%221%22%3EYes%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Or use genomic intervals
+  model_class: SelectToolParameter
+  multiple: false
+  name: region
+  optional: false
+  options:
+  - ['No', '0', true]
+  - ['Yes', '1', false]
+  type: select
+  value: '0'
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22type%22%20last_selected_value%3D%22ENTREZGENE_ACC%22%3E%0A%3Coption%20value%3D%22ENTREZGENE_ACC%22%20selected%3EEntrez%20Gene%20Acc%3C/option%3E%0A%3Coption%20value%3D%22MIM_MORBID%22%3EOMIM%20Morbid%20Map%3C/option%3E%0A%3Coption%20value%3D%22MIM_GENE%22%3EOMIM%20Gene%20ID%3C/option%3E%0A%3Coption%20value%3D%22AFFY_HUGENE_1_0_ST_V1%22%3EAFFY_HUGENE_1_0_ST_V1%3C/option%3E%0A%3Coption%20value%3D%22HGNC_AUTOMATIC_GENE_ACC%22%3EHGNC_AUTOMATIC_GENE_ACC%3C/option%3E%0A%3Coption%20value%3D%22HGNC_MB001_ACC%22%3EHGNC_MB001_ACC%3C/option%3E%0A%3Coption%20value%3D%22HGNC_ACC%22%3EHGNC_ACC%3C/option%3E%0A%3Coption%20value%3D%22WIKIGENE_ACC%22%3EWIKIGENE_ACC%3C/option%3E%0A%3Coption%20value%3D%22DBASS5_ACC%22%3EDBASS5_ACC%3C/option%3E%0A%3Coption%20value%3D%22ILLUMINA_HUMANWG_6_V1%22%3EILLUMINA_HUMANWG_6_V1%3C/option%3E%0A%3Coption%20value%3D%22AFFY_HUEX_1_0_ST_V2%22%3EAFFY_HUEX_1_0_ST_V2%3C/option%3E%0A%3Coption%20value%3D%22DBASS3_ACC%22%3EDBASS3_ACC%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Identifier type if numeric
+  model_class: SelectToolParameter
+  multiple: false
+  name: type
+  optional: false
+  options:
+  - [Entrez Gene Acc, ENTREZGENE_ACC, true]
+  - [OMIM Morbid Map, MIM_MORBID, false]
+  - [OMIM Gene ID, MIM_GENE, false]
+  - [AFFY_HUGENE_1_0_ST_V1, AFFY_HUGENE_1_0_ST_V1, false]
+  - [HGNC_AUTOMATIC_GENE_ACC, HGNC_AUTOMATIC_GENE_ACC, false]
+  - [HGNC_MB001_ACC, HGNC_MB001_ACC, false]
+  - [HGNC_ACC, HGNC_ACC, false]
+  - [WIKIGENE_ACC, WIKIGENE_ACC, false]
+  - [DBASS5_ACC, DBASS5_ACC, false]
+  - [ILLUMINA_HUMANWG_6_V1, ILLUMINA_HUMANWG_6_V1, false]
+  - [AFFY_HUEX_1_0_ST_V2, AFFY_HUEX_1_0_ST_V2, false]
+  - [DBASS3_ACC, DBASS3_ACC, false]
+  type: select
+  value: ENTREZGENE_ACC
+link: /tool_runner?tool_id=hgv_linkToGProfile
+min_width: -1
+model_class: Tool
+name: g:Profiler
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '', model_class: ToolOutput,
+  name: out_file1}
+panel_section_id: hgv
+panel_section_name: Phenotype Association
+target: galaxy_main
+version: 1.0.0

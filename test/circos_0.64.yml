@@ -1,0 +1,63 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/screno/circos/94e801f73dc7/circos/circos.xml
+description: for existing karyotypes
+id: toolshed.pasteur.fr/repos/screno/circos/circos/0.64
+inputs:
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22graph_name%22%20size%3D%2220%22%20value%3D%22graph1%22%3E',
+  is_dynamic: false, label: Graph name, model_class: TextToolParameter, name: graph_name,
+  optional: false, size: '20', type: text, value: graph1}
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22karyotype%22%3E%0A%3Coption%20value%3D%22data/karyotype/karyotype.human.hg18.txt%22%3EHuman%20%28homo%20sapiens%2C%20hs%29%20-hg18-%3C/option%3E%0A%3Coption%20value%3D%22data/karyotype/karyotype.human.hg19.txt%22%3EHuman%20%28homo%20sapiens%2C%20hs%29%20-s/hg19-%3C/option%3E%0A%3Coption%20value%3D%22data/karyotype/karyotype.mouse.mm10.txt%22%3EMouse%20%28Mus%20Musculus%2C%20mm10%29%3C/option%3E%0A%3Coption%20value%3D%22data/karyotype/karyotype.mouse.mm9.txt%22%3EMouse%20%28Mus%20Musculus%2C%20mm9%29%3C/option%3E%0A%3Coption%20value%3D%22data/karyotype/karyotype.rat.rn4.txt%22%3ERat%20%28Rattus%20norvegicus%2C%20rn4%29%3C/option%3E%0A%3Coption%20value%3D%22data/karyotype/karyotype.yeast.txt%22%3EYeast%20%28Saccharomyces%20Cerevisiae%2C%20sc%29%20-SGD-%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Type of model organism
+  model_class: SelectToolParameter
+  multiple: false
+  name: karyotype
+  optional: false
+  options:
+  - ['Human (homo sapiens, hs) -hg18-', data/karyotype/karyotype.human.hg18.txt, false]
+  - ['Human (homo sapiens, hs) -s/hg19-', data/karyotype/karyotype.human.hg19.txt,
+    false]
+  - ['Mouse (Mus Musculus, mm10)', data/karyotype/karyotype.mouse.mm10.txt, false]
+  - ['Mouse (Mus Musculus, mm9)', data/karyotype/karyotype.mouse.mm9.txt, false]
+  - ['Rat (Rattus norvegicus, rn4)', data/karyotype/karyotype.rat.rn4.txt, false]
+  - ['Yeast (Saccharomyces Cerevisiae, sc) -SGD-', data/karyotype/karyotype.yeast.txt,
+    false]
+  type: select
+  value: data/karyotype/karyotype.human.hg18.txt
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22chromosomes_units%22%20size%3D%2250%22%20value%3D%221000000%22%3E',
+  is_dynamic: false, label: Chromosomes units, max: null, min: null, model_class: IntegerToolParameter,
+  name: chromosomes_units, optional: false, size: '50', type: integer, value: '1000000'}
+- {area: false, argument: null, help: 'ex: hs2;hs3 or -hsX;-hsY', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22chromosomes%22%20size%3D%22100%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: List of chromosome names to keep or exclude, model_class: TextToolParameter,
+  name: chromosomes, optional: false, size: '100', type: text, value: ''}
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [segdup]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Input link file (.segdup)
+  model_class: DataToolParameter
+  multiple: false
+  name: link_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fscreno%2Fcircos%2Fcircos%2F0.64
+min_width: -1
+model_class: Tool
+name: Circos circular plots for SVDetect
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '${graph_name}.circos.log',
+  model_class: ToolOutput, name: log_file}
+- {edam_format: format_3547, format: png, hidden: false, label: '${graph_name}.png',
+  model_class: ToolOutput, name: outputfile}
+panel_section_id: plots
+panel_section_name: Graph/Display Data
+target: galaxy_main
+version: '0.64'

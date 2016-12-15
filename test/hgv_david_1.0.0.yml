@@ -1,0 +1,96 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/phenotype_association/linkToDavid.xml
+description: functional annotation for a list of genes
+id: hgv_david
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Dataset
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  data_ref: input
+  display: null
+  help: ''
+  hidden: false
+  is_dynamic: true
+  label: Column with identifiers
+  model_class: ColumnListParameter
+  multiple: false
+  name: numerical_column
+  numerical: false
+  optional: false
+  options: []
+  type: data_column
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22type%22%20last_selected_value%3D%22GENE_SYMBOL%22%3E%0A%3Coption%20value%3D%22AFFYMETRIX_3PRIME_IVT_ID%22%3EAFFYMETRIX_3PRIME_IVT_ID%3C/option%3E%0A%3Coption%20value%3D%22AFFYMETRIX_EXON_GENE_ID%22%3EAFFYMETRIX_EXON_GENE_ID%3C/option%3E%0A%3Coption%20value%3D%22AFFYMETRIX_SNP_ID%22%3EAFFYMETRIX_SNP_ID%3C/option%3E%0A%3Coption%20value%3D%22AGILENT_CHIP_ID%22%3EAGILENT_CHIP_ID%3C/option%3E%0A%3Coption%20value%3D%22AGILENT_ID%22%3EAGILENT_ID%3C/option%3E%0A%3Coption%20value%3D%22AGILENT_OLIGO_ID%22%3EAGILENT_OLIGO_ID%3C/option%3E%0A%3Coption%20value%3D%22ENSEMBL_GENE_ID%22%3EENSEMBL_GENE_ID%3C/option%3E%0A%3Coption%20value%3D%22ENSEMBL_TRANSCRIPT_ID%22%3EENSEMBL_TRANSCRIPT_ID%3C/option%3E%0A%3Coption%20value%3D%22ENTREZ_GENE_ID%22%3EENTREZ_GENE_ID%3C/option%3E%0A%3Coption%20value%3D%22FLYBASE_GENE_ID%22%3EFLYBASE_GENE_ID%3C/option%3E%0A%3Coption%20value%3D%22FLYBASE_TRANSCRIPT_ID%22%3EFLYBASE_TRANSCRIPT_ID%3C/option%3E%0A%3Coption%20value%3D%22GENBANK_ACCESSION%22%3EGENBANK_ACCESSION%3C/option%3E%0A%3Coption%20value%3D%22GENPEPT_ACCESSION%22%3EGENPEPT_ACCESSION%3C/option%3E%0A%3Coption%20value%3D%22GENOMIC_GI_ACCESSION%22%3EGENOMIC_GI_ACCESSION%3C/option%3E%0A%3Coption%20value%3D%22PROTEIN_GI_ACCESSION%22%3EPROTEIN_GI_ACCESSION%3C/option%3E%0A%3Coption%20value%3D%22ILLUMINA_ID%22%3EILLUMINA_ID%3C/option%3E%0A%3Coption%20value%3D%22IPI_ID%22%3EIPI_ID%3C/option%3E%0A%3Coption%20value%3D%22MGI_ID%22%3EMGI_ID%3C/option%3E%0A%3Coption%20value%3D%22GENE_SYMBOL%22%20selected%3EGENE_SYMBOL%3C/option%3E%0A%3Coption%20value%3D%22PFAM_ID%22%3EPFAM_ID%3C/option%3E%0A%3Coption%20value%3D%22PIR_ACCESSION%22%3EPIR_ACCESSION%3C/option%3E%0A%3Coption%20value%3D%22PIR_ID%22%3EPIR_ID%3C/option%3E%0A%3Coption%20value%3D%22PIR_NREF_ID%22%3EPIR_NREF_ID%3C/option%3E%0A%3Coption%20value%3D%22REFSEQ_GENOMIC%22%3EREFSEQ_GENOMIC%3C/option%3E%0A%3Coption%20value%3D%22REFSEQ_MRNA%22%3EREFSEQ_MRNA%3C/option%3E%0A%3Coption%20value%3D%22REFSEQ_PROTEIN%22%3EREFSEQ_PROTEIN%3C/option%3E%0A%3Coption%20value%3D%22REFSEQ_RNA%22%3EREFSEQ_RNA%3C/option%3E%0A%3Coption%20value%3D%22RGD_ID%22%3ERGD_ID%3C/option%3E%0A%3Coption%20value%3D%22SGD_ID%22%3ESGD_ID%3C/option%3E%0A%3Coption%20value%3D%22TAIR_ID%22%3ETAIR_ID%3C/option%3E%0A%3Coption%20value%3D%22UCSC_GENE_ID%22%3EUCSC_GENE_ID%3C/option%3E%0A%3Coption%20value%3D%22UNIGENE%22%3EUNIGENE%3C/option%3E%0A%3Coption%20value%3D%22UNIPROT_ACCESSION%22%3EUNIPROT_ACCESSION%3C/option%3E%0A%3Coption%20value%3D%22UNIPROT_ID%22%3EUNIPROT_ID%3C/option%3E%0A%3Coption%20value%3D%22UNIREF100_ID%22%3EUNIREF100_ID%3C/option%3E%0A%3Coption%20value%3D%22WORMBASE_GENE_ID%22%3EWORMBASE_GENE_ID%3C/option%3E%0A%3Coption%20value%3D%22WORMPEP_ID%22%3EWORMPEP_ID%3C/option%3E%0A%3Coption%20value%3D%22ZFIN_ID%22%3EZFIN_ID%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Identifier type
+  model_class: SelectToolParameter
+  multiple: false
+  name: type
+  optional: false
+  options:
+  - [AFFYMETRIX_3PRIME_IVT_ID, AFFYMETRIX_3PRIME_IVT_ID, false]
+  - [AFFYMETRIX_EXON_GENE_ID, AFFYMETRIX_EXON_GENE_ID, false]
+  - [AFFYMETRIX_SNP_ID, AFFYMETRIX_SNP_ID, false]
+  - [AGILENT_CHIP_ID, AGILENT_CHIP_ID, false]
+  - [AGILENT_ID, AGILENT_ID, false]
+  - [AGILENT_OLIGO_ID, AGILENT_OLIGO_ID, false]
+  - [ENSEMBL_GENE_ID, ENSEMBL_GENE_ID, false]
+  - [ENSEMBL_TRANSCRIPT_ID, ENSEMBL_TRANSCRIPT_ID, false]
+  - [ENTREZ_GENE_ID, ENTREZ_GENE_ID, false]
+  - [FLYBASE_GENE_ID, FLYBASE_GENE_ID, false]
+  - [FLYBASE_TRANSCRIPT_ID, FLYBASE_TRANSCRIPT_ID, false]
+  - [GENBANK_ACCESSION, GENBANK_ACCESSION, false]
+  - [GENPEPT_ACCESSION, GENPEPT_ACCESSION, false]
+  - [GENOMIC_GI_ACCESSION, GENOMIC_GI_ACCESSION, false]
+  - [PROTEIN_GI_ACCESSION, PROTEIN_GI_ACCESSION, false]
+  - [ILLUMINA_ID, ILLUMINA_ID, false]
+  - [IPI_ID, IPI_ID, false]
+  - [MGI_ID, MGI_ID, false]
+  - [GENE_SYMBOL, GENE_SYMBOL, true]
+  - [PFAM_ID, PFAM_ID, false]
+  - [PIR_ACCESSION, PIR_ACCESSION, false]
+  - [PIR_ID, PIR_ID, false]
+  - [PIR_NREF_ID, PIR_NREF_ID, false]
+  - [REFSEQ_GENOMIC, REFSEQ_GENOMIC, false]
+  - [REFSEQ_MRNA, REFSEQ_MRNA, false]
+  - [REFSEQ_PROTEIN, REFSEQ_PROTEIN, false]
+  - [REFSEQ_RNA, REFSEQ_RNA, false]
+  - [RGD_ID, RGD_ID, false]
+  - [SGD_ID, SGD_ID, false]
+  - [TAIR_ID, TAIR_ID, false]
+  - [UCSC_GENE_ID, UCSC_GENE_ID, false]
+  - [UNIGENE, UNIGENE, false]
+  - [UNIPROT_ACCESSION, UNIPROT_ACCESSION, false]
+  - [UNIPROT_ID, UNIPROT_ID, false]
+  - [UNIREF100_ID, UNIREF100_ID, false]
+  - [WORMBASE_GENE_ID, WORMBASE_GENE_ID, false]
+  - [WORMPEP_ID, WORMPEP_ID, false]
+  - [ZFIN_ID, ZFIN_ID, false]
+  type: select
+  value: GENE_SYMBOL
+link: /tool_runner?tool_id=hgv_david
+min_width: -1
+model_class: Tool
+name: DAVID
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '', model_class: ToolOutput,
+  name: out_file1}
+panel_section_id: hgv
+panel_section_name: Phenotype Association
+target: galaxy_main
+version: 1.0.0

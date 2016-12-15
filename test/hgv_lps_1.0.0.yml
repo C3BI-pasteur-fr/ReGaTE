@@ -1,0 +1,279 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/galaxy-dist/tools/phenotype_association/lps.xml
+description: LASSO-Patternsearch algorithm
+id: hgv_lps
+inputs:
+- argument: null
+  edam_formats: [format_3475]
+  extensions: [tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Dataset
+  model_class: DataToolParameter
+  multiple: false
+  name: input_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  data_ref: input_file
+  display: null
+  help: 'Column containing outcome labels: +1 or -1.'
+  hidden: false
+  is_dynamic: true
+  label: Label column
+  model_class: ColumnListParameter
+  multiple: false
+  name: label_column
+  numerical: true
+  optional: false
+  options: []
+  type: data_column
+- {area: false, argument: null, help: 'Target value of the regularization parameter,
+    expressed as a fraction of the calculated lambda_max.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22lambda_fac%22%20size%3D%2210%22%20value%3D%220.03%22%3E',
+  is_dynamic: false, label: Lambda_fac, max: null, min: null, model_class: FloatToolParameter,
+  name: lambda_fac, optional: false, size: null, type: float, value: '0.03'}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'false'
+  - inputs:
+    - {area: false, argument: null, help: Sample this fraction of the data set., hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22sample%22%20size%3D%2210%22%20value%3D%221.0%22%3E',
+      is_dynamic: false, label: Sample fraction, max: null, min: null, model_class: FloatToolParameter,
+      name: sample, optional: false, size: null, type: float, value: '1.0'}
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22verbosity%22%20last_selected_value%3D%220%22%3E%0A%3Coption%20value%3D%220%22%20selected%3ELittle%20output%3C/option%3E%0A%3Coption%20value%3D%221%22%3EMore%20output%3C/option%3E%0A%3Coption%20value%3D%222%22%3EStill%20more%20output%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Verbosity
+      model_class: SelectToolParameter
+      multiple: false
+      name: verbosity
+      optional: false
+      options:
+      - [Little output, '0', true]
+      - [More output, '1', false]
+      - [Still more output, '2', false]
+      type: select
+      value: '0'
+    - argument: null
+      display: null
+      help: Scales and shifts each column so that it has mean zero and variance 1.
+      hidden: false
+      html: '%3Cselect%20name%3D%22standardize%22%20last_selected_value%3D%220%22%3E%0A%3Coption%20value%3D%220%22%20selected%3EDon%27t%20standardize%3C/option%3E%0A%3Coption%20value%3D%221%22%3EStandardize%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Standardize
+      model_class: SelectToolParameter
+      multiple: false
+      name: standardize
+      optional: false
+      options:
+      - [Don't standardize, '0', true]
+      - [Standardize, '1', false]
+      type: select
+      value: '0'
+    - {area: false, argument: null, help: 'First value of lambda to be used in the
+        continuation scheme, expressed as a fraction of lambda_max.', hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22initialLambda%22%20size%3D%2210%22%20value%3D%220.8%22%3E',
+      is_dynamic: false, label: Initial lambda, max: null, min: null, model_class: FloatToolParameter,
+      name: initialLambda, optional: false, size: null, type: float, value: '0.8'}
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: '0'
+      - inputs:
+        - {area: false, argument: null, help: Number of lambda values to use in continuation
+            <em>prior</em> to target value lambda_fac., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22continuationSteps%22%20size%3D%2210%22%20value%3D%225%22%3E',
+          is_dynamic: false, label: Continuation steps, max: null, min: null, model_class: IntegerToolParameter,
+          name: continuationSteps, optional: false, size: null, type: integer, value: '5'}
+        - argument: null
+          display: null
+          help: Indicates whether accurate solutions are required for lambda values
+            other than the target value lambda_fac.
+          hidden: false
+          html: '%3Cselect%20name%3D%22accurateIntermediates%22%20last_selected_value%3D%220%22%3E%0A%3Coption%20value%3D%220%22%20selected%3EDon%27t%20need%20accurate%20intemediates%3C/option%3E%0A%3Coption%20value%3D%221%22%3ECalculate%20accurate%20intermediates%3C/option%3E%0A%3C/select%3E'
+          is_dynamic: false
+          label: Accurate intermediates
+          model_class: SelectToolParameter
+          multiple: false
+          name: accurateIntermediates
+          optional: false
+          options:
+          - [Don't need accurate intemediates, '0', true]
+          - [Calculate accurate intermediates, '1', false]
+          type: select
+          value: '0'
+        model_class: ConditionalWhen
+        value: '1'
+      model_class: Conditional
+      name: continuation
+      test_param:
+        argument: null
+        display: null
+        help: Use continuation strategy to start with a larger value of lambda, decreasing
+          it successively to lambda_fac.
+        hidden: false
+        html: '%3Cselect%20name%3D%22continuation%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%220%22%3E%0A%3Coption%20value%3D%220%22%20selected%3EDon%27t%20use%20continuation%3C/option%3E%0A%3Coption%20value%3D%221%22%3EUse%20continuation%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Continuation
+        model_class: SelectToolParameter
+        multiple: false
+        name: continuation
+        optional: false
+        options:
+        - [Don't use continuation, '0', true]
+        - [Use continuation, '1', false]
+        type: select
+        value: '0'
+      type: conditional
+    - {area: false, argument: null, help: 'Print a progress report every NI iterations,
+        where NI is the supplied value of this parameter.', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22printFreq%22%20size%3D%2210%22%20value%3D%221%22%3E',
+      is_dynamic: false, label: Print frequency, max: null, min: null, model_class: IntegerToolParameter,
+      name: printFreq, optional: false, size: null, type: integer, value: '1'}
+    - cases:
+      - inputs: []
+        model_class: ConditionalWhen
+        value: '0'
+      - inputs:
+        - {area: false, argument: null, help: Maximum size of free variable subvector
+            for Newton., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22newtonThreshold%22%20size%3D%2210%22%20value%3D%22500%22%3E',
+          is_dynamic: false, label: Newton threshold, max: null, min: null, model_class: IntegerToolParameter,
+          name: newtonThreshold, optional: false, size: null, type: integer, value: '500'}
+        model_class: ConditionalWhen
+        value: '1'
+      model_class: Conditional
+      name: newton
+      test_param:
+        argument: null
+        display: null
+        help: ''
+        hidden: false
+        html: '%3Cselect%20name%3D%22newton%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%220%22%3E%0A%3Coption%20value%3D%220%22%20selected%3ENo%20Newton%20steps%3C/option%3E%0A%3Coption%20value%3D%221%22%3ETry%20projected%20Newton%20steps%3C/option%3E%0A%3C/select%3E'
+        is_dynamic: false
+        label: Projected Newton steps
+        model_class: SelectToolParameter
+        multiple: false
+        name: newton
+        optional: false
+        options:
+        - [No Newton steps, '0', true]
+        - [Try projected Newton steps, '1', false]
+        type: select
+        value: '0'
+      type: conditional
+    - {area: false, argument: null, help: Fraction of terms to use in approximate
+        Hessian calculation., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22hessianSampleFraction%22%20size%3D%2210%22%20value%3D%221.0%22%3E',
+      is_dynamic: false, label: Hessian sample fraction, max: null, min: null, model_class: FloatToolParameter,
+      name: hessianSampleFraction, optional: false, size: null, type: float, value: '1.0'}
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22fullGradient%22%3E%0A%3Coption%20value%3D%220%22%3EUse%20randomly%20selected%20partial%20gradient%2C%20including%20current%20active%20components%20%28%26quot%3Bbiased%26quot%3B%29%3C/option%3E%0A%3Coption%20value%3D%221%22%3EUse%20full%20gradient%20vector%20at%20every%20step%3C/option%3E%0A%3Coption%20value%3D%222%22%3ERandomly%20selected%20partial%20gradient%2C%20without%20regard%20to%20current%20active%20set%20%28%26quot%3Bunbiased%26quot%3B%29%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Partial gradient vector selection
+      model_class: SelectToolParameter
+      multiple: false
+      name: fullGradient
+      optional: false
+      options:
+      - ['Use randomly selected partial gradient, including current active components
+          ("biased")', '0', false]
+      - [Use full gradient vector at every step, '1', false]
+      - ['Randomly selected partial gradient, without regard to current active set
+          ("unbiased")', '2', false]
+      type: select
+      value: '0'
+    - {area: false, argument: null, help: Fraction of inactive gradient vector to
+        evaluate., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22gradientFraction%22%20size%3D%2210%22%20value%3D%220.1%22%3E',
+      is_dynamic: false, label: Gradient fraction, max: null, min: null, model_class: FloatToolParameter,
+      name: gradientFraction, optional: false, size: null, type: float, value: '0.1'}
+    - {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22initialAlpha%22%20size%3D%2210%22%20value%3D%221.0%22%3E',
+      is_dynamic: false, label: Initial value of alpha, max: null, min: null, model_class: FloatToolParameter,
+      name: initialAlpha, optional: false, size: null, type: float, value: '1.0'}
+    - {area: false, argument: null, help: Factor by which to increase alpha after
+        descent not obtained., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22alphaIncrease%22%20size%3D%2210%22%20value%3D%222.0%22%3E',
+      is_dynamic: false, label: Alpha increase, max: null, min: null, model_class: FloatToolParameter,
+      name: alphaIncrease, optional: false, size: null, type: float, value: '2.0'}
+    - {area: false, argument: null, help: Factor by which to decrease alpha after
+        successful first-order step., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22alphaDecrease%22%20size%3D%2210%22%20value%3D%220.8%22%3E',
+      is_dynamic: false, label: Alpha decrease, max: null, min: null, model_class: FloatToolParameter,
+      name: alphaDecrease, optional: false, size: null, type: float, value: '0.8'}
+    - {area: false, argument: null, help: Maximum value of alpha; terminate with error
+        if we exceed this., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22alphaMax%22%20size%3D%2210%22%20value%3D%221e12%22%3E',
+      is_dynamic: false, label: Alpha max, max: null, min: null, model_class: FloatToolParameter,
+      name: alphaMax, optional: false, size: null, type: float, value: 1e12}
+    - {area: false, argument: null, help: Parameter defining the margin by which the
+        first-order step is required to decrease before being taken., hidden: false,
+      html: '%3Cinput%20type%3D%22text%22%20name%3D%22c1%22%20size%3D%2210%22%20value%3D%221e-3%22%3E',
+      is_dynamic: false, label: '', max: null, min: null, model_class: FloatToolParameter,
+      name: c1, optional: false, size: null, type: float, value: 1e-3}
+    - {area: false, argument: null, help: Terminate with error if we exceed this.,
+      hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxIter%22%20size%3D%2210%22%20value%3D%2210000%22%3E',
+      is_dynamic: false, label: Maximum number of iterations, max: null, min: null,
+      model_class: IntegerToolParameter, name: maxIter, optional: false, size: null,
+      type: integer, value: '10000'}
+    - {area: false, argument: null, help: Convergence tolerance for target value of
+        lambda., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22stopTol%22%20size%3D%2210%22%20value%3D%221e-6%22%3E',
+      is_dynamic: false, label: Stop tolerance, max: null, min: null, model_class: FloatToolParameter,
+      name: stopTol, optional: false, size: null, type: float, value: 1e-6}
+    - {area: false, argument: null, help: Convergence tolerance for intermediate values
+        of lambda., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22intermediateTol%22%20size%3D%2210%22%20value%3D%221e-4%22%3E',
+      is_dynamic: false, label: Intermediate tolerance, max: null, min: null, model_class: FloatToolParameter,
+      name: intermediateTol, optional: false, size: null, type: float, value: 1e-4}
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22finalOnly%22%20last_selected_value%3D%220%22%3E%0A%3Coption%20value%3D%220%22%20selected%3EReturn%20information%20for%20all%20intermediate%20values%3C/option%3E%0A%3Coption%20value%3D%221%22%3EJust%20return%20information%20at%20the%20last%20lambda%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Final only
+      model_class: SelectToolParameter
+      multiple: false
+      name: finalOnly
+      optional: false
+      options:
+      - [Return information for all intermediate values, '0', true]
+      - [Just return information at the last lambda, '1', false]
+      type: select
+      value: '0'
+    model_class: ConditionalWhen
+    value: 'true'
+  model_class: Conditional
+  name: advanced
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22options%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22false%22%3E%0A%3Coption%20value%3D%22false%22%20selected%3EHide%20advanced%20options%3C/option%3E%0A%3Coption%20value%3D%22true%22%3EShow%20advanced%20options%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Advanced Options
+    model_class: SelectToolParameter
+    multiple: false
+    name: options
+    optional: false
+    options:
+    - [Hide advanced options, 'false', true]
+    - [Show advanced options, 'true', false]
+    type: select
+    value: 'false'
+  type: conditional
+link: /tool_runner?tool_id=hgv_lps
+min_width: -1
+model_class: Tool
+name: LPS
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: '${tool.name}
+    on ${on_string}: results', model_class: ToolOutput, name: output_file}
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} on ${on_string}:
+    log', model_class: ToolOutput, name: log_file}
+panel_section_id: hgv
+panel_section_name: Phenotype Association
+target: galaxy_main
+version: 1.0.0

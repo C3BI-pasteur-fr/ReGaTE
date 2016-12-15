@@ -1,0 +1,83 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/findpeaks/93512aec4632/findpeaks/findPeaks_wrapper.xml
+description: a Peak Finder/Analysis application for the ChIP-Seq
+id: toolshed.pasteur.fr/repos/fmareuil/findpeaks/peakcalling_findpeaks/4.0.9.2
+inputs:
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22input_type_selector%22%20last_selected_value%3D%22eland%22%3E%0A%3Coption%20value%3D%22eland%22%20selected%3EEland%3C/option%3E%0A%3Coption%20value%3D%22bed%22%3EBED%3C/option%3E%0A%3Coption%20value%3D%22bowtie%22%3EBowtie%3C/option%3E%0A%3Coption%20value%3D%22elandext%22%3EEland%20Export%3C/option%3E%0A%3Coption%20value%3D%22gff%22%3EGFF%3C/option%3E%0A%3Coption%20value%3D%22mapview%22%3EMapView%20%28MAQ%29%3C/option%3E%0A%3Coption%20value%3D%22maq%22%3EMap%20%28MAQ%29%3C/option%3E%0A%3Coption%20value%3D%22sam%22%3ESAM/BAM%3C/option%3E%0A%3Coption%20value%3D%22sam-filter%22%3ESAM/BAM%2C%20skips%20reads%20that%20contain%20indels%20%3C/option%3E%0A%3Coption%20value%3D%22sam-ignore-deletion%22%3ESAM/BAM%20ignores%20the%20indels%20in%20the%20reads%20%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Alignment Format
+  model_class: SelectToolParameter
+  multiple: false
+  name: input_type_selector
+  optional: false
+  options:
+  - [Eland, eland, true]
+  - [BED, bed, false]
+  - [Bowtie, bowtie, false]
+  - [Eland Export, elandext, false]
+  - [GFF, gff, false]
+  - [MapView (MAQ), mapview, false]
+  - [Map (MAQ), maq, false]
+  - [SAM/BAM, sam, false]
+  - ['SAM/BAM, skips reads that contain indels ', sam-filter, false]
+  - ['SAM/BAM ignores the indels in the reads ', sam-ignore-deletion, false]
+  type: select
+  value: eland
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22median_fragment_length%22%20size%3D%2210%22%20value%3D%22174%22%3E',
+  is_dynamic: false, label: Median Fragment Length, max: null, min: null, model_class: IntegerToolParameter,
+  name: median_fragment_length, optional: false, size: null, type: integer, value: '174'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22low%22%20size%3D%2210%22%20value%3D%22100%22%3E',
+  is_dynamic: false, label: Minimal Fragment Length, max: null, min: null, model_class: IntegerToolParameter,
+  name: low, optional: false, size: null, type: integer, value: '100'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22high%22%20size%3D%2210%22%20value%3D%22300%22%3E',
+  is_dynamic: false, label: Maximal Fragment Length, max: null, min: null, model_class: IntegerToolParameter,
+  name: high, optional: false, size: null, type: integer, value: '300'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minimumH%22%20size%3D%2210%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: Minimal Peak Height, max: null, min: null, model_class: IntegerToolParameter,
+  name: minimumH, optional: false, size: null, type: integer, value: '0'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22subpeaks%22%20size%3D%2210%22%20value%3D%22.2%22%3E',
+  is_dynamic: false, label: Value to perform peak separation, max: null, min: null,
+  model_class: FloatToolParameter, name: subpeaks, optional: false, size: null, type: float,
+  value: '.2'}
+- argument: null
+  edam_formats: [format_3003, null, format_2305, format_3475, null, format_2305, null,
+    null, format_2573, format_2572, format_2330, null, format_3475]
+  extensions: [bed, bowtie, gff, eland, elandext, gff, mapview, maq, sam, bam, txt,
+    bwtmap, elandmulti]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: ChIP-Seq Tag File
+  model_class: DataToolParameter
+  multiple: false
+  name: inputfile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22name%22%20size%3D%2210%22%20value%3D%22chip%22%3E',
+  is_dynamic: false, label: type of experiment, model_class: TextToolParameter, name: name,
+  optional: false, size: null, type: text, value: chip}
+- {argument: null, help: '', hidden: true, html: '%3Cinput%20type%3D%22hidden%22%20name%3D%22outputPath%22%20value%3D%22PATH/TO/galaxy-dist/database/files/000%22%3E',
+  is_dynamic: false, label: 'Output path (Analysis folder, and NOT your Home directory)',
+  model_class: HiddenToolParameter, name: outputPath, optional: false, type: hidden,
+  value: PATH/TO/galaxy-dist/database/files/000}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Ffindpeaks%2Fpeakcalling_findpeaks%2F4.0.9.2
+min_width: -1
+model_class: Tool
+name: FindPeaks
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '${tool.name} for
+    ${name} (peaks: .peaks)', model_class: ToolOutput, name: peaks}
+- {edam_format: null, format: log, hidden: false, label: '${tool.name} for ${name}
+    (report)', model_class: ToolOutput, name: log}
+- {edam_format: format_2330, format: gzip, hidden: false, label: '${tool.name} for
+    ${name} (wig)', model_class: ToolOutput, name: wig}
+panel_section_id: nebula_tools
+panel_section_name: ChIP-SEQ Analysis Nebula Tools, Institut Curie
+target: galaxy_main
+version: 4.0.9.2

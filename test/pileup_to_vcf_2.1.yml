@@ -1,0 +1,181 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.g2.bx.psu.edu/repos/jjohnson/pileup_to_vcf/e77ab15bbce9/pileup_to_vcf/pileup_to_vcf.xml
+description: Converts a pileup to VCF with filtering
+id: toolshed.g2.bx.psu.edu/repos/jjohnson/pileup_to_vcf/pileup_to_vcf/2.1
+inputs:
+- argument: null
+  edam_formats: [format_3015, format_3475]
+  extensions: [pileup, tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Source File
+  model_class: DataToolParameter
+  multiple: false
+  name: input_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  - inputs:
+    - argument: null
+      data_ref: input_file
+      display: null
+      help: ''
+      hidden: false
+      is_dynamic: true
+      label: Chromosome Column
+      model_class: ColumnListParameter
+      multiple: false
+      name: chrom_col
+      numerical: false
+      optional: false
+      options: []
+      type: data_column
+    - argument: null
+      data_ref: input_file
+      display: null
+      help: ''
+      hidden: false
+      is_dynamic: true
+      label: Position Column
+      model_class: ColumnListParameter
+      multiple: false
+      name: pos_col
+      numerical: false
+      optional: false
+      options: []
+      type: data_column
+    - argument: null
+      data_ref: input_file
+      display: null
+      help: ''
+      hidden: false
+      is_dynamic: true
+      label: Reference Base Column
+      model_class: ColumnListParameter
+      multiple: false
+      name: ref_col
+      numerical: false
+      optional: false
+      options: []
+      type: data_column
+    - argument: null
+      data_ref: input_file
+      display: null
+      help: ''
+      hidden: false
+      is_dynamic: true
+      label: Depth Column
+      model_class: ColumnListParameter
+      multiple: false
+      name: cvrg_col
+      numerical: false
+      optional: false
+      options: []
+      type: data_column
+    - argument: null
+      data_ref: input_file
+      display: null
+      help: ''
+      hidden: false
+      is_dynamic: true
+      label: Base Call Column
+      model_class: ColumnListParameter
+      multiple: false
+      name: base_call_col
+      numerical: false
+      optional: false
+      options: []
+      type: data_column
+    - argument: null
+      data_ref: input_file
+      display: null
+      help: ''
+      hidden: false
+      is_dynamic: true
+      label: Base Quality Column
+      model_class: ColumnListParameter
+      multiple: false
+      name: base_qual_col
+      numerical: false
+      optional: false
+      options: []
+      type: data_column
+    model_class: ConditionalWhen
+    value: 'yes'
+  model_class: Conditional
+  name: cols
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22select_order%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22no%22%20selected%3EUse%20the%20default%20pileup%20columns%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3ESelect%20the%20column%20position%20that%20represents%20each%20pileup%20column%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Set column positions for non-standard pileup
+    model_class: SelectToolParameter
+    multiple: false
+    name: select_order
+    optional: false
+    options:
+    - [Use the default pileup columns, 'no', true]
+    - [Select the column position that represents each pileup column, 'yes', false]
+    type: select
+    value: 'no'
+  type: conditional
+- {area: false, argument: null, help: Don't consider a read if the base call quality
+    is below this threshold, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_base_qual%22%20size%3D%2210%22%20value%3D%2220%22%3E',
+  is_dynamic: false, label: Minimum Base Quality, max: null, min: null, model_class: IntegerToolParameter,
+  name: min_base_qual, optional: true, size: null, type: integer, value: '20'}
+- {area: false, argument: null, help: Any position below the threshold will be omitted
+    from the resulting VCF, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_cvrg%22%20size%3D%2210%22%20value%3D%225%22%3E',
+  is_dynamic: false, label: Minimum Coverage Depth, max: null, min: null, model_class: IntegerToolParameter,
+  name: min_cvrg, optional: true, size: null, type: integer, value: '5'}
+- {area: false, argument: null, help: If an allele does not meet the minimum frequency
+    it will be omitted from the resulting VCF., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22min_var_pct%22%20size%3D%2210%22%20value%3D%220.5%22%3E',
+  is_dynamic: false, label: Minimum Frequency of a Specific Allele, max: null, min: null,
+  model_class: FloatToolParameter, name: min_var_pct, optional: false, size: null,
+  type: float, value: '0.5'}
+- {argument: null, falsevalue: '', help: 'Multiple alleles may be output in the VCF
+    if the allowable frequency is below 0.5, otherwise only one will be reported',
+  hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22allow_multiples%22%20name%3D%22allow_multiples%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22allow_multiples%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'Allow Multiple Alleles for a Position?', model_class: BooleanToolParameter,
+  name: allow_multiples, optional: false, truevalue: -m, type: boolean, value: false}
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22snps_only%22%20name%3D%22snps_only%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22snps_only%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: 'Only report SNPs, not indels', model_class: BooleanToolParameter,
+  name: snps_only, optional: false, truevalue: -s, type: boolean, value: false}
+- argument: null
+  display: null
+  help: 'The reported read voverage depth: DP, and the calculation of specific allele
+    frequency (SAF) of variants'
+  hidden: false
+  html: '%3Cselect%20name%3D%22depth_as%22%20last_selected_value%3D%22ref%22%3E%0A%3Coption%20value%3D%22source%22%3ERead%20coverage%20reported%20in%20pileup%3C/option%3E%0A%3Coption%20value%3D%22ref%22%20selected%3EReads%20at%20this%20position%20that%20have%20a%20base%20call%3C/option%3E%0A%3Coption%20value%3D%22qual%22%3EReads%20at%20this%20position%20taht%20pass%20the%20base%20call%20quality%20threshold%3C/option%3E%0A%3Coption%20value%3D%22all%22%3EAll%20reads%20and%20indels%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Report DP and SAF with read coverage of
+  model_class: SelectToolParameter
+  multiple: false
+  name: depth_as
+  optional: false
+  options:
+  - [Read coverage reported in pileup, source, false]
+  - [Reads at this position that have a base call, ref, true]
+  - [Reads at this position taht pass the base call quality threshold, qual, false]
+  - [All reads and indels, all, false]
+  type: select
+  value: ref
+link: /tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Fjjohnson%2Fpileup_to_vcf%2Fpileup_to_vcf%2F2.1
+min_width: -1
+model_class: Tool
+name: Pileup to VCF
+outputs:
+- {edam_format: format_3016, format: vcf, hidden: false, label: '', model_class: ToolOutput,
+  name: output_file}
+panel_section_id: samtools
+panel_section_name: 'NGS: SAM Tools'
+target: galaxy_main
+version: '2.1'

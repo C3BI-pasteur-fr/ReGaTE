@@ -1,0 +1,53 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/vcfutils/82cee648867f/vcfutils/vcfutils.xml
+description: Program from SAMtools/BCFtools package (only vcf2fq command is implemented)
+id: toolshed.pasteur.fr/repos/odoppelt/vcfutils/vcfutils/0.1.18
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3016, format_3020]
+      extensions: [vcf, bcf]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: vcf file
+      model_class: DataToolParameter
+      multiple: false
+      name: input
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: vcf2fq
+  model_class: Conditional
+  name: command_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22command%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22vcf2fq%22%3E%20vcf2fq%20%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: command for vcfutils
+    model_class: SelectToolParameter
+    multiple: false
+    name: command
+    optional: false
+    options:
+    - [' vcf2fq ', vcf2fq, false]
+    type: select
+    value: vcf2fq
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Fvcfutils%2Fvcfutils%2F0.1.18
+min_width: -1
+model_class: Tool
+name: vcfutils
+outputs:
+- {edam_format: format_1930, format: fastq, hidden: false, label: '${tool.name} ${on_string}',
+  model_class: ToolOutput, name: output}
+panel_section_id: ngs_vcf_tools
+panel_section_name: 'NGS: VCF Tools'
+target: galaxy_main
+version: 0.1.18

@@ -1,0 +1,88 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/odoppelt/fqtools/4801a84ea16e/fqtools/fqduplicate.xml
+description: Detect duplicate reads. Outputs a list of read names corresponding to
+  reads already seen in the dataset with a better quality sum score (duplicates)
+id: toolshed.pasteur.fr/repos/odoppelt/fqtools/fqduplicate/1.0
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_1931, format_1932]
+      extensions: [fastqillumina, fastqsanger]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Illumina Single-Read fastq dataset from your history
+      model_class: DataToolParameter
+      multiple: false
+      name: input
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: single
+  - inputs:
+    - argument: null
+      edam_formats: [format_1931, format_1932]
+      extensions: [fastqillumina, fastqsanger]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Illumina paired-end Read 1 Fastq dataset from your history
+      model_class: DataToolParameter
+      multiple: false
+      name: input1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    - argument: null
+      edam_formats: [format_1931, format_1932]
+      extensions: [fastqillumina, fastqsanger]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Illumina paired-end Read 2 Fastq dataset from your history
+      model_class: DataToolParameter
+      multiple: false
+      name: input2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: paired
+  model_class: Conditional
+  name: read_type
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22read_type_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22single%22%3E%0A%3Coption%20value%3D%22single%22%20selected%3ESingle%20Read%3C/option%3E%0A%3Coption%20value%3D%22paired%22%3EPaired%20End%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Type of input data
+    model_class: SelectToolParameter
+    multiple: false
+    name: read_type_selector
+    optional: false
+    options:
+    - [Single Read, single, true]
+    - [Paired End, paired, false]
+    type: select
+    value: single
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fodoppelt%2Ffqtools%2Ffqduplicate%2F1.0
+min_width: -1
+model_class: Tool
+name: fqduplicate
+outputs:
+- {edam_format: format_3475, format: lst, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+panel_section_id: NGS_QC
+panel_section_name: 'NGS: QC and manipulation'
+target: galaxy_main
+version: '1.0'

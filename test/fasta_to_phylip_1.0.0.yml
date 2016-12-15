@@ -1,0 +1,46 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/cf3e04ffae51/oneclick_phylogeny/fasta2phylip/fasta_to_phylip.xml
+description: file conversion
+id: toolshed.pasteur.fr/repos/fmareuil/oneclick_phylogeny/fasta_to_phylip/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: fasta or phylip format
+  hidden: false
+  is_dynamic: false
+  label: Source file
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: 'Sequencial: sequences are one one line'
+  hidden: false
+  html: '%3Cselect%20name%3D%22format%22%3E%0A%3Coption%20value%3D%22--interleave%22%3EInterleave%3C/option%3E%0A%3Coption%20value%3D%22--sequencial%22%3ESequencial%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: format
+  model_class: SelectToolParameter
+  multiple: false
+  name: format
+  optional: false
+  options:
+  - [Interleave, --interleave, false]
+  - [Sequencial, --sequencial, false]
+  type: select
+  value: --interleave
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Foneclick_phylogeny%2Ffasta_to_phylip%2F1.0.0
+min_width: -1
+model_class: Tool
+name: Fasta to Phylip
+outputs:
+- {edam_format: format_2330, format: phylip, hidden: false, label: '${input.name}',
+  model_class: ToolOutput, name: output}
+panel_section_id: oneclick_phylogeny
+panel_section_name: Oneclick Phylogeny
+target: galaxy_main
+version: 1.0.0

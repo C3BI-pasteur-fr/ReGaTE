@@ -1,0 +1,83 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/annovar_summarize/5ef2b442831e/annovar_summarize/summarize_annovar.xml
+description: annotate genetic variants detected from human genome
+id: toolshed.pasteur.fr/repos/fmareuil/annovar_summarize/annovar_summarize/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_2330, format_3475]
+  extensions: [txt, tabular]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Source Data
+  model_class: DataToolParameter
+  multiple: false
+  name: input
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22ver1000g%22%20last_selected_value%3D%221000g2012feb%22%3E%0A%3Coption%20value%3D%221000g2012feb%22%20selected%3E1000g2012feb%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Version 1000 Genomes
+  model_class: SelectToolParameter
+  multiple: false
+  name: ver1000g
+  optional: false
+  options:
+  - [1000g2012feb, 1000g2012feb, true]
+  type: select
+  value: 1000g2012feb
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22verdbsnp%22%20last_selected_value%3D%22135%22%3E%0A%3Coption%20value%3D%22132%22%3E132%3C/option%3E%0A%3Coption%20value%3D%22135%22%20selected%3E135%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Version Db SNP
+  model_class: SelectToolParameter
+  multiple: false
+  name: verdbsnp
+  optional: false
+  options:
+  - ['132', '132', false]
+  - ['135', '135', true]
+  type: select
+  value: '135'
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22buildver%22%20last_selected_value%3D%22hg19%22%3E%0A%3Coption%20value%3D%22hg18%22%3Ehg18%3C/option%3E%0A%3Coption%20value%3D%22hg19%22%20selected%3Ehg19%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Version Genome
+  model_class: SelectToolParameter
+  multiple: false
+  name: buildver
+  optional: false
+  options:
+  - [hg18, hg18, false]
+  - [hg19, hg19, true]
+  type: select
+  value: hg19
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fannovar_summarize%2Fannovar_summarize%2F1.0.0
+min_width: -1
+model_class: Tool
+name: Annovar
+outputs:
+- {edam_format: format_3475, format: tabular, hidden: false, label: variant_function,
+  model_class: ToolOutput, name: output1}
+- {edam_format: format_3475, format: tabular, hidden: false, label: exonic_variant_function,
+  model_class: ToolOutput, name: output2}
+- {edam_format: format_3475, format: tabular, hidden: false, label: genome_summary,
+  model_class: ToolOutput, name: output3}
+- {edam_format: format_3475, format: tabular, hidden: false, label: exome_summary,
+  model_class: ToolOutput, name: output4}
+panel_section_id: ngs:_snp/indel_annotation
+panel_section_name: 'NGS: SNP/Indel Annotation'
+target: galaxy_main
+version: 1.0.0

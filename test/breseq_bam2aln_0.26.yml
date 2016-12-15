@@ -1,0 +1,110 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/breseq/12d6e3745b2e/breseq/breseq_bam2aln.xml
+description: ''
+id: toolshed.pasteur.fr/repos/mvalade/breseq/breseq_bam2aln/0.26
+inputs:
+- argument: null
+  edam_formats: [format_2572]
+  extensions: [bam]
+  help: BAM database file of read alignments
+  hidden: false
+  is_dynamic: false
+  label: BAM database file
+  model_class: DataToolParameter
+  multiple: false
+  name: bam_path
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_1929]
+  extensions: [fasta]
+  help: FASTA file of reference sequences
+  hidden: false
+  is_dynamic: false
+  label: FASTA file
+  model_class: DataToolParameter
+  multiple: false
+  name: fasta_path
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- default: 1
+  help: null
+  inputs:
+  - {area: false, argument: null, help: 'Regions to create alignments for. Must be
+      provided as sequence regions in the format ACCESSION:START-END, where ACCESSION
+      is a valid identifier for one of the sequences in the FASTA file, and START
+      and END are 1-indexed coordinates of the beginning and end positions. Any read
+      overlapping these positions will be shown. A separate output file is created
+      for each region. Regions may be provided at the end of the command line as unnamed
+      arguments', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22accession%22%20size%3D%2210%22%20value%3D%22%22%3E',
+    is_dynamic: false, label: ACCESSION is a valid identifier for one of the sequences
+      in the FASTA file, model_class: TextToolParameter, name: accession, optional: false,
+    size: null, type: text, value: null}
+  - {area: false, argument: null, help: 'Regions to create alignments for. Must be
+      provided as sequence regions in the format ACCESSION:START-END, where ACCESSION
+      is a valid identifier for one of the sequences in the FASTA file, and START
+      and END are 1-indexed coordinates of the beginning and end positions. Any read
+      overlapping these positions will be shown. A separate output file is created
+      for each region. Regions may be provided at the end of the command line as unnamed
+      arguments', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22start%22%20size%3D%2210%22%20value%3D%221%22%3E',
+    is_dynamic: false, label: START and END are 1-indexed coordinates of the beginning
+      and end positions., max: null, min: 1, model_class: IntegerToolParameter, name: start,
+    optional: false, size: null, type: integer, value: '1'}
+  - {area: false, argument: null, help: 'Regions to create alignments for. Must be
+      provided as sequence regions in the format ACCESSION:START-END, where ACCESSION
+      is a valid identifier for one of the sequences in the FASTA file, and START
+      and END are 1-indexed coordinates of the beginning and end positions. Any read
+      overlapping these positions will be shown. A separate output file is created
+      for each region. Regions may be provided at the end of the command line as unnamed
+      arguments', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22end%22%20size%3D%2210%22%20value%3D%221%22%3E',
+    is_dynamic: false, label: START and END are 1-indexed coordinates of the beginning
+      and end positions., max: null, min: 1, model_class: IntegerToolParameter, name: end,
+    optional: false, size: null, type: integer, value: '1'}
+  max: __Infinity__
+  min: 1
+  model_class: Repeat
+  name: nb_regions
+  title: nb_regions
+  type: repeat
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22format%22%20last_selected_value%3D%22HTML%22%3E%0A%3Coption%20value%3D%22HTML%22%20selected%3EHTML%3C/option%3E%0A%3Coption%20value%3D%22TXT%22%3ETXT%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Output's file format
+  model_class: SelectToolParameter
+  multiple: false
+  name: format
+  optional: false
+  options:
+  - [HTML, HTML, true]
+  - [TXT, TXT, false]
+  type: select
+  value: HTML
+- {area: false, argument: null, help: Maximum number of reads to show in alignment
+    (DEFAULT=200), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22maxreads%22%20size%3D%2210%22%20value%3D%22200%22%3E',
+  is_dynamic: false, label: Maximum number of reads, max: null, min: 0, model_class: IntegerToolParameter,
+  name: maxreads, optional: false, size: null, type: integer, value: '200'}
+- {area: false, argument: null, help: Quality score cutoff below which reads are highlighted
+    as yellow (DEFAULT=0), hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22qualityscorecutoff%22%20size%3D%2210%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: Quality score cutoff, max: null, min: 0.0, model_class: FloatToolParameter,
+  name: qualityscorecutoff, optional: false, size: null, type: float, value: '0'}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Fbreseq%2Fbreseq_bam2aln%2F0.26
+min_width: -1
+model_class: Tool
+name: Breseq BAM2ALN - v0.26
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '', model_class: ToolOutput,
+  name: report}
+- {edam_format: format_2330, format: txt, hidden: false, label: '', model_class: ToolOutput,
+  name: report1}
+panel_section_id: ngs:_snp/indel_annotation
+panel_section_name: 'NGS: SNP/Indel Annotation'
+target: galaxy_main
+version: '0.26'

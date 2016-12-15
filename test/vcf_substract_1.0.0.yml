@@ -1,0 +1,57 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/vcf_substract/4899ed1f4e80/vcf_substract/substract.xml
+description: ': substract one or more vcf file(s) from a first one'
+id: toolshed.pasteur.fr/repos/fmareuil/vcf_substract/vcf_substract/1.0.0
+inputs:
+- argument: null
+  edam_formats: [format_3016]
+  extensions: [vcf]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: Initial VCF file
+  model_class: DataToolParameter
+  multiple: false
+  name: input1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- default: 1
+  help: null
+  inputs:
+  - argument: null
+    edam_formats: [format_3016]
+    extensions: [vcf]
+    help: ''
+    hidden: false
+    is_dynamic: false
+    label: Select a vcf dataset
+    model_class: DataToolParameter
+    multiple: false
+    name: vcf_to_extract
+    optional: false
+    options:
+      hda: []
+      hdca: []
+    type: data
+  max: __Infinity__
+  min: 1
+  model_class: Repeat
+  name: vcf_datasets
+  title: VCF datasets to substract from the initial one
+  type: repeat
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22Outputname%22%20size%3D%2210%22%20value%3D%22%22%3E',
+  is_dynamic: false, label: Output name, model_class: TextToolParameter, name: Outputname,
+  optional: false, size: '10', type: text, value: null}
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fvcf_substract%2Fvcf_substract%2F1.0.0
+min_width: -1
+model_class: Tool
+name: VCF substraction
+outputs:
+- {edam_format: format_3016, format: vcf, hidden: false, label: '${Outputname.value}',
+  model_class: ToolOutput, name: output}
+panel_section_id: ngs_vcf_tools
+panel_section_name: 'NGS: VCF Tools'
+target: galaxy_main
+version: 1.0.0

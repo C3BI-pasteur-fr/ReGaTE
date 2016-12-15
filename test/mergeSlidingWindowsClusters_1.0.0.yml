@@ -1,0 +1,281 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/urgi_tools/9cc0e8345ec3/urgi_tools/repet_pipe/SMART/galaxy/mergeSlidingWindowsClusters.xml
+description: Merges two files containing the results of a sliding windows clustering.
+id: toolshed.pasteur.fr/repos/fmareuil/urgi_tools/mergeSlidingWindowsClusters/1.0.0
+inputs:
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3003]
+      extensions: [bed]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 1
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: bed
+  - inputs:
+    - argument: null
+      edam_formats: [format_2305]
+      extensions: [gff]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 1
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff
+  - inputs:
+    - argument: null
+      edam_formats: [null]
+      extensions: [gff2]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 1
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff2
+  - inputs:
+    - argument: null
+      edam_formats: [format_1975]
+      extensions: [gff3]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 1
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff3
+  - inputs:
+    - argument: null
+      edam_formats: [format_2573]
+      extensions: [sam]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 1
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: sam
+  - inputs:
+    - argument: null
+      edam_formats: [format_2306]
+      extensions: [gtf]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 1
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName1
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gtf
+  model_class: Conditional
+  name: formatType
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22FormatInputFileName1%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22bed%22%3Ebed%3C/option%3E%0A%3Coption%20value%3D%22gff%22%3Egff%3C/option%3E%0A%3Coption%20value%3D%22gff2%22%3Egff2%3C/option%3E%0A%3Coption%20value%3D%22gff3%22%3Egff3%3C/option%3E%0A%3Coption%20value%3D%22sam%22%3Esam%3C/option%3E%0A%3Coption%20value%3D%22gtf%22%3Egtf%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Input File Format 1
+    model_class: SelectToolParameter
+    multiple: false
+    name: FormatInputFileName1
+    optional: false
+    options:
+    - [bed, bed, false]
+    - [gff, gff, false]
+    - [gff2, gff2, false]
+    - [gff3, gff3, false]
+    - [sam, sam, false]
+    - [gtf, gtf, false]
+    type: select
+    value: bed
+  type: conditional
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3003]
+      extensions: [bed]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 2
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: bed
+  - inputs:
+    - argument: null
+      edam_formats: [format_2305]
+      extensions: [gff]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 2
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff
+  - inputs:
+    - argument: null
+      edam_formats: [null]
+      extensions: [gff2]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 2
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff2
+  - inputs:
+    - argument: null
+      edam_formats: [format_1975]
+      extensions: [gff3]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 2
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gff3
+  - inputs:
+    - argument: null
+      edam_formats: [format_2573]
+      extensions: [sam]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 2
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: sam
+  - inputs:
+    - argument: null
+      edam_formats: [format_2306]
+      extensions: [gtf]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Input File 2
+      model_class: DataToolParameter
+      multiple: false
+      name: inputFileName2
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: gtf
+  model_class: Conditional
+  name: formatType2
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22FormatInputFileName2%22%20refresh_on_change%3D%22true%22%3E%0A%3Coption%20value%3D%22bed%22%3Ebed%3C/option%3E%0A%3Coption%20value%3D%22gff%22%3Egff%3C/option%3E%0A%3Coption%20value%3D%22gff2%22%3Egff2%3C/option%3E%0A%3Coption%20value%3D%22gff3%22%3Egff3%3C/option%3E%0A%3Coption%20value%3D%22sam%22%3Esam%3C/option%3E%0A%3Coption%20value%3D%22gtf%22%3Egtf%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Input File Format 2
+    model_class: SelectToolParameter
+    multiple: false
+    name: FormatInputFileName2
+    optional: false
+    options:
+    - [bed, bed, false]
+    - [gff, gff, false]
+    - [gff2, gff2, false]
+    - [gff3, gff3, false]
+    - [sam, sam, false]
+    - [gtf, gtf, false]
+    type: select
+    value: bed
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Furgi_tools%2FmergeSlidingWindowsClusters%2F1.0.0
+min_width: -1
+model_class: Tool
+name: merge sliding windows clusters
+outputs:
+- {edam_format: format_1975, format: gff3, hidden: false, label: '', model_class: ToolOutput,
+  name: outputFileGff}
+panel_section_id: urgi
+panel_section_name: RNA-Seq URGI Tools (beta)
+target: galaxy_main
+version: 1.0.0

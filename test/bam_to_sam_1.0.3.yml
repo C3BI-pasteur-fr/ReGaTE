@@ -1,0 +1,33 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.g2.bx.psu.edu/repos/devteam/bam_to_sam/dc20f447c0e2/bam_to_sam/bam_to_sam.xml
+description: converts BAM format to SAM format
+id: toolshed.g2.bx.psu.edu/repos/devteam/bam_to_sam/bam_to_sam/1.0.3
+inputs:
+- argument: null
+  edam_formats: [format_2572]
+  extensions: [bam]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: BAM File to Convert
+  model_class: DataToolParameter
+  multiple: false
+  name: input1
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {argument: null, falsevalue: '', help: '', hidden: false, html: '%3Cinput%20type%3D%22checkbox%22%20id%3D%22header%22%20name%3D%22header%22%20value%3D%22true%22%3E%3Cinput%20type%3D%22hidden%22%20name%3D%22header%22%20value%3D%22true%22%3E',
+  is_dynamic: false, label: Include header in output, model_class: BooleanToolParameter,
+  name: header, optional: false, truevalue: --header, type: boolean, value: false}
+link: /tool_runner?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Fdevteam%2Fbam_to_sam%2Fbam_to_sam%2F1.0.3
+min_width: -1
+model_class: Tool
+name: BAM-to-SAM
+outputs:
+- {edam_format: format_2573, format: sam, hidden: false, label: '${tool.name} on ${on_string}:
+    converted SAM', model_class: ToolOutput, name: output1}
+panel_section_id: samtools
+panel_section_name: 'NGS: SAM Tools'
+target: galaxy_main
+version: 1.0.3

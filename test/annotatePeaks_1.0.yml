@@ -1,0 +1,217 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/annotatepeaks/c512965ffab6/annotatepeaks/annotatePeaks_wrapper.xml
+description: ''
+id: toolshed.pasteur.fr/repos/fmareuil/annotatepeaks/annotatePeaks/1.0
+inputs:
+- argument: null
+  edam_formats: [format_3003]
+  extensions: [bed]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: ChIP peaks
+  model_class: DataToolParameter
+  multiple: false
+  name: inputfile
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- {area: false, argument: null, help: Set to 0 if you don't want to filter your .BED
+    file with peaks, hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minScore%22%20size%3D%2210%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: MinimalScore, max: null, min: null, model_class: FloatToolParameter,
+  name: minScore, optional: false, size: null, type: float, value: '0'}
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_3003]
+      extensions: [bed]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: Control peaks
+      model_class: DataToolParameter
+      multiple: false
+      name: controlfile
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: use_control
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22use_control_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Use control data
+    model_class: SelectToolParameter
+    multiple: false
+    name: use_control_selector
+    optional: false
+    options:
+    - ['No', 'no', true]
+    - ['Yes', 'yes', false]
+    type: select
+    value: 'no'
+  type: conditional
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22left%22%20size%3D%2210%22%20value%3D%22-2000%22%3E',
+  is_dynamic: false, label: Define Promoter is a region up to X bp upstream gene TSS,
+  max: null, min: null, model_class: IntegerToolParameter, name: left, optional: false,
+  size: null, type: integer, value: '-2000'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22right%22%20size%3D%2210%22%20value%3D%222000%22%3E',
+  is_dynamic: false, label: Define Immediate Downstream is a region up to X bp downstream
+    gene TSS, max: null, min: null, model_class: IntegerToolParameter, name: right,
+  optional: false, size: null, type: integer, value: '2000'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22EnhLeft%22%20size%3D%2210%22%20value%3D%22-30000%22%3E',
+  is_dynamic: false, label: Define Enhancer is a region up to X bp upstream gene TSS,
+  max: null, min: null, model_class: IntegerToolParameter, name: EnhLeft, optional: false,
+  size: null, type: integer, value: '-30000'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22DownGene%22%20size%3D%2210%22%20value%3D%225000%22%3E',
+  is_dynamic: false, label: Define Gene Downstream is a region up to X bp downstream
+    transcription end, max: null, min: null, model_class: IntegerToolParameter, name: DownGene,
+  optional: false, size: null, type: integer, value: '5000'}
+- cases:
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22version%22%20last_selected_value%3D%22hg19%22%3E%0A%3Coption%20value%3D%22hg19%22%20selected%3Ehg19%3C/option%3E%0A%3Coption%20value%3D%22hg18%22%3Ehg18%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Select genome vesion
+      model_class: SelectToolParameter
+      multiple: false
+      name: version
+      optional: false
+      options:
+      - [hg19, hg19, true]
+      - [hg18, hg18, false]
+      type: select
+      value: hg19
+    model_class: ConditionalWhen
+    value: Human
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22version%22%20last_selected_value%3D%22mm9%22%3E%0A%3Coption%20value%3D%22mm9%22%20selected%3Emm9%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Select genome vesion
+      model_class: SelectToolParameter
+      multiple: false
+      name: version
+      optional: false
+      options:
+      - [mm9, mm9, true]
+      type: select
+      value: mm9
+    model_class: ConditionalWhen
+    value: Mouse
+  - inputs:
+    - argument: null
+      display: null
+      help: ''
+      hidden: false
+      html: '%3Cselect%20name%3D%22version%22%20last_selected_value%3D%22zv9%22%3E%0A%3Coption%20value%3D%22zv9%22%20selected%3Ezv9%3C/option%3E%0A%3C/select%3E'
+      is_dynamic: false
+      label: Select genome vesion
+      model_class: SelectToolParameter
+      multiple: false
+      name: version
+      optional: false
+      options:
+      - [zv9, zv9, true]
+      type: select
+      value: zv9
+    model_class: ConditionalWhen
+    value: Zebrafish
+  model_class: Conditional
+  name: input_organism
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22input_organism_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22Human%22%3E%0A%3Coption%20value%3D%22Human%22%20selected%3EHomo%20sapiens%3C/option%3E%0A%3Coption%20value%3D%22Mouse%22%3EMus%20musculus%3C/option%3E%0A%3Coption%20value%3D%22Zebrafish%22%3EZebrafish%20%28Danio%20rerio%29%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Select organism
+    model_class: SelectToolParameter
+    multiple: false
+    name: input_organism_selector
+    optional: false
+    options:
+    - [Homo sapiens, Human, true]
+    - [Mus musculus, Mouse, false]
+    - [Zebrafish (Danio rerio), Zebrafish, false]
+    type: select
+    value: Human
+  type: conditional
+- cases:
+  - inputs:
+    - argument: null
+      edam_formats: [format_2330]
+      extensions: [txt]
+      help: ''
+      hidden: false
+      is_dynamic: false
+      label: File with information about gene regulation
+      model_class: DataToolParameter
+      multiple: false
+      name: regfile
+      optional: false
+      options:
+        hda: []
+        hdca: []
+      type: data
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: use_reg
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22use_reg_selector%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22no%22%20selected%3ENo%3C/option%3E%0A%3Coption%20value%3D%22yes%22%3EYes%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: Use transcriptomic data (up- and down- regulated genes)
+    model_class: SelectToolParameter
+    multiple: false
+    name: use_reg_selector
+    optional: false
+    options:
+    - ['No', 'no', true]
+    - ['Yes', 'yes', false]
+    type: select
+    value: 'no'
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fannotatepeaks%2FannotatePeaks%2F1.0
+min_width: -1
+model_class: Tool
+name: Genomic annotation of Chip-Seq peaks
+outputs:
+- {edam_format: format_3547, format: png, hidden: false, label: Peaks Stats (png),
+  model_class: ToolOutput, name: outputPNG}
+- {edam_format: format_3475, format: tabular, hidden: false, label: Annotated Peaks
+    (ChIP), model_class: ToolOutput, name: stats}
+- {edam_format: format_3475, format: tabular, hidden: false, label: .LOG for Annotated
+    Peaks, model_class: ToolOutput, name: log}
+- {edam_format: format_3475, format: tabular, hidden: false, label: Annotated Peaks
+    (Control), model_class: ToolOutput, name: statsControl}
+panel_section_id: nebula_tools
+panel_section_name: ChIP-SEQ Analysis Nebula Tools, Institut Curie
+target: galaxy_main
+version: '1.0'

@@ -1,0 +1,30 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/mvalade/frogs/36109d143f38/frogs/clusters_stat.xml
+description: Process some metrics on clusters.
+id: toolshed.pasteur.fr/repos/mvalade/frogs/FROGS_clusters_stat/1.4.0
+inputs:
+- argument: null
+  edam_formats: [format_3464]
+  extensions: [biom1]
+  help: 'Clusters abundance (format: BIOM).'
+  hidden: false
+  is_dynamic: false
+  label: Abundance file
+  model_class: DataToolParameter
+  multiple: false
+  name: biom
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Fmvalade%2Ffrogs%2FFROGS_clusters_stat%2F1.4.0
+min_width: -1
+model_class: Tool
+name: FROGS Clusters stat
+outputs:
+- {edam_format: format_2331, format: html, hidden: false, label: '${tool.name}: summary.html',
+  model_class: ToolOutput, name: summary_file}
+panel_section_id: frogs_metagenomic_pipeline
+panel_section_name: FROGS Metagenomic pipeline
+target: galaxy_main
+version: 1.4.0

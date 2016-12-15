@@ -1,0 +1,155 @@
+config_file: /pasteur/projets/policy01/galaxy-prod/shed_tools/toolshed.pasteur.fr/repos/fmareuil/htseqcount/dc589d1100f8/htseqcount/htseqCount.xml
+description: This script takes an alignment file in SAM format and a feature file
+  in GFF format and calculates for each feature the number of reads mapping to it
+id: toolshed.pasteur.fr/repos/fmareuil/htseqcount/htseqCount/0.6.1p1
+inputs:
+- argument: null
+  edam_formats: [format_2573, null]
+  extensions: [sam, ' bam']
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: SAM or BAM file
+  model_class: DataToolParameter
+  multiple: false
+  name: sambam_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  edam_formats: [format_2305]
+  extensions: [gff]
+  help: ''
+  hidden: false
+  is_dynamic: false
+  label: GFF file
+  model_class: DataToolParameter
+  multiple: false
+  name: gff_file
+  optional: false
+  options:
+    hda: []
+    hdca: []
+  type: data
+- argument: null
+  display: null
+  help: ''
+  hidden: false
+  html: '%3Cselect%20name%3D%22mode%22%20last_selected_value%3D%22union%22%3E%0A%3Coption%20value%3D%22union%22%20selected%3Eunion%3C/option%3E%0A%3Coption%20value%3D%22intersection-strict%22%3Eintersection-strict%3C/option%3E%0A%3Coption%20value%3D%22intersection-nonempty%22%3Eintersection-nonempty%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: Mode to handle reads overlapping more than one feature.
+  model_class: SelectToolParameter
+  multiple: false
+  name: mode
+  optional: false
+  options:
+  - [union, union, true]
+  - [intersection-strict, intersection-strict, false]
+  - [intersection-nonempty, intersection-nonempty, false]
+  type: select
+  value: union
+- argument: null
+  display: null
+  help: For stranded=no, a read is considered overlapping with a feature regardless
+    of whether it is mapped to the same or the opposite strand as the feature. For
+    stranded=yes and single-end reads, the read has to be mapped to the same strand
+    as the feature. For paired-end reads, the first read has to be on the same strand
+    and the second read on the opposite strand. For stranded=reverse, these rules
+    are reversed.
+  hidden: false
+  html: '%3Cselect%20name%3D%22stranded%22%20last_selected_value%3D%22yes%22%3E%0A%3Coption%20value%3D%22yes%22%20selected%3Eyes%3C/option%3E%0A%3Coption%20value%3D%22no%22%3Eno%3C/option%3E%0A%3Coption%20value%3D%22reverse%22%3Ereverse%3C/option%3E%0A%3C/select%3E'
+  is_dynamic: false
+  label: whether the data is from a strand-specific assay
+  model_class: SelectToolParameter
+  multiple: false
+  name: stranded
+  optional: false
+  options:
+  - ['yes', 'yes', true]
+  - ['no', 'no', false]
+  - [reverse, reverse, false]
+  type: select
+  value: 'yes'
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22minaqual%22%20size%3D%2210%22%20value%3D%220%22%3E',
+  is_dynamic: false, label: skip all reads with alignment quality lower than the given
+    minimum value, max: null, min: null, model_class: IntegerToolParameter, name: minaqual,
+  optional: false, size: null, type: integer, value: '0'}
+- {area: false, argument: null, help: '', hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22feature_type%22%20size%3D%2210%22%20value%3D%22exon%22%3E',
+  is_dynamic: false, label: 'feature type (3rd column in GFF file) to be used, all
+    features of other type are ignored', model_class: TextToolParameter, name: feature_type,
+  optional: false, size: null, type: text, value: exon}
+- {area: false, argument: null, help: Several GFF lines with the same feature ID will
+    be considered as parts of the same feature., hidden: false, html: '%3Cinput%20type%3D%22text%22%20name%3D%22id_attribute%22%20size%3D%2210%22%20value%3D%22gene_id%22%3E',
+  is_dynamic: false, label: GFF attribute to be used as feature ID., model_class: TextToolParameter,
+  name: id_attribute, optional: false, size: null, type: text, value: gene_id}
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: samout
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22flag%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22yes%22%3E%20yes%20%3C/option%3E%0A%3Coption%20value%3D%22no%22%20selected%3E%20no%20%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: write out all SAM alignment records into an output SAM file, annotating
+      each line with its assignment to a feature or a special counter (as an optional
+      field with tag 'XF')
+    model_class: SelectToolParameter
+    multiple: false
+    name: flag
+    optional: false
+    options:
+    - [' yes ', 'yes', false]
+    - [' no ', 'no', true]
+    type: select
+    value: 'no'
+  type: conditional
+- cases:
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'yes'
+  - inputs: []
+    model_class: ConditionalWhen
+    value: 'no'
+  model_class: Conditional
+  name: quiet
+  test_param:
+    argument: null
+    display: null
+    help: ''
+    hidden: false
+    html: '%3Cselect%20name%3D%22flag%22%20refresh_on_change%3D%22true%22%20last_selected_value%3D%22no%22%3E%0A%3Coption%20value%3D%22yes%22%3E%20yes%20%3C/option%3E%0A%3Coption%20value%3D%22no%22%20selected%3E%20no%20%3C/option%3E%0A%3C/select%3E'
+    is_dynamic: false
+    label: suppress progress report and warnings
+    model_class: SelectToolParameter
+    multiple: false
+    name: flag
+    optional: false
+    options:
+    - [' yes ', 'yes', false]
+    - [' no ', 'no', true]
+    type: select
+    value: 'no'
+  type: conditional
+link: /tool_runner?tool_id=toolshed.pasteur.fr%2Frepos%2Ffmareuil%2Fhtseqcount%2FhtseqCount%2F0.6.1p1
+min_width: -1
+model_class: Tool
+name: htseqCount
+outputs:
+- {edam_format: format_2330, format: txt, hidden: false, label: '', model_class: ToolOutput,
+  name: output}
+- {edam_format: format_2573, format: sam, hidden: false, label: '', model_class: ToolOutput,
+  name: samoutput}
+panel_section_id: ngs-rna-tools
+panel_section_name: 'NGS: RNA Analysis'
+target: galaxy_main
+version: 0.6.1p1
