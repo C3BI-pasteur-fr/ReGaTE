@@ -33,7 +33,7 @@ setup(
           'console_scripts': ['regate=regate.regate:run',
                               'remag=regate.remag:run'],
         },
-    tests_require=['nose'],
+    tests_require=['nose', 'nose_parameterized'],
     test_suite='nose.collector',
     include_package_data=True,
     zip_safe=False
