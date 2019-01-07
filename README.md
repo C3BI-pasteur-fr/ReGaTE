@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/C3BI-pasteur-fr/ReGaTE.svg?branch=master)](https://travis-ci.org/C3BI-pasteur-fr/ReGaTE)
+
 ReGaTE README file
 ==================
 
@@ -11,3 +13,5 @@ regate --templateconfig
 vim regate.ini #here fill in the configuration variables sensibly before running regate
 regate --config_file regate.ini
 ```
+
+
